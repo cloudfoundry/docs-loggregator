@@ -1,0 +1,22 @@
+---
+title: Architecture of the Loggregator System
+---
+
+Loggregator is Cloud Foundry’s next generation system for aggregating and streaming logs and metrics from all of the user apps and system components in a Cloud Foundry deployment. The main use cases are as follows:
+
+- App developers can tail their application logs or dump the recent logs from the CF CLI, or stream these to a 3rd party log archive and analysis service.
+
+- Operators and administrators can access the Loggregator Firehose--the combined stream of logs from all apps, plus metrics data from CF components.
+
+- Operators can deploy ‘nozzles’ to the Firehose. A nozzle is a component that selectively listens to the firehose for specified events and metrics and streams this data to external services.
+
+Loggregator is composed of the following subsystems:
+
+- Sources: Logging agents that run on the Cloud Foundry components.
+- Metron: Metron agents are co-located with sources. They collect logs and forward them to:
+- Doppler: Responsible for gathering logs from the Metron agents, storing them in temporary buffers, and forwarding logs to 3rd party syslog drains.
+- Traffic Controller: Handles client requests for logs. Gathers and collates messages from all Doppler servers, and provides external API and message translation (as needed for legacy APIs). Exposes the Firehose.
+- Firehose: the API exposed by the Traffic Controller. The access point for logs and metrics from a deployment, other than those forwarded directly from Doppler instances to 3rd party log services. (why don’t these hit the firehose??) “Nozzle” applications that consume logs and/or metrics subscribe to the Firehose.
+
+
+
