@@ -1,0 +1,12 @@
+---
+title: Logging and Metrics
+---
+
+This section provides the following:
+
+- An overview of the architecture of Loggregator, the system that handles logging and metrics for all components in <%= vars.product_full %>
+
+- A discussion of the various sources of logs and metrics data from <%= vars.product_full %> components.
+
+- A tutorial on creating a 'nozzle' application that consumes data from the Loggregator Firehose.
+
