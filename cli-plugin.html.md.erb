@@ -1,3 +1,36 @@
 ---
 title: Installing the Loggregator Plugin for CF CLI
 ---
+
+Prerequisites:
+
+- CF CLI 6.12.2 or later
+- Admin access for the CF deployment you wish to monitor.
+
+
+
+## <a id='add'></a>Install the Plugin
+
+1. Add the CF Community plugin repo by running the following in the terminal:
+<pre class='terminal'>
+cf add-plugin-repo CF-Community http://plugins.cloudfoundry.org
+</pre>
+
+1. Install the plugin:
+<pre class='terminal'>
+cf install-plugin "Firehose Plugin" -r CF-Community
+</pre>
+
+
+## <a id='usage'></a> Usage ##
+
+To view the Firehose, run:
+
+<pre class='terminal'>cf nozzle --debug (optional)</pre>
+
+<p class='note'>You must be logged in as an admin to access the firehose</p>
+
+
+## <a id='uninstall'></a>Uninstall the Plugin ##
+ <pre class='terminal'>cf uninstall-plugin FirehosePlugin</pre>
+
