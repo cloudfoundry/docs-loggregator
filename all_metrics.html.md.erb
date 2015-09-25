@@ -1,0 +1,11 @@
+---
+title: All the Metrics!
+---
+
+<% %w(cloud_controller dea_logging_agent diego doppler etcd hm9000 metron_agent syslog_drain_binder traffic_controller ).each_with_index do |component_name, i| %>
+
+<h2><a id='<%= component_name %>'></a> <%= component_name.split('_').map { |word| word.capitalize  }.join(' ') %> </h2>
+
+ <%= partial "_#{component_name }" %>
+
+<% end %>

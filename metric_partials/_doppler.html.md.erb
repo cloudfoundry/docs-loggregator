@@ -1,0 +1,34 @@
+Metric Name                                                              | Description
+--------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------
+ DopplerServer.dropsondeListener.currentBufferCount                       | Instantaneous number of messages read by UDP socket but not yet unmarshalled
+ DopplerServer.dropsondeListener.receivedByteCount                        | Lifetime number of bytes read by UDP socket
+ DopplerServer.dropsondeListener.receivedMessageCount                     | Lifetime number of messages read by UDP socket
+ DopplerServer.dropsondeUnmarshaller.containerMetricReceived              | Lifetime number of ContainerMetric messages unmarshalled
+ DopplerServer.dropsondeUnmarshaller.counterEventReceived                 | Lifetime number of CounterEvent messages unmarshalled
+ DopplerServer.dropsondeUnmarshaller.errorReceived                        | Lifetime number of Error messages unmarshalled
+ DopplerServer.dropsondeUnmarshaller.heartbeatReceived                    | Lifetime number of Heartbeat messages unmarshalled
+ DopplerServer.dropsondeUnmarshaller.httpStartReceived                    | Lifetime number of HttpStart messages unmarshalled
+ DopplerServer.dropsondeUnmarshaller.httpStartStopReceived                | Lifetime number of HttpStartStop messages unmarshalled
+ DopplerServer.dropsondeUnmarshaller.httpStopReceived                     | Lifetime number of HttpStop messages unmarshalled
+ DopplerServer.dropsondeUnmarshaller.logMessageTotal                      | Lifetime number of LogMessage messages unmarshalled
+ DopplerServer.dropsondeUnmarshaller.unmarshalErrors                      | Lifetime number of errors when unmarshalling messages
+ DopplerServer.dropsondeUnmarshaller.valueMetricReceived                  | Lifetime number of ValueMetric messages unmarshalled
+ DopplerServer.httpServer.receivedMessages                                | Number of messages received by Doppler's internal MessageRouter
+ DopplerServer.memoryStats.lastGCPauseTimeNS                              | Duration of the last Garbage Collector pause in nanoseconds
+ DopplerServer.memoryStats.numBytesAllocated                              | Instantaneous count of bytes allocated and still in use
+ DopplerServer.memoryStats.numBytesAllocatedHeap                          | Instantaneous count of bytes allocated on the main heap and still in use
+ DopplerServer.memoryStats.numBytesAllocatedStack                         | Instantaneous count of bytes used by the stack allocator
+ DopplerServer.memoryStats.numFrees                                       | Lifetime number of memory deallocations
+ DopplerServer.memoryStats.numMallocs                                     | Lifetime number of memory allocations
+ DopplerServer.messageRouter.numberOfDumpSinks                            | Instantaneous number of dump sinks known to the SinkManager
+ DopplerServer.messageRouter.numberOfFirehoseSinks                        | Instantaneous number of firehose sinks known to the SinkManager
+ DopplerServer.messageRouter.numberOfSyslogSinks                          | Instantaneous number of syslog sinks known to the SinkManager
+ DopplerServer.messageRouter.numberOfWebsocketSinks                       | Instantaneous number of websocket sinks known to the SinkManager
+ DopplerServer.messageRouter.totalDroppedMessages                         | Lifetime number of messages dropped inside Doppler for various reasons (downstream consumer can't keep up internal object wasn't ready for message, etc.)
+ DopplerServer.numCpus                                                    | Number of CPUs on the machine
+ DopplerServer.numGoRoutines                                              | Instantaneous number of active Goroutines in the Doppler process
+ DopplerServer.signatureVerifier.invalidSignatureErrors                   | Lifetime number of messages received with an invalid signature
+ DopplerServer.signatureVerifier.missingSignatureErrors                   | Lifetime number of messages received that are too small to contain a signature
+ DopplerServer.signatureVerifier.validSignatures                          | Lifetime number of messages received with valid signatures
+
+[Top](#metrics-by-component)
