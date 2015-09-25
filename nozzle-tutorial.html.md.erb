@@ -1,3 +1,113 @@
 ---
 title: Deploying a Nozzle to the Loggregator Firehose
 ---
+
+Prerequisites:
+
+- BOSH CLI installed locally.
+- Spiff installed locally. [Spiff on GitHub](https://github.com/cloudfoundry-incubator/spiff).
+- A working Cloud Foundry environment with Loggregator to use as a source of data. [Cloud Foundry on GitHub](https://github.com/cloudfoundry/cf-release).
+- A BOSH lite deployed locally, with which to deploy the nozzle. [BOSH lite on GitHub](https://github.com/cloudfoundry/bosh-lite).
+
+
+## <a id='dl-release'></a>Step 1: Download example release ##
+
+The Loggregator team has prepared an example nozzle application for use with this tutorial. Download it from [GitHub](https://github.com/cloudfoundry-incubator/example-nozzle-release).
+
+
+## <a id='add-client'></a>Step 2: Add UAA client ##
+
+You must authorize the example nozzle as a UAA client for your CF deployment.
+
+1. Download your deployment manifest.
+
+1. Add a UAA client for the nozzle to your deployment manifest:
+
+```
+properties:
+  uaa:
+    clients:
+      example-nozzle:
+        access-token-validity: 1209600
+        authorized-grant-types: authorization_code,client_credentials,refresh_token
+        override: true
+        secret: example-nozzle
+        scope: openid,oauth.approvals,doppler.firehose
+        authorities: oauth.login,doppler.firehose
+```
+
+3\. BOSH deploy your Cloud Foundry again with the new manifest.
+
+## <a id='step-id'></a>Step 3: Prepare the nozzle manifest ##
+
+There are two options for preparing the nozzle deployment manifest:
+
+- (Quicker but less informative) Our engineers have included a script to prepare the manifest in a single step. To use this option simply run the following in the terminal: 
+<pre class='terminal'>
+$ scripts/make\_manifest\_spiff\_bosh\_lite
+</pre>
+
+- (Recommended) Complete the following steps:
+
+1. Inside `example-nozzle-release`, change into the `templates` directory.
+<pre class='terminal'>
+$ cd templates
+</pre>
+There are two yaml files inside:
+	- `template.yml` is template for the manifest we will use to deploy the nozzle.
+	- `bosh-lite-stub.yml` contains the values that will populate the missing information in the manifest template to complete our deployment manifest.
+
+1. Make a `tmp` directory to house our compiled manifest.
+
+1. Use spiff to compile a deployment manifest from the template and stub, and save this manifest.
+<pre class='terminal'>
+$ spiff merge templates/template.yml templates/bosh\-lite\-stub.yml > tmp/manifest\_bosh\_lite.yml
+</pre>
+
+1. Get your BOSH director UUID by running: <pre class='terminal'>$ bosh status --uuid</pre>
+
+1. In the compiled nozzle deployment manifest, find the `director_uuid` property and replace its value of `PLACEHOLDER-DIRECTOR-UUID` with your BOSH director UUID.
+
+```
+compilation:
+  cloud_properties:
+    name: default
+  network: example-nozzle-net
+  reuse_compilation_vms: true
+  workers: 1
+director_uuid: PLACEHOLDER-DIRECTOR-UUID
+```
+
+
+## <a id='create'></a>Step 4: Create a BOSH release for the nozzle ##
+
+Run the following terminal command:
+<pre class='terminal'>
+$ bosh create release
+</pre>
+
+
+## <a id='upload'></a>Step 5: Upload the BOSH release ##
+Run the following terminal command:
+<pre class='terminal'>
+$ bosh upload release
+</pre>
+
+
+## <a id='deploy'></a>Step 6: Deploy the nozzle ##
+Run the following terminal command:
+<pre class='terminal'>
+$ bosh deploy
+</pre>
+
+## <a id='view'></a>Step 7: View the nozzle output ##
+
+Congratulations! You have successfully deployed a Loggregator firehose nozzle.
+
+The example nozzle simply dumps all of the data coming from the firehose to its log files. To view this data, SSH into the example-nozzle VM and examine the logs.
+
+<pre class='terminal'>
+$ bosh ssh example-nozzle
+$ cd /var/vcap/sys/log/example-nozzle
+$ tail -f *.log
+</pre>
