@@ -1,3 +1,91 @@
 ---
 title: Loggregator for Operators
 ---
+
+## <a id='scaling'></a> Scaling Loggregator ##
+
+Dopplers have a limited buffer which is periodically forwarded to the Traffic Controller. When input from Metron agents exceeds the buffer size for a given interval, log and metric data can be lost. There are several ways to minimize this loss:
+- Increase buffer size.
+- Add additional Doppler instances.
+
+## <a id='customizing'></a> Customizing Loggregator Components ##
+
+Each Loggregator component can be customized in many ways by changing its properties in the CF deployment manifest. Some of the most useful are detailed below.
+
+### <a id='dea-agent'></a>DEA Logging Agent ###
+<table border='1' class='nice'>
+	<tr>
+		<th><strong>Property</strong></th>
+		<th><strong>Description</strong></th>
+		<th><strong>Default</strong></th>
+	</tr>
+	<tr>
+		<td>dea_logging_agent.debug</td>
+	    <td>Boolean value to turn on verbose mode</td>
+	    <td>false</td>
+	</tr>
+	<tr>
+		<td>metron_endpoint.host</td>
+	    <td>The host used to emit messages to the Metron agent</td>
+	    <td>127.0.0.1</td>
+	</tr>
+	<tr>
+		<td>metron_endpoint.dropsonde_port</td>
+	    <td>The port used to emit dropsonde messages to the Metron agent</td>
+	    <td>3457</td>
+	</tr>
+	<tr>
+	    <td>metron_endpoint.shared_secret</td>
+	    <td>The key used to sign log messages</td>
+	    <td>No default value</td>
+	</tr>
+	<tr>
+	     <td>dea_logging_agent.status.port</td>
+	    <td>Port used to run the varz endpoint</td>
+	    <td>0</td>
+	</tr>
+	<tr>
+	    <td>nats.user</td>
+	    <td>Username for cc client to connect to NATS</td>
+	    <td>No default value</td>
+	</tr>
+  	<tr>
+  	  	<td>nats.password</td>
+  	    <td>Password for cc client to connect to NATS</td>
+  	    <td>No default value</td>
+  	</tr>
+  	<tr>
+  	  	<td>nats.machines</td>
+  	    <td>IP addresses of Cloud Foundry NATS servers</td>
+  	    <td>No default value</td>
+  	</tr>
+	<tr>
+	    <td>nats.port</td>
+	    <td>IP port of Cloud Foundry NATS server</td>
+	    <td>No default value</td>
+	</tr>
+</table>
+
+
+### <a id='doppler'></a>Doppler ###
+
+### <a id='traffic-controller'></a>Traffic Controller ###
+
+### <a id='metron'></a>Metron Agent ###
+
+### <a id='syslog-drain'></a>Syslog Drain Binder###
+this is for apps. 
+http://docs.pivotal.io/pivotalcf/devguide/services/log-management.html
+
+## <a id='step-id'></a> Syslog Forwarding from <%= vars.product_full %> Components
+
+In your CF deployment manifest, add the following properties to the `properties` hash.
+
+```
+properties:
+  syslog_daemon_config:
+  		address: YOUR-SYSLOG-AGGREGATOR-IP
+       	port: YOUR-SYSLOG-AGGREGATOR-TCP-PORT      
+     	transport: 
+   <!--  description: "Transport to be used when forwarding logs (tcp|udp|relp)." -->
+```
