@@ -1,5 +1,5 @@
 ---
-title: All the Metrics!
+title: Cloud Foundry Component Metrics
 ---
 ## <a id='metrics-by-component'>Metrics by Component</a>
 
@@ -10,13 +10,3 @@ title: All the Metrics!
 <%= partial "_#{component_name }" %>
 
 <% end %>
-
-<script type="text/javascript">
-	var italicsThings = $.makeArray($('em'));
-	if ( italicsThings.length > 0 ){
-		console.log( "The following text is in italics but probably shouldn't be. Probably some '_' need to be escaped in the markdown.  ")
-		italicsThings.forEach(function(thing){
-			console.log(thing.innerHTML)
-		})
-	}
-</script>
