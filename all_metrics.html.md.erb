@@ -1,11 +1,22 @@
 ---
 title: All the Metrics!
 ---
+## <a id='metrics-by-component'>Metrics by Component</a>
 
 <% %w(cloud_controller dea_logging_agent diego doppler etcd hm9000 metron_agent syslog_drain_binder traffic_controller ).each_with_index do |component_name, i| %>
 
 <h2><a id='<%= component_name %>'></a> <%= component_name.split('_').map { |word| word.capitalize  }.join(' ') %> </h2>
 
- <%= partial "_#{component_name }" %>
+<%= partial "_#{component_name }" %>
 
 <% end %>
+
+<script type="text/javascript">
+	var italicsThings = $.makeArray($('em'));
+	if ( italicsThings.length > 0 ){
+		console.log( "The following text is in italics but probably shouldn't be. Probably some '_' need to be escaped in the markdown.  ")
+		italicsThings.forEach(function(thing){
+			console.log(thing.innerHTML)
+		})
+	}
+</script>
