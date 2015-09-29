@@ -2,27 +2,27 @@ Metric Name                                                   | Description
 --------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------
 vcap_sinatra.requests.outstanding                             | Number of requests currently being processed
 vcap_sinatra.requests.completed                               | Number of requests that have been completed
-vcap_sinatra.http_status.[status_code]                        | Metrics on number of http response codes for all requests
-vcap_sinatra.recent_errors                                    | 50 most recent errors
+vcap\_sinatra.http\_status.[status_code]                        | Metrics on number of http response codes for all requests
+vcap\_sinatra.recent\_errors                                    | 50 most recent errors
 log_counts.[severity]                                         | Metrics for number of log messages of various severity
-cc_user_count                                                 | "Total number of users ever created (includes inactive users).  Note: this field is updated at least every 10 minutes."
-cc_job_queue_length.[queue_type]                              | "Number of delayed_jobs that have yet to run for the first time. Note: this field is updated at least once every 30 seconds"
-cc_job_queue_length.total                                     | Total number of delayed_jobs that have yet to run for the first time
+cc\_user\_count                                                 | "Total number of users ever created (includes inactive users).  Note: this field is updated at least every 10 minutes."
+cc\_job\_queue\_length.[queue\_type]                              | "Number of delayed_jobs that have yet to run for the first time. Note: this field is updated at least once every 30 seconds"
+cc\_job\_queue_length.total                                     | Total number of delayed_jobs that have yet to run for the first time
 thread_info.[rest bellow here]                                | Note: these fields are updated at least once every 30 seconds
-thread_info.thread_count                                      | Total number of threads that are either runnable or stopped
-thread_info.event_machine.connection_count                    | Number of open connections to event machine
-thread_info.event_machine.threadqueue.size                    | Number of unscheduled tasks in the threadqueue
-thread_info.event_machine.threadqueue.num_waiting             | Number of scheduled tasks in the threadqueue
-thread_info.event_machine.resultqueue.size                    | Number of unscheduled tasks in the result
-thread_info.event_machine.resultqueue.num_waiting             | Number of scheduled tasks in the result
-cc_failed_job_count.[queue_type]                              | "Number of failed jobs sorted by queue type. Updated once every 30 seconds. Note: this is unrelated to the worker
-cc_failed_job_count.total                                     | Total number of failed jobs
-uptime_in_seconds                                             | "The uptime of the process
+thread\_info.thread\_count                                      | Total number of threads that are either runnable or stopped
+thread\_info.event\_machine.connection_count                    | Number of open connections to event machine
+thread\_info.event\_machine.threadqueue.size                    | Number of unscheduled tasks in the threadqueue
+thread\_info.event\_machine.threadqueue.num_waiting             | Number of scheduled tasks in the threadqueue
+thread\_info.event\_machine.resultqueue.size                    | Number of unscheduled tasks in the result
+thread\_info.event\_machine.resultqueue.num_waiting             | Number of scheduled tasks in the result
+cc\_failed\_job\_count.[queue\_type]                              | "Number of failed jobs sorted by queue type. Updated once every 30 seconds. Note: this is unrelated to the worker
+cc\_failed\_job_count.total                                     | Total number of failed jobs
+uptime\_in\_seconds                                             | "The uptime of the process
 uptime                                                        | "The uptime of the process
 mem_bytes                                                     | RSS bytes calculated by the OS
-mem_used_bytes                                                | total memory used according to the OS
-mem_free_bytes                                                | total memory available according to the OS
-cpu_load_avg                                                  | system cpu load average over a minute according to the OS
+mem\_used\_bytes                                                | total memory used according to the OS
+mem\_free\_bytes                                                | total memory available according to the OS
+cpu\_load\_avg                                                  | system cpu load average over a minute according to the OS
 cpu                                                           | the percent cpu usage by the process
 num_cores                                                     | number of CPUs of the host machine
 
