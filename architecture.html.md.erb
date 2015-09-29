@@ -31,7 +31,7 @@ Metron agents are co-located with sources. They collect logs and forward them to
 
 ## <a id='doppler'></a>Doppler
 
-Responsible for gathering logs from the Metron agents, storing them in temporary buffers, and forwarding logs to 3rd party syslog drains.
+Dopplers gather logs from the Metron agents, store them in temporary buffers, and forward them to the Traffic Controller or to 3rd party syslog drains.
 
 ## <a id='traffic-controller'></a>Traffic Controller
 
@@ -39,7 +39,7 @@ Handles client requests for logs. Gathers and collates messages from all Doppler
 
 ## <a id='firehose'></a>Firehose
 
-The Firehose is the API exposed by the Traffic Controller. The access point for logs and metrics from a deployment, other than those forwarded directly from Doppler instances to 3rd party log services. (why don’t these hit the firehose??) “Nozzle” applications that consume logs and/or metrics subscribe to the Firehose.
+The Firehose is the API exposed by the Traffic Controller. The access point for logs and metrics from a deployment, other than those forwarded directly from Doppler instances to 3rd party log services. “Nozzle” applications that consume logs and/or metrics subscribe to the Firehose.
 
 
 
