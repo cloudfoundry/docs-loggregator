@@ -4,9 +4,16 @@ title: Loggregator for Operators
 
 ## <a id='scaling'></a> Scaling Loggregator ##
 
-Dopplers have a limited buffer which is periodically forwarded to the Traffic Controller. When input from Metron agents exceeds the buffer size for a given interval, log and metric data can be lost. There are several ways to minimize this loss:
+[Dopplers](./architecture.html#doppler) have a limited buffer which is periodically forwarded to the Traffic Controller. When input from Metron agents exceeds the buffer size for a given interval, log and metric data can be lost. There are several ways to minimize this loss:
 - Increase buffer size.
 - Add additional Doppler instances.
+
+## <a id='scaling-nozzles'> Scaling Nozzles </a>
+
+[Nozzles](./architecture#firehose) can be scaled by using the subscription ID, which is specified when the nozzle connects to the firehose. If you use the same subscription ID on each nozzle instance, the firehose will evenly distribute events across all instances of the nozzle. For example, if you have two nozzles with the same subscription ID, then half the events will go to one nozzle and half to the other. Similarly if there were three instances of the nozzle, then each instance would get one-third the traffic.
+
+A stateless nozzle should handle scaling gracefully. But if the nozzle buffers or caches the data, the nozzle author must test what happens when the nozzle is scaled up or scaled down.
+
 
 ## <a id='customizing'></a> Customizing Loggregator Components ##
 
