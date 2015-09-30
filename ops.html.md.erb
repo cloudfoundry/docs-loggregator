@@ -102,6 +102,126 @@ Each Loggregator component can be customized in many ways by changing its proper
 
 
 ### <a id='doppler'></a>Doppler ###
+<table>
+	<tr>
+		<th><strong>Property</strong></th>
+		<th><strong>Description</strong></th>
+		<th><strong>Default</strong></th>
+	</tr>
+	<tr>
+		<td>doppler.zone</td>
+		<td>Zone of the doppler server</td>
+		<td>No default value</td>
+	</tr>
+	<tr>
+		<td>doppler.debug</td>
+		<td> boolean value to turn on verbose logging for doppler system (dea agent & doppler server)</td>
+		<td>false</td>
+	</tr>
+	<tr>
+		<td>doppler.status.user</td>
+		<td>username used to log into <code>varz</code> endpoint</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>doppler.status.port</td>
+		<td>Port used to run the <code>varz</code> endpoint</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>doppler.status.port</td>
+		<td>port used to run the varz endpoint</td>
+		<td>0</td>
+	</tr>
+	<tr>
+		<td>doppler.maxRetainedLogMessages</td>
+		<td>number of log messages to retain per application</td>
+		<td>100</td>
+	</tr>
+	<tr>
+		<td>doppler.incoming_port</td>
+		<td>Port for incoming log messages in the legacy format</td>
+		<td>3456</td>
+	</tr>
+	<tr>
+		<td>doppler.dropsonde_incoming_port</td>
+		<td>Port for incoming messages in the dropsonde format</td>
+		<td>3457</td>
+	</tr>
+	<tr>
+		<td>doppler.outgoing_port</td>
+		<td>Port for outgoing log messages</td>
+		<td>8081</td>
+	</tr>
+	<tr>
+		<td>doppler.blacklisted_syslog_ranges</td>
+		<td>Blacklist for IPs that should not be used as syslog drains, e.g. internal ip addresses.</td>
+		<td>No default value</td>
+	</tr>
+	<tr>
+		<td>doppler.container_metric_ttl_seconds</td>
+		<td>TTL (in seconds) for container usage metrics</td>
+		<td>120</td>
+	</tr>
+	<tr>
+		<td>  doppler.unmarshaller_count</td>
+		<td>Number of parallel unmarshallers to run within Doppler</td>
+		<td>5</td>
+	</tr>
+	<tr>
+		<td> doppler.sink_inactivity_timeout_seconds</td>
+		<td>Interval before removing a sink due to inactivity</td>
+		<td>3600</td>
+	</tr>
+	<tr>
+		<td>doppler.sink_dial_timeout_seconds</td>
+		<td>Dial timeout for sinks</td>
+		<td>1</td>
+	</tr>
+	<tr>
+		<td>doppler.sink_io_timeout_seconds</td>
+		<td>I/O Timeout on sinks</td>
+		<td>0</td>
+	</tr>
+	<tr>
+		<td> doppler_endpoint.shared_secret</td>
+		<td>Shared secret used to verify cryptographically signed doppler messages</td>
+		<td>No default value</td>
+	</tr>
+	<tr>
+		<td>doppler.message_drain_buffer_size</td>
+		<td>Size of the internal buffer used by doppler to store messages. If the buffer gets full doppler will drop the messages.</td>
+		<td>100</td>
+	</tr>
+	<tr>
+		<td>etcd.machines</td>
+		<td>IPs pointing to the ETCD cluster</td>
+		<td>No default value</td>
+	</tr>
+	<tr>
+		<td> metron_endpoint.host</td>
+		<td>The host used to emit messages to the Metron agent</td>
+		<td>127.0.0.1</td>
+	</tr>
+	<tr>
+		<td>metron_endpoint.dropsonde_port</td>
+		<td>The port used to emit dropsonde messages to the Metron agent</td>
+		<td>default: 3457</td>
+	</tr>
+	<tr>
+		<td>ssl.skip_cert_verify</td>
+		<td>when connecting over TLS, don't verify certificates</td>
+		<td>false</td>
+	</tr>
+	
+</table>
+
+
+<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
 
 ### <a id='traffic-controller'></a>Traffic Controller ###
 
