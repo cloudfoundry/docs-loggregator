@@ -41,10 +41,15 @@ Handles client requests for logs. Gathers and collates messages from all Doppler
 
 The Firehose is a websocket endpoint which streams all the events coming from a <%= vars.product_full %> deployment. This includes logs, HTTP events and container metrics from all applications. It also includes metrics from all components and any errors in the system. Since the data coming from the firehose may contain sensitive information (for example, customer information in the application logs), the firehose is only accessible by users who have the right permissions.
 
-The firehose is served by the loggregator traffic-controller. The address of the traffic controller can be discovered by hitting the info endpoint on the API and getting the value of the doppler_logging_endpoint.
+The firehose is served by the loggregator traffic-controller. The address of the traffic controller can be discovered by hitting the info endpoint on the API and getting the value of the doppler\_logging\_endpoint.
 
-cf curl /v2/info | jq .doppler_logging_endpoint
-# outputs "wss://doppler.10.244.0.34.xip.io:443" for a bosh-lite CF environment
+Example output for a BOSH Lite CF environment:
+<pre class='terminal'>
+ $ cf curl /v2/info | jq .doppler_logging_endpoint
+ wss://doppler.10.244.0.34.xip.io:443
+</pre>
+
+for a bosh-lite CF environment
 
 The Firehose is the API exposed by the Traffic Controller. The access point for logs and metrics from a deployment, other than those forwarded directly from Doppler instances to 3rd party log services. 
 
