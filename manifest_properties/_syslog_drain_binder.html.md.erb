@@ -1,0 +1,14 @@
+Property Name | Description | Default
+--- | --- | ---
+metron\\_endpoint.host | The host used to emit messages to the Metron agent | 127.0.0.1
+metron\\_endpoint.dropsonde\\_port | The port used to emit dropsonde messages to the Metron agent | 3457
+loggregator.etcd.machines | IPs pointing to the ETCD cluster
+loggregator.etcd.maxconcurrentrequests | Number of concurrent requests to ETCD | 10
+system\\_domain | Domain reserved for CF operator, base URL where the login, uaa, and other non-user apps listen
+syslog\\_drain\\_binder.drain\\_url\\_ttl\\_seconds | Time to live for drain urls in seconds | 60
+syslog\\_drain\\_binder.update\\_interval\\_seconds | Interval on which to poll cloud controller in seconds | 15
+syslog\\_drain\\_binder.polling\\_batch\\_size | Batch size for the poll from cloud controller | 1000
+syslog\\_drain\\_binder.debug | boolean value to turn on verbose logging for syslog\\_drain\\_binder | false
+cc.bulk\\_api\\_password | password for the bulk api
+cc.srv\\_api\\_uri | API URI of cloud controller
+ssl.skip\\_cert\\_verify | when connecting over https, ignore bad ssl certificates | false

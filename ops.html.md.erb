@@ -1,10 +1,12 @@
 ---
-title: Loggregator for Operators
+title: Loggregator Guide for Cloud Foundry Operators
 ---
+
+This topic contains information about the [Loggregator System](./architecture.html) that may be of use to operators of Cloud Foundry deployments.
 
 ## <a id='scaling'></a> Scaling Loggregator ##
 
-[Dopplers](./architecture.html#doppler) have a limited buffer which is periodically forwarded to the Traffic Controller. When input from Metron agents exceeds the buffer size for a given interval, log and metric data can be lost. There are several ways to minimize this loss:
+[Dopplers](./architecture.html#doppler) have a limited buffer which is periodically forwarded to the [Traffic Controller](./architecture.html#traffic-controller). When input from [Metron](./architecture.html#metron) agents exceeds the buffer size for a given interval, log and metric data can be lost. There are several ways to minimize this loss:
 
 - Increase buffer size.
 - Add additional Doppler instances.
@@ -27,7 +29,7 @@ Based on these slow alerts the operator can choose to scale up the nozzle.
 
 ## <a id='step-id'></a> Syslog Forwarding from <%= vars.product_full %> Components
 
-Syslog data can be forarded directly from <%= vars.product_full %> components to an external aggregator. To do this, add the following properties to the `properties` hash in your CF deployment manifest,.
+Syslog data can be forarded directly from <%= vars.product_full %> components to an external aggregator. To do this, add the following properties to the `properties` hash in your CF deployment manifest.
 
 ```
 properties:
@@ -36,197 +38,28 @@ properties:
        	port: YOUR-SYSLOG-AGGREGATOR-TCP-PORT      
      	transport: YOUR-TRANSPORT-PROTOCOL
 ```
-Transport protocol can be any of the following:
+Transport protocol must be one of the following:
 
--tcp
--udp
--relp
+- `tcp`
+- `udp`
+- `relp`
 
 ## <a id='customizing'></a> Customizing Loggregator Components ##
 
 Each Loggregator component can be customized in many ways by changing its properties in the CF deployment manifest. Some of the most useful are detailed below.
 
 ### <a id='dea-agent'></a>DEA Logging Agent ###
-<table border='1' class='nice'>
-	<tr>
-		<th><strong>Property</strong></th>
-		<th><strong>Description</strong></th>
-		<th><strong>Default</strong></th>
-	</tr>
-	<tr>
-		<td>dea_logging_agent.debug</td>
-	    <td>Boolean value to turn on verbose mode</td>
-	    <td>false</td>
-	</tr>
-	<tr>
-		<td>metron_endpoint.host</td>
-	    <td>The host used to emit messages to the Metron agent</td>
-	    <td>127.0.0.1</td>
-	</tr>
-	<tr>
-		<td>metron_endpoint.dropsonde_port</td>
-	    <td>The port used to emit dropsonde messages to the Metron agent</td>
-	    <td>3457</td>
-	</tr>
-	<tr>
-	    <td>metron_endpoint.shared_secret</td>
-	    <td>The key used to sign log messages</td>
-	    <td>No default value</td>
-	</tr>
-	<tr>
-	     <td>dea_logging_agent.status.port</td>
-	    <td>Port used to run the varz endpoint</td>
-	    <td>0</td>
-	</tr>
-	<tr>
-	    <td>nats.user</td>
-	    <td>Username for cc client to connect to NATS</td>
-	    <td>No default value</td>
-	</tr>
-  	<tr>
-  	  	<td>nats.password</td>
-  	    <td>Password for cc client to connect to NATS</td>
-  	    <td>No default value</td>
-  	</tr>
-  	<tr>
-  	  	<td>nats.machines</td>
-  	    <td>IP addresses of Cloud Foundry NATS servers</td>
-  	    <td>No default value</td>
-  	</tr>
-	<tr>
-	    <td>nats.port</td>
-	    <td>IP port of Cloud Foundry NATS server</td>
-	    <td>No default value</td>
-	</tr>
-</table>
-
+<%= partial 'manifest_properties/dea_logging_agent'%>
 
 ### <a id='doppler'></a>Doppler ###
-<table>
-	<tr>
-		<th><strong>Property</strong></th>
-		<th><strong>Description</strong></th>
-		<th><strong>Default</strong></th>
-	</tr>
-	<tr>
-		<td>doppler.zone</td>
-		<td>Zone of the doppler server</td>
-		<td>No default value</td>
-	</tr>
-	<tr>
-		<td>doppler.debug</td>
-		<td> boolean value to turn on verbose logging for doppler system (dea agent & doppler server)</td>
-		<td>false</td>
-	</tr>
-	<tr>
-		<td>doppler.status.user</td>
-		<td>username used to log into <code>varz</code> endpoint</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>doppler.status.port</td>
-		<td>Port used to run the <code>varz</code> endpoint</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>doppler.status.port</td>
-		<td>port used to run the varz endpoint</td>
-		<td>0</td>
-	</tr>
-	<tr>
-		<td>doppler.maxRetainedLogMessages</td>
-		<td>number of log messages to retain per application</td>
-		<td>100</td>
-	</tr>
-	<tr>
-		<td>doppler.incoming_port</td>
-		<td>Port for incoming log messages in the legacy format</td>
-		<td>3456</td>
-	</tr>
-	<tr>
-		<td>doppler.dropsonde_incoming_port</td>
-		<td>Port for incoming messages in the dropsonde format</td>
-		<td>3457</td>
-	</tr>
-	<tr>
-		<td>doppler.outgoing_port</td>
-		<td>Port for outgoing log messages</td>
-		<td>8081</td>
-	</tr>
-	<tr>
-		<td>doppler.blacklisted_syslog_ranges</td>
-		<td>Blacklist for IPs that should not be used as syslog drains, e.g. internal ip addresses.</td>
-		<td>No default value</td>
-	</tr>
-	<tr>
-		<td>doppler.container_metric_ttl_seconds</td>
-		<td>TTL (in seconds) for container usage metrics</td>
-		<td>120</td>
-	</tr>
-	<tr>
-		<td>  doppler.unmarshaller_count</td>
-		<td>Number of parallel unmarshallers to run within Doppler</td>
-		<td>5</td>
-	</tr>
-	<tr>
-		<td> doppler.sink_inactivity_timeout_seconds</td>
-		<td>Interval before removing a sink due to inactivity</td>
-		<td>3600</td>
-	</tr>
-	<tr>
-		<td>doppler.sink_dial_timeout_seconds</td>
-		<td>Dial timeout for sinks</td>
-		<td>1</td>
-	</tr>
-	<tr>
-		<td>doppler.sink_io_timeout_seconds</td>
-		<td>I/O Timeout on sinks</td>
-		<td>0</td>
-	</tr>
-	<tr>
-		<td> doppler_endpoint.shared_secret</td>
-		<td>Shared secret used to verify cryptographically signed doppler messages</td>
-		<td>No default value</td>
-	</tr>
-	<tr>
-		<td>doppler.message_drain_buffer_size</td>
-		<td>Size of the internal buffer used by doppler to store messages. If the buffer gets full doppler will drop the messages.</td>
-		<td>100</td>
-	</tr>
-	<tr>
-		<td>etcd.machines</td>
-		<td>IPs pointing to the ETCD cluster</td>
-		<td>No default value</td>
-	</tr>
-	<tr>
-		<td> metron_endpoint.host</td>
-		<td>The host used to emit messages to the Metron agent</td>
-		<td>127.0.0.1</td>
-	</tr>
-	<tr>
-		<td>metron_endpoint.dropsonde_port</td>
-		<td>The port used to emit dropsonde messages to the Metron agent</td>
-		<td>default: 3457</td>
-	</tr>
-	<tr>
-		<td>ssl.skip_cert_verify</td>
-		<td>when connecting over TLS, don't verify certificates</td>
-		<td>false</td>
-	</tr>
-	
-</table>
-
-
-<tr>
-		<td></td>
-		<td></td>
-		<td></td>
-	</tr>
+<%= partial 'manifest_properties/doppler' %>
 
 ### <a id='traffic-controller'></a>Traffic Controller ###
-
-### <a id='metron'></a>Metron Agent ###
+<%= partial 'manifest_properties/loggregator_trafficcontroller' %>
+ 
+### <a id='metron'></a> Metron Agent ###
+<%= partial 'manifest_properties/metron_agent' %>
 
 ### <a id='syslog-drain'></a>Syslog Drain Binder###
-this is for apps. 
-http://docs.pivotal.io/pivotalcf/devguide/services/log-management.html
+This is for apps. See [this thing](http://docs.pivotal.io/pivotalcf/devguide/services/log-management.html).
+<%= partial 'manifest_properties/syslog_drain_binder' %>
