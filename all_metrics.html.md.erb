@@ -7,6 +7,6 @@ title: Cloud Foundry Component Metrics
 
 <h2><a id='<%= component_name %>'></a> <%= component_name.split('_').map { |word| word.capitalize  }.join(' ') %> </h2>
 
-<%= partial "_#{component_name }" %>
+<%= partial "./metrics/#{component_name }" %>
 
 <% end %>
