@@ -1,26 +1,26 @@
 ---
-title: Installing the Loggregator Firehose Plugin for CF CLI
+title: Installing the Loggregator Firehose Plugin for cf CLI
 ---
 
-The Loggregator Firehose Plugin for the Cloud Foundry Command Line Interface (CF CLI) allows Cloud Foundry (CF) administrators easy access to the output of the [Loggregator Firehose](./architecture.html#firehose), which includes logs and metrics from all CF components.
+The Loggregator Firehose plugin for the Cloud Foundry Command Line Interface (cf CLI) allows Cloud Foundry (CF) administrators access to the output of the [Loggregator Firehose](./architecture.html#firehose), which includes logs and metrics from all CF components.
 
-See [Using CF CLI Plugins](../devguide/installcf/use-cli-plugins.html) for more general information on using plugins with the CF CLI.
+See [Using cf CLI Plugins](../devguide/installcf/use-cli-plugins.html) for more information about using plugins with the cl CLI.
 
-Prerequisites:
+## <a id='prerequisites'></a>Prerequisites
 
-- Cloud Foundry Command Line Interface (CF CLI) 6.12.2 or later
-- Admin access for the Cloud Foundry (CF) deployment you wish to monitor
+- Administrator access to the Cloud Foundry deployment that you wish to monitor
+- Cloud Foundry Command Line Interface (cf CLI) 6.12.2 or later
 
- [CF CLI on GitHub](https://github.com/cloudfoundry/cli).
+Refer to the [Installing the cf Command Line Interface](../devguide/installcf/install-go-cli.html) topic for information about downloading, installing, and uninstalling the cf CLI.
 
 ## <a id='add'></a>Install the Plugin
 
-1. Run `cf add-plugin-repo REPO_NAME URL` to add the Cloud Foundry Community plugin repository to your CF CLI plugins.
+1. Run `cf add-plugin-repo REPO_NAME URL` to add the Cloud Foundry Community plugin repository to your cf CLI plugins.
 <pre class='terminal'>
 $ cf add-plugin-repo CF-Community http://plugins.cloudfoundry.org
 </pre>
 
-1. Run `cf install-plugin PLUGIN-NAME -r PLUGIN-REPO` to install the Firehose plugin from the CF Community plugin repo.
+1. Run `cf install-plugin PLUGIN-NAME -r PLUGIN-REPO` to install the Firehose plugin from the CF Community plugin repository.
 <pre class='terminal'>
 $ cf install-plugin "Firehose Plugin" -r CF-Community
 </pre>
@@ -32,7 +32,7 @@ Run `cf nozzle --debug` to view the streaming output of the Firehose, which incl
 $ cf nozzle --debug
 </pre>
 
-<p class='note'><strong>Note</strong>: You must be logged in as an admin to access the Firehose.</p>
+<p class='note'><strong>Note</strong>: You must be logged in as a Cloud Foundry administrator to access the Firehose.</p>
 
 ## <a id='uninstall'></a>Uninstall the Plugin ##
 Run `cf plugins` to see a list of installed plugins.
@@ -44,6 +44,6 @@ Plugin Name      Version   Command Name   Command Help
 FirehosePlugin   0.6.0     nozzle         Command to print out messages from the firehose
 </pre>
 
-Run `cf uninstall-plugin PLUGIN-NAME` to uninstall the Plugin.
+Run `cf uninstall-plugin PLUGIN-NAME` to uninstall the plugin.
  <pre class='terminal'>$ cf uninstall-plugin FirehosePlugin</pre>
 
