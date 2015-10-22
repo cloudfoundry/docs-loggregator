@@ -4,16 +4,33 @@ title: Deploying a Nozzle to the Loggregator Firehose
 <% $this_topic = 'nozzle-tutorial' %>
 Prerequisites:
 
-- BOSH CLI installed locally.
+- [BOSH CLI](https://bosh.io/docs/bosh-cli.html) installed locally.
 - Spiff installed locally. [Spiff on GitHub](https://github.com/cloudfoundry-incubator/spiff).
-- A BOSH Lite deployed locally [BOSH lite on GitHub](https://github.com/cloudfoundry/bosh-lite). 
-- A working [Cloud Foundry](https://github.com/cloudfoundry/cf-release), including Loggregator, deployed with your local BOSH Lite. This will serve as our source of data. See [Deploying Cloud Foundry using BOSH Lite](http://docs.cloudfoundry.org/deploying/boshlite/deploy_cf_boshlite.html). 
+- A BOSH Lite deployed locally using VirtualBox. See [BOSH lite on GitHub](https://github.com/cloudfoundry/bosh-lite).
+- A working [Cloud Foundry](https://github.com/cloudfoundry/cf-release), including Loggregator, deployed with your local BOSH Lite. This will serve as our source of data. See [Deploying Cloud Foundry using BOSH Lite](http://docs.cloudfoundry.org/deploying/boshlite/deploy_cf_boshlite.html), or use the `provion_cf` script included in the [BOSH Lite release](https://github.com/cloudfoundry/bosh-lite#deploy-cloud-foundry).
+
+<p class='note'><strong>Note</strong>: Even using the automated <code>provision_cf</code> script, Deploying Cloud Foundry can take up to several hours, depending on your internet bandwith.</p>
 
 
 ## <a id='dl-release'></a>Step 1: Clone example release ##
 
-The Loggregator team has prepared an example nozzle application for use with this tutorial. Clone it from [GitHub](https://github.com/cloudfoundry-incubator/example-nozzle-release).
+The Loggregator team has prepared an example nozzle application for use with this tutorial.
 
+1. Run <code>git clone</code> Clone the main release repository from [GitHub](https://github.com/cloudfoundry-incubator/example-nozzle-release).
+<pre class='terminal'>
+$ git clone git@github.com:cloudfoundry-incubator/example-nozzle-release.git
+Cloning into 'example-nozzle-release'...
+</pre>
+
+1. Run <code>git submodule update --init --recursive</code> to update all the included submodules.
+<pre class='terminal'>
+$ git submodule update --init --recursive
+Submodule 'src/github.com/cloudfoundry-incubator/example-nozzle' (git@github.com:cloudfoundry-incubator/example-nozzle.git) registered for path 'src/github.com/cloudfoundry-incubator/example-nozzle'
+Submodule 'src/github.com/cloudfoundry-incubator/uaago' (git@github.com:cloudfoundry-incubator/uaago.git) registered for path 'src/github.com/cloudfoundry-incubator/uaago'
+...
+Cloning into 'src/github.com/cloudfoundry-incubator/example-nozzle'...
+...
+</pre>
 
 ## <a id='dl-bosh-manifest'></a>Step 2: Download the BOSH Manifest ##
 <%= partial 'download_bosh_manifest' %>
@@ -43,7 +60,7 @@ properties:
 
 There are two options for preparing the nozzle deployment manifest:
 
-- (Quicker option) Our engineers have included a script to prepare the manifest in a single step. To use this option simply run the following in the terminal: 
+- (Quicker option) Our engineers have included a script to prepare the manifest in a single step. To use this option simply run the following in the terminal:
 <pre class='terminal'>
 $ scripts/make\_manifest\_spiff\_bosh\_lite
 </pre>
