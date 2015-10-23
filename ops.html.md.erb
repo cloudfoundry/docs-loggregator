@@ -99,24 +99,24 @@ Replace `YOUR-TRANSPORT-PROTOCOL` with one of the following transport protocols:
 - `udp`
 - `relp`
 
-<% end %>
-
-## <a id='customizing'></a> Customizing Loggregator Components ##
+##   Customizing Loggregator Components ##
 
 Each Loggregator component can be customized in many ways by changing its properties in the CF deployment manifest. Some of the most useful are detailed below.
 
-### <a id='dea-agent'></a>DEA Logging Agent ###
+### DEA Logging Agent ###
 <%= partial 'manifest_properties/dea_logging_agent'%>
 
-### <a id='doppler'></a>Doppler ###
+### Doppler ###
 <%= partial 'manifest_properties/doppler' %>
 
-### <a id='traffic-controller'></a>Traffic Controller ###
+### Traffic Controller ###
 <%= partial 'manifest_properties/loggregator_trafficcontroller' %>
 
-### <a id='metron'></a> Metron Agent ###
+###  Metron Agent ###
 <%= partial 'manifest_properties/metron_agent' %>
 
-### <a id='syslog-drain'></a>Syslog Drain Binder###
+### Syslog Drain Binder###
 See [Using Log Management Services](../devguide/services/log-management.html).
 <%= partial 'manifest_properties/syslog_drain_binder' %>
+
+<% end %>
