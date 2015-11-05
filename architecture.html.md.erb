@@ -39,7 +39,7 @@ Handles client requests for logs. Gathers and collates messages from all Doppler
 
 ## <a id='firehose'></a>Firehose
 
-The Firehose is a websocket endpoint which streams all the event data coming from a<%= vars.product_full=='Cloud Foundry' ? "" : "n"  %>  <%= vars.product_full %> deployment, including logs, HTTP events and container metrics from all applications. It also includes metrics from all <%= vars.product_full %> system components and any errors in the system.
+The Firehose is a websocket endpoint which streams all the event data coming from a<%= vars.product_full=='Cloud Foundry' ? "" : "n"  %>  <%= vars.product_full %> deployment. The data stream includes logs, HTTP events and container metrics from all applications, and metrics from all <%= vars.product_full %> system components. (Logs from system components such as Cloud Controller are not included in the firehose and are typically accessed via rsyslog configuraiton)
 
 Because the data coming from the Firehose may contain sensitive information (for example, customer information in the application logs), the Firehose is only accessible by users who have the right permissions.
 
