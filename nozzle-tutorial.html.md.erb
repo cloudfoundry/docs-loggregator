@@ -31,23 +31,23 @@ You must authorize the example nozzle as a UAA client for your CF deployment. To
 1.  Under that `uaa` key, find the `clients` key at the next level of indentation.
 1.  Enter properties for  the `example-nozzle` at the next level of indentation, exactly as below. The `...` in the figure below indicate that other properties may populate the manifest at each level in the hierarchy.
 
-```
-properties:
-  ...
-  uaa:
-  ...
-    clients:
-    ...
-      example-nozzle:
-        access-token-validity: 1209600
-        authorized-grant-types: authorization_code,client_credentials,refresh_token
-        override: true
-        secret: example-nozzle
-        scope: openid,oauth.approvals,doppler.firehose
-        authorities: oauth.login,doppler.firehose
-```
+    ```
+    properties:
+      ...
+      uaa:
+      ...
+        clients:
+        ...
+          example-nozzle:
+            access-token-validity: 1209600
+            authorized-grant-types: authorization_code,client_credentials,refresh_token
+            override: true
+            secret: example-nozzle
+            scope: openid,oauth.approvals,doppler.firehose
+            authorities: oauth.login,doppler.firehose
+    ```
 
-5\. Save the manifest file `cf.yml`.
+1. Save the manifest file `cf.yml`.
 
 ## <a id='redeploy'></a>Step 3: Redeploy Cloud Foundry ##
 
@@ -58,54 +58,54 @@ Deployment set to `/Users/example_user/workspace/bosh-lite/cf.yml'
 </pre>
 
 1. Deploy your Cloud Foundry with BOSH.
-<pre class='terminal'>
-$ bosh deploy
-Acting as user 'admin' on deployment 'cf-warden' on 'Bosh Lite Director'
-Getting deployment properties from director...<br>
-Detecting deployment changes
-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-Releases
-No changes
-<br>
-Compilation
-No changes
-<br>
-Update
-No changes
-<br>
-Resource pools
-No changes
-<br>
-Disk pools
-No changes
-<br>
-Networks
-No changes
-<br>
-Jobs
-No changes
-<br>
-Properties
-uaa
-clients
-example-nozzle
-\+ access-token-validity: 1209600
-\+ authorized-grant-types: authorization_code,client_credentials,refresh_token
-\+ override: true
-\+ secret: example-nozzle
-\+ scope: openid,oauth.approvals,doppler.firehose
-\+ authorities: oauth.login,doppler.firehose
-<br>
-Meta
-No changes
-<br>
-Please review all changes carefully
-<br>
-Deploying
-\-\-\-\-\-\-\-\-\-
-Are you sure you want to deploy? (type 'yes' to continue):
-</pre>
 
+    <pre class='terminal'>
+    $ bosh deploy
+    Acting as user 'admin' on deployment 'cf-warden' on 'Bosh Lite Director'
+    Getting deployment properties from director...<br>
+    Detecting deployment changes
+    \----------------------------
+    Releases
+    No changes
+    
+    Compilation
+    No changes
+    
+    Update
+    No changes
+    
+    Resource pools
+    No changes
+    
+    Disk pools
+    No changes
+    
+    Networks
+    No changes
+    
+    Jobs
+    No changes
+    
+    Properties
+    uaa
+    clients
+    example-nozzle
+        + access-token-validity: 1209600
+        + authorized-grant-types: authorization_code,client_credentials,refresh_token
+        + override: true
+        + secret: example-nozzle
+        + scope: openid,oauth.approvals,doppler.firehose
+        + authorities: oauth.login,doppler.firehose
+    
+    Meta
+    No changes
+    
+    Please review all changes carefully
+    
+    Deploying
+    ---------
+    Are you sure you want to deploy? (type 'yes' to continue):
+    </pre>
 
 ## <a id='dl-release'></a>Step 4: Clone example release ##
 
@@ -132,7 +132,7 @@ Cloning into 'src/github.com/cloudfoundry-incubator/example-nozzle'...
 $ cd example-nozzle-release
 </pre>
 
-## <a id='step-id'></a>Step 5: Prepare the Nozzle manifest ##
+## <a id='step-id'></a>Step 5: Prepare the nozzle manifest ##
 
 There are two options for preparing the nozzle deployment manifest:
 
@@ -249,53 +249,49 @@ Congratulations! You have successfully deployed a Loggregator firehose nozzle.
 
 The example nozzle simply dumps all of the data coming from the firehose to its log files. To view this data, SSH into the example-nozzle VM and examine the logs.
 
+1. Run `bosh ssh` to access the nozzle VM at the IP configured in the nozzle's manifest template stub `./templates/bosh-lite-stub.yml`.
+
+    <pre class='terminal'>
+    bosh ssh example-nozzle --strict_host_key_checking no
+    Welcome to Ubuntu 14.04.1 LTS (GNU/Linux 3.19.0-25-generic x86_64)
+    Documentation:  https://help.ubuntu.com/
+    Last login: Wed Sep 23 21:29:50 2015 from 192.168.50.1
+    </pre>
 
 
-1. `ssh` into the nozzle vm at the IP configured in the nozzle's manifest template stub `./templates/bosh-lite-stub.yml`.
-<pre class='terminal'>
-bosh ssh example-nozzle --strict_host_key_checking no
-<br>
-Welcome to Ubuntu 14.04.1 LTS (GNU/Linux 3.19.0-25-generic x86_64)
-<br>
- * Documentation:  https://help.ubuntu.com/
-Last login: Wed Sep 23 21:29:50 2015 from 192.168.50.1
-</pre>
+1. Use the `cat` command to output the `stdout` log file.
 
+    <pre class='terminal'>
+    $ cat /var/vcap/sys/log/example-nozzle/example-nozzle.stdout.log
 
-1. `cat` out the `stdout` log file.
-<pre class='terminal'>
-$ cat /var/vcap/sys/log/example-nozzle/example-nozzle.stdout.log
-<br>
-===== Streaming Firehose (will only succeed if you have admin credentials)
-origin:"DopplerServer" eventType:ValueMetric timestamp:1443046217700750747 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"messageRouter.numberOfFirehoseSinks" value:1 unit:"sinks" >
-origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910193187 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"dropsondeAgentListener.receivedByteCount" delta:771 total:386368 >
-origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910360012 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"dropsondeMarshaller.counterEventMarshalled" delta:8 total:2619 >
-origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910252169 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"dropsondeUnmarshaller.valueMetricReceived" delta:9 total:4525 >
-origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910294255 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"MessageAggregator.uncategorizedEvents" delta:9 total:4525 >
-origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910318582 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"dropsondeMarshaller.valueMetricMarshalled" delta:9 total:4525 >
-origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910339088 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"MessageAggregator.counterEventReceived" delta:8 total:2619 >
-origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910379199 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"DopplerForwarder.sentMessages" delta:17 total:7082 >
-origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910394886 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"dropsondeAgentListener.receivedMessageCount" delta:9 total:4525 >
-origin:"router__0" eventType:HttpStartStop timestamp:1443046219105062148 deployment:"cf-warden" job:"router_z1" index:"0" ip:"10.244.0.22" httpStartStop:<startTimestamp:1443046219096144435 stopTimestamp:1443046219105062148 requestId:<low:7224371029360401779 high:6477133057804225906 > peerType:Client method:POST uri:"uaa.service.cf.internal:8080/oauth/token" remoteAddress:"" userAgent:"" statusCode:200 contentLength:-1 >
-origin:"api_z1_0" eventType:HttpStartStop timestamp:1443046219109842455 deployment:"cf-warden" job:"api_z1" index:"0" ip:"10.244.0.134" httpStartStop:<startTimestamp:1443046219106687524 stopTimestamp:1443046219109842455 requestId:<low:7948515536237261025 high:3934284340053050957 > peerType:Server method:GET uri:"routing-api.service.cf.internal:3000/v1/routes" remoteAddress:"10.0.2.15:49577" userAgent:"Go 1.1 package http" statusCode:200 contentLength:108 >
-origin:"router__0" eventType:HttpStartStop timestamp:1443046219110064368 deployment:"cf-warden" job:"router_z1" index:"0" ip:"10.244.0.22" httpStartStop:<startTimestamp:1443046219106025264 stopTimestamp:1443046219110064368 requestId:<low:7948515536237261025 high:3934284340053050957 > peerType:Client method:GET uri:"routing-api.service.cf.internal:3000/v1/routes" remoteAddress:"" userAgent:"" statusCode:200 contentLength:108 >
-origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177165446 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"logSenderTotalMessagesRead" value:0 unit:"count" >
+    ===== Streaming Firehose (will only succeed if you have admin credentials)
+    origin:"DopplerServer" eventType:ValueMetric timestamp:1443046217700750747 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"messageRouter.numberOfFirehoseSinks" value:1 unit:"sinks" >
+    origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910193187 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"dropsondeAgentListener.receivedByteCount" delta:771 total:386368 >
+    origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910360012 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"dropsondeMarshaller.counterEventMarshalled" delta:8 total:2619 >
+    origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910252169 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"dropsondeUnmarshaller.valueMetricReceived" delta:9 total:4525 >
+    origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910294255 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"MessageAggregator.uncategorizedEvents" delta:9 total:4525 >
+    origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910318582 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"dropsondeMarshaller.valueMetricMarshalled" delta:9 total:4525 >
+    origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910339088 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"MessageAggregator.counterEventReceived" delta:8 total:2619 >
+    origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910379199 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"DopplerForwarder.sentMessages" delta:17 total:7082 >
+    origin:"MetronAgent" eventType:CounterEvent timestamp:1443046218910394886 deployment:"cf-warden" job:"loggregator_trafficcontroller_z1" index:"0" ip:"10.244.0.146" counterEvent:<name:"dropsondeAgentListener.receivedMessageCount" delta:9 total:4525 >
+    origin:"router__0" eventType:HttpStartStop timestamp:1443046219105062148 deployment:"cf-warden" job:"router_z1" index:"0" ip:"10.244.0.22" httpStartStop:<startTimestamp:1443046219096144435 stopTimestamp:1443046219105062148 requestId:<low:7224371029360401779 high:6477133057804225906 > peerType:Client method:POST uri:"uaa.service.cf.internal:8080/oauth/token" remoteAddress:"" userAgent:"" statusCode:200 contentLength:-1 >
+    origin:"api_z1_0" eventType:HttpStartStop timestamp:1443046219109842455 deployment:"cf-warden" job:"api_z1" index:"0" ip:"10.244.0.134" httpStartStop:<startTimestamp:1443046219106687524 stopTimestamp:1443046219109842455 requestId:<low:7948515536237261025 high:3934284340053050957 > peerType:Server method:GET uri:"routing-api.service.cf.internal:3000/v1/routes" remoteAddress:"10.0.2.15:49577" userAgent:"Go 1.1 package http" statusCode:200 contentLength:108 >
+    origin:"router__0" eventType:HttpStartStop timestamp:1443046219110064368 deployment:"cf-warden" job:"router_z1" index:"0" ip:"10.244.0.22" httpStartStop:<startTimestamp:1443046219106025264 stopTimestamp:1443046219110064368 requestId:<low:7948515536237261025 high:3934284340053050957 > peerType:Client method:GET uri:"routing-api.service.cf.internal:3000/v1/routes" remoteAddress:"" userAgent:"" statusCode:200 contentLength:108 >
+    origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177165446 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"logSenderTotalMessagesRead" value:0 unit:"count" >
 origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177288325 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"numGoRoutines" value:22 unit:"count" >
-origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177346726 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"memoryStats.numBytesAllocated" value:347992 unit:"count" >
-origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177274975 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"numCPUS" value:4 unit:"count" >
-origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177310389 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"memoryStats.numBytesAllocatedHeap" value:347992 unit:"count" >
-origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177330214 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"memoryStats.numBytesAllocatedStack" value:393216 unit:"count" >
-origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177353454 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"memoryStats.numMallocs" value:312614 unit:"count" >
-origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177360052 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"memoryStats.numFrees" value:309258 unit:"count" >
-origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177481456 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"memoryStats.lastGCPauseTimeNS" value:318837 unit:"count" >
-origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219880585603 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"dropsondeListener.receivedMessageCount" delta:59 total:61634 >
-origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219880895040 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"dropsondeListener.receivedByteCount" delta:9462 total:9111082 >
-origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219881017888 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"dropsondeUnmarshaller.httpStartStopReceived" delta:7 total:2191 >
-origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219881011670 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"dropsondeUnmarshaller.valueMetricReceived" delta:28 total:35309 >
-origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219880929574 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"dropsondeUnmarshaller.counterEventReceived" delta:24 total:24134 >
-origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219881004417 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"httpServer.receivedMessages" delta:59 total:61634 >
-origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219880929568 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"signatureVerifier.validSignatures" delta:59 total:61634 >
-origin:"MetronAgent" eventType:CounterEvent timestamp:1443046220058280679 deployment:"cf-warden" job:"api_z1" index:"0" ip:"10.244.0.134" counterEvent:<name:"MessageAggregator.uncategorizedEvents" delta:44 total:12891 >
-
-
-</pre>
+    origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177346726 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"memoryStats.numBytesAllocated" value:347992 unit:"count" >
+    origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177274975 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"numCPUS" value:4 unit:"count" >
+    origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177310389 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"memoryStats.numBytesAllocatedHeap" value:347992 unit:"count" >
+    origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177330214 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"memoryStats.numBytesAllocatedStack" value:393216 unit:"count" >
+    origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177353454 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"memoryStats.numMallocs" value:312614 unit:"count" >
+    origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177360052 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"memoryStats.numFrees" value:309258 unit:"count" >
+    origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177481456 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" valueMetric:<name:"memoryStats.lastGCPauseTimeNS" value:318837 unit:"count" >
+    origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219880585603 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"dropsondeListener.receivedMessageCount" delta:59 total:61634 >
+    origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219880895040 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"dropsondeListener.receivedByteCount" delta:9462 total:9111082 >
+    origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219881017888 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"dropsondeUnmarshaller.httpStartStopReceived" delta:7 total:2191 >
+    origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219881011670 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"dropsondeUnmarshaller.valueMetricReceived" delta:28 total:35309 >
+    origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219880929574 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"dropsondeUnmarshaller.counterEventReceived" delta:24 total:24134 >
+    origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219881004417 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"httpServer.receivedMessages" delta:59 total:61634 >
+    origin:"DopplerServer" eventType:CounterEvent timestamp:1443046219880929568 deployment:"cf-warden" job:"doppler_z1" index:"0" ip:"10.244.0.142" counterEvent:<name:"signatureVerifier.validSignatures" delta:59 total:61634 >
+    origin:"MetronAgent" eventType:CounterEvent timestamp:1443046220058280679 deployment:"cf-warden" job:"api_z1" index:"0" ip:"10.244.0.134" counterEvent:<name:"MessageAggregator.uncategorizedEvents" delta:44 total:12891 >
+    </pre>
