@@ -2,6 +2,8 @@
 title: Overview of the Loggregator System
 ---
 
+<strong><%= modified_date %></strong>
+
 Loggregator is the next generation system for aggregating and streaming logs and metrics from all of the user apps and system components in a<%= vars.product_full=='Cloud Foundry' ? "" : "n"  %> <%= vars.product_full %> deployment.
 
 [Loggregator on GitHub](https://github.com/cloudfoundry/loggregator)
@@ -21,7 +23,7 @@ The main use cases are as follows:
 <%= image_tag 'architecture/loggregator.png' %>
 Overview of Loggregator components
 
-## <a id='sources'></a>Source 
+## <a id='sources'></a>Source
 
 Sources are logging agents that run on the Cloud Foundry components.
 

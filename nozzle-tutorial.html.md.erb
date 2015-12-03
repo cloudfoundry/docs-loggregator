@@ -1,6 +1,9 @@
 ---
 title: Deploying a Nozzle to the Loggregator Firehose
 ---
+
+<strong><%= modified_date %></strong>
+
 <% $this_topic = 'nozzle-tutorial' %>
 
 This topic will walk through the procedure for deploying a ['nozzle'](./architecture.html#nozzles) application to the Cloud Foundry [Loggregator Firehose](./architecture.html#firehose). The Loggregator team has prepared an example nozzle application for use with this tutorial.
@@ -67,25 +70,25 @@ Deployment set to `/Users/example_user/workspace/bosh-lite/cf.yml'
     \----------------------------
     Releases
     No changes
-    
+
     Compilation
     No changes
-    
+
     Update
     No changes
-    
+
     Resource pools
     No changes
-    
+
     Disk pools
     No changes
-    
+
     Networks
     No changes
-    
+
     Jobs
     No changes
-    
+
     Properties
     uaa
     clients
@@ -96,12 +99,12 @@ Deployment set to `/Users/example_user/workspace/bosh-lite/cf.yml'
         + secret: example-nozzle
         + scope: openid,oauth.approvals,doppler.firehose
         + authorities: oauth.login,doppler.firehose
-    
+
     Meta
     No changes
-    
+
     Please review all changes carefully
-    
+
     Deploying
     ---------
     Are you sure you want to deploy? (type 'yes' to continue):
