@@ -1,0 +1,8 @@
+
+### Increase buffer size
+
+The doppler internal buffer size can be increased by changing the `doppler.message\_drain\_buffer\_size property` from its default value of 100 in your CloudFoundry BOSH deployment manifest.
+
+### Add additional Doppler instances
+
+The number of doppler servers can be increased by modifying the `instances` property for the `doppler\_z1` and `doppler\_z2` jobs in your CloudFoundry BOSH deployment manifest.
