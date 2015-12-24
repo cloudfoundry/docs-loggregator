@@ -14,9 +14,9 @@ This topic contains information about the [Loggregator System](./architecture.ht
 
 ## <a id='scaling-nozzles'></a> Scaling Nozzles
 
-Scale [nozzles](./architecture.html#nozzles) by using the subscription ID, which is specified when the nozzle connects to the Firehose. If you use the same subscription ID on each nozzle instance, the Firehose evenly distributes events across all instances of the nozzle. For example, if you have two nozzles with the same subscription ID, the Firehose sends half of the events to one nozzle and half to the other. Similarly, if you have three nozzles with the same subscription ID, the Firehose sends each instance one-third of the event traffic.
+You can scale [nozzles](./architecture.html#nozzles) using the subscription ID, specified when the nozzle connects to the Firehose. If you use the same subscription ID on each nozzle instance, the Firehose evenly distributes events across all instances of the nozzle. For example, if you have two nozzles with the same subscription ID, the Firehose sends half of the events to one nozzle and half to the other. Similarly, if you have three nozzles with the same subscription ID, the Firehose sends each instance one-third of the event traffic.
 
-Stateless nozzles should handle scaling gracefully. If the nozzle buffers or caches the data, the nozzle author must test the results of scaling the number of nozzle instances up or down.
+Stateless nozzles should handle scaling gracefully. If a nozzle buffers or caches the data, the nozzle author must test the results of scaling the number of nozzle instances up or down.
 
 ## <a id='slow-noz'></a> Slow Nozzle Alerts ##
 
@@ -29,7 +29,7 @@ If a nozzle falls behind, Loggregator alerts the nozzle in two ways:
 
 An operator can scale the number of nozzles in response to these alerts to minimize the loss of data.
 
-## <a id='syslog-forward'></a> Managing Syslog Forwarding from <%= vars.product_full %> Components
+## <a id='syslog-forward'></a> Managing Syslog Forwarding 
 
 Syslog data can be forwarded directly from <%= vars.product_full %> components to an external aggregator.
 
