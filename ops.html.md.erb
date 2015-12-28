@@ -8,7 +8,7 @@ This topic contains information about the [Loggregator System](./architecture.ht
 
 ## <a id='scaling'></a> Scaling Loggregator ##
 
-[Doppler](./architecture.html#doppler) components take in log and metric data from <%= vars.product_full %> system components. Dopplers store this data in a buffer before periodically forwarding it to the [Traffic Controller](./architecture.html#traffic-controller), which serves up the aggregated data stream through the Firehose WebSocket endpoint. When input from [Metron](./architecture.html#metron) agents exceeds a Doppler's buffer size for a given interval, log and metric data can be lost. You can take several actions to minimize this loss.
+[Doppler](./architecture.html#doppler) components accept log and metric data from <%= vars.product_full %> system components. Dopplers store this data in a buffer before periodically forwarding it to the [Traffic Controller](./architecture.html#traffic-controller), which serves up the aggregated data stream through the Firehose WebSocket endpoint. When input from [Metron](./architecture.html#metron) agents exceeds a Doppler's buffer size for a given interval, log and metric data can be lost. You can take several actions to minimize this loss.
 
 <%= partial vars.logg_scaling %>
 
