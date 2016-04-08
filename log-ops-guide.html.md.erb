@@ -1,5 +1,6 @@
 ---
 title: Loggregator Guide for Cloud Foundry Operators
+owner: Logging and Metrics
 ---
 
 <strong><%= modified_date %></strong>
@@ -18,7 +19,7 @@ Stateless nozzles should handle scaling gracefully. If a nozzle buffers or cache
 
 ## <a id='slow-noz'></a> Slow Nozzle Alerts ##
 
-The [Traffic Controller](./architecture.html#traffic-controller) alerts nozzles if they consume events too slowly. 
+The [Traffic Controller](./architecture.html#traffic-controller) alerts nozzles if they consume events too slowly.
 If a nozzle falls behind, Loggregator alerts the nozzle in two ways:
 
 - **TruncatingBuffer** alerts: If the nozzle consumes messages more slowly than they are produced, the Loggregator system may drop messages. In this case, Loggregator sends the log message, `TB: Output channel too full. Dropped (n) messages`, where "n" is the number of dropped messages. Loggregator also emits a **CounterEvent** with the name `TruncatingBuffer.DroppedMessages`. The nozzle receives both messages from the Firehose, alerting the operator to the performance issue.

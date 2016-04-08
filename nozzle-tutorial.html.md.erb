@@ -1,17 +1,18 @@
 ---
 title: Deploying a Nozzle to the Loggregator Firehose
+owner: Logging and Metrics
 ---
 
 <strong><%= modified_date %></strong>
 
 <% $this_topic = 'nozzle-tutorial' %>
 
-This topic describes deploying a 
+This topic describes deploying a
 ["nozzle"](./architecture.html#nozzles) application to the Cloud Foundry (CF)
-[Loggregator Firehose](./architecture.html#firehose). 
+[Loggregator Firehose](./architecture.html#firehose).
 The Cloud Foundry Loggregator created an example nozzle application for use with this tutorial.
 
-The procedure described below deploys this example nozzle to the Firehose of a Cloud Foundry installation deployed locally with BOSH Lite. 
+The procedure described below deploys this example nozzle to the Firehose of a Cloud Foundry installation deployed locally with BOSH Lite.
 
 ## Prerequisites
 
@@ -105,7 +106,7 @@ You must authorize the example nozzle as a UAA client for your CF deployment. To
 
 ## <a id='dl-release'></a>Step 4: Clone Example Release ##
 
-The Cloud Foundry Loggregator team created an example nozzle application for 
+The Cloud Foundry Loggregator team created an example nozzle application for
 use with this tutorial.
 
 1. Run <code>git clone</code> to clone the main release repository from [GitHub](https://github.com/cloudfoundry-incubator/example-nozzle-release).
@@ -137,10 +138,10 @@ Complete the following steps to prepare the nozzle deployment manifest:
 <pre class='terminal'>
   $ cd templates
 </pre>
-  Within this directory, examine the two YAML files. 
-  `bosh-lite-stub.yml` contains the values used to populate the missing 
-  information in `template.yml`. 
-  By combining these two file, we create a deployment manifest for our nozzle. 
+  Within this directory, examine the two YAML files.
+  `bosh-lite-stub.yml` contains the values used to populate the missing
+  information in `template.yml`.
+  By combining these two file, we create a deployment manifest for our nozzle.
 
 1. Create a `tmp` directory for the compiled manifest.
 
@@ -149,7 +150,7 @@ Complete the following steps to prepare the nozzle deployment manifest:
   $ spiff merge templates/template.yml templates/bosh-lite-stub.yml > tmp/manifest\_bosh\_lite.yml
 </pre>
 
-1. Run ` bosh status --uuid` to obtain your BOSH director UUID. 
+1. Run ` bosh status --uuid` to obtain your BOSH director UUID.
 <pre class='terminal'>
   $ bosh status --uuid
 </pre>
@@ -163,7 +164,7 @@ Complete the following steps to prepare the nozzle deployment manifest:
   network: example-nozzle-net
   reuse_compilation_vms: true
   workers: 1
-director_uuid: PLACEHOLDER-DIRECTOR-UUID  # replace this 
+director_uuid: PLACEHOLDER-DIRECTOR-UUID  # replace this
     ```
 
 <p class='note'><strong>Note</strong>: If you do not want to see the complete deployment procedure, run the following command to automatically prepare the manifest: <code>scripts/make_manifest_spiff_bosh_lite</code>
@@ -188,7 +189,7 @@ Use the `bosh create release --name RELEASE-NAME` command to create a BOSH relea
 
 ## <a id='upload'></a>Step 8: Upload Nozzle BOSH Release ##
 
-Run `bosh upload release` to upload the release that you created in [Step 7: Create Nozzle BOSH Release](#create). 
+Run `bosh upload release` to upload the release that you created in [Step 7: Create Nozzle BOSH Release](#create).
 <pre class='terminal'>
   $ bosh upload release
   Acting as user 'admin' on 'Bosh Lite Director'<br>
