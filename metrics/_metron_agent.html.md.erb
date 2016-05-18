@@ -7,6 +7,8 @@ Metric Name                                   | Description
  MessageAggregator.httpUnmatchedStartReceived  | Lifetime number of HTTPStart events for which no HTTPStop was received
  MessageAggregator.httpUnmatchedStopReceived   | Lifetime number of HTTPStop events for which no HTTPStart was received
  MessageAggregator.uncategorizedEvents         | Lifetime number of non-(CounterEvent  HTTPStart HTTPStop) events processed by aggregator
+ MessageBuffer.droppedMessageCount	       | Lifetime number of intentionally dropped messages from Metron's batch writer buffer. Batch writing is performed over TCP/TLS only.
+ DopplerForwarder.sentMessages		       | Lifetime number of messages sent to Doppler regardless of protocol
  dropsondeAgentListener.currentBufferCount     | Instantaneous number of Dropsonde messages read by UDP socket  but not yet unmarshalled
  dropsondeAgentListener.receivedByteCount      | Lifetime number of bytes of Dropsonde messages read by UDP socket
  dropsondeAgentListener.receivedMessageCount   | Lifetime number of Dropsonde messages read by UDP socket
@@ -19,6 +21,7 @@ Metric Name                                   | Description
  dropsondeMarshaller.httpStopMarshalled        | Lifetime number of HttpStop messages marshalled
  dropsondeMarshaller.logMessageMarshalled      | Lifetime number of LogMessage messages marshalled
  dropsondeMarshaller.marshalErrors             | Lifetime number of errors when marshalling messages
+ dropsondeMarshaller.nilByteWriterWrites       | Lifetime number of errors when trying to send messages from Metron without setting the marshaller's ByteWriter
  dropsondeMarshaller.valueMetricMarshalled     | Lifetime number of ValueMetric messages marshalled
  dropsondeUnmarshaller.containerMetricReceived | Lifetime number of ContainerMetric messages unmarshalled
  dropsondeUnmarshaller.counterEventReceived    | Lifetime number of CounterEvent messages unmarshalled
@@ -41,5 +44,15 @@ Metric Name                                   | Description
  memoryStats.numMallocs                        | Lifetime number of memory allocations
  numCpus                                       | Number of CPUs on the machine
  numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
+ tcp.sendErrorCount			       | Lifetime number of errors if writing to Doppler over TCP fails
+ tcp.sentByteCount			       | Lifetime number of sent bytes to Doppler over TCP
+ tcp.sentMessageCount			       | Lifetime number of sent messages to Doppler over TCP
+ tls.sendErrorCount			       | Lifetime number of errors if writing to Doppler over TLS fails
+ tls.sentByteCount			       | Lifetime number of sent bytes to Doppler over TLS
+ tls.sentMessageCount			       | Lifetime number of sent messages to Doppler over TLS
+ udp.sendErrorCount			       | Lifetime number of errors if writing to Doppler over UDP fails
+ udp.sentByteCount			       | Lifetime number of sent bytes to Doppler over UDP
+ udp.sentMessageCount			       | Lifetime number of sent messages to Doppler over UDP
+
 
 [Top](#metrics-by-component)
