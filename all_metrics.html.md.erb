@@ -5,12 +5,24 @@ owner: Logging and Metrics
 
 <strong><%= modified_date %></strong>
 
-## <a id='metrics-by-component'>Metrics by Component</a>
+## <a id='metrics-by-component'></a>Metrics by Component
 
-<% %w(cloud_controller dea_logging_agent diego doppler etcd hm9000 metron_agent syslog_drain_binder traffic_controller ).each_with_index do |component_name, i| %>
 
-<h2><a id='<%= component_name %>'></a> <%= component_name.split('_').map { |word| word.capitalize  }.join(' ') %> </h2>
+<%= partial './metrics/cloud_controller' %>
 
-<%= partial "./metrics/#{component_name }" %>
+<%= partial './metrics/dea_logging_agent' %>
 
-<% end %>
+<%= partial './metrics/diego' %>
+
+<%= partial './metrics/doppler' %>
+
+<%= partial './metrics/etcd' %>
+
+<%= partial './metrics/hm9000' %>
+
+<%= partial './metrics/metron_agent' %>
+
+<%= partial './metrics/syslog_drain_binder' %>
+
+<%= partial './metrics/traffic_controller' %>
+
