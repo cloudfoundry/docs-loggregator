@@ -1,48 +1,48 @@
 Metric Name                                                              | Description
 --------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------
- DopplerServer.dropsondeListener.currentBufferCount                       | DEPRECATED
- DopplerServer.dropsondeListener.receivedByteCount                        | DEPRECATED in favor of DopplerServer.udpListener.receivedByteCount
- DopplerServer.dropsondeListener.receivedMessageCount                     | DEPRECATED in favor of DopplerServer.udpListener.receivedMessageCount
- DopplerServer.dropsondeUnmarshaller.containerMetricReceived              | Lifetime number of ContainerMetric messages unmarshalled
- DopplerServer.dropsondeUnmarshaller.counterEventReceived                 | Lifetime number of CounterEvent messages unmarshalled
- DopplerServer.dropsondeUnmarshaller.errorReceived                        | Lifetime number of Error messages unmarshalled
- DopplerServer.dropsondeUnmarshaller.heartbeatReceived                    | DEPRECATED
- DopplerServer.dropsondeUnmarshaller.httpStartReceived                    | Lifetime number of HttpStart messages unmarshalled
- DopplerServer.dropsondeUnmarshaller.httpStartStopReceived                | Lifetime number of HttpStartStop messages unmarshalled
- DopplerServer.dropsondeUnmarshaller.httpStopReceived                     | Lifetime number of HttpStop messages unmarshalled
- DopplerServer.dropsondeUnmarshaller.logMessageTotal                      | Lifetime number of LogMessage messages unmarshalled
- DopplerServer.dropsondeUnmarshaller.unmarshalErrors                      | Lifetime number of errors when unmarshalling messages
- DopplerServer.dropsondeUnmarshaller.valueMetricReceived                  | Lifetime number of ValueMetric messages unmarshalled
- DopplerServer.httpServer.receivedMessages                                | Number of messages received by Doppler's internal MessageRouter
- DopplerServer.memoryStats.lastGCPauseTimeNS                              | Duration of the last Garbage Collector pause in nanoseconds
- DopplerServer.memoryStats.numBytesAllocated                              | Instantaneous count of bytes allocated and still in use
- DopplerServer.memoryStats.numBytesAllocatedHeap                          | Instantaneous count of bytes allocated on the main heap and still in use
- DopplerServer.memoryStats.numBytesAllocatedStack                         | Instantaneous count of bytes used by the stack allocator
- DopplerServer.memoryStats.numFrees                                       | Lifetime number of memory deallocations
- DopplerServer.memoryStats.numMallocs                                     | Lifetime number of memory allocations
- DopplerServer.messageRouter.numberOfContainerMetricSinks                 | Instantaneous number of container metric sinks known to the SinkManager
- DopplerServer.messageRouter.numberOfDumpSinks                            | Instantaneous number of dump sinks known to the SinkManager
- DopplerServer.messageRouter.numberOfFirehoseSinks                        | Instantaneous number of firehose sinks known to the SinkManager
- DopplerServer.messageRouter.numberOfSyslogSinks                          | Instantaneous number of syslog sinks known to the SinkManager
- DopplerServer.messageRouter.numberOfWebsocketSinks                       | Instantaneous number of websocket sinks known to the SinkManager
- DopplerServer.messageRouter.totalDroppedMessages                         | Lifetime number of messages dropped inside Doppler for various reasons (downstream consumer can't keep up internal object wasn't ready for message, etc.)
- DopplerServer.sentMessagesFirehose.<SUBSCRIPTION_ID>                     | Number of sent messages through the firehose per subscription id
- DopplerServer.udpListener.receivedByteCount				  | Lifetime number of bytes received by Doppler's UDP Listener
- DopplerServer.udpListener.receivedMessageCount				  | Lifetime number of messages received by Doppler's UDP Listener
- DopplerServer.udpListener.receivedErrorCount				  | Lifetime number of errors encountered by Doppler's UDP Listener while reading from the connection
- DopplerServer.tcpListener.receivedByteCount				  | Lifetime number of bytes received by Doppler's TCP Listener
- DopplerServer.tcpListener.receivedMessageCount				  | Lifetime number of messages received by Doppler's TCP Listener
- DopplerServer.tcpListener.receivedErrorCount				  | Lifetime number of errors encountered by Doppler's TCP Listener while handshaking, decoding or reading from the connection
- DopplerServer.tlsListener.receivedByteCount				  | Lifetime number of bytes received by Doppler's TLS Listener
- DopplerServer.tlsListener.receivedMessageCount				  | Lifetime number of messages received by Doppler's TLS Listener
- DopplerServer.tlsListener.receivedErrorCount				  | Lifetime number of errors encountered by Doppler's TLS Listener while handshaking, decoding or reading from the connection
- DopplerServer.TruncatingBuffer.DroppedMessages				  | Number of messages intentionally dropped by Doppler from the sink for the specific sink. This counter event will correspond with log messages "Log message output is too high"
- DopplerServer.TruncatingBuffer.totalDroppedMessages			  | Lifetime total number of messages intentionally dropped by Doppler from all of its sinks due to back pressure
- DopplerServer.listeners.totalReceivedMessageCount			  | Total number of messages received across all of Doppler's listeners (UDP, TCP, TLS)
- DopplerServer.numCpus                                                    | Number of CPUs on the machine
- DopplerServer.numGoRoutines                                              | Instantaneous number of active Goroutines in the Doppler process
- DopplerServer.signatureVerifier.invalidSignatureErrors                   | Lifetime number of messages received with an invalid signature
- DopplerServer.signatureVerifier.missingSignatureErrors                   | Lifetime number of messages received that are too small to contain a signature
- DopplerServer.signatureVerifier.validSignatures                          | Lifetime number of messages received with valid signatures
+ dropsondeListener.currentBufferCount                       | DEPRECATED
+ dropsondeListener.receivedByteCount                        | DEPRECATED in favor of DopplerServer.udpListener.receivedByteCount
+ dropsondeListener.receivedMessageCount                     | DEPRECATED in favor of DopplerServer.udpListener.receivedMessageCount
+ dropsondeUnmarshaller.containerMetricReceived              | Lifetime number of ContainerMetric messages unmarshalled
+ dropsondeUnmarshaller.counterEventReceived                 | Lifetime number of CounterEvent messages unmarshalled
+ dropsondeUnmarshaller.errorReceived                        | Lifetime number of Error messages unmarshalled
+ dropsondeUnmarshaller.heartbeatReceived                    | DEPRECATED
+ dropsondeUnmarshaller.httpStartReceived                    | Lifetime number of HttpStart messages unmarshalled
+ dropsondeUnmarshaller.httpStartStopReceived                | Lifetime number of HttpStartStop messages unmarshalled
+ dropsondeUnmarshaller.httpStopReceived                     | Lifetime number of HttpStop messages unmarshalled
+ dropsondeUnmarshaller.logMessageTotal                      | Lifetime number of LogMessage messages unmarshalled
+ dropsondeUnmarshaller.unmarshalErrors                      | Lifetime number of errors when unmarshalling messages
+ dropsondeUnmarshaller.valueMetricReceived                  | Lifetime number of ValueMetric messages unmarshalled
+ httpServer.receivedMessages                                | Number of messages received by Doppler's internal MessageRouter
+ memoryStats.lastGCPauseTimeNS                              | Duration of the last Garbage Collector pause in nanoseconds
+ memoryStats.numBytesAllocated                              | Instantaneous count of bytes allocated and still in use
+ memoryStats.numBytesAllocatedHeap                          | Instantaneous count of bytes allocated on the main heap and still in use
+ memoryStats.numBytesAllocatedStack                         | Instantaneous count of bytes used by the stack allocator
+ memoryStats.numFrees                                       | Lifetime number of memory deallocations
+ memoryStats.numMallocs                                     | Lifetime number of memory allocations
+ messageRouter.numberOfContainerMetricSinks                 | Instantaneous number of container metric sinks known to the SinkManager
+ messageRouter.numberOfDumpSinks                            | Instantaneous number of dump sinks known to the SinkManager
+ messageRouter.numberOfFirehoseSinks                        | Instantaneous number of firehose sinks known to the SinkManager
+ messageRouter.numberOfSyslogSinks                          | Instantaneous number of syslog sinks known to the SinkManager
+ messageRouter.numberOfWebsocketSinks                       | Instantaneous number of websocket sinks known to the SinkManager
+ messageRouter.totalDroppedMessages                         | Lifetime number of messages dropped inside Doppler for various reasons (downstream consumer can't keep up internal object wasn't ready for message, etc.)
+ sentMessagesFirehose.<SUBSCRIPTION_ID>                     | Number of sent messages through the firehose per subscription id
+ udpListener.receivedByteCount				  | Lifetime number of bytes received by Doppler's UDP Listener
+ udpListener.receivedMessageCount				  | Lifetime number of messages received by Doppler's UDP Listener
+ udpListener.receivedErrorCount				  | Lifetime number of errors encountered by Doppler's UDP Listener while reading from the connection
+ tcpListener.receivedByteCount				  | Lifetime number of bytes received by Doppler's TCP Listener
+ tcpListener.receivedMessageCount				  | Lifetime number of messages received by Doppler's TCP Listener
+ tcpListener.receivedErrorCount				  | Lifetime number of errors encountered by Doppler's TCP Listener while handshaking, decoding or reading from the connection
+ tlsListener.receivedByteCount				  | Lifetime number of bytes received by Doppler's TLS Listener
+ tlsListener.receivedMessageCount				  | Lifetime number of messages received by Doppler's TLS Listener
+ tlsListener.receivedErrorCount				  | Lifetime number of errors encountered by Doppler's TLS Listener while handshaking, decoding or reading from the connection
+ TruncatingBuffer.DroppedMessages				  | Number of messages intentionally dropped by Doppler from the sink for the specific sink. This counter event will correspond with log messages "Log message output is too high"
+ TruncatingBuffer.totalDroppedMessages			  | Lifetime total number of messages intentionally dropped by Doppler from all of its sinks due to back pressure
+ listeners.totalReceivedMessageCount			  | Total number of messages received across all of Doppler's listeners (UDP, TCP, TLS)
+ numCpus                                                    | Number of CPUs on the machine
+ numGoRoutines                                              | Instantaneous number of active Goroutines in the Doppler process
+ signatureVerifier.invalidSignatureErrors                   | Lifetime number of messages received with an invalid signature
+ signatureVerifier.missingSignatureErrors                   | Lifetime number of messages received that are too small to contain a signature
+ signatureVerifier.validSignatures                          | Lifetime number of messages received with valid signatures
 
 [Top](#metrics-by-component)
