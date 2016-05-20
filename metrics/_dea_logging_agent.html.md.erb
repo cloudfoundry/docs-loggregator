@@ -1,13 +1,15 @@
- Metric Name                                          | Description
-------------------------------------------------------|--------------------------------------------------------------------------
- dea\_logging\_agent.memoryStats.lastGCPauseTimeNS      | Duration of the last Garbage Collector pause in nanoseconds
- dea\_logging\_agent.memoryStats.numBytesAllocated      | Instantaneous count of bytes allocated and still in use
- dea\_logging\_agent.memoryStats.numBytesAllocatedHeap  | Instantaneous count of bytes allocated on the main heap and still in use
- dea\_logging\_agent.memoryStats.numBytesAllocatedStack | Instantaneous count of bytes used by the stack allocator
- dea\_logging\_agent.memoryStats.numFrees               | Lifetime number of memory deallocations
- dea\_logging\_agent.memoryStats.numMallocs             | Lifetime number of memory allocations
- dea\_logging\_agent.numCPUS                            | Number of CPUs on the machine
- dea\_logging\_agent.numGoRoutines                      | Instantaneous number of active Goroutines in the Doppler process
- dea\_logging\_agent.totalApps                          | The number of applications which the DEA logging agent is hooked onto
+Default Origin Name: dea_logging_agent
+
+Metric Name                         | Description
+------------------------------------|--------------------------------------------------------------------------
+ memoryStats.lastGCPauseTimeNS      | Duration of the last Garbage Collector pause in nanoseconds
+ memoryStats.numBytesAllocated      | Instantaneous count of bytes allocated and still in use
+ memoryStats.numBytesAllocatedHeap  | Instantaneous count of bytes allocated on the main heap and still in use
+ memoryStats.numBytesAllocatedStack | Instantaneous count of bytes used by the stack allocator
+ memoryStats.numFrees               | Lifetime number of memory deallocations
+ memoryStats.numMallocs             | Lifetime number of memory allocations
+ numCPUS                            | Number of CPUs on the machine
+ numGoRoutines                      | Instantaneous number of active Goroutines in the Doppler process
+ totalApps                          | The number of applications which the DEA logging agent is hooked onto
 
 [Top](#metrics-by-component)
