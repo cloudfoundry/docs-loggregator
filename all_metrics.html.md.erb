@@ -5,25 +5,28 @@ owner: Logging and Metrics
 
 <strong><%= modified_date %></strong>
 
-## <a id='metrics-by-component'></a>Metrics by Component
+This topic lists and describes the metrics available for <%=vars.first_product_name%> system components. These metrics are streamed from the Loggregator [Firehose](./architecture.html).
+
+<%= vars.dea_metrics %> 
 
 ##<a id='cc'></a>Cloud Controller
 <%= partial './metrics/cloud_controller' %>
 
-##<a id='dea'></a>DEA Logging Agent
-<%= partial './metrics/dea_logging_agent' %>
 ##<a id='diego'></a>Diego
 <%= partial './metrics/diego' %>
-##<a id='doppler'></a>Doppler
+
+##<a id='doppler'></a>DopplerServer
 <%= partial './metrics/doppler' %>
+
 ##<a id='etcd'></a>Etcd
 <%= partial './metrics/etcd' %>
-##<a id='hm9000'></a>HM9000
-<%= partial './metrics/hm9000' %>
+
 ##<a id='metron'></a>Metron Agent
 <%= partial './metrics/metron_agent' %>
+
 ##<a id='syslog'></a>Syslog Drain Binder
 <%= partial './metrics/syslog_drain_binder' %>
+
 ##<a id='traffic'></a>Traffic Controller
 <%= partial './metrics/traffic_controller' %>
 
