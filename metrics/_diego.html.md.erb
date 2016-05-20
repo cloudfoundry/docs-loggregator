@@ -1,57 +1,72 @@
+Default Origin Name: auctioneer
+
  Metric Name                                                 | Description
 -------------------------------------------------------------|----------------------------------------------------------------------------------------------
- auctioneer.AuctioneerFetchStatesDuration                    |
- auctioneer.AuctioneerLRPAuctionsFailed                      |
- auctioneer.AuctioneerLRPAuctionsStarted                     |
- auctioneer.AuctioneerTaskAuctionsFailed                     |
- auctioneer.AuctioneerTaskAuctionsStarted                    |
- auctioneer.memoryStats.lastGCPauseTimeNS                    | Duration of the last Garbage Collector pause in nanoseconds
- auctioneer.memoryStats.numBytesAllocated                    | Instantaneous count of bytes allocated and still in use
- auctioneer.memoryStats.numBytesAllocatedHeap                | Instantaneous count of bytes allocated on the main heap and still in use
- auctioneer.memoryStats.numBytesAllocatedStack               | Instantaneous count of bytes used by the stack allocator
- auctioneer.memoryStats.numFrees                             | Lifetime number of memory deallocations
- auctioneer.memoryStats.numMallocs                           | Lifetime number of memory allocations
- auctioneer.numCPUS                                          | Number of CPUs on the machine
- auctioneer.numGoRoutines                                    | Instantaneous number of active Goroutines in the process
- bbs.ConvergenceLRPRuns                                      |
- bbs.ConvergenceLRPDuration                                  |
- bbs.ConvergenceLRPPreProcessingDesiredLRPsDeleted           |
- bbs.ConvergenceLRPPreProcessingActualLRPsDeleted            |
- bbs.ConvergenceLRPsDeleted                                  |
- bbs.LRPsDesired                                             |
- bbs.LRPsStarting                                            |
- bbs.LRPsRunning                                             |
- bbs.CrashedActualLRPs                                       |
- bbs.CrashingDesiredLRPs                                     |
- bbs.ETCDLeader                                              |
- bbs.ETCDFollowers                                           |
- bbs.ETCDReceivedBandwidthRate                               |
- bbs.ETCDSentBandwidthRate                                   |
- bbs.ETCDReceivedRequestRate                                 |
- bbs.ETCDSentRequestRate                                     |
- bbs.ETCDRaftTerm                                            |
- bbs.ETCDWatchers                                            |
- bbs.ConvergenceTaskRuns                                     |
- bbs.ConvergenceTaskDuration                                 |
- bbs.ConvergenceTasksKicked                                  |
- bbs.ConvergenceTasksPruned                                  |
- bbs.TasksPending                                            |
- bbs.TasksRunning                                            |
- bbs.TasksCompleted                                          |
- bbs.TasksResolving                                          |
- bbs.RequestLatency                                          |
- bbs.RequestCount                                            |
- bbs.MetricsReportingDuration                                |
- bbs.BBSMasterElected                                        |
- bbs.MigrationDuration                                       |
- bbs.memoryStats.lastGCPauseTimeNS                           | Duration of the last Garbage Collector pause in nanoseconds
- bbs.memoryStats.numBytesAllocated                           | Instantaneous count of bytes allocated and still in use
- bbs.memoryStats.numBytesAllocatedHeap                       | Instantaneous count of bytes allocated on the main heap and still in use
- bbs.memoryStats.numBytesAllocatedStack                      | Instantaneous count of bytes used by the stack allocator
- bbs.memoryStats.numFrees                                    | Lifetime number of memory deallocations
- bbs.memoryStats.numMallocs                                  | Lifetime number of memory allocations
- bbs.numCPUS                                                 | Number of CPUs on the machine
- bbs.numGoRoutines                                           | Instantaneous number of active Goroutines in the process
+ LockHeld.v1-locks-auctioneer_lock                           | Whether an auctioneeer holds the auctioneer lock: 1 means the lock is held, and 0 means the lock was lost. Emitted periodically by the active auctioneer
+ LockHeldDuration.v1-locks-auctioneer_lock                   | Time the active auctioneeer has held the auctioneer lock. Emitted periodically by the active auctioneer
+ AuctioneerFetchStatesDuration                               | Time the auctioneer took to fetch state from all the cells when running its auction. Emitted during each auction
+ AuctioneerLRPAuctionsFailed                                 | Cumulative number of LRP instances that the auctioneer failed to place on Diego cells. Emitted during each auction
+ AuctioneerLRPAuctionsStarted                                | Cumulative number of LRP instances that the auctioneer successfully placed on Diego cells. Emitted during each auction
+ AuctioneerTaskAuctionsFailed                                | Cumulative number of Tasks that the auctioneer failed to place on Diego cells. Emitted during each auction
+ AuctioneerTaskAuctionsStarted                               | Cumulative number of Tasks that the auctioneer successfully placed on Diego cells. Emitted during each auction
+ memoryStats.lastGCPauseTimeNS                               | Duration of the last Garbage Collector pause in nanoseconds
+ memoryStats.numBytesAllocated                               | Instantaneous count of bytes allocated and still in use
+ memoryStats.numBytesAllocatedHeap                           | Instantaneous count of bytes allocated on the main heap and still in use
+ memoryStats.numBytesAllocatedStack                          | Instantaneous count of bytes used by the stack allocator
+ memoryStats.numFrees                                        | Lifetime number of memory deallocations
+ memoryStats.numMallocs                                      | Lifetime number of memory allocations
+ numCPUS                                                     | Number of CPUs on the machine
+ numGoRoutines                                               | Instantaneous number of active Goroutines in the process
+
+Default Origin Name: bbs
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
+ BBSMasterElected                                        | Emitted once when the BBS is elected as master
+ ConvergenceLRPDuration                                  | Time the BBS took to run its LRP convergence pass. Emitted every time LRP convergence runs
+ ConvergenceLRPPreProcessingActualLRPsDeleted            | Cumulative number of times the BBS has detected and deleted a malformed ActualLRP in its LRP convergence pass. Emitted periodically
+ ConvergenceLRPPreProcessingDesiredLRPsDeleted           |
+ ConvergenceLRPRuns                                      | Cumulative number of times BBS has run its LRP convergence pass. Emitted periodically
+ ConvergenceTaskDuration                                 | Time the BBS took to run its Task convergence pass. Emitted every time Task convergence runs
+ ConvergenceTaskRuns                                     | Cumulative number of times the BBS has run its Task convergence pass. Emitted periodically.
+ ConvergenceTasksKicked                                  | Cumulative number of times the BBS has updated a Task during its Task convergence pass. Emitted periodically.
+ ConvergenceTasksPruned                                  | Cumulative number of times the BBS has deleted a malformed Task during its Task convergence pass. Emitted periodically
+ CrashedActualLRPs                                       | Total number of LRP instances that have crashed. Emitted periodically
+ CrashingDesiredLRPs                                     | Total number of DesiredLRPs that have at least one crashed instance. Emitted periodically
+ Domain.cf-apps                                          | Whether the 'cf-apps' domain is up-to-date, so that CF apps from CC have been synchronized with DesiredLRPs for Diego to run. 1 means the domain is up-to-date, no data means it is not. Emitted periodically
+ ETCDLeader                                              | Index of the leader node in the etcd cluster. Emitted periodically
+ ETCDRaftTerm                                            | Raft term of the etcd cluster. Emitted periodically
+ ETCDReceivedBandwidthRate                               | Number of bytes per second received by the follower etcd node. Emitted periodically
+ ETCDReceivedRequestRate                                 | Number of requests per second received by the follower etcd node. Emitted periodically
+ ETCDSentBandwidthRate                                   | Number of bytes per second sent by the leader etcd node. Emitted periodically
+ ETCDSentRequestRate                                     | Number of requests per second sent by the leader etcd node. Emitted periodically
+ ETCDWatchers                                            | Number of watches set against the etcd cluster. Emitted periodically
+ LockHeld.v1-locks-bbs_lock                              | Whether a BBS holds the BBS lock: 1 means the lock is held, and 0 means the lock was lost. Emitted periodically by the active BBS server
+ LRPsDesired                                             | Total number of LRP instances desired across all LRPs. Emitted periodically
+ LRPsMissing                                             | Total number of Tasks running on cells. Emitted periodically
+ LRPsRunning                                             | Total number of LRP instances that are running on cells. Emitted periodically
+ LRPsStarting                                            |
+ MetricsReportingDuration                                | Time the BBS took to emit metrics about etcd. Emitted periodically
+ MigrationDuration                                       | Time the BBS took to run migrations against its persistence store. Emitted each time a BBS becomes the active master
+ RequestCount                                            | Cumulative number of requests the BBS has handled through its API. Emitted periodically
+ RequestLatency                                          | Time the BBS took to handle requests to its API endpoints. Emitted when the BBS API handles requests
+ TasksCompleted                                          | Total number of Tasks that have completed. Emitted periodically
+ TasksPending                                            | Total number of Tasks that have not yet been placed on a cell. Emitted periodically
+ TasksResolving                                          | Total number of Tasks locked for deletion. Emitted periodically
+ TasksRunning                                            | Total number of Tasks running on cells. Emitted periodically
+ memoryStats.lastGCPauseTimeNS                           | Duration of the last Garbage Collector pause in nanoseconds
+ memoryStats.numBytesAllocated                           | Instantaneous count of bytes allocated and still in use
+ memoryStats.numBytesAllocatedHeap                       | Instantaneous count of bytes allocated on the main heap and still in use
+ memoryStats.numBytesAllocatedStack                      | Instantaneous count of bytes used by the stack allocator
+ memoryStats.numFrees                                    | Lifetime number of memory deallocations
+ memoryStats.numMallocs                                  | Lifetime number of memory allocations
+ numCPUS                                                 | Number of CPUs on the machine
+ numGoRoutines                                           | Instantaneous number of active Goroutines in the process
+
+Default Origin Name: cc_uploader
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
  cc_uploader.memoryStats.lastGCPauseTimeNS                   | Duration of the last Garbage Collector pause in nanoseconds
  cc_uploader.memoryStats.numBytesAllocated                   | Instantaneous count of bytes allocated and still in use
  cc_uploader.memoryStats.numBytesAllocatedHeap               | Instantaneous count of bytes allocated on the main heap and still in use
@@ -60,6 +75,11 @@
  cc_uploader.memoryStats.numMallocs                          | Lifetime number of memory allocations
  cc_uploader.numCPUS                                         | Number of CPUs on the machine
  cc_uploader.numGoRoutines                                   | Instantaneous number of active Goroutines in the process
+
+Default Origin Name: converger
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
  converger.ConvergenceLRPDuration                            |
  converger.ConvergenceLRPPreProcessingActualLRPsDeleted      |
  converger.ConvergenceLRPPreProcessingDesiredLRPsDeleted     |
@@ -76,6 +96,11 @@
  converger.memoryStats.numMallocs                            | Lifetime number of memory allocations
  converger.numCPUS                                           | Number of CPUs on the machine
  converger.numGoRoutines                                     | Instantaneous number of active Goroutines in the process
+
+Default Origin Name: file_server
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
  file_server.memoryStats.lastGCPauseTimeNS                   | Duration of the last Garbage Collector pause in nanoseconds
  file_server.memoryStats.numBytesAllocated                   | Instantaneous count of bytes allocated and still in use
  file_server.memoryStats.numBytesAllocatedHeap               | Instantaneous count of bytes allocated on the main heap and still in use
@@ -84,6 +109,11 @@
  file_server.memoryStats.numMallocs                          | Lifetime number of memory allocations
  file_server.numCPUS                                         | Number of CPUs on the machine
  file_server.numGoRoutines                                   | Instantaneous number of active Goroutines in the process
+
+Default Origin Name: garden_linux
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
  garden_linux.memoryStats.lastGCPauseTimeNS                  | Duration of the last Garbage Collector pause in nanoseconds
  garden_linux.memoryStats.numBytesAllocated                  | Instantaneous count of bytes allocated and still in use
  garden_linux.memoryStats.numBytesAllocatedHeap              | Instantaneous count of bytes allocated on the main heap and still in use
@@ -92,6 +122,11 @@
  garden_linux.memoryStats.numMallocs                         | Lifetime number of memory allocations
  garden_linux.numCPUS                                        | Number of CPUs on the machine
  garden_linux.numGoRoutines                                  | Instantaneous number of active Goroutines in the process
+
+Default Origin Name: nsync_bulker
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
  nsync_bulker.DesiredLRPSyncDuration                         |
  nsync_bulker.memoryStats.lastGCPauseTimeNS                  | Duration of the last Garbage Collector pause in nanoseconds
  nsync_bulker.memoryStats.numBytesAllocated                  | Instantaneous count of bytes allocated and still in use
@@ -110,6 +145,11 @@
  nsync_listener.memoryStats.numMallocs                       | Lifetime number of memory allocations
  nsync_listener.numCPUS                                      | Number of CPUs on the machine
  nsync_listener.numGoRoutines                                | Instantaneous number of active Goroutines in the process
+
+Default Origin Name: receptor
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
  receptor.memoryStats.lastGCPauseTimeNS                      | Duration of the last Garbage Collector pause in nanoseconds
  receptor.memoryStats.numBytesAllocated                      | Instantaneous count of bytes allocated and still in use
  receptor.memoryStats.numBytesAllocatedHeap                  | Instantaneous count of bytes allocated on the main heap and still in use
@@ -118,6 +158,11 @@
  receptor.memoryStats.numMallocs                             | Lifetime number of memory allocations
  receptor.numCPUS                                            | Number of CPUs on the machine
  receptor.numGoRoutines                                      | Instantaneous number of active Goroutines in the process
+
+Default Origin Name: rep
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
  rep.CapacityRemainingContainers                             |
  rep.CapacityRemainingDisk                                   |
  rep.CapacityRemainingMemory                                 |
@@ -134,6 +179,11 @@
  rep.numCPUS                                                 | Number of CPUs on the machine
  rep.numGoRoutines                                           | Instantaneous number of active Goroutines in the process
  rep.RepBulkSyncDuration                                     |
+
+Default Origin Name: route_emitter
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
  route_emitter.memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
  route_emitter.memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
  route_emitter.memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
@@ -147,6 +197,11 @@
  route_emitter.RoutesSynced                                  |
  route_emitter.RoutesTotal                                   |
  route_emitter.RoutesUnregistered                            |
+
+Default Origin Name: ssh_proxy
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
  ssh_proxy.memoryStats.lastGCPauseTimeNS                     | Duration of the last Garbage Collector pause in nanoseconds
  ssh_proxy.memoryStats.numBytesAllocated                     | Instantaneous count of bytes allocated and still in use
  ssh_proxy.memoryStats.numBytesAllocatedHeap                 | Instantaneous count of bytes allocated on the main heap and still in use
@@ -155,6 +210,11 @@
  ssh_proxy.memoryStats.numMallocs                            | Lifetime number of memory allocations
  ssh_proxy.numCPUS                                           | Number of CPUs on the machine
  ssh_proxy.numGoRoutines                                     | Instantaneous number of active Goroutines in the process
+
+Default Origin Name: stager
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
  stager.memoryStats.lastGCPauseTimeNS                        | Duration of the last Garbage Collector pause in nanoseconds
  stager.memoryStats.numBytesAllocated                        | Instantaneous count of bytes allocated and still in use
  stager.memoryStats.numBytesAllocatedHeap                    | Instantaneous count of bytes allocated on the main heap and still in use
@@ -168,6 +228,11 @@
  stager.StagingRequestsSucceeded                             |
  stager.StagingRequestSucceededDuration                      |
  stager.StagingStartRequestsReceived                         |
+
+Default Origin Name: tps_listener
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
  tps_listener.memoryStats.lastGCPauseTimeNS                  | Duration of the last Garbage Collector pause in nanoseconds
  tps_listener.memoryStats.numBytesAllocated                  | Instantaneous count of bytes allocated and still in use
  tps_listener.memoryStats.numBytesAllocatedHeap              | Instantaneous count of bytes allocated on the main heap and still in use
@@ -176,6 +241,11 @@
  tps_listener.memoryStats.numMallocs                         | Lifetime number of memory allocations
  tps_listener.numCPUS                                        | Number of CPUs on the machine
  tps_listener.numGoRoutines                                  | Instantaneous number of active Goroutines in the process
+
+Default Origin Name: tps_watcher
+
+ Metric Name                                                 | Description
+-------------------------------------------------------------|----------------------------------------------------------------------------------------------
  tps_watcher.memoryStats.lastGCPauseTimeNS                   | Duration of the last Garbage Collector pause in nanoseconds
  tps_watcher.memoryStats.numBytesAllocated                   | Instantaneous count of bytes allocated and still in use
  tps_watcher.memoryStats.numBytesAllocatedHeap               | Instantaneous count of bytes allocated on the main heap and still in use
