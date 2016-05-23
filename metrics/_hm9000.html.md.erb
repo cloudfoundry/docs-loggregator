@@ -1,11 +1,13 @@
+Default Origin Name: HM9000
+
  Metric Name                          | Description
 --------------------------------------|---------------------------------------------------------------------------------------------------------------------------
- HM9000.numCpus                       | Number of CPUs for the HM9000 box with the lock
- HM9000.numGoRoutines                 | Number of go routines running on the metrics server on the HM9000 with the lock
- HM9000.HM9000.StartCrashed           | Increments each time HM9000 tries to start a crashed instance
- HM9000.HM9000.StartEvacuating        | Increments each time HM9000 is evacuating an instance and sends an immediate start and sometimes stop
- HM9000.HM9000.StartMissing           | Increments each time HM9000 starts an instance that is missing
- HM9000.HM9000.StopDuplicate          | Increments each time a stop is scheduled for a running instance at a duplicated index
- HM9000.HM9000.StopEvacuationComplete | Increments each time HM9000 is done evacuating an instance and stops the instance
+ numCpus                       | Number of CPUs for the HM9000 box with the lock
+ numGoRoutines                 | Number of Go routines running on the metrics server on the HM9000 with the lock
+ HM9000.StartCrashed           | Increments each time HM9000 tries to start a crashed instance
+ HM9000.StartEvacuating        | Increments each time HM9000 is evacuating an instance and sends an immediate start and sometimes stop
+ HM9000.StartMissing           | Increments each time HM9000 starts an instance that is missing
+ HM9000.StopDuplicate          | Increments each time a stop is scheduled for a running instance at a duplicated index
+ HM9000.StopEvacuationComplete | Increments each time HM9000 is done evacuating an instance and stops the instance
 
 [Top](#top)
