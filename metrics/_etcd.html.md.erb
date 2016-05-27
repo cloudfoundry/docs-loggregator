@@ -1,34 +1,36 @@
 Visit [etcd stats API](https://coreos.com/etcd/docs/latest/api.html#statistics)
 
+Default Origin Name: etcd
+
 Metric Name | Description
 --- | ---
-etcd.leader.Followers              | number of etcd followers
-etcd.leader.Latency                | current latency to a specific follower
-etcd.server.IsLeader               | 1 if the current server is the leader, 0 if it is a follower
-etcd.server.ReceivedAppendRequests | number of append requests this node has processed
-etcd.server.ReceivingBandwidthRate | number of bytes per second this node is receiving (follower only)
-etcd.server.ReceivingRequestRate   | number of requests per second this node is receiving (follower only)
-etcd.server.SendingBandwidthRate   | number of bytes per second this node is sending (leader only). This value is undefined on single member clusters.
-etcd.server.SendingRequestRate     | number of requests per second this node is sending (leader only). This value is undefined on single member clusters.
-etcd.server.SentAppendRequests     | number of requests that this node has sent
-etcd.store.RaftIndex               | X-Raft-Index value from the /stats/store endpoint
-etcd.store.RaftTerm                | X-Raft-Term value from the /stats/store endpoint
-etcd.store.EtcdIndex               | X-Etcd-Index value from the /stats/store endpoint
-etcd.store.CompareAndDeleteFail    | CompareAndDeleteFail operation count
-etcd.store.CompareAndDeleteSuccess | CompareAndDeleteSuccess operation count
-etcd.store.CompareAndSwapFail      | CompareAndSwapFail operation count
-etcd.store.CompareAndSwapSuccess   | CompareAndSwapSuccess operation count
-etcd.store.CreateFail              | CreateFail operation count
-etcd.store.CreateSuccess           | CreateSuccess operation count
-etcd.store.DeleteFail              | DeleteFail operation count
-etcd.store.DeleteSuccess           | DeleteSuccess operation count
-etcd.store.ExpireCount             | ExpireCount operation count
-etcd.store.GetsFail                | GetsFail operation count
-etcd.store.GetsSuccess             | GetsSuccess operation count
-etcd.store.SetsFail                | SetsFail operation count
-etcd.store.SetsSuccess             | SetsSuccess operation count
-etcd.store.UpdateFail              | UpdateFail operation count
-etcd.store.UpdateSuccess           | UpdateSuccess operation count
-etcd.store.Watchers                | Watchers operation count
+leader.Followers              | Number of etcd followers
+leader.Latency                | Current latency to a specific follower
+server.IsLeader               | 1 if the current server is the leader, 0 if it is a follower
+server.ReceivedAppendRequests | Number of append requests this node has processed
+server.ReceivingBandwidthRate | Number of bytes per second this node is receiving (follower only)
+server.ReceivingRequestRate   | Number of requests per second this node is receiving (follower only)
+server.SendingBandwidthRate   | Number of bytes per second this node is sending (leader only). This value is undefined on single member clusters.
+server.SendingRequestRate     | Number of requests per second this node is sending (leader only). This value is undefined on single member clusters.
+server.SentAppendRequests     | Number of requests that this node has sent
+store.RaftIndex               | X-Raft-Index value from the /stats/store endpoint
+store.RaftTerm                | X-Raft-Term value from the /stats/store endpoint
+store.EtcdIndex               | X-Etcd-Index value from the /stats/store endpoint
+store.CompareAndDeleteFail    | CompareAndDeleteFail operation count
+store.CompareAndDeleteSuccess | CompareAndDeleteSuccess operation count
+store.CompareAndSwapFail      | CompareAndSwapFail operation count
+store.CompareAndSwapSuccess   | CompareAndSwapSuccess operation count
+store.CreateFail              | CreateFail operation count
+store.CreateSuccess           | CreateSuccess operation count
+store.DeleteFail              | DeleteFail operation count
+store.DeleteSuccess           | DeleteSuccess operation count
+store.ExpireCount             | ExpireCount operation count
+store.GetsFail                | GetsFail operation count
+store.GetsSuccess             | GetsSuccess operation count
+store.SetsFail                | SetsFail operation count
+store.SetsSuccess             | SetsSuccess operation count
+store.UpdateFail              | UpdateFail operation count
+store.UpdateSuccess           | UpdateSuccess operation count
+store.Watchers                | Watchers operation count
 
 [Top](#top)
