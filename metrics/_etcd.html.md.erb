@@ -4,33 +4,33 @@ Default Origin Name: etcd
 
 Metric Name | Description
 --- | ---
-leader.Followers              | Number of etcd followers
-leader.Latency                | Current latency to a specific follower
-server.IsLeader               | 1 if the current server is the leader, 0 if it is a follower
-server.ReceivedAppendRequests | Number of append requests this node has processed
-server.ReceivingBandwidthRate | Number of bytes per second this node is receiving (follower only)
-server.ReceivingRequestRate   | Number of requests per second this node is receiving (follower only)
-server.SendingBandwidthRate   | Number of bytes per second this node is sending (leader only). This value is undefined on single member clusters.
-server.SendingRequestRate     | Number of requests per second this node is sending (leader only). This value is undefined on single member clusters.
-server.SentAppendRequests     | Number of requests that this node has sent
-store.RaftIndex               | X-Raft-Index value from the /stats/store endpoint
-store.RaftTerm                | X-Raft-Term value from the /stats/store endpoint
-store.EtcdIndex               | X-Etcd-Index value from the /stats/store endpoint
-store.CompareAndDeleteFail    | CompareAndDeleteFail operation count
-store.CompareAndDeleteSuccess | CompareAndDeleteSuccess operation count
-store.CompareAndSwapFail      | CompareAndSwapFail operation count
-store.CompareAndSwapSuccess   | CompareAndSwapSuccess operation count
-store.CreateFail              | CreateFail operation count
-store.CreateSuccess           | CreateSuccess operation count
-store.DeleteFail              | DeleteFail operation count
-store.DeleteSuccess           | DeleteSuccess operation count
-store.ExpireCount             | ExpireCount operation count
-store.GetsFail                | GetsFail operation count
-store.GetsSuccess             | GetsSuccess operation count
-store.SetsFail                | SetsFail operation count
-store.SetsSuccess             | SetsSuccess operation count
-store.UpdateFail              | UpdateFail operation count
-store.UpdateSuccess           | UpdateSuccess operation count
-store.Watchers                | Watchers operation count
+CompareAndDeleteFail    | CompareAndDeleteFail operation count
+CompareAndDeleteSuccess | CompareAndDeleteSuccess operation count
+CompareAndSwapFail      | CompareAndSwapFail operation count
+CompareAndSwapSuccess   | CompareAndSwapSuccess operation count
+CreateFail              | CreateFail operation count
+CreateSuccess           | CreateSuccess operation count
+DeleteFail              | DeleteFail operation count
+DeleteSuccess           | DeleteSuccess operation count
+EtcdIndex               | X-Etcd-Index value from the /stats/store endpoint
+ExpireCount             | ExpireCount operation count
+Followers              | Number of etcd followers
+GetsFail                | GetsFail operation count
+GetsSuccess             | GetsSuccess operation count
+IsLeader               | 1 if the current server is the leader, 0 if it is a follower
+Latency                | Current latency to a specific follower
+RaftIndex               | X-Raft-Index value from the /stats/store endpoint
+RaftTerm                | X-Raft-Term value from the /stats/store endpoint
+ReceivedAppendRequests | Number of append requests this node has processed
+ReceivingBandwidthRate | Number of bytes per second this node is receiving (follower only)
+ReceivingRequestRate   | Number of requests per second this node is receiving (follower only)
+SendingBandwidthRate   | Number of bytes per second this node is sending (leader only). This value is undefined on single member clusters.
+SendingRequestRate     | Number of requests per second this node is sending (leader only). This value is undefined on single member clusters.
+SentAppendRequests     | Number of requests that this node has sent
+SetsFail                | SetsFail operation count
+SetsSuccess             | SetsSuccess operation count
+UpdateFail              | UpdateFail operation count
+UpdateSuccess           | UpdateSuccess operation count
+Watchers                | Watchers operation count
 
 [Top](#top)
