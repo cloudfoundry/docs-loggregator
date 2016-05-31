@@ -2,6 +2,17 @@ Default Origin Name: dea\_logging\_agent
 
 Metric Name                         | Description
 ------------------------------------|--------------------------------------------------------------------------
+ available_disk_ratio               | Percentage of remaining disk which includes staging and running apps, includes overcommit
+ available_memory_ratio             | Percentage of remaining memory which includes staging and running apps, includes overcommit
+ avg_cpu_load                       | Average CPU over the past minute
+ dea_registry_born                  | The number of born instances
+ dea_registry_crashed               | The number of crashed instances
+ dea_registry_evacuating            | The number of evacuating instances
+ dea_registry_running               | The number of running instances
+ dea_registry_starting              | The number of starting instances
+ dea_registry_stopped               | The number of stopped instances 
+ dea_registry_stopping              | The number of stopping instances
+ instances                          | Total number of "running" instances, regardless of state
  memoryStats.lastGCPauseTimeNS      | Duration of the last Garbage Collector pause in nanoseconds
  memoryStats.numBytesAllocated      | Instantaneous count of bytes allocated and still in use
  memoryStats.numBytesAllocatedHeap  | Instantaneous count of bytes allocated on the main heap and still in use
@@ -10,6 +21,11 @@ Metric Name                         | Description
  memoryStats.numMallocs             | Lifetime number of memory allocations
  numCPUS                            | Number of CPUs on the machine
  numGoRoutines                      | Instantaneous number of active Goroutines in the Doppler process
+ remaining_disk                     | Remaining disk which includes staging and running apps, includes overcommit
+ remaining_memory                   | Remaining memory which includes staging and running apps, includes overcommit
+ reservable_stagers                 | The number of stagings that could occur given the current memory and disk available
  totalApps                          | The number of applications which the DEA logging agent is hooked onto
+ uptime                             | How long the DEA has been running
+ 
 
 [Top](#top)
