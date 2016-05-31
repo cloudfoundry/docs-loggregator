@@ -170,7 +170,8 @@ Default Origin Name: nsync_bulker
  Metric Name                                                 | Description
 -------------------------------------------------------------|----------------------------------------------------------------------------------------------
  DesiredLRPSyncDuration                         | Time the nsync-bulker took to synchronize CF apps and Diego DesiredLRPs. Emitted periodically
- LockHeldDuration.v1-locks-nsync_bulker_lock    | Time the active nsync-bulker has held the convergence lock. Emitted periodically by the active nsync-bulker
+ LockHeld.v1-locks-nsync\_bulker\_lock            | Whether an nsync-bulker holds the nsync-bulker lock: 1 means the lock is held, and 0 means the lock was lost. Emitted periodically by the active nsync-bulker
+ LockHeldDuration.v1-locks-nsync\_bulker\_lock    | Time the active nsync-bulker has held the convergence lock. Emitted periodically by the active nsync-bulker
  LRPsDesired                                    | Cumulative number of LRPs desired through the nsync API. Emitted on each request desiring a new LRP
  memoryStats.lastGCPauseTimeNS                  | Duration of the last Garbage Collector pause in nanoseconds
  memoryStats.numBytesAllocated                  | Instantaneous count of bytes allocated and still in use
