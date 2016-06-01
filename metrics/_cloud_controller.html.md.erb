@@ -1,5 +1,45 @@
 Metric Name                                                   | Description
 --------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------
+failed_job_count.cc-api_z1-0               | Number of failed jobs in the cc-api_z1-0 queue. Updated every 30 seconds
+failed_job_count.cc-api_z2-0               | Number of failed jobs in the cc-api_z2-0 queue. Updated every 30 seconds
+failed_job_count.cc-api_z2-1               | Number of failed jobs in the cc-api_z2-1 queue. Updated every 30 seconds
+failed_job_count.cc-generic                | Number of failed jobs in the cc-generic queue. Updated every 30 seconds
+failed_job_count.total                     | Number of failed jobs in all queues. Updated every 30 seconds
+http_status.1XX                            | Number of HTTP response status codes of type 1xx (informational)
+http_status.2XX                            | Number of HTTP response status codes of type 2xx (success)
+http_status.3XX                            | Number of HTTP response status codes of type 3xx (redirection)
+http_status.4XX                            | Number of HTTP response status codes of type 4xx (client error)
+http_status.5XX                            | Number of HTTP response status codes of type 5xx (server error)
+job_queue_length.cc-api_z1-0               | Number of background jobs in the cc-api_Z1-0 queue that have yet to run for the first time. Updated at least once every 30 seconds
+job_queue_length.cc-api_z1-1               | Number of background jobs in the cc-api_Z1-0 queue that have yet to run for the first time. Updated at least once every 30 seconds
+job_queue_length.cc-api_z2-0               | Number of background jobs in the cc-api_Z1-0 queue that have yet to run for the first time. Updated at least once every 30 seconds
+job_queue_length.cc-api_z2-1               | Number of background jobs in the cc-api_Z1-0 queue that have yet to run for the first time. Updated at least once every 30 seconds
+job_queue_length.cc-generic                | Number of background jobs in the cc-api_Z1-0 queue that have yet to run for the first time. Updated at least once every 30 seconds
+job_queue_length.total                     | Total number of background jobs in the queues that have yet to run for the first time. Updated at least once every 30 seconds
+log_count.all                              | Total number of log messages, sum of messages of all severity levels
+log_count.debug                            | Number of log messages of severity "debug"
+log_count.debug1                           | Number of log messages of severity "debug1"
+log_count.debug2                           | Number of log messages of severity "debug2"
+log_count.error                            | Number of log messages of severity "error"
+log_count.fatal                            | Number of log messages of severity "fatal"
+log_count.info                             | Number of log messages of severity "info"
+log_count.off                              | Number of log messages of severity "off"
+log_count.warn                             | Number of log messages of severity "warn"
+requests.completed                         | Number of requests that have been processed
+requests.outstanding                       | Number of request that are currently being processed
+tasks_running.count                        | Number of currently running tasks. Updated at least once every 30 seconds. This metric is only seen in version 3 of the Cloud Foundry API
+tasks_running.memory_in_mb                 | Memory being consumed by all currently running tasks. Updated at least once every 30s. This metric is only seen in version 3 of the Cloud Foundry API
+total_users                                | Total number of users ever created, including inactive users. Updated at least every 10 minutes
+vitals.cpu                                 | Percentage of CPU used by the Cloud Controller process. Updated every 30 seconds
+vitals.cpu_load_avg                        | System CPU load averaged over a minute according to the OS. Updated every 30 seconds
+vitals.mem_bytes                           | The RSS bytes (resident set size) or real memory of the Cloud Controller process. Updated every 30 seconds
+vitals.mem_free_bytes                      | Total memory available according to the OS. Updated every 30 seconds
+vitals.mem_used_bytes                      | Total memory used (active + wired) according to the OS. Updated every 30 seconds
+vitals.num_cores                           | The number of CPUs of a host machine. Updated at least every 30 seconds
+vitals.uptime                              | The uptime of the Cloud Controller process in seconds. Updated every 30 seconds
+
+
+
 vcap_sinatra.requests.outstanding                             | Number of requests currently being processed
 vcap_sinatra.requests.completed                               | Number of requests that have been completed
 vcap\_sinatra.http\_status.[status_code]                        | Metrics on number of http response codes for all requests
