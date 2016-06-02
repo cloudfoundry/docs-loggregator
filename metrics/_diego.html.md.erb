@@ -3,14 +3,12 @@ Diego metrics have the following origin names:
 + [auctioneer](#auctioneer)
 + [bbs](#bbs)
 + [cc_uploader](#ccuploader)
-+ [fetcher](#fetcher)
 + [file_server](#fileserver)
 + [garden_linux](#gardenlinux)
 + [nsync_bulker](#nsyncbulker)
 + [nsync_listener](#nsynclistener)
 + [rep](#rep)
 + [route_emitter](#routeemitter)
-+ [sender](#sender)
 + [ssh_proxy](#sshproxy)
 + [stager](#stager)
 + [tps_listener](#tpslistener)
@@ -99,14 +97,8 @@ Default Origin Name: cc_uploader
  memoryStats.numFrees                            | Lifetime number of memory deallocations
  memoryStats.numMallocs                          | Lifetime number of memory allocations
  numCPUS                                         | Number of CPUs on the machine
- numGoRoutines                                   | Instantaneous number of active goroutines in the process<a id="converger"></a>
+ numGoRoutines                                   | Instantaneous number of active goroutines in the process<a id="fileserver"></a>
 
-
-Default Origin Name: fetcher
-
- Metric Name                                     | Description
--------------------------------------------------|----------------------------------------------------------------------------------------------
- DesiredStateSyncTimeInMilliseconds              |<a id="fileserver"></a>
 
 Default Origin Name: file\_server
 
@@ -166,7 +158,7 @@ Default Origin Name: nsync_listener
  memoryStats.numFrees                         | Lifetime number of memory deallocations
  memoryStats.numMallocs                       | Lifetime number of memory allocations
  numCPUS                                      | Number of CPUs on the machine
- numGoRoutines                                | Instantaneous number of active goroutines in the process<a id="receptor"></a>
+ numGoRoutines                                | Instantaneous number of active goroutines in the process<a id="rep"></a>
 
 Default Origin Name: rep
 
