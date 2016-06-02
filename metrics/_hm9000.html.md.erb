@@ -15,6 +15,12 @@ Default Origin Name: analyzer
 -----------------------------------------------|------------------------------------------------------------------------------------------------------
  LockHeld.hm9000.analyzer                      | Whether an analyzer holds the lock: 1 means the lock is held, and 0 means the lock was lost. Emitted periodically by the active analyzer
  LockHeldDuration.hm9000.analyzer              | Time the active analyzer has held the analyzer lock. Emitted periodically by the active analyzer
+ memoryStats.lastGCPauseTimeNS                 | Duration of the last garbage collector pause in nanoseconds
+ memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
+ memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
+ memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
+ memoryStats.numFrees                          | Lifetime number of memory deallocations
+ memoryStats.numMallocs                        | Lifetime number of memory allocations
  NumberOfAppsWithAllInstancesReporting         | The number of desired apps for which all instances are reporting. The state of the instance is irrelevant: STARTING/RUNNING/CRASHED all count
  NumberOfAppsWithMissingInstances              | The number of desired apps for which an instance is missing, i.e. the instance is not heartbeating at all
  NumberOfCrashedIndices                        | The number of indices reporting as crashed. Because of the restart policy an individual, index might have very many crashes associated with it.
@@ -25,12 +31,6 @@ Default Origin Name: analyzer
  NumberOfMissingIndices                        | The number of missing instances. These are instances that are desired but are not heartbeating at all.
  NumberOfRunningInstances                      | The number of instances in the STARTING or RUNNING state
  NumberOfUndesiredRunningApps                  | The number of undesired apps with at least one instance reporting as STARTING or RUNNING
- memoryStats.lastGCPauseTimeNS                 | Duration of the last garbage collector pause in nanoseconds
- memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
- memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
- memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
- memoryStats.numFrees                          | Lifetime number of memory deallocations
- memoryStats.numMallocs                        | Lifetime number of memory allocations
  numCPUS                                       | Number of CPUs on the machine
  numGoRoutines                                 | Instantaneous number of active goroutines in the process<a id="apiserver"></a>
 
@@ -75,8 +75,6 @@ Default Origin Name: listener
  ActualStateListenerStoreUsagePercentage       | DEPRECATED
  LockHeld.hm9000.listener                      | Whether a listener holds the lock: 1 means the lock is held, and 0 means the lock was lost. Emitted periodically by the active listener
  LockHeldDuration.hm9000.listener              | Time the active listener has held the listener lock. Emitted periodically by the active listener
- ReceivedHeartbeats                            | Number of DEA heartbeats received within an interval
- SavedHeartbeats                               | Number of heartbeats saved to etcd within an interval
  memoryStats.lastGCPauseTimeNS                 | Duration of the last garbage collector pause in nanoseconds
  memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
  memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
@@ -85,6 +83,8 @@ Default Origin Name: listener
  memoryStats.numMallocs                        | Lifetime number of memory allocations
  numCPUS                                       | Number of CPUs on the machine
  numGoRoutines                                 | Instantaneous number of active goroutines in the process<a id="sender"></a>
+ ReceivedHeartbeats                            | Number of DEA heartbeats received within an interval
+ SavedHeartbeats                               | Number of heartbeats saved to etcd within an interval
 
 Default Origin Name: sender
 
