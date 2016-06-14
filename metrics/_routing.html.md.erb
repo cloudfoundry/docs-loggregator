@@ -2,9 +2,9 @@ Routing Release metrics have following origin names:
 
 
 + [gorouter](#gorouter)
-+ [tcp_router] (#tcprouter)
++ [tcp_router] (#tcp_router)
 + [tcp_emitter] (#tcp_emitter)
-+ [routing_api] (#routingapi)<a id="gorouter"></a>
++ [routing_api] (#routing_api)<a id="gorouter"></a>
 
 
 Default Origin Name: gorouter
@@ -64,13 +64,13 @@ Metric Name                                   | Description
  numCpus                                       | Number of CPUs on the machine
  numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
  udp.sentMessageCount			       | Lifetime number of sent messages to Doppler over UDP
- udp.sentByteCount			       | Lifetime number of sent bytes to Doppler over UDP<a id="routing_api"></a>
+ udp.sentByteCount			       | Lifetime number of sent bytes to Doppler over UDP
  TotalBackendConnectionErrors		       | Total number of backend connection errors
  TotalCurrentQueuedRequests		       | Total number of requests unassigned in queue
  AverageQueueTimeMs			       | Average time spent in queue (in ms)
  AverageConnectTimeMs			       | Average backend response time (in ms)
  {session_id}CurrentSessions		       | Total number of current sessions
- {session_id}.ConnectionTime		       | Average connection time to backend in current session
+ {session_id}.ConnectionTime		       | Average connection time to backend in current session<a id="routing_api"></a>
 
 
 Default Origin Name: routing_api
