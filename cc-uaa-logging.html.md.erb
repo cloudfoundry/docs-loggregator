@@ -146,7 +146,7 @@ To learn more about the names of the events included in these categories and the
 
 The following sections provide several example requests with the corresponding UAA log entries.
 
-#### Successful User Authentication: 
+#### Successful User Authentication 
 
 ```
 Audit: TokenIssuedEvent ('["openid","scim.read","uaa.user",
@@ -159,7 +159,7 @@ origin=[client=cf, user=bob], identityZoneId=[uaa]
 * UAA issued a token associated with the scopes `"openid","scim.read","uaa.user",
 "cloud_controller.read","password.write","cloud_controller.write","scim.write"` to the user `bob`.
 
-#### Failed User Authentication:
+#### Failed User Authentication
 
 ```
 Audit: UserAuthenticationFailure ('bob@example.com'): 
@@ -186,7 +186,7 @@ iss=https://uaa.example.com/oauth/token)], identityZoneId=[uaa]
 * This entry records a `UserCreatedEvent`. 
 * The `admin` user originating at `<%=vars.example_ip_2%>` created a user named `bob@example.com`.
 
-#### Successful User Deletion:
+#### Successful User Deletion
 
 ```
 Audit: UserDeletedEvent ('["user_id=61965469-c821-
