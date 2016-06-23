@@ -5,19 +5,19 @@ owner: Logging and Metrics
 
 <strong><%= modified_date %></strong>
 
-This topic describes how to enable and interpret logging of requests to the Cloud Controller and the User Account and Authentication (UAA) server for the purposes of security or compliance.
+This topic describes how to enable and interpret security event logging for the Cloud Controller and the User Account and Authentication (UAA) server. Operators can use these logs to retrieve information about a subset of requests to the Cloud Controller and the UAA server for the purposes of security or compliance.
 
 ##<a id="cc"></a>Cloud Controller Logging
 
 <%=vars.cc_logging_default%>
 
-Cloud Foundry logs all requests to the Cloud Controller in a log file located at <code>/var/vcap/sys/log/cloud\_controller\_ng/ccng\_security\_events.log</code> on the `api_z1` VM. Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service. 
+The Cloud Controller logs security events to syslog. You must configure a syslog drain to forward your system logs to a log management service. 
 
 <%=vars.enable_syslog_drain%>
 
 ###<a id="format"></a>Format for Log Entries
 
-Cloud Controller logs requests in the [Common Event Format](https://kc.mcafee.com/resources/sites/MCAFEE/content/live/CORP_KNOWLEDGEBASE/78000/KB78712/en_US/CEF_White_Paper_20100722.pdf) (CEF). CEF specifies the following format for log entries:
+Cloud Controller logs security events in the [Common Event Format](https://kc.mcafee.com/resources/sites/MCAFEE/content/live/CORP_KNOWLEDGEBASE/78000/KB78712/en_US/CEF_White_Paper_20100722.pdf) (CEF). CEF specifies the following format for log entries:
 
 ```
 CEF:Version|Device Vendor|Device Product|Device Version|Signature ID|Name|Severity|Extension
@@ -126,7 +126,7 @@ The following list provides several example requests with the corresponding Clou
 
 ##<a id="uaa"></a>UAA Logging
 
-UAA logs requests to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA VM. Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service. 
+UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA VM. Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service. 
 
 <%=vars.enable_syslog_drain%>
 
