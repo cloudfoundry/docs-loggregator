@@ -28,11 +28,11 @@ Entries in the Cloud Controller log use the following format:
 ```
 CEF:CEF_VERSION|cloud_foundry|cloud_controller_ng|CC_API_VERSION|
 SIGNATURE_ID|NAME|SEVERITY|rt=TIMESTAMP suser=USERNAME suid=USER_GUID
-cs1Label=userAuthenticationMechanism cs1=oauth-access-token 
+cs1Label=userAuthenticationMechanism cs1=AUTH_MECHANISM 
 cs2Label=vcapRequestId cs2=VCAP_REQUEST_ID request=REQUEST
 requestMethod=REQUEST_METHOD cs3Label=result cs3=RESULT 
 cs4Label=httpStatusCode cs4=HTTP_STATUS_CODE src=SOURCE_ADDRESS 
-dst=DESTINATION_ADDRESS cs5Label=xForwardedFor cs5=X-FORWARDED-FOR-HEADER
+dst=DESTINATION_ADDRESS cs5Label=xForwardedFor cs5=X_FORWARDED_FOR_HEADER
 ```
 
 Refer to the following list for a description of the properties above:
@@ -45,6 +45,7 @@ Refer to the following list for a description of the properties above:
 * `TIMESTAMP`: The number of milliseconds since the Unix epoch.
 * `USERNAME`: The name of the user who originated the request.
 * `USER_GUID`: The GUID of the user who originated the request.
+* `AUTH_MECHANISM`: The user authentication mechanism. This can be `oauth-access-token`, `basic-auth`, or `no-auth`.
 * `VCAP_REQUEST_ID`: The VCAP request ID of the request.
 * `REQUEST`: The request path and parameters. For example, `/v2/info?MY-PARAM=VALUE`.
 * `REQUEST_METHOD`. The method of the request. For example, `GET`.
@@ -52,7 +53,7 @@ Refer to the following list for a description of the properties above:
 * `HTTP_STATUS_CODE`. The HTTP status code of the response. For example, `200`.
 * `SOURCE_ADDRESS`: The IP address of the client who originated the request.
 * `DESTINATION_ADDRESS`: The IP address of the Cloud Controller VM.
-* `X-FORWARDED-FOR-HEADER`: The contents of the X-Forwarded-For 
+* `X_FORWARDED_FOR_HEADER`: The contents of the X-Forwarded-For 
 header of the request. This is empty if the header is not present
 
 ###<a id="example"></a>Example Log Entries
