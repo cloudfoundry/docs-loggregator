@@ -1,29 +1,48 @@
-Metric Name                                                   | Description
---------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------
-vcap_sinatra.requests.outstanding                             | Number of requests currently being processed
-vcap_sinatra.requests.completed                               | Number of requests that have been completed
-vcap\_sinatra.http\_status.[status_code]                        | Metrics on number of http response codes for all requests
-vcap\_sinatra.recent\_errors                                    | 50 most recent errors
-log_counts.[severity]                                         | Metrics for number of log messages of various severity
-cc\_user\_count                                                 | "Total number of users ever created (includes inactive users).  Note: this field is updated at least every 10 minutes."
-cc\_job\_queue\_length.[queue\_type]                              | "Number of delayed_jobs that have yet to run for the first time. Note: this field is updated at least once every 30 seconds"
-cc\_job\_queue_length.total                                     | Total number of delayed_jobs that have yet to run for the first time
-thread_info.[rest bellow here]                                | Note: these fields are updated at least once every 30 seconds
-thread\_info.thread\_count                                      | Total number of threads that are either runnable or stopped
-thread\_info.event\_machine.connection_count                    | Number of open connections to event machine
-thread\_info.event\_machine.threadqueue.size                    | Number of unscheduled tasks in the threadqueue
-thread\_info.event\_machine.threadqueue.num_waiting             | Number of scheduled tasks in the threadqueue
-thread\_info.event\_machine.resultqueue.size                    | Number of unscheduled tasks in the result
-thread\_info.event\_machine.resultqueue.num_waiting             | Number of scheduled tasks in the result
-cc\_failed\_job\_count.[queue\_type]                              | "Number of failed jobs sorted by queue type. Updated once every 30 seconds. Note: this is unrelated to the worker
-cc\_failed\_job_count.total                                     | Total number of failed jobs
-uptime\_in\_seconds                                             | "The uptime of the process
-uptime                                                        | "The uptime of the process
-mem_bytes                                                     | RSS bytes calculated by the OS
-mem\_used\_bytes                                                | total memory used according to the OS
-mem\_free\_bytes                                                | total memory available according to the OS
-cpu\_load\_avg                                                  | system cpu load average over a minute according to the OS
-cpu                                                           | the percent cpu usage by the process
-num_cores                                                     | number of CPUs of the host machine
+Metric Name                                         | Description
+----------------------------------------------------|--------------------------------------------------------------------------------------------------
+failed\_job\_count.cc-api\_z1-0                     | Number of failed jobs in the cc-api\_z1-0 queue. Updated every 30 seconds
+failed\_job\_count.cc-api\_z2-0                     | Number of failed jobs in the cc-api\_z2-0 queue. Updated every 30 seconds
+failed\_job\_count.cc-api\_z2-1                     | Number of failed jobs in the cc-api\_z2-1 queue. Updated every 30 seconds
+failed\_job\_count.cc-generic                       | Number of failed jobs in the cc-generic queue. Updated every 30 seconds
+failed\_job\_count.total                            | Number of failed jobs in all queues. Updated every 30 seconds
+http\_status.1XX                                    | Number of HTTP response status codes of type 1xx (informational)
+http\_status.2XX                                    | Number of HTTP response status codes of type 2xx (success)
+http\_status.3XX                                    | Number of HTTP response status codes of type 3xx (redirection)
+http\_status.4XX                                    | Number of HTTP response status codes of type 4xx (client error)
+http\_status.5XX                                    | Number of HTTP response status codes of type 5xx (server error)
+job\_queue\_length.cc-api\_z1-0                      | Number of background jobs in the cc-api\_z1-0 queue that have yet to run for the first time. Updated at least once every 30 seconds
+job\_queue\_length.cc-api\_z1-1                     | Number of background jobs in the cc-api\_z1-0 queue that have yet to run for the first time. Updated at least once every 30 seconds
+job\_queue\_length.cc-api\_z2-0                      | Number of background jobs in the cc-api\_z1-0 queue that have yet to run for the first time. Updated at least once every 30 seconds
+job\_queue\_length.cc-api\_z2-1                      | Number of background jobs in the cc-api\_z1-0 queue that have yet to run for the first time. Updated at least once every 30 seconds
+job\_queue\_length.cc-generic                       | Number of background jobs in the cc-api\_z1-0 queue that have yet to run for the first time. Updated at least once every 30 seconds
+job\_queue\_length.total                            | Total number of background jobs in the queues that have yet to run for the first time. Updated at least once every 30 seconds
+log\_count.all                                      | Total number of log messages, sum of messages of all severity levels
+log\_count.debug                                    | Number of log messages of severity "debug"
+log\_count.debug1                                   | Number of log messages of severity "debug1"
+log\_count.debug2                                   | Number of log messages of severity "debug2"
+log\_count.error                                    | Number of log messages of severity "error"
+log\_count.fatal                                    | Number of log messages of severity "fatal"
+log\_count.info                                     | Number of log messages of severity "info"
+log\_count.off                                      | Number of log messages of severity "off"
+log\_count.warn                                     | Number of log messages of severity "warn"
+requests.completed                                  | Number of requests that have been processed
+requests.outstanding                                | Number of request that are currently being processed
+tasks\_running.count                                | Number of currently running tasks. Updated at least once every 30 seconds. This metric is only seen in version 3 of the Cloud Foundry API
+tasks\_running.memory\_in\_mb                       | Memory being consumed by all currently running tasks. Updated at least once every 30s. This metric is only seen in version 3 of the Cloud Foundry API
+thread\_info.event\_machine.connection\_count       | Number of open connections to event machine. Updated at least once every 30 seconds
+thread\_info.event\_machine.resultqueue.num\_waiting | Number of scheduled tasks in the result. Updated at least once every 30 seconds
+thread\_info.event\_machine.resultqueue.size        | Number of unscheduled tasks in the result. Updated at least once every 30 seconds
+thread\_info.event\_machine.threadqueue.num\_waiting | Number of scheduled tasks in the threadqueue. Updated at least once every 30 seconds
+thread\_info.event\_machine.threadqueue.size        | Number of unscheduled tasks in the threadqueue. Updated at least once every 30 seconds
+thread\_info.thread\_count                          | Total number of threads that are either runnable or stopped. Updated at least once every 30 seconds
+total\_users                                        | Total number of users ever created, including inactive users. Updated at least every 10 minutes
+vcap\_sinatra.recent\_errors                        | 50 most recent errors. DEPRECATED
+vitals.cpu                                          | Percentage of CPU used by the Cloud Controller process. Updated every 30 seconds
+vitals.cpu\_load\_avg                               | System CPU load averaged over a minute according to the OS. Updated every 30 seconds
+vitals.mem\_bytes                                   | The RSS bytes (resident set size) or real memory of the Cloud Controller process. Updated every 30 seconds
+vitals.mem\_free\_bytes                             | Total memory available according to the OS. Updated every 30 seconds
+vitals.mem\_used\_bytes                             | Total memory used (active + wired) according to the OS. Updated every 30 seconds
+vitals.num\_cores                                   | The number of CPUs of a host machine. Updated at least every 30 seconds
+vitals.uptime                                       | The uptime of the Cloud Controller process in seconds. Updated every 30 seconds
 
-[Top](#metrics-by-component)
+[Top](#top)

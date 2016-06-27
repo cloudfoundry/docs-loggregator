@@ -1,34 +1,36 @@
 Visit [etcd stats API](https://coreos.com/etcd/docs/latest/api.html#statistics)
 
+Default Origin Name: etcd
+
 Metric Name | Description
 --- | ---
-etcd.leader.Followers              | number of etcd followers
-etcd.leader.Latency                | current latency to a specific follower
-etcd.server.IsLeader               | 1 if the current server is the leader, 0 if it is a follower
-etcd.server.ReceivedAppendRequests | number of append requests this node has processed
-etcd.server.ReceivingBandwidthRate | number of bytes per second this node is receiving (follower only)
-etcd.server.ReceivingRequestRate   | number of requests per second this node is receiving (follower only)
-etcd.server.SendingBandwidthRate   | number of bytes per second this node is sending (leader only). This value is undefined on single member clusters.
-etcd.server.SendingRequestRate     | number of requests per second this node is sending (leader only). This value is undefined on single member clusters.
-etcd.server.SentAppendRequests     | number of requests that this node has sent
-etcd.store.RaftIndex               | X-Raft-Index value from the /stats/store endpoint
-etcd.store.RaftTerm                | X-Raft-Term value from the /stats/store endpoint
-etcd.store.EtcdIndex               | X-Etcd-Index value from the /stats/store endpoint
-etcd.store.CompareAndDeleteFail    | CompareAndDeleteFail operation count
-etcd.store.CompareAndDeleteSuccess | CompareAndDeleteSuccess operation count
-etcd.store.CompareAndSwapFail      | CompareAndSwapFail operation count
-etcd.store.CompareAndSwapSuccess   | CompareAndSwapSuccess operation count
-etcd.store.CreateFail              | CreateFail operation count
-etcd.store.CreateSuccess           | CreateSuccess operation count
-etcd.store.DeleteFail              | DeleteFail operation count
-etcd.store.DeleteSuccess           | DeleteSuccess operation count
-etcd.store.ExpireCount             | ExpireCount operation count
-etcd.store.GetsFail                | GetsFail operation count
-etcd.store.GetsSuccess             | GetsSuccess operation count
-etcd.store.SetsFail                | SetsFail operation count
-etcd.store.SetsSuccess             | SetsSuccess operation count
-etcd.store.UpdateFail              | UpdateFail operation count
-etcd.store.UpdateSuccess           | UpdateSuccess operation count
-etcd.store.Watchers                | Watchers operation count
+CompareAndDeleteFail    | CompareAndDeleteFail operation count
+CompareAndDeleteSuccess | CompareAndDeleteSuccess operation count
+CompareAndSwapFail      | CompareAndSwapFail operation count
+CompareAndSwapSuccess   | CompareAndSwapSuccess operation count
+CreateFail              | CreateFail operation count
+CreateSuccess           | CreateSuccess operation count
+DeleteFail              | DeleteFail operation count
+DeleteSuccess           | DeleteSuccess operation count
+EtcdIndex               | X-Etcd-Index value from the /stats/store endpoint
+ExpireCount             | ExpireCount operation count
+Followers              | Number of etcd followers
+GetsFail                | GetsFail operation count
+GetsSuccess             | GetsSuccess operation count
+IsLeader               | 1 if the current server is the leader, 0 if it is a follower
+Latency                | Current latency to a specific follower
+RaftIndex               | X-Raft-Index value from the /stats/store endpoint
+RaftTerm                | X-Raft-Term value from the /stats/store endpoint
+ReceivedAppendRequests | Number of append requests this node has processed
+ReceivingBandwidthRate | Number of bytes per second this node is receiving (follower only)
+ReceivingRequestRate   | Number of requests per second this node is receiving (follower only)
+SendingBandwidthRate   | Number of bytes per second this node is sending (leader only). This value is undefined on single member clusters.
+SendingRequestRate     | Number of requests per second this node is sending (leader only). This value is undefined on single member clusters.
+SentAppendRequests     | Number of requests that this node has sent
+SetsFail                | SetsFail operation count
+SetsSuccess             | SetsSuccess operation count
+UpdateFail              | UpdateFail operation count
+UpdateSuccess           | UpdateSuccess operation count
+Watchers                | Watchers operation count
 
-[Top](#metrics-by-component)
+[Top](#top)

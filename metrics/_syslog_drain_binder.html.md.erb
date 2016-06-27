@@ -1,14 +1,16 @@
-Metric Name                                            | Description
---------------------------------------------------------|---------------------------------------------------------------------------------------------------
- syslog\_drain\_binder.memoryStats.lastGCPauseTimeNS      | Duration of the last Garbage Collector pause in nanoseconds
- syslog\_drain\_binder.memoryStats.numBytesAllocated      | Instantaneous count of bytes allocated and still in use
- syslog\_drain\_binder.memoryStats.numBytesAllocatedHeap  | Instantaneous count of bytes allocated on the main heap and still in use
- syslog\_drain\_binder.memoryStats.numBytesAllocatedStack | Instantaneous count of bytes used by the stack allocator
- syslog\_drain\_binder.memoryStats.numFrees               | Lifetime number of memory deallocations
- syslog\_drain\_binder.memoryStats.numMallocs             | Lifetime number of memory allocations
- syslog\_drain\_binder.numCPUS                            | Number of CPUs on the machine
- syslog\_drain\_binder.numGoRoutines                      | Instantaneous number of active Goroutines in the Doppler process
- syslog\_drain\_binder.pollCount                          | Number of times the syslog drain binder has polled the cloud controller for syslog drain bindings
- syslog\_drain\_binder.totalDrains                        | Number of syslog drains returned by cloud controller
+Default Origin Name: syslog\_drain\_binder
 
-[Top](#metrics-by-component)
+Metric Name                         | Description
+------------------------------------|---------------------------------------------------------------------------------------------------
+ memoryStats.lastGCPauseTimeNS      | Duration of the last Garbage Collector pause in nanoseconds
+ memoryStats.numBytesAllocated      | Instantaneous count of bytes allocated and still in use
+ memoryStats.numBytesAllocatedHeap  | Instantaneous count of bytes allocated on the main heap and still in use
+ memoryStats.numBytesAllocatedStack | Instantaneous count of bytes used by the stack allocator
+ memoryStats.numFrees               | Lifetime number of memory deallocations
+ memoryStats.numMallocs             | Lifetime number of memory allocations
+ numCPUS                            | Number of CPUs on the machine
+ numGoRoutines                      | Instantaneous number of active Goroutines in the Doppler process
+ pollCount                          | Number of times the syslog drain binder has polled the cloud controller for syslog drain bindings
+ totalDrains                        | Number of syslog drains returned by cloud controller
+
+[Top](#top)
