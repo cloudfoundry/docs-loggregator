@@ -9,7 +9,7 @@ Routing Release metrics have following origin names:
 
 Default Origin Name: gorouter
 
-Metric Name                                   | Description
+ Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
  memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
  memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
@@ -17,6 +17,7 @@ Metric Name                                   | Description
  memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
  memoryStats.numFrees                          | Lifetime number of memory deallocations
  memoryStats.numMallocs                        | Lifetime number of memory allocations
+ logSenderTotalMessagesRead                    | Count of application log messages
  numCpus                                       | Number of CPUs on the machine
  numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
  responses				       | Total number of http responses
@@ -39,7 +40,7 @@ Metric Name                                   | Description
 
 Default Origin Name: tcp_emitter
 
-Metric Name                                   | Description
+ Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
  memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
  memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
@@ -49,11 +50,13 @@ Metric Name                                   | Description
  memoryStats.numMallocs                        | Lifetime number of memory allocations
  numCpus                                       | Number of CPUs on the machine
  numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process<a id="tcp_router"></a>
+ udp.sentMessageCount			       | Lifetime number of sent messages to Doppler over UDP
+ udp.sentByteCount			       | Lifetime number of sent bytes to Doppler over UDP
 
 
-Default Origin Name: tcp_router
+Default Origin Name: router_configurer
 
-Metric Name                                   | Description
+ Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
  memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
  memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
@@ -75,7 +78,7 @@ Metric Name                                   | Description
 
 Default Origin Name: routing_api
 
-Metric Name                                   | Description
+ Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
  memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
  memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
