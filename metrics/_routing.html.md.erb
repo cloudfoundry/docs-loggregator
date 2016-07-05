@@ -2,12 +2,12 @@ Routing Release metrics have following origin names:
 
 
 + [gorouter](#gorouter)
-+ [tcp_router] (#tcp_router)
 + [tcp_emitter] (#tcp_emitter)
-+ [routing_api] (#routing_api)<a id="gorouter"></a>
++ [tcp_router] (#tcp_router)
++ [routing_api] (#routing_api)
 
 
-Default Origin Name: gorouter
+<a id="gorouter"></a>Default Origin Name: gorouter
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
@@ -35,10 +35,10 @@ Default Origin Name: gorouter
  ms_since_last_registry_update		       | Time in millisecond since the last route register has been been receieved
  bad_gateways				       | Total number of Bad gateways
  latency				       | Time the Gorouter took to handle requests to its application endpoints. Emitted when the Gorouter handles requests
- latency.{component}			       | Time the Gorouter took to handle requests from each component to its endpoints. Emitted when the Gorouter handles requests<a id="tcp_emitter"></a>
+ latency.{component}			       | Time the Gorouter took to handle requests from each component to its endpoints. Emitted when the Gorouter handles requests
 
 
-Default Origin Name: tcp_emitter
+<a id="tcp_emitter"></a>Default Origin Name: tcp_emitter
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
@@ -49,12 +49,12 @@ Default Origin Name: tcp_emitter
  memoryStats.numFrees                          | Lifetime number of memory deallocations
  memoryStats.numMallocs                        | Lifetime number of memory allocations
  numCpus                                       | Number of CPUs on the machine
- numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process<a id="tcp_router"></a>
+ numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
  udp.sentMessageCount			       | Lifetime number of sent messages to Doppler over UDP
  udp.sentByteCount			       | Lifetime number of sent bytes to Doppler over UDP
 
 
-Default Origin Name: router_configurer
+<a id="tcp_router"></a>Default Origin Name: router_configurer (bosh job tcp_router)
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
@@ -73,10 +73,10 @@ Default Origin Name: router_configurer
  AverageQueueTimeMs			       | Average time spent in queue (in ms)
  AverageConnectTimeMs			       | Average backend response time (in ms)
  {session_id}CurrentSessions		       | Total number of current sessions
- {session_id}.ConnectionTime		       | Average connection time to backend in current session<a id="routing_api"></a>
+ {session_id}.ConnectionTime		       | Average connection time to backend in current session
 
 
-Default Origin Name: routing_api
+<a id="routing_api"></a>Default Origin Name: routing_api
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
