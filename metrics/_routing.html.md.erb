@@ -1,0 +1,100 @@
+Routing Release metrics have following origin names: 
+
+
++ [gorouter](#gorouter)
++ [tcp_emitter] (#tcp_emitter)
++ [tcp_router] (#tcp_router)
++ [routing_api] (#routing_api)
+
+
+<a id="gorouter"></a>Default Origin Name: gorouter
+
+ Metric Name                                   | Description
+-----------------------------------------------|----------------------------------------------------------------------------------------------------------------
+ memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
+ memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
+ memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
+ memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
+ memoryStats.numFrees                          | Lifetime number of memory deallocations
+ memoryStats.numMallocs                        | Lifetime number of memory allocations
+ logSenderTotalMessagesRead                    | Count of application log messages
+ numCpus                                       | Number of CPUs on the machine
+ numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
+ responses				       | Total number of http responses
+ responses.2xx				       | Total number of 2xx http responses
+ responses.3xx				       | Total number of 3xx http responses
+ responses.4xx				       | Total number of 4xx http responses
+ responses.5xx				       | Total number of 5xx http responses
+ responses.xxx				       | Total number of other(non-(2xx-5xx)) http responses
+ routed_app_requests			       | The collector sums up requests for all dea-{index} components for its output metrics.
+ total_requests				       | Total number of requests receieved
+ total_routes				       | Total number of routes registered
+ registry_message.{components}		       | Total number of route register messages received for each component
+ rejected_requests			       | Total number of bad requests received on gorouter
+ requests.{component_name}		       | Total number of requests receieved for each component
+ ms_since_last_registry_update		       | Time in millisecond since the last route register has been been receieved
+ bad_gateways				       | Total number of Bad gateways
+ latency				       | Time the Gorouter took to handle requests to its application endpoints. Emitted when the Gorouter handles requests
+ latency.{component}			       | Time the Gorouter took to handle requests from each component to its endpoints. Emitted when the Gorouter handles requests
+
+
+<a id="tcp_emitter"></a>Default Origin Name: tcp_emitter
+
+ Metric Name                                   | Description
+-----------------------------------------------|----------------------------------------------------------------------------------------------------------------
+ memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
+ memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
+ memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
+ memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
+ memoryStats.numFrees                          | Lifetime number of memory deallocations
+ memoryStats.numMallocs                        | Lifetime number of memory allocations
+ numCpus                                       | Number of CPUs on the machine
+ numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
+ udp.sentMessageCount			       | Lifetime number of sent messages to Doppler over UDP
+ udp.sentByteCount			       | Lifetime number of sent bytes to Doppler over UDP
+
+
+<a id="tcp_router"></a>Default Origin Name: router_configurer (bosh job tcp_router)
+
+ Metric Name                                   | Description
+-----------------------------------------------|----------------------------------------------------------------------------------------------------------------
+ memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
+ memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
+ memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
+ memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
+ memoryStats.numFrees                          | Lifetime number of memory deallocations
+ memoryStats.numMallocs                        | Lifetime number of memory allocations
+ numCpus                                       | Number of CPUs on the machine
+ numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
+ udp.sentMessageCount			       | Lifetime number of sent messages to Doppler over UDP
+ udp.sentByteCount			       | Lifetime number of sent bytes to Doppler over UDP
+ TotalBackendConnectionErrors		       | Total number of backend connection errors
+ TotalCurrentQueuedRequests		       | Total number of requests unassigned in queue
+ AverageQueueTimeMs			       | Average time spent in queue (in ms)
+ AverageConnectTimeMs			       | Average backend response time (in ms)
+ {session_id}CurrentSessions		       | Total number of current sessions
+ {session_id}.ConnectionTime		       | Average connection time to backend in current session
+
+
+<a id="routing_api"></a>Default Origin Name: routing_api
+
+ Metric Name                                   | Description
+-----------------------------------------------|----------------------------------------------------------------------------------------------------------------
+ memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
+ memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
+ memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
+ memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
+ memoryStats.numFrees                          | Lifetime number of memory deallocations
+ memoryStats.numMallocs                        | Lifetime number of memory allocations
+ numCpus                                       | Number of CPUs on the machine
+ numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
+ udp.sentMessageCount			       | Lifetime number of sent messages to Doppler over UDP
+ udp.sentByteCount			       | Lifetime number of sent bytes to Doppler over UDP
+ total_http_routes			       | Number of tcp routes in the  routing table. Emitted periodically
+ total_http_subscription		       | Number of http routes subscripions
+ total_token_errors			       | Total number of UAA token errors
+ key_refresh_events			       | Total number of events when fresh token was fetched from UAA
+ total_tcp_routes			       | Number of tcp routes in the routing table. Emitted periodically
+ total_tcp_subscriptions		       | Number of tcp routes subscripions
+
+ [Top](#top)
