@@ -25,17 +25,17 @@ Routing Release metrics have following origin names:
  responses.3xx				       | Total number of 3xx http responses
  responses.4xx				       | Total number of 4xx http responses
  responses.5xx				       | Total number of 5xx http responses
- responses.xxx				       | Total number of other(non-(2xx-5xx)) http responses
- routed_app_requests			       | The collector sums up requests for all dea-{index} components for its output metrics.
+ responses.xxx				       | Total number of other (non-(2xx-5xx)) http responses
+ routed\_app\_requests			       | The collector sums up requests for all dea-{index} components for its output metrics.
  total_requests				       | Total number of requests receieved
  total_routes				       | Total number of routes registered
  registry_message.{components}		       | Total number of route register messages received for each component
  rejected_requests			       | Total number of bad requests received on gorouter
  requests.{component_name}		       | Total number of requests receieved for each component
- ms_since_last_registry_update		       | Time in millisecond since the last route register has been been receieved
- bad_gateways				       | Total number of Bad gateways
- latency				       | Time the Gorouter took to handle requests to its application endpoints. Emitted when the Gorouter handles requests
- latency.{component}			       | Time the Gorouter took to handle requests from each component to its endpoints. Emitted when the Gorouter handles requests
+ ms\_since\_last\_registry\_update		       | Time in milliseconds since the last route register has been been receieved
+ bad_gateways				       | Total number of bad gateways
+ latency				       | Time the Gorouter took to handle requests to its application endpoints. Emitted when the Gorouter handles requests.
+ latency.{component}			       | Time the Gorouter took to handle requests from each component to its endpoints. Emitted when the Gorouter handles requests.
 
 
 <a id="tcp_emitter"></a>Default Origin Name: tcp_emitter
@@ -54,7 +54,7 @@ Routing Release metrics have following origin names:
  udp.sentByteCount			       | Lifetime number of sent bytes to Doppler over UDP
 
 
-<a id="tcp_router"></a>Default Origin Name: router_configurer (bosh job tcp_router)
+<a id="tcp_router"></a>Default Origin Name: router\_configurer (bosh job tcp_router)
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
@@ -90,11 +90,11 @@ Routing Release metrics have following origin names:
  numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
  udp.sentMessageCount			       | Lifetime number of sent messages to Doppler over UDP
  udp.sentByteCount			       | Lifetime number of sent bytes to Doppler over UDP
- total_http_routes			       | Number of tcp routes in the  routing table. Emitted periodically
- total_http_subscription		       | Number of http routes subscripions
- total_token_errors			       | Total number of UAA token errors
- key_refresh_events			       | Total number of events when fresh token was fetched from UAA
- total_tcp_routes			       | Number of tcp routes in the routing table. Emitted periodically
- total_tcp_subscriptions		       | Number of tcp routes subscripions
+ total\_http\_routes			       | Number of tcp routes in the  routing table. Emitted periodically.
+ total\_http\_subscription		       | Number of http routes subscriptions
+ total\_token\_errors			       | Total number of UAA token errors
+ key\_refresh\_events			       | Total number of events when fresh token was fetched from UAA
+ total\_tcp\_routes			       | Number of tcp routes in the routing table. Emitted periodically
+ total\_tcp\_subscriptions		       | Number of tcp routes subscriptions
 
  [Top](#top)
