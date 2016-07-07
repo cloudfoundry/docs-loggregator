@@ -62,68 +62,68 @@ The following list provides several example requests with the corresponding Clou
 
 * An anonymous GET request:
 
-	```
-	CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/info|GET 
-	/v2/info|0|rt=1460690037402 suser= suid= request=/v2/info 
-	requestMethod=GET src=127.0.0.1 dst=<%=vars.example_ip_1%> 
-	cs1Label=userAuthenticationMechanism cs1=no-auth cs2Label=vcapRequestId 
-	cs2=c4bac383-7cc9-4d9f-b1c0-1iq8c0baa000 cs3Label=result cs3=success 
-	cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor 
-	cs5=<%=vars.example_ip_2%>
-	```
+    ```
+    CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/info|GET 
+    /v2/info|0|rt=1460690037402 suser= suid= request=/v2/info 
+    requestMethod=GET src=127.0.0.1 dst=<%=vars.example_ip_1%> 
+    cs1Label=userAuthenticationMechanism cs1=no-auth cs2Label=vcapRequestId 
+    cs2=c4bac383-7cc9-4d9f-b1c0-1iq8c0baa000 cs3Label=result cs3=success 
+    cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor 
+    cs5=<%=vars.example_ip_2%>
+    ```
 
 * A GET request with basic authentication:
 
-	```
-	CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/syslog_drain_urls|GET
-	/v2/syslog_drain_urls|0|rt=1460690165743 suser=bulk_api suid= 
-	request=/v2/syslog_drain_urls?batch_size\=1000 requestMethod=GET 
-	src=127.0.0.1 dst=<%=vars.example_ip_1%> cs1Label=userAuthenticationMechanism 
-	cs1=basic-auth cs2Label=vcapRequestId cs2=79187189-e810-33dd-6911-b5d015bbc999
-	::eat1234d-4004-4622-ad11-9iaai88e3ae9 cs3Label=result cs3=success 
-	cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor cs5=<%=vars.example_ip_2%>
-	```
+    ```
+    CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/syslog_drain_urls|GET
+    /v2/syslog_drain_urls|0|rt=1460690165743 suser=bulk_api suid= 
+    request=/v2/syslog_drain_urls?batch_size\=1000 requestMethod=GET 
+    src=127.0.0.1 dst=<%=vars.example_ip_1%> cs1Label=userAuthenticationMechanism 
+    cs1=basic-auth cs2Label=vcapRequestId cs2=79187189-e810-33dd-6911-b5d015bbc999
+    ::eat1234d-4004-4622-ad11-9iaai88e3ae9 cs3Label=result cs3=success 
+    cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor cs5=<%=vars.example_ip_2%>
+    ```
 
 * A GET request with OAuth access token authentication:
 
-	```
-	CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/routes|GET 
-	/v2/routes|0|rt=1460689904925 suser=admin suid=c7ca208f-8a9e-4aab-
-	92f5-28795f86d62a request=/v2/routes?inline-relations-depth\=1&q\=
-	host%3Adora%3Bdomain_guid%3B777-1o9f-5f5n-i888-o2025cb2dfc3 
-	requestMethod=GET src=127.0.0.1 dst=<%=vars.example_ip_1%> 
-	cs1Label=userAuthenticationMechanism cs1=oauth-access-token 
-	cs2Label=vcapRequestId cs2=79187189-990i-8930-52b2-9090b2c5poz0
-	::5a265621-b223-4520-afae-ab7d0ee7c75b cs3Label=result cs3=success 
-	cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor cs5=<%=vars.example_ip_2%>
-	```
+    ```
+    CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/routes|GET 
+    /v2/routes|0|rt=1460689904925 suser=admin suid=c7ca208f-8a9e-4aab-
+    92f5-28795f86d62a request=/v2/routes?inline-relations-depth\=1&q\=
+    host%3Adora%3Bdomain_guid%3B777-1o9f-5f5n-i888-o2025cb2dfc3 
+    requestMethod=GET src=127.0.0.1 dst=<%=vars.example_ip_1%> 
+    cs1Label=userAuthenticationMechanism cs1=oauth-access-token 
+    cs2Label=vcapRequestId cs2=79187189-990i-8930-52b2-9090b2c5poz0
+    ::5a265621-b223-4520-afae-ab7d0ee7c75b cs3Label=result cs3=success 
+    cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor cs5=<%=vars.example_ip_2%>
+    ```
 
 * A GET request that results in a 404 error:
 
-	```
-	CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/apps/7f310103-
-	39aa-4a8c-b92a-9ff8a6a2fa6b|GET /v2/apps/7f310103-39aa-4a8c-b92a-
-	9ff8a6a2fa6b|0|rt=1460691002394 suser=bob suid=a00i2026-55io-3983-
-	555o-40e611410aec request=/v2/apps/7f310103-39aa-4a8c-b92a-9ff8a6a2fa6b 
-	requestMethod=GET src=127.0.0.1 dst=<%=vars.example_ip_1%> 
-	cs1Label=userAuthenticationMechanism cs1=oauth-access-token cs2Label=vcapRequestId 
-	cs2=49f21579-9eb5-4bdf-6e49-e77d2de647a2::9f8841e6-e04a-498b-b3ff-d59cfe7cb7ea 
-	cs3Label=result cs3=clientError cs4Label=httpStatusCode cs4=404 
-	cs5Label=xForwardedFor cs5=<%=vars.example_ip_2%>
-	```
+    ```
+    CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/apps/7f310103-
+    39aa-4a8c-b92a-9ff8a6a2fa6b|GET /v2/apps/7f310103-39aa-4a8c-b92a-
+    9ff8a6a2fa6b|0|rt=1460691002394 suser=bob suid=a00i2026-55io-3983-
+    555o-40e611410aec request=/v2/apps/7f310103-39aa-4a8c-b92a-9ff8a6a2fa6b 
+    requestMethod=GET src=127.0.0.1 dst=<%=vars.example_ip_1%> 
+    cs1Label=userAuthenticationMechanism cs1=oauth-access-token cs2Label=vcapRequestId 
+    cs2=49f21579-9eb5-4bdf-6e49-e77d2de647a2::9f8841e6-e04a-498b-b3ff-d59cfe7cb7ea 
+    cs3Label=result cs3=clientError cs4Label=httpStatusCode cs4=404 
+    cs5Label=xForwardedFor cs5=<%=vars.example_ip_2%>
+    ```
 
 * A POST request that results in a 403 error:
 
-	```
-	CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|POST /v2/apps|POST 
-	/v2/apps|0|rt=1460691405564 suser=bob suid=4f9a33f9-fb13-4774-a708-
-	f60c939625cd request=/v2/apps?async\=true requestMethod=POST 
-	src=127.0.0.1 dst=<%=vars.example_ip_1%> cs1Label=userAuthenticationMechanism 
-	cs1=oauth-access-token cs2Label=vcapRequestId cs2=booc03111-9999-4003-88ab-
-	20i9r33333ou::5a4993fc-722f-48bc-aff4-99b2005i9bb5 cs3Label=result 
-	cs3=clientError cs4Label=httpStatusCode cs4=403 cs5Label=xForwardedFor 
-	cs5=<%=vars.example_ip_2%>
-	```
+    ```
+    CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|POST /v2/apps|POST 
+    /v2/apps|0|rt=1460691405564 suser=bob suid=4f9a33f9-fb13-4774-a708-
+    f60c939625cd request=/v2/apps?async\=true requestMethod=POST 
+    src=127.0.0.1 dst=<%=vars.example_ip_1%> cs1Label=userAuthenticationMechanism 
+    cs1=oauth-access-token cs2Label=vcapRequestId cs2=booc03111-9999-4003-88ab-
+    20i9r33333ou::5a4993fc-722f-48bc-aff4-99b2005i9bb5 cs3Label=result 
+    cs3=clientError cs4Label=httpStatusCode cs4=403 cs5Label=xForwardedFor 
+    cs5=<%=vars.example_ip_2%>
+    ```
 
 ##<a id="uaa"></a>UAA Logging
 
