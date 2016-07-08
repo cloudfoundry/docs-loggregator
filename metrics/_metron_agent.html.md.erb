@@ -1,6 +1,6 @@
 Default Origin Name: MetronAgent
 
-Metric Name                                   | Description
+Metric Name                                    | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
  MessageAggregator.counterEventReceived        | Lifetime number of CounterEvents aggregated in Metron
  MessageAggregator.httpStartReceived           | Lifetime number of HTTPStart aggregated in Metron
@@ -9,8 +9,8 @@ Metric Name                                   | Description
  MessageAggregator.httpUnmatchedStartReceived  | Lifetime number of HTTPStart events for which no HTTPStop was received
  MessageAggregator.httpUnmatchedStopReceived   | Lifetime number of HTTPStop events for which no HTTPStart was received
  MessageAggregator.uncategorizedEvents         | Lifetime number of non-(CounterEvent  HTTPStart HTTPStop) events processed by aggregator
- MessageBuffer.droppedMessageCount           | Lifetime number of intentionally dropped messages from Metron's batch writer buffer. Batch writing is performed over TCP/TLS only.
- DopplerForwarder.sentMessages               | Lifetime number of messages sent to Doppler regardless of protocol
+ MessageBuffer.droppedMessageCount             | Lifetime number of intentionally dropped messages from Metron's batch writer buffer. Batch writing is performed over TCP/TLS only.
+ DopplerForwarder.sentMessages                 | Lifetime number of messages sent to Doppler regardless of protocol
  dropsondeAgentListener.currentBufferCount     | Instantaneous number of Dropsonde messages read by UDP socket  but not yet unmarshalled
  dropsondeAgentListener.receivedByteCount      | Lifetime number of bytes of Dropsonde messages read by UDP socket
  dropsondeAgentListener.receivedMessageCount   | Lifetime number of Dropsonde messages read by UDP socket
