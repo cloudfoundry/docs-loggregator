@@ -2,40 +2,61 @@ Routing Release metrics have following origin names:
 
 
 + [gorouter](#gorouter)
++ [routing_api] (#routing_api)
 + [tcp_emitter] (#tcp_emitter)
 + [tcp_router] (#tcp_router)
-+ [routing_api] (#routing_api)
 
 
 <a id="gorouter"></a>Default Origin Name: gorouter
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
+ bad\_gateways                                 | Total number of bad gateways
+ latency                                       | Time the Gorouter took to handle requests to its application endpoints. Emitted when the Gorouter handles requests
+ latency.{component}                           | Time the Gorouter took to handle requests from each component to its endpoints. Emitted when the Gorouter handles requests
+ logSenderTotalMessagesRead                    | Count of application log messages
  memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
  memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
  memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
  memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
  memoryStats.numFrees                          | Lifetime number of memory deallocations
  memoryStats.numMallocs                        | Lifetime number of memory allocations
- logSenderTotalMessagesRead                    | Count of application log messages
+ ms\_since\_last\_registry\_update             | Time in millisecond since the last route register has been been received
  numCpus                                       | Number of CPUs on the machine
  numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
+ registry\_message.{components}                | Total number of route register messages received for each component
+ rejected\_requests                            | Total number of bad requests received on gorouter
+ requests.{component\_name}                    | Total number of requests received for each component
  responses                                     | Total number of HTTP responses
  responses.2xx                                 | Total number of 2xx HTTP responses
  responses.3xx                                 | Total number of 3xx HTTP responses
  responses.4xx                                 | Total number of 4xx HTTP responses
  responses.5xx                                 | Total number of 5xx HTTP responses
  responses.xxx                                 | Total number of other(non-(2xx-5xx)) HTTP responses
- routed\_app\_requests                           | The collector sums up requests for all dea-{index} components for its output metrics.
- total\_requests                                | Total number of requests received
- total\_routes                                  | Total number of routes registered
- registry\_message.{components}                 | Total number of route register messages received for each component
- rejected\_requests                             | Total number of bad requests received on gorouter
- requests.{component\_name}                     | Total number of requests received for each component
- ms\_since\_last\_registry\_update                 | Time in millisecond since the last route register has been been received
- bad\_gateways                                  | Total number of bad gateways
- latency                                       | Time the Gorouter took to handle requests to its application endpoints. Emitted when the Gorouter handles requests
- latency.{component}                           | Time the Gorouter took to handle requests from each component to its endpoints. Emitted when the Gorouter handles requests
+ routed\_app\_requests                         | The collector sums up requests for all dea-{index} components for its output metrics.
+ total\_requests                               | Total number of requests received
+ total\_routes                                 | Total number of routes registered
+
+<a id="routing_api"></a>Default Origin Name: routing_api
+
+ Metric Name                                   | Description
+-----------------------------------------------|----------------------------------------------------------------------------------------------------------------
+ key\_refresh\_events                          | Total number of events when fresh token was fetched from UAA
+ memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
+ memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
+ memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
+ memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
+ memoryStats.numFrees                          | Lifetime number of memory deallocations
+ memoryStats.numMallocs                        | Lifetime number of memory allocations
+ numCpus                                       | Number of CPUs on the machine
+ numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
+ total\_http\_routes                           | Number of TCP routes in the  routing table. Emitted periodically
+ total\_http\_subscription                     | Number of HTTP routes subscriptions
+ total\_tcp\_routes                            | Number of TCP routes in the routing table. Emitted periodically
+ total\_tcp\_subscriptions                     | Number of TCP routes subscriptions
+ total\_token\_errors                          | Total number of UAA token errors
+ udp.sentByteCount                             | Lifetime number of sent bytes to Doppler over UDP
+ udp.sentMessageCount                          | Lifetime number of sent messages to Doppler over UDP
 
 <a id="tcp_emitter"></a>Default Origin Name: tcp_emitter
 
@@ -49,14 +70,18 @@ Routing Release metrics have following origin names:
  memoryStats.numMallocs                        | Lifetime number of memory allocations
  numCpus                                       | Number of CPUs on the machine
  numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
- udp.sentMessageCount                          | Lifetime number of sent messages to Doppler over UDP
  udp.sentByteCount                             | Lifetime number of sent bytes to Doppler over UDP
+ udp.sentMessageCount                          | Lifetime number of sent messages to Doppler over UDP
 
 
 <a id="tcp_router"></a>Default Origin Name: router\_configurer (bosh job tcp_router)
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
+ {session_id}.ConnectionTime                   | Average connection time to backend in current session
+ {session_id}CurrentSessions                   | Total number of current sessions
+ AverageConnectTimeMs                          | Average backend response time (in ms)
+ AverageQueueTimeMs                            | Average time spent in queue (in ms)
  memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
  memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
  memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
@@ -65,35 +90,11 @@ Routing Release metrics have following origin names:
  memoryStats.numMallocs                        | Lifetime number of memory allocations
  numCpus                                       | Number of CPUs on the machine
  numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
- udp.sentMessageCount                          | Lifetime number of sent messages to Doppler over UDP
- udp.sentByteCount                             | Lifetime number of sent bytes to Doppler over UDP
  TotalBackendConnectionErrors                  | Total number of backend connection errors
  TotalCurrentQueuedRequests                    | Total number of requests unassigned in queue
- AverageQueueTimeMs                            | Average time spent in queue (in ms)
- AverageConnectTimeMs                          | Average backend response time (in ms)
- {session_id}CurrentSessions                   | Total number of current sessions
- {session_id}.ConnectionTime                   | Average connection time to backend in current session
-
-
-<a id="routing_api"></a>Default Origin Name: routing_api
-
- Metric Name                                   | Description
------------------------------------------------|----------------------------------------------------------------------------------------------------------------
- memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
- memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
- memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
- memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
- memoryStats.numFrees                          | Lifetime number of memory deallocations
- memoryStats.numMallocs                        | Lifetime number of memory allocations
- numCpus                                       | Number of CPUs on the machine
- numGoRoutines                                 | Instantaneous number of active Goroutines in the Doppler process
- udp.sentMessageCount                          | Lifetime number of sent messages to Doppler over UDP
  udp.sentByteCount                             | Lifetime number of sent bytes to Doppler over UDP
- total\_http\_routes                             | Number of TCP routes in the  routing table. Emitted periodically
- total\_http\_subscription                       | Number of HTTP routes subscriptions
- total\_token\_errors                            | Total number of UAA token errors
- key\_refresh\_events                            | Total number of events when fresh token was fetched from UAA
- total\_tcp\_routes                              | Number of TCP routes in the routing table. Emitted periodically
- total\_tcp\_subscriptions                       | Number of TCP routes subscriptions
+ udp.sentMessageCount                          | Lifetime number of sent messages to Doppler over UDP
+
+
 
  [Top](#top)
