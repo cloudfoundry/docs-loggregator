@@ -165,17 +165,17 @@ Default Origin Name: rep
 
  Metric Name                                             | Description
 ---------------------------------------------------------|----------------------------------------------------------------------------------------------
- CapacityRemainingContainers                             | Remaining number of containers this cell can host. Emitted periodically
- CapacityRemainingDisk                                   | Remaining amount of disk available for this cell to allocate to containers. Emitted periodically
- CapacityRemainingMemory                                 | Remaining amount of memory available for this cell to allocate to containers. Emitted periodically
- CapacityTotalContainers                                 | Total number of containers this cell can host. Emitted periodically
- CapacityTotalDisk                                       | Total amount of disk available for this cell to allocate to containers. Emitted periodically
- CapacityTotalMemory                                     | Total amount of memory available for this cell to allocate to containers. Emitted periodically
- CM                                                      |
- ContainerCount                                          | Number of containers hosted on the cell. Emitted periodically
+ CapacityRemainingContainers                             | Remaining number of containers this cell can host. Emitted every 30 seconds
+ CapacityRemainingDisk                                   | Remaining amount of disk available for this cell to allocate to containers. Emitted every 30 seconds
+ CapacityRemainingMemory                                 | Remaining amount of memory available for this cell to allocate to containers. Emitted every 30 seconds
+ CapacityTotalContainers                                 | Total number of containers this cell can host. Emitted every 30 seconds
+ CapacityTotalDisk                                       | Total amount of disk available for this cell to allocate to containers. Emitted every 30 seconds
+ CapacityTotalMemory                                     | Total amount of memory available for this cell to allocate to containers. Emitted every 30 seconds
+ CM                                                      | Emitted every 30 seconds
+ ContainerCount                                          | Number of containers hosted on the cell. Emitted every 30 seconds
  GardenContainerCreationDuration                         | Time the rep Garden backend took to create a container. Emitted after every successful container creation
- LogMessage                                              |
- logSenderTotalMessagesRead                              |
+ LogMessage                                              | Emitted every 30 seconds
+ logSenderTotalMessagesRead                              | Emitted every 30 seconds
  memoryStats.lastGCPauseTimeNS                           | Duration of the last garbage collector pause in nanoseconds
  memoryStats.numBytesAllocated                           | Instantaneous count of bytes allocated and still in use
  memoryStats.numBytesAllocatedHeap                       | Instantaneous count of bytes allocated on the main heap and still in use
@@ -184,29 +184,29 @@ Default Origin Name: rep
  memoryStats.numMallocs                                  | Lifetime number of memory allocations
  numCPUS                                                 | Number of CPUs on the machine
  numGoRoutines                                           | Instantaneous number of active goroutines in the process
- RepBulkSyncDuration                                     | Time the cell rep took to synchronize the ActualLRPs it has claimed with its actual garden containers. Emitted periodically by each rep
- UnhealthyCell                                           | Whether the cell has failed to pass its healthcheck against the garden backend. 0 signifies healthy, and 1 signifies unhealthy. Emitted periodically<a id="routeemitter"></a>
+ RepBulkSyncDuration                                     | Time the cell rep took to synchronize the ActualLRPs it has claimed with its actual garden containers. Emitted every 30 seconds by each rep
+ UnhealthyCell                                           | Whether the cell has failed to pass its healthcheck against the garden backend. 0 signifies healthy, and 1 signifies unhealthy. Emitted every 30 seconds<a id="routeemitter"></a>
 
 Default Origin Name: route_emitter
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------
- LockHeld.v1-locks-route\_emitter\_lock          | Whether a route-emitter holds the route-emitter lock: 1 means the lock is held, and 0 means the lock was lost. Emitted periodically by the active route-emitter
- LockHeldDuration.v1-locks-route\_emitter\_lock | Time the active route-emitter has held the route-emitter lock. Emitted periodically by the active route-emitter
+ LockHeld.v1-locks-route\_emitter\_lock        | Whether a route-emitter holds the route-emitter lock: 1 means the lock is held, and 0 means the lock was lost. Emitted every 30 seconds by the active route-emitter
+ LockHeldDuration.v1-locks-route\_emitter\_lock | Time the active route-emitter has held the route-emitter lock. Emitted every 30 seconds by the active route-emitter
  memoryStats.lastGCPauseTimeNS                 | Duration of the last garbage collector pause in nanoseconds
  memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
  memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
  memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
  memoryStats.numFrees                          | Lifetime number of memory deallocations
  memoryStats.numMallocs                        | Lifetime number of memory allocations
- MessagesEmitted                               | The cumulative number of registration messages that this process has sent
+ MessagesEmitted                               | The cumulative number of registration messages that this process has sent. Emitted every 30 seconds
  numCPUS                                       | Number of CPUs on the machine
  numGoRoutines                                 | Instantaneous number of active goroutines in the process
- RouteEmitterSyncDuration                      | Time the active route-emitter took to perform its synchronization pass. Emitted periodically
- RoutesRegistered                              | Cumulative number of route registrations emitted from the route-emitter as it reacts to changes to LRPs
- RoutesSynced                                  | Cumulative number of route registrations emitted from the route-emitter during its periodic route-table synchronization
- RoutesTotal                                   | Number of routes in the route-emitter's routing table. Emitted periodically
- RoutesUnregistered                            | Cumulative number of route unregistrations emitted from the route-emitter as it reacts to changes to LRPs<a id="sshproxy"></a>
+ RouteEmitterSyncDuration                      | Time the active route-emitter took to perform its synchronization pass. Emitted every 30 seconds
+ RoutesRegistered                              | Cumulative number of route registrations emitted from the route-emitter as it reacts to changes to LRPs. Emitted every 30 seconds
+ RoutesSynced                                  | Cumulative number of route registrations emitted from the route-emitter during its periodic route-table synchronization. Emitted every 30 seconds.
+ RoutesTotal                                   | Number of routes in the route-emitter's routing table. Emitted every 30 seconds
+ RoutesUnregistered                            | Cumulative number of route unregistrations emitted from the route-emitter as it reacts to changes to LRPs. Emitted every 30 seconds<a id="sshproxy"></a>
 
 Default Origin Name: ssh_proxy
 
@@ -256,15 +256,15 @@ Default Origin Name: tps_watcher
 
  Metric Name                                                 | Description
 -------------------------------------------------------------|----------------------------------------------------------------------------------------------
- LockHeld.v1-locks-tps\_watcher\_lock                        | Whether a tps-watcher holds the tps-watcher lock: 1 means the lock is held, and 0 means the lock was lost. Emitted periodically by the active tps-watcher
- LockHeldDuration.v1-locks-tps\_watcher\_lock                | Time the active tps-watcher has held the convergence lock. Emitted periodically by the active tps-watcher
+ LockHeld.v1-locks-tps\_watcher\_lock                        | Whether a tps-watcher holds the tps-watcher lock: 1 means the lock is held, and 0 means the lock was lost. Emitted every 30 seconds by the active tps-watcher
+ LockHeldDuration.v1-locks-tps\_watcher\_lock                | Time the active tps-watcher has held the convergence lock. Emitted every 30 seconds by the active tps-watcher
  memoryStats.lastGCPauseTimeNS                               | Duration of the last garbage collector pause in nanoseconds
  memoryStats.numBytesAllocated                               | Instantaneous count of bytes allocated and still in use
  memoryStats.numBytesAllocatedHeap                           | Instantaneous count of bytes allocated on the main heap and still in use
  memoryStats.numBytesAllocatedStack                          | Instantaneous count of bytes used by the stack allocator
  memoryStats.numFrees                                        | Lifetime number of memory deallocations
  memoryStats.numMallocs                                      | Lifetime number of memory allocations
- numCPUS                                                     | Number of CPUs on the machine
+ numCPUS                                                     | Number of CPUs on the machine. Emitted every 30 seconds
  numGoRoutines                                               | Instantaneous number of active goroutines in the process
  
 [Top](#top)
