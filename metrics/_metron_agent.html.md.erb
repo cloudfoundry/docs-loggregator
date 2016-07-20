@@ -10,7 +10,7 @@ Metric Name                                    | Description
  MessageAggregator.httpUnmatchedStopReceived   | Lifetime number of HTTPStop events for which no HTTPStart was received
  MessageAggregator.uncategorizedEvents         | Lifetime number of non-(CounterEvent  HTTPStart HTTPStop) events processed by aggregator
  MessageBuffer.droppedMessageCount             | Lifetime number of intentionally dropped messages from Metron's batch writer buffer. Batch writing is performed over TCP/TLS only.
- DopplerForwarder.sentMessages                 | Lifetime number of messages sent to Doppler regardless of protocol
+ DopplerForwarder.sentMessages                 | Lifetime number of messages sent to Doppler regardless of protocol. Emitted every 30 seconds
  dropsondeAgentListener.currentBufferCount     | Instantaneous number of Dropsonde messages read by UDP socket  but not yet unmarshalled
  dropsondeAgentListener.receivedByteCount      | Lifetime number of bytes of Dropsonde messages read by UDP socket
  dropsondeAgentListener.receivedMessageCount   | Lifetime number of Dropsonde messages read by UDP socket
@@ -49,8 +49,8 @@ Metric Name                                    | Description
  tcp.sentByteCount                             | Lifetime number of sent bytes to Doppler over TCP
  tcp.sentMessageCount                          | Lifetime number of sent messages to Doppler over TCP
  tls.sendErrorCount                            | Lifetime number of errors if writing to Doppler over TLS fails
- tls.sentByteCount                             | Lifetime number of sent bytes to Doppler over TLS
- tls.sentMessageCount                          | Lifetime number of sent messages to Doppler over TLS
+ tls.sentByteCount                             | Lifetime number of sent bytes to Doppler over TLS. Emitted every 30 seconds
+ tls.sentMessageCount                          | Lifetime number of sent messages to Doppler over TLS. Emitted every 30 seconds
  udp.sendErrorCount                            | Lifetime number of errors if writing to Doppler over UDP fails
  udp.sentByteCount                             | Lifetime number of sent bytes to Doppler over UDP
  udp.sentMessageCount                          | Lifetime number of sent messages to Doppler over UDP
