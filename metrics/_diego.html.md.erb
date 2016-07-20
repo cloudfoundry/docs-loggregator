@@ -117,16 +117,16 @@ Default Origin Name: garden_linux
 
  Metric Name                                    | Description
 ------------------------------------------------|----------------------------------------------------------------------------------------------
- BackingStores                                  | Number of container backing store files
- DepotDirs                                      | Number of directories in the Garden depot
- LoopDevices                                    | Number of attached loop devices
+ BackingStores                                  | Number of container backing store files. Emitted every 30 seconds
+ DepotDirs                                      | Number of directories in the Garden depot. Emitted every 30 seconds
+ LoopDevices                                    | Number of attached loop devices. Emitted every 30 seconds
  memoryStats.lastGCPauseTimeNS                  | Duration of the last garbage collector pause in nanoseconds
  memoryStats.numBytesAllocated                  | Instantaneous count of bytes allocated and still in use
  memoryStats.numBytesAllocatedHeap              | Instantaneous count of bytes allocated on the main heap and still in use
  memoryStats.numBytesAllocatedStack             | Instantaneous count of bytes used by the stack allocator
  memoryStats.numFrees                           | Lifetime number of memory deallocations
  memoryStats.numMallocs                         | Lifetime number of memory allocations
- MetricsReporting                               | How long it took to emit the BackingStores, DepotDirs, and LoopDevices metrics
+ MetricsReporting                               | How long it took to emit the BackingStores, DepotDirs, and LoopDevices metrics. Emitted every 30 seconds
  numCPUS                                        | Number of CPUs on the machine
  numGoRoutines                                  | Instantaneous number of active goroutines in the process<a id="nsyncbulker"></a>
 

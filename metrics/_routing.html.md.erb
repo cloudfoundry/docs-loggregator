@@ -11,89 +11,89 @@ Routing Release metrics have following origin names:
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
- bad\_gateways                                 | Total number of bad gateways
+ bad\_gateways                                 | Total number of bad gateways. Emitted every 30 seconds
  latency                                       | Time the Gorouter took to handle requests to its application endpoints. Emitted when the Gorouter handles requests
  latency.{component}                           | Time the Gorouter took to handle requests from each component to its endpoints. Emitted when the Gorouter handles requests
- logSenderTotalMessagesRead                    | Count of application log messages
- memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
- memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
- memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
- memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
- memoryStats.numFrees                          | Lifetime number of memory deallocations
- memoryStats.numMallocs                        | Lifetime number of memory allocations
- ms\_since\_last\_registry\_update             | Time in millisecond since the last route register has been been received
- numCpus                                       | Number of CPUs on the machine
- numGoRoutines                                 | Instantaneous number of active goroutines in the Doppler process
+ logSenderTotalMessagesRead                    | Count of application log messages. Emitted every 30 seconds
+ memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds. Emitted every 30 seconds
+ memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use. Emitted every 30 seconds
+ memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use. Emitted every 30 seconds
+ memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator. Emitted every 30 seconds
+ memoryStats.numFrees                          | Lifetime number of memory deallocations. Emitted every 30 seconds
+ memoryStats.numMallocs                        | Lifetime number of memory allocations. Emitted every 30 seconds
+ ms\_since\_last\_registry\_update             | Time in millisecond since the last route register has been been received. Emitted every 30 seconds
+ numCpus                                       | Number of CPUs on the machine. Emitted every 30 seconds
+ numGoRoutines                                 | Instantaneous number of active goroutines in the Doppler process. 
  registry\_message.{components}                | Total number of route register messages received for each component
- rejected\_requests                            | Total number of bad requests received on gorouter
+ rejected\_requests                            | Total number of bad requests received on gorouter. Emitted every 30 seconds
  requests.{component\_name}                    | Total number of requests received for each component
- responses                                     | Total number of HTTP responses
- responses.2xx                                 | Total number of 2xx HTTP responses
+ responses                                     | Total number of HTTP responses. 
+ responses.2xx                                 | Total number of 2xx HTTP responses. 
  responses.3xx                                 | Total number of 3xx HTTP responses
  responses.4xx                                 | Total number of 4xx HTTP responses
  responses.5xx                                 | Total number of 5xx HTTP responses
  responses.xxx                                 | Total number of other(non-(2xx-5xx)) HTTP responses
- routed\_app\_requests                         | The collector sums up requests for all dea-{index} components for its output metrics.
- total\_requests                               | Total number of requests received
- total\_routes                                 | Total number of routes registered
+ routed\_app\_requests                         | The collector sums up requests for all dea-{index} components for its output metrics.Emitted every 30 seconds
+ total\_requests                               | Total number of requests received. Emitted every 30 seconds
+ total\_routes                                 | Total number of routes registered. Emitted every 30 seconds
 
 <a id="routing_api"></a>Default Origin Name: routing_api
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
- key\_refresh\_events                          | Total number of events when fresh token was fetched from UAA
- memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
- memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
- memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
- memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
- memoryStats.numFrees                          | Lifetime number of memory deallocations
- memoryStats.numMallocs                        | Lifetime number of memory allocations
- numCpus                                       | Number of CPUs on the machine
- numGoRoutines                                 | Instantaneous number of active goroutines in the Doppler process
- total\_http\_routes                           | Number of TCP routes in the  routing table. Emitted periodically
- total\_http\_subscription                     | Number of HTTP routes subscriptions
- total\_tcp\_routes                            | Number of TCP routes in the routing table. Emitted periodically
- total\_tcp\_subscriptions                     | Number of TCP routes subscriptions
- total\_token\_errors                          | Total number of UAA token errors
- udp.sentByteCount                             | Lifetime number of sent bytes to Doppler over UDP
- udp.sentMessageCount                          | Lifetime number of sent messages to Doppler over UDP
+ key\_refresh\_events                          | Total number of events when fresh token was fetched from UAA. Emitted every 30 seconds
+ memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds. Emitted every 30 seconds
+ memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use. Emitted every 30 seconds
+ memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use. Emitted every 30 seconds
+ memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator. Emitted every 30 seconds
+ memoryStats.numFrees                          | Lifetime number of memory deallocations. Emitted every 30 seconds
+ memoryStats.numMallocs                        | Lifetime number of memory allocations. Emitted every 30 seconds
+ numCpus                                       | Number of CPUs on the machine. Emitted every 30 seconds
+ numGoRoutines                                 | Instantaneous number of active goroutines in the Doppler process. Emitted every 30 seconds
+ total\_http\_routes                           | Number of TCP routes in the  routing table. Emitted every 30 seconds
+ total\_http\_subscription                     | Number of HTTP routes subscriptions. Emitted every 30 seconds
+ total\_tcp\_routes                            | Number of TCP routes in the routing table. Emitted every 30 seconds
+ total\_tcp\_subscriptions                     | Number of TCP routes subscriptions. Emitted every 30 seconds
+ total\_token\_errors                          | Total number of UAA token errors. Emitted every 30 seconds
+ udp.sentByteCount                             | Lifetime number of sent bytes to Doppler over UDP. Emitted every 30 seconds
+ udp.sentMessageCount                          | Lifetim numbeyyyy sent messages to Doppler over UDP. Emitted every 30 seconds
 
 <a id="tcp_emitter"></a>Default Origin Name: tcp_emitter
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
- memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
- memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
- memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
- memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
- memoryStats.numFrees                          | Lifetime number of memory deallocations
- memoryStats.numMallocs                        | Lifetime number of memory allocations
- numCpus                                       | Number of CPUs on the machine
- numGoRoutines                                 | Instantaneous number of active goroutines in the Doppler process
- udp.sentByteCount                             | Lifetime number of sent bytes to Doppler over UDP
- udp.sentMessageCount                          | Lifetime number of sent messages to Doppler over UDP
+ memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds. Emitted every 30 seconds
+ memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use. Emitted every 30 seconds
+ memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use. Emitted every 30 seconds
+ memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator. Emitted every 30 seconds
+ memoryStats.numFrees                          | Lifetime number of memory deallocations. Emitted every 30 seconds
+ memoryStats.numMallocs                        | Lifetime number of memory allocations. Emitted every 30 seconds
+ numCpus                                       | Number of CPUs on the machine. Emitted every 30 seconds
+ numGoRoutines                                 | Instantaneous number of active goroutines in the Doppler process. Emitted every 30 seconds
+ udp.sentByteCount                             | Lifetime number of sent bytes to Doppler over UDP. Emitted every 30 seconds
+ udp.sentMessageCount                          | Lifetime number of sent messages to Doppler over UDP. Emitted every 30 seconds
 
 
 <a id="tcp_router"></a>Default Origin Name: router\_configurer (bosh job tcp_router)
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
- {session_id}.ConnectionTime                   | Average connection time to backend in current session
- {session_id}CurrentSessions                   | Total number of current sessions
- AverageConnectTimeMs                          | Average backend response time (in ms)
- AverageQueueTimeMs                            | Average time spent in queue (in ms)
- memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds
- memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use
- memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use
- memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator
- memoryStats.numFrees                          | Lifetime number of memory deallocations
- memoryStats.numMallocs                        | Lifetime number of memory allocations
- numCpus                                       | Number of CPUs on the machine
- numGoRoutines                                 | Instantaneous number of active goroutines in the Doppler process
- TotalBackendConnectionErrors                  | Total number of backend connection errors
- TotalCurrentQueuedRequests                    | Total number of requests unassigned in queue
+ {session_id}.ConnectionTime                   | Average connection time to backend in current session. Emitted every 30 seconds
+ {session_id}CurrentSessions                   | Total number of current sessions. Emitted every 30 seconds
+ AverageConnectTimeMs                          | Average backend response time (in ms). Emitted every 30 seconds
+ AverageQueueTimeMs                            | Average time spent in queue (in ms). Emitted every 30 seconds
+ memoryStats.lastGCPauseTimeNS                 | Duration of the last Garbage Collector pause in nanoseconds. Emitted every 30 seconds
+ memoryStats.numBytesAllocated                 | Instantaneous count of bytes allocated and still in use. Emitted every 30 seconds
+ memoryStats.numBytesAllocatedHeap             | Instantaneous count of bytes allocated on the main heap and still in use. Emitted every 30 seconds
+ memoryStats.numBytesAllocatedStack            | Instantaneous count of bytes used by the stack allocator. Emitted every 30 seconds
+ memoryStats.numFrees                          | Lifetime number of memory deallocations. Emitted every 30 seconds
+ memoryStats.numMallocs                        | Lifetime number of memory allocations. Emitted every 30 seconds
+ numCpus                                       | Number of CPUs on the machine. Emitted every 30 seconds
+ numGoRoutines                                 | Instantaneous number of active goroutines in the Doppler process. Emitted every 30 seconds
+ TotalBackendConnectionErrors                  | Total number of backend connection errors. Emitted every 30 seconds
+ TotalCurrentQueuedRequests                    | Total number of requests unassigned in queue. Emitted every 30 seconds
  udp.sentByteCount                             | Lifetime number of sent bytes to Doppler over UDP
- udp.sentMessageCount                          | Lifetime number of sent messages to Doppler over UDP
+ udp.sentMessageCount                          | Lifetime number of sent messages to Doppler over UDP. Emitted every 30 seconds
 
 
 
