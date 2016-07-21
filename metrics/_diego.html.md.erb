@@ -41,12 +41,12 @@ Default Origin Name: bbs
  Metric Name                                             | Description
 ---------------------------------------------------------|----------------------------------------------------------------------------------------------
  BBSMasterElected                                        | Emitted once when the BBS is elected as master
- ConvergenceLRPDuration                                  | Time the BBS took to run its LRP convergence pass. Emitted every time LRP convergence runs
+ ConvergenceLRPDuration                                  | Time the BBS took to run its LRP convergence pass. Emitted every 30 seconds when LRP convergence runs
  ConvergenceLRPPreProcessingActualLRPsDeleted            | Cumulative number of times the BBS has detected and deleted a malformed ActualLRP in its LRP convergence pass. Emitted every 30 seconds 
  ConvergenceLRPPreProcessingMalformedRunInfos            | Cumulative number of times the BBS has detected a malformed DesiredLRP RunInfo in its LRP convergence pass. Emitted every 30 seconds
  ConvergenceLRPPreProcessingMalformedSchedulingInfos     | Cumulative number of times the BBS has detected a malformed DesiredLRP SchedulingInfo in its LRP convergence pass. Emitted every 30 seconds
  ConvergenceLRPRuns                                      | Cumulative number of times BBS has run its LRP convergence pass. Emitted every 30 seconds
- ConvergenceTaskDuration                                 | Time the BBS took to run its Task convergence pass. Emitted every time Task convergence runs
+ ConvergenceTaskDuration                                 | Time the BBS took to run its Task convergence pass. Emitted every 30 seconds when Task convergence runs
  ConvergenceTaskRuns                                     | Cumulative number of times the BBS has run its Task convergence pass. Emitted every 30 seconds
  ConvergenceTasksKicked                                  | Cumulative number of times the BBS has updated a Task during its Task convergence pass. Emitted every 30 seconds
  ConvergenceTasksPruned                                  | Cumulative number of times the BBS has deleted a malformed Task during its Task convergence pass. Emitted every 30 seconds
@@ -136,8 +136,8 @@ Default Origin Name: nsync_bulker
 ------------------------------------------------|----------------------------------------------------------------------------------------------
  DesiredLRPSyncDuration                         | Time the nsync-bulker took to synchronize CF apps and Diego DesiredLRPs. Emitted every 30 seconds
  LockHeld.v1-locks-nsync\_bulker\_lock            | Whether an nsync-bulker holds the nsync-bulker lock: 1 means the lock is held, and 0 means the lock was lost. Emitted every 30 seconds by the active nsync-bulker
- LockHeldDuration.v1-locks-nsync\_bulker\_lock    | Time the active nsync-bulker has held the convergence lock. Emitted every 30 seconds by the active nsync-bulker
- LRPsDesired                                    | Cumulative number of LRPs desired through the nsync API. Emitted on each request desiring a new LRP
+ LockHeldDuration.v1-locks-nsync\_bulker\_lock  | Time the active nsync-bulker has held the convergence lock. Emitted every 30 seconds by the active nsync-bulker
+ LRPsDesired                                    | Cumulative number of LRPs desired through the nsync API. Emitted on each request desiring a new LRP, every 30 seconds
  memoryStats.lastGCPauseTimeNS                  | Duration of the last garbage collector pause in nanoseconds
  memoryStats.numBytesAllocated                  | Instantaneous count of bytes allocated and still in use
  memoryStats.numBytesAllocatedHeap              | Instantaneous count of bytes allocated on the main heap and still in use
