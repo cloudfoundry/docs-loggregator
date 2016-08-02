@@ -1,6 +1,6 @@
 <% if $this_topic == 'restore-pcf' || $this_topic == 'backup-pcf' %>
 
-1. Install Ruby and the [BOSH CLI Ruby gem](http://docs.cloudfoundry.org/bosh/bosh-cli.html) on a machine outside of your [Pivotal Cloud Foundry&reg;](https://network.pivotal.io/products/pivotal-cf) (PCF) system deployment.
+1. Install Ruby and the [BOSH CLI Ruby gem](http://docs.cloudfoundry.org/bosh/bosh-cli.html) on a machine outside of your [Pivotal Cloud Foundry](https://network.pivotal.io/products/pivotal-cf) (PCF) system deployment.
 
 
 1. From the Installation Dashboard in Ops Manager, select **Ops Manager Director > Status** and record the IP address listed for the Ops Manager Director.
@@ -43,7 +43,7 @@ save the current BOSH deployment manifest.
 You need this manifest to locate information about your databases.
 Replace `DEPLOYMENT-NAME` with the name of the current BOSH deployment.
 For this procedure, use `cf.yml` as the `LOCAL-SAVE-NAME`.
-	
+
 	<pre class='terminal'>
 	    $ bosh download manifest cf-example cf.yml
 	    Deployment manifest saved to `cf.yml'
