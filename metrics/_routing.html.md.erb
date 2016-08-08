@@ -20,7 +20,7 @@ Routing Release metrics have following origin names:
  numCPUS                            | Number of CPUs on the machine. Emitted every 10 seconds
  numGoRoutines                      | Instantaneous number of active goroutines in the Doppler process. Emitted every 10 seconds
  logSenderTotalMessagesRead         | Count of application log messages. Emitted every 5 seconds
- bad\_gateways                      | Total number of bad gateways. Emitted every 5 seconds
+ bad\_gateways                      | Total number of requests that could not be routed. If a backend (app instance) fails to respond for a request to a given route, the router will retry all backends for the route until one responds. If no backend responds, the router will return an error to the client and increment this metric. Emitted every 5 seconds
  latency                            | Time the Gorouter took to handle requests to its application endpoints. Emitted per router request
  latency.{component}                | Time the Gorouter took to handle requests from each component to its endpoints. Emitted per router request
  registry\_message.{component}      | Total number of route register messages received for each component. Emitted per route-register message
