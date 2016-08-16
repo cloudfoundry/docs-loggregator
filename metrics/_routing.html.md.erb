@@ -19,23 +19,23 @@ Routing Release metrics have following origin names:
  memoryStats.numMallocs             | Lifetime number of memory allocations. Emitted every 10 seconds
  numCPUS                            | Number of CPUs on the machine. Emitted every 10 seconds
  numGoRoutines                      | Instantaneous number of active goroutines in the Doppler process. Emitted every 10 seconds
- logSenderTotalMessagesRead         | Count of application log messages. Emitted every 5 seconds
- bad\_gateways                      | Total number of requests that could not be routed. If a backend (app instance) fails to respond for a request to a given route, the router will retry all backends for the route until one responds. If no backend responds, the router will return an error to the client and increment this metric. Emitted every 5 seconds
+ logSenderTotalMessagesRead         | Lifetime number of application log messages. Emitted every 5 seconds
+ bad\_gateways                      | Lifetime number of bad gateways. Emitted every 5 seconds
  latency                            | Time the Gorouter took to handle requests to its application endpoints. Emitted per router request
  latency.{component}                | Time the Gorouter took to handle requests from each component to its endpoints. Emitted per router request
- registry\_message.{component}      | Total number of route register messages received for each component. Emitted per route-register message
- rejected\_requests                 | Total number of bad requests received on gorouter. Emitted every 5 seconds
- requests.{component}               | Total number of requests received for each component. Emitted every 5 seconds
- responses                          | Total number of HTTP responses. Emitted every 5 seconds
- responses.2xx                      | Total number of 2xx HTTP responses. Emitted every 5 seconds
- responses.3xx                      | Total number of 3xx HTTP response. Emitted every 5 seconds
- responses.4xx                      | Total number of 4xx HTTP response. Emitted every 5 seconds
- responses.5xx                      | Total number of 5xx HTTP response. Emitted every 5 seconds
- responses.xxx                      | Total number of other(non-(2xx-5xx)) HTTP response. Emitted every 5 seconds
+ registry\_message.{component}      | Lifetime number of route register messages received for each component. Emitted per route-register message
+ rejected\_requests                 | Lifetime number of bad requests received on gorouter. Emitted every 5 seconds
+ requests.{component}               | Lifetime number of requests received for each component. Emitted every 5 seconds
+ responses                          | Lifetime number of HTTP responses. Emitted every 5 seconds
+ responses.2xx                      | Lifetime number of 2xx HTTP responses. Emitted every 5 seconds
+ responses.3xx                      | Lifetime number of 3xx HTTP response. Emitted every 5 seconds
+ responses.4xx                      | Lifetime number of 4xx HTTP response. Emitted every 5 seconds
+ responses.5xx                      | Lifetime number of 5xx HTTP response. Emitted every 5 seconds
+ responses.xxx                      | Lifetime number of other(non-(2xx-5xx)) HTTP response. Emitted every 5 seconds
  routed\_app\_requests              | The collector sums up requests for all dea-{index} components for its output metrics. Emitted every 5 seconds
- total\_requests                    | Total number of requests received. Emitted every 5 seconds
+ total\_requests                    | Lifetime number of requests received. Emitted every 5 seconds
  ms\_since\_last\_registry\_update  | Time in millisecond since the last route register has been been received. Emitted every 30 seconds
- total\_routes                      | Total number of routes registered. Emitted every 30 seconds
+ total\_routes                      | Lifetime number of routes registered. Emitted every 30 seconds
  uptime                             | Uptime for router. Emitted every second
 
 <a id="routing_api"></a>Default Origin Name: routing_api
