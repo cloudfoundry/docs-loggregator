@@ -3,12 +3,6 @@ Default Origin Name: MetronAgent
 Metric Name                                    | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------------------------
  MessageAggregator.counterEventReceived        | Lifetime number of CounterEvents aggregated in Metron
- MessageAggregator.httpStartReceived           | Lifetime number of HTTPStart aggregated in Metron
- MessageAggregator.httpStartStopEmitted        | Lifetime number of HTTPStartStop events emitted by Metron (created by combining HTTPStart and HTTPStop events)
- MessageAggregator.httpStopReceived            | Lifetime number of HTTPStop aggregated in Metron
- MessageAggregator.httpUnmatchedStartReceived  | Lifetime number of HTTPStart events for which no HTTPStop was received
- MessageAggregator.httpUnmatchedStopReceived   | Lifetime number of HTTPStop events for which no HTTPStart was received
- MessageAggregator.uncategorizedEvents         | Lifetime number of non-(CounterEvent  HTTPStart HTTPStop) events processed by aggregator
  MessageBuffer.droppedMessageCount             | Lifetime number of intentionally dropped messages from Metron's batch writer buffer. Batch writing is performed over TCP/TLS only.
  DopplerForwarder.sentMessages                 | Lifetime number of messages sent to Doppler regardless of protocol. Emitted every 30 seconds
  dropsondeAgentListener.currentBufferCount     | Instantaneous number of Dropsonde messages read by UDP socket  but not yet unmarshalled
@@ -18,9 +12,7 @@ Metric Name                                    | Description
  dropsondeMarshaller.counterEventMarshalled    | Lifetime number of CounterEvent messages marshalled
  dropsondeMarshaller.errorMarshalled           | Lifetime number of Error messages marshalled
  dropsondeMarshaller.heartbeatMarshalled       | Lifetime number of Heartbeat messages marshalled
- dropsondeMarshaller.httpStartMarshalled       | Lifetime number of HttpStart messages marshalled
  dropsondeMarshaller.httpStartStopMarshalled   | Lifetime number of HttpStartStop messages marshalled
- dropsondeMarshaller.httpStopMarshalled        | Lifetime number of HttpStop messages marshalled
  dropsondeMarshaller.logMessageMarshalled      | Lifetime number of LogMessage messages marshalled
  dropsondeMarshaller.marshalErrors             | Lifetime number of errors when marshalling messages
  dropsondeMarshaller.valueMetricMarshalled     | Lifetime number of ValueMetric messages marshalled
@@ -28,9 +20,7 @@ Metric Name                                    | Description
  dropsondeUnmarshaller.counterEventReceived    | Lifetime number of CounterEvent messages unmarshalled
  dropsondeUnmarshaller.errorReceived           | Lifetime number of Error messages unmarshalled
  dropsondeUnmarshaller.heartbeatReceived       | DEPRECATED
- dropsondeUnmarshaller.httpStartReceived       | Lifetime number of HttpStart messages unmarshalled
  dropsondeUnmarshaller.httpStartStopReceived   | Lifetime number of HttpStartStop messages unmarshalled
- dropsondeUnmarshaller.httpStopReceived        | Lifetime number of HttpStop messages unmarshalled
  dropsondeUnmarshaller.logMessageTotal         | Lifetime number of LogMessage messages unmarshalled
  dropsondeUnmarshaller.unmarshalErrors         | Lifetime number of errors when unmarshalling messages
  dropsondeUnmarshaller.valueMetricReceived     | Lifetime number of ValueMetric messages unmarshalled
