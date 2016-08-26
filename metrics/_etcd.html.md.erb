@@ -18,7 +18,7 @@ Followers               | Number of etcd followers. Emitted every 30 seconds.
 GetsFail                | GetsFail operation count. Emitted every 30 seconds.
 GetsSuccess             | GetsSuccess operation count. Emitted every 30 seconds.
 IsLeader                | `1` if the current server is the leader, `0` if it is a follower. Emitted every 30 seconds.
-Latency                 | Current latency in seconds from leader to a specific follower. Emitted every 30 seconds.
+Latency                 | Current latency in milliseconds from leader to a specific follower. Emitted every 30 seconds.
 RaftIndex               | X-Raft-Index value from the `/stats/store` endpoint. Emitted every 30 seconds.
 RaftTerm                | X-Raft-Term value from the `/stats/store` endpoint. Emitted every 30 seconds.
 ReceivedAppendRequests  | Number of append requests this node has processed. Emitted every 30 seconds.
