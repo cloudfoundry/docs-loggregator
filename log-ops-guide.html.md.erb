@@ -33,3 +33,7 @@ An operator can scale the number of nozzles in response to these alerts to minim
 You can configure <%= vars.product_full %> to forward log data from components and apps to an external aggregator service instead of routing it to the Loggregator Firehose. <%=vars.logg_forwarding %> explains how to enable log forwarding by specifying the aggregator address, port, and protocol.
 
 [Using Log Management Services](../devguide/services/log-management.html) explains how to bind applications to the external service and configure it to receive logs from <%= vars.product_full %>.
+
+## <a id='log-message-size'></a> Log Message Size Constraints##
+
+Application logs are emitted via UDP messages from Diego/DEA to Metron. The maximum log message size from a DEA is ~60KiB (assuming overhead for the transporting envelope). Diego breaks up log messages greater than ~60KiB into multiple envelopes to mitigate this constraint.
