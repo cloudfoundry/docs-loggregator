@@ -34,6 +34,7 @@ You can configure <%= vars.product_full %> to forward log data from components a
 
 [Using Log Management Services](../devguide/services/log-management.html) explains how to bind applications to the external service and configure it to receive logs from <%= vars.product_full %>.
 
-## <a id='log-message-size'></a> Log Message Size Constraints##
+## <a id='log-message-size'></a> Log Message Size Constraints
 
-The Diego Cell or Droplet Execution Agent (DEA) emits application logs as UDP messages to the Metron. For DEAs, the maximum log message size is approximately 60KiB, assuming overhead for the transporting envelope. Diego breaks up log messages greater than approximately 60KiB into multiple envelopes to mitigate this constraint.
+The Diego Cell <%= vars.dea %>
+Diego breaks up log messages greater than approximately 60KiB into multiple envelopes to mitigate this constraint.
