@@ -9,10 +9,6 @@ Currently, Cloud Foundry logs and metrics come from several sources:
 
 - Loggregator is the next generation logging and metrics system for Cloud Foundry. It aggregates metrics from applications and CF system components and streams these out to the CF cli or to third party log management services.
 
-- The [Collector](https://github.com/cloudfoundry/collector) is Cloud Foundry’s original metric aggregation system. It gathers metrics from all Cloud Foundry system components by querying their `/healthz` and `/varz` endpoints, and then publishes this data to external systems such as Datadog, AWS CloudWatch and OpenTSDB.
-
-<p class='note'><strong>Note</strong>: The Collector will eventually be deprecated in favor of the Loggregator system.</p>
-
 - The BOSH Health Monitor continually listens for one ‘heartbeat’ per minute from each deployed VM. These heartbeats contain status updates and lifecycle events. Health Monitor can be extended by plugins to forward heartbeat data to other CF components or third party services.
 
 - Logs from CF components can also be forwarded directly to your own server, bypassing loggregator. See [Loggregator for Operators](./log-ops-guide.html) for more information.
