@@ -7,17 +7,17 @@ owner: Logging and Metrics
 
 Loggregator is the next generation system for aggregating and streaming logs and metrics from all of the user apps and system components in a<%= vars.product_full=='Cloud Foundry' ? "" : "n"  %> <%= vars.product_full %> deployment.
 
-[Loggregator on GitHub](https://github.com/cloudfoundry/loggregator)
+View the [Loggregator repository on GitHub](https://github.com/cloudfoundry/loggregator).
 
 # <a id='use-cases'></a> Using Loggregator
 
 The main use cases are as follows:
 
-- App developers can tail their application logs or dump the recent logs from the CF CLI, or stream these to a third party log archive and analysis service.
+- App developers can tail their application logs or dump the recent logs from the Cloud Foundry Command Line Interface (cf CLI), or stream these to a third party log archive and analysis service.
 
-- Operators and administrators can access the **Loggregator [Firehose](#firehose)**, the combined stream of logs from all apps, plus metrics data from CF components.
+- Operators and administrators can access the **Loggregator [Firehose](#firehose)**, the combined stream of logs from all apps, and the  metrics data from Cloud Foundry components.
 
-- Operators can deploy ‘nozzles’ to the Firehose. A nozzle is a component that listens to the Firehose for specified events and metrics and streams this data to external services.
+- Operators can deploy "nozzles" to the Firehose. A nozzle is a component that listens to the Firehose for specified events and metrics, and streams this data to external services.
 
 # <a id='use-cases'></a> Loggregator Components
 
@@ -42,13 +42,13 @@ Handles client requests for logs. Gathers and collates messages from all Doppler
 
 ## <a id='firehose'></a>Firehose
 
-The Firehose is a websocket endpoint which streams all the event data coming from a<%= vars.product_full=='Cloud Foundry' ? "" : "n"  %>  <%= vars.product_full %> deployment. The data stream includes logs, HTTP events and container metrics from all applications, and metrics from all <%= vars.product_full %> system components. Logs from system components such as Cloud Controller are not included in the firehose and are typically accessed via rsyslog configuration.
+The Firehose is a WebSocket endpoint which streams all the event data coming from a<%= vars.product_full=='Cloud Foundry' ? "" : "n"  %>  <%= vars.product_full %> deployment. The data stream includes logs, HTTP events and container metrics from all applications, and metrics from all <%= vars.product_full %> system components. Logs from system components such as Cloud Controller are not included in the firehose and are typically accessed via rsyslog configuration.
 
 Because the data coming from the Firehose may contain sensitive information, such as customer information in the application logs, the Firehose is only accessible by users who have the right permissions.
 
-The Traffic Controller serves the Firehose over websocket at the `/firehose` endpoint. The events coming out of the Firehose are formatted as protobuf messages conforming to the [dropsonde protocol](https://github.com/cloudfoundry/dropsonde-protocol).
+The Traffic Controller serves the Firehose over WebSocket at the `/firehose` endpoint. The events coming out of the Firehose are formatted as protobuf messages conforming to the [dropsonde protocol](https://github.com/cloudfoundry/dropsonde-protocol).
 
-The address of the traffic controller can be discovered by hitting the info endpoint on the API and getting the value of the doppler\_logging\_endpoint.
+The address of the traffic controller can be discovered by hitting the `info` endpoint on the API and getting the value of the doppler\_logging\_endpoint.
 
 Example output for a BOSH Lite CF environment:
 <pre class='terminal'>
