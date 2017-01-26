@@ -1,3 +1,5 @@
+Default Origin Name: cc
+
 Metric Name                                         | Description
 ----------------------------------------------------|--------------------------------------------------------------------------------------------------
 failed\_job\_count.\<VM\_NAME\>-\<VM\_INDEX\>         | Number of failed jobs in the \<VM\_NAME\>-\<VM\_INDEX\> queue. This is the number of delayed jobs where the `failed at` column is populated with the time of the most recently failed attempt at the job. The failed job count is not specific to the jobs run by the Cloud Controller worker. By default, Cloud Controller deletes failed jobs after 31 days. Emitted every 30 seconds per VM.
