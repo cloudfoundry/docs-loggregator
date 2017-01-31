@@ -191,6 +191,7 @@ Default Origin Name: route_emitter
 
  Metric Name                                   | Description
 -----------------------------------------------|----------------------------------------------------------------------------------------------
+ ConsulDownMode                                | Whether a route-emitter is operating normally: `0` if the route-emitter is healthy, and `1` when the consul servers are either down or in a bad state.
  LockHeld.v1-locks-route\_emitter\_lock          | Whether a route-emitter holds the route-emitter lock: 1 means the lock is held, and 0 means the lock was lost. Emitted periodically by the active route-emitter
  LockHeldDuration.v1-locks-route\_emitter\_lock | Time the active route-emitter has held the route-emitter lock. Emitted periodically by the active route-emitter
  memoryStats.lastGCPauseTimeNS                 | Duration of the last garbage collector pause in nanoseconds
