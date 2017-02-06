@@ -56,6 +56,18 @@ Example output for a BOSH Lite CF environment:
  wss://doppler.192.0.2.34.xip.io:443
 </pre>
 
+## <a id='logs-vs-metrics'></a>Difference Between Logs and Metrics
+
+The Firehose carries both logs and metrics, which differ as follows:
+
+* **Metrics**
+  - Report a measurement from or status of a VM at its timestamp time.
+  - Follow statsd or [dropsonde](https://github.com/cloudfoundry/dropsonde-protocol) or [statsd](https://github.com/etsy/statsd) protocol
+  - Can route to a monitoring platform to trigger alerts
+* **Logs**
+  - Report events detected, actions taken, errors, or any other messages the operator or developer wanted to generate.
+  - Follow the syslog standard
+  - Are not used to trigger alerts
 
 ## <a id='nozzles'></a> Nozzles
 
