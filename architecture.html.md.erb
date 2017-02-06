@@ -61,11 +61,11 @@ Example output for a BOSH Lite CF environment:
 The Firehose carries both logs and metrics, which differ as follows:
 
 * **Metrics**
-  - Report a measurement from or status of a VM at its timestamp time.
-  - Follow statsd or [dropsonde](https://github.com/cloudfoundry/dropsonde-protocol) or [statsd](https://github.com/etsy/statsd) protocol
+  - Report a measurement from or status of a VM at its timestamp time
+  - Follow [dropsonde](https://github.com/cloudfoundry/dropsonde-protocol) or [statsd](https://github.com/etsy/statsd) protocol
   - Can route to a monitoring platform to trigger alerts
 * **Logs**
-  - Report events detected, actions taken, errors, or any other messages the operator or developer wanted to generate.
+  - Report events detected, actions taken, errors, or any other messages the operator or developer wanted to generate
   - Follow the syslog standard
   - Are not used to trigger alerts
 
