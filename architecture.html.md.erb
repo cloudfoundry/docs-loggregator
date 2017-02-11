@@ -73,6 +73,7 @@ The Firehose carries both logs and metrics, which differ as follows:
 
 Nozzles are programs which consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and forward it to other applications and services. For example:
 
+- The JMX Bridge OpenTSDB Firehose Nozzle, which installs with [JMX Bridge](docs.pivotal.io/jmx-bridge)
 - The [Datadog nozzle](https://github.com/cloudfoundry-incubator/datadog-firehose-nozzle) publishes metrics coming from the Firehose to Datadog.
 - The [Syslog nozzle](https://github.com/cloudfoundry-community/firehose-to-syslog) filters out log messages coming from the Firehose and sends it to a syslog server.
 
