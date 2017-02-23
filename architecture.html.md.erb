@@ -22,7 +22,10 @@ The main use cases are as follows:
 # <a id='use-cases'></a> Loggregator Components
 
 <%= image_tag 'architecture/loggregator.png' %>
-Overview of Loggregator components
+
+To see a larger version of this diagram, click <a href="./images/architecture/loggregator.png">here</a>.
+
+<p class="note"><strong>Note</strong>: The Loggregator system now uses <a href="http://www.grpc.io/">gRPC</a> for communication between the Metron Agent and the Doppler, and between the Doppler and the Traffic Controller. This improves the stability and the performance of the Loggregator system, but it may require operators to <a href="../running/managing-cf/logging-config.html#scaling">scale</a> their Dopplers.</p>
 
 ## <a id='sources'></a>Source
 
