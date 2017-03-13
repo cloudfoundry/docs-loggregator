@@ -33,6 +33,7 @@ Routing Release metrics have following origin names:
  responses.4xx                      | Lifetime number of 4xx HTTP response. Emitted every 5 seconds.
  responses.5xx                      | Lifetime number of 5xx HTTP response. Emitted every 5 seconds.
  responses.xxx                      | Lifetime number of other(non-(2xx-5xx)) HTTP response. Emitted every 5 seconds.
+ route\_lookup\_time		    | Time in nanoseconds to lookup a request URL in the route table. Emitted per router request.
  websocket_upgrades                 | Lifetime number of WebSocket upgrades. Emitted every 5 seconds.
  websocket_failures                 | Lifetime number of WebSocket failures. Emitted every 5 seconds.
  routed\_app\_requests              | The collector sums up requests for all dea-{index} components for its output metrics. Emitted every 5 seconds.
