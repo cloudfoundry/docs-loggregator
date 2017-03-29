@@ -75,7 +75,7 @@ Routing Release metrics have following origin names:
  numGoRoutines                      | Instantaneous number of active goroutines in the Doppler process. Emitted every 10 seconds.
 
 
-<a id="tcp_router"></a>Default Origin Name: router\_configurer (bosh job tcp_router)
+<a id="tcp_router"></a>Default Origin Name: tcp-router
 
  Metric Name                        | Description
 ------------------------------------|----------------------------------------------------------------------------------------------------------------
@@ -87,12 +87,12 @@ Routing Release metrics have following origin names:
  memoryStats.numMallocs             | Lifetime number of memory allocations. Emitted every 10 seconds.
  numCPUS                            | Number of CPUs on the machine. Emitted every 10 seconds.
  numGoRoutines                      | Instantaneous number of active goroutines in the Doppler process. Emitted every 10 seconds.
- {session_id}.ConnectionTime        | Average connection time to backend in current session. Emitted every 60 seconds per session ID. Interval value for this metric can be configured with manifest property `router_configurer.tcp_stats_collection_interval`.
- {session_id}.CurrentSessions       | Total number of current sessions. Emitted every 60 seconds per session ID. Interval value for this metric can be configured with manifest property `router_configurer.tcp_stats_collection_interval`.
- AverageConnectTimeMs               | Average backend response time (in ms). Emitted every 60 seconds. Interval value for this metric can be configured with manifest property `router_configurer.tcp_stats_collection_interval`.
- AverageQueueTimeMs                 | Average time spent in queue (in ms). Emitted every 60 seconds. Interval value for this metric can be configured with manifest property `router_configurer.tcp_stats_collection_interval`.
- TotalBackendConnectionErrors       | Total number of backend connection errors. Emitted every 60 seconds. Interval value for this metric can be configured with manifest property `router_configurer.tcp_stats_collection_interval`.
- TotalCurrentQueuedRequests         | Total number of requests unassigned in queue. Emitted every 60 seconds. Interval value for this metric can be configured with manifest property `router_configurer.tcp_stats_collection_interval`.
+ {session_id}.ConnectionTime        | Average connection time to backend in current session. Emitted every 60 seconds per session ID. Interval value for this metric can be configured with manifest property `tcp_router.tcp_stats_collection_interval`.
+ {session_id}.CurrentSessions       | Total number of current sessions. Emitted every 60 seconds per session ID. Interval value for this metric can be configured with manifest property `tcp_router.tcp_stats_collection_interval`.
+ AverageConnectTimeMs               | Average backend response time (in ms). Emitted every 60 seconds. Interval value for this metric can be configured with manifest property `tcp_router.tcp_stats_collection_interval`.
+ AverageQueueTimeMs                 | Average time spent in queue (in ms). Emitted every 60 seconds. Interval value for this metric can be configured with manifest property `tcp_router.tcp_stats_collection_interval`.
+ TotalBackendConnectionErrors       | Total number of backend connection errors. Emitted every 60 seconds. Interval value for this metric can be configured with manifest property `tcp_router.tcp_stats_collection_interval`.
+ TotalCurrentQueuedRequests         | Total number of requests unassigned in queue. Emitted every 60 seconds. Interval value for this metric can be configured with manifest property `tcp_router.tcp_stats_collection_interval`.
 
 
  [Top](#top)
