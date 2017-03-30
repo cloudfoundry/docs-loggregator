@@ -165,12 +165,12 @@ Default Origin Name: rep
 
  Metric Name                                             | Description
 ---------------------------------------------------------|----------------------------------------------------------------------------------------------
- CapacityRemainingContainers                             | Remaining number of containers this cell can host. Emitted every 30 seconds.
- CapacityRemainingDisk                                   | Remaining amount in MiB of disk available for this cell to allocate to containers. Emitted every 30 seconds.
- CapacityRemainingMemory                                 | Remaining amount in MiB of memory available for this cell to allocate to containers. Emitted every 30 seconds.
- CapacityTotalContainers                                 | Total number of containers this cell can host. Emitted every 30 seconds.
- CapacityTotalDisk                                       | Total amount in MiB of disk available for this cell to allocate to containers. Emitted every 30 seconds.
- CapacityTotalMemory                                     | Total amount in MiB of memory available for this cell to allocate to containers. Emitted every 30 seconds.
+ CapacityRemainingContainers                             | Remaining number of containers this cell can host. Emitted every 60 seconds.
+ CapacityRemainingDisk                                   | Remaining amount in MiB of disk available for this cell to allocate to containers. Emitted every 60 seconds.
+ CapacityRemainingMemory                                 | Remaining amount in MiB of memory available for this cell to allocate to containers. Emitted every 60 seconds.
+ CapacityTotalContainers                                 | Total number of containers this cell can host. Emitted every 60 seconds.
+ CapacityTotalDisk                                       | Total amount in MiB of disk available for this cell to allocate to containers. Emitted every 60 seconds.
+ CapacityTotalMemory                                     | Total amount in MiB of memory available for this cell to allocate to containers. Emitted every 60 seconds.
  CM                                                      | Emitted every 30 seconds.
  ContainerCount                                          | Number of containers hosted on the cell. Emitted every 30 seconds.
  GardenContainerCreationDuration                         | Time in nanoseconds that the rep Garden backend took to create a container. Emitted after every successful container creation.
@@ -202,7 +202,7 @@ Default Origin Name: route_emitter
  MessagesEmitted                               | The cumulative number of registration messages that this process has sent. Emitted every 30 seconds.
  numCPUS                                       | Number of CPUs on the machine.
  numGoRoutines                                 | Instantaneous number of active goroutines in the process.
- RouteEmitterSyncDuration                      | Time in nanoseconds that the active route-emitter took to perform its synchronization pass. Emitted every 30 seconds.
+ RouteEmitterSyncDuration                      | Time in nanoseconds that the active route-emitter took to perform its synchronization pass. Emitted every 60 seconds.
  RoutesRegistered                              | Cumulative number of route registrations emitted from the route-emitter as it reacts to changes to LRPs. Emitted every 30 seconds.
  RoutesSynced                                  | Cumulative number of route registrations emitted from the route-emitter during its periodic route-table synchronization. Emitted every 30 seconds.
  RoutesTotal                                   | Number of routes in the route-emitter's routing table. Emitted every 30 seconds.
