@@ -5,18 +5,18 @@ owner: Logging and Metrics
 
 <strong><%= modified_date %></strong>
 
-Currently, Cloud Foundry logs and metrics come from several sources:
+Cloud Foundry logs and metrics come from several sources.
 
-- Loggregator is the next generation logging and metrics system for Cloud Foundry. It aggregates metrics from applications and CF system components and streams these out to the CF cli or to third party log management services.
+- Loggregator is the next generation logging and metrics system for Cloud Foundry (CF). Loggregator aggregates metrics from applications and CF system components and streams these out to the Cloud Foundry Command Line Interface (cf CLI) or to third-party log management services.
 
-- The BOSH Health Monitor continually listens for one ‘heartbeat’ per minute from each deployed VM. These heartbeats contain status updates and lifecycle events. Health Monitor can be extended by plugins to forward heartbeat data to other CF components or third party services.
+- The BOSH Health Monitor continually listens for one **heartbeat** per minute from each deployed virtual machine (VM). These heartbeats contain status updates and lifecycle events. Health Monitor can be extended by plugins to forward heartbeat data to other CF components or third-party services.
 
-- Logs from CF components can also be forwarded directly to your own server, bypassing loggregator. See [Loggregator for Operators](./log-ops-guide.html) for more information.
+- Logs from CF components can also be forwarded directly to your own server, bypassing Loggregator. See [Loggregator for Operators](./log-ops-guide.html) for more information.
 
-Currently, Cloud Foundry supports all of these metrics pipelines. Data from each of these sources can be streamed to a variety of services including the following:
+Cloud Foundry supports all of these metrics pipelines. Data from each of these sources can be streamed to a variety of services including the following:
 
 - JMX Bridge
 - Datadog
 - AWS CloudWatch
 
- See [Using Log Management Services](../devguide/services/log-management.html) for more information about draining logs from <%= vars.product_full %>.
+See [Using Log Management Services](../devguide/services/log-management.html) for more information about draining logs from <%= vars.product_full %>.

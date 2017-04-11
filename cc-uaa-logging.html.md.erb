@@ -5,7 +5,7 @@ owner: Logging and Metrics
 
 <strong><%= modified_date %></strong>
 
-This topic describes how to enable and interpret security event logging for the Cloud Controller and the User Account and Authentication (UAA) server. Operators can use these logs to retrieve information about a subset of requests to the Cloud Controller and the UAA server for the purposes of security or compliance.
+This topic describes how to enable and interpret security event logging for the Cloud Controller and the User Account and Authentication (UAA) server. Operators can use these logs to retrieve information about a subset of requests to the Cloud Controller and the UAA server for security or compliance purposes.
 
 ##<a id="cc"></a>Cloud Controller Logging
 
@@ -35,7 +35,7 @@ cs4Label=httpStatusCode cs4=HTTP_STATUS_CODE src=SOURCE_ADDRESS
 dst=DESTINATION_ADDRESS cs5Label=xForwardedFor cs5=X_FORWARDED_FOR_HEADER
 ```
 
-Refer to the following list for a description of the properties above:
+Refer to the following list for a description of the properties shown in the Cloud Controller log format:
 
 * `CEF_VERSION`: The version of CEF used in the logs.
 * `CC_API_VERSION`: The current Cloud Controller API version.
@@ -60,7 +60,7 @@ header of the request. This is empty if the header is not present
 
 The following list provides several example requests with the corresponding Cloud Controller log entries.
 
-* An anonymous GET request:
+* An anonymous `GET` request:
 
     ```
     CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/info|GET 
@@ -72,7 +72,7 @@ The following list provides several example requests with the corresponding Clou
     cs5=<%=vars.example_ip_2%>
     ```
 
-* A GET request with basic authentication:
+* A `GET` request with basic authentication:
 
     ```
     CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/syslog_drain_urls|GET
@@ -84,7 +84,7 @@ The following list provides several example requests with the corresponding Clou
     cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor cs5=<%=vars.example_ip_2%>
     ```
 
-* A GET request with OAuth access token authentication:
+* A `GET` request with OAuth access token authentication:
 
     ```
     CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/routes|GET 
@@ -98,7 +98,7 @@ The following list provides several example requests with the corresponding Clou
     cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor cs5=<%=vars.example_ip_2%>
     ```
 
-* A GET request that results in a 404 error:
+* A `GET` request that results in a 404 error:
 
     ```
     CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/apps/7f310103-
@@ -112,7 +112,7 @@ The following list provides several example requests with the corresponding Clou
     cs5Label=xForwardedFor cs5=<%=vars.example_ip_2%>
     ```
 
-* A POST request that results in a 403 error:
+* A `POST` request that results in a 403 error:
 
     ```
     CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|POST /v2/apps|POST 
@@ -127,7 +127,7 @@ The following list provides several example requests with the corresponding Clou
 
 ##<a id="uaa"></a>UAA Logging
 
-UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA VM. Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service. 
+UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA virtual machine (VM). Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service. 
 
 <%=vars.enable_syslog_drain%>
 
@@ -136,7 +136,7 @@ UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on
 UAA logs identify the following categories of events:
 
 * Authorization and Password Events
-* Scim Administration Events
+* SCIM Administration Events
 * Token Events
 * Client Administration Events
 * UAA Administration Events
@@ -200,6 +200,4 @@ sub=admin, iss=https://uaa.example.com/oauth/token)], identityZoneId=[uaa]
 
 * This entry records a `UserDeletedEvent`. 
 * The `admin` user originating at `<%=vars.example_ip_2%>` deleted a user named `bob@example.com`.
-
-
 
