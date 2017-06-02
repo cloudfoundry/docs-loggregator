@@ -91,11 +91,11 @@ For more information about nozzles, see the [Nozzle Tutorial](./nozzle-tutorial.
 <% else %>
 ## <a name='syslog'></a> Scalable Syslog
 
-This section describes the Scalable Syslog component of Loggregator.
+This section describes the Scalable Syslog components of Loggregator.
 
 ### <a name='overview'></a> Overview
 
-See the following list to understand the concepts for this component:
+See the following list to understand the concepts for Scalable Syslog:
 
 * **What Scalable Syslog does**:
 	* Loggregator uses the [Scalable Syslog BOSH release](https://github.com/cloudfoundry/scalable-syslog-release) to support developers who want to stream app logs to a syslog compatible aggregation or analytics service. See [Streaming Application Logs to Log Management Services](../devguide/services/log-management.html#user-provided).  
@@ -112,5 +112,5 @@ RLPs are a BOSH jobs colocated with the Traffic Controller that collect  logs fr
 
 ### <a name='adapter'></a> Syslog Adapter
 
-Syslog Adapters are Bosh VMs that manage connections with and write to syslog services, or drains. You can scale this component based on the number of drains. 
+Syslog Adapters are BOSH VMs that manage connections with and write to syslog services, or drains. You can scale this component based on the number of drains. 
 <% end %>
