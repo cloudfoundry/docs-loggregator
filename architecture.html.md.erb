@@ -21,7 +21,11 @@ The primary use cases for Loggregator include the following:
 
 # <a id='use-cases'></a> Loggregator Components
 
+<% if vars.product_name == 'CF' %>
 <%= image_tag 'architecture/loggregator.png' %>
+<% else %>
+<%= image_tag 'architecture/loggregatornew.png' %>
+<% end %>
 
 To see a larger version of this diagram, click <a href="./images/architecture/loggregator.png">here</a>.
 
@@ -83,3 +87,30 @@ Nozzles are programs which consume data from the Loggregator Firehose. Nozzles c
 
 For more information about nozzles, see the [Nozzle Tutorial](./nozzle-tutorial.html).
 
+<% if vars.product_name == 'CF' %>
+<% else %>
+## <a id='syslog'></a> Scalable Syslog
+
+This section describes the Scalable Syslog component of Loggregator.
+
+### <a id='overview'></a> Overview
+
+See the following list to understand the concepts for this component:
+
+* **What Scalable Syslog does**:
+	* Loggregator uses the [Scalable Syslog BOSH release](https://github.com/cloudfoundry/scalable-syslog-release) to support developers who want to stream app logs to a syslog compatible aggregation or analytics service. See [Streaming Application Logs to Log Management Services](../devguide/services/log-management.html#user-provided).  
+* **What Scalable Syslog consists of**:
+	* Scalable Syslog includes the Reverse Log Proxy (RLP) and Syslog Adapter components described below. These components are VMs deployed with Elastic Runtime that you can scale independently to support large numbers of user provided syslog drains. 
+* **How you can scale**:
+	* See [Configuring System Logging in Elastic Runtime](../opsguide/logging-config-opsman.html#scaling).
+* **When to scale**:
+	* For guidance on monitoring and scaling, see the [Scalable Syslog Metrics](../monitoring/kpi.html#scalable-syslog) and [Scalable Syslog Scaling Indicator](../monitoring/key-cap-scaling.html#scalable-syslog) sections of the _Monitoring Pivotal Cloud Foundry_ guide.
+
+### <a id='rlp'></a> Reverse Log Proxy (RLP)
+
+RLPs are a BOSH jobs colocated with the Traffic Controller that collect  logs from Dopplers and forward them to Syslog Adapters. You can scale this component based on your overall log volume.
+
+### <a id='adapter'></a> Syslog Adapter
+
+Syslog Adapters are Bosh VMs that manage connections with and write to syslog services, or drains. You can scale this component based on the number of drains. 
+<% end %>
