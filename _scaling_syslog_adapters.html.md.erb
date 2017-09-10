@@ -1,0 +1,11 @@
+### Syslog Adapter
+
+Syslog Adapter is a Loggregator component that manages user-provided syslog drains. This component should be scaled depending on the number of your drain bindings.
+
+<p class="note"><strong>Note</strong>: A drain binding is a syslog destination associated with an app. Apps can have multiple bindings.</p>
+
+Elastic Runtime recommends the following formula for determining the number of Syslog Adapter instances:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Number of Syslog Adapter instances = Number of drain bindings / 500</em>
+
+You can use the [`scalablesyslog.scheduler.drains`](../monitoring/key-cap-scaling.html#scalable-syslog-ksi) capacity scaling indicator to configure auto-scaling of Syslog Adapters.
