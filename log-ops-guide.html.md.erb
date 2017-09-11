@@ -19,7 +19,7 @@ Doppler resources can require scaling to accommodate your overall log volume and
 
 ### Traffic Controller
 
-Traffic Controller resources are usually scaled in line with Doppler resources: one Traffic Controller instance per four Doppler instances. <%= vars.product_full %> recommends the following formula for determining the number of Traffic Controller instances you need to achieve a loss rate of &lt; 1%:
+Traffic Controller resources are usually scaled in line with Doppler resources (one Traffic Controller instance per four Doppler instances). <%= vars.product_full %> recommends the following formula for determining the number of Traffic Controller instances you need to achieve a loss rate of &lt; 1%:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Number of Traffic Controller instances = Number of logs per second / 3200</em>
 
