@@ -15,13 +15,19 @@ Most Loggregator configurations are set to use preferred resource defaults. If y
 
 Doppler resources can require scaling to accommodate your overall log volume and envelope size. <%= vars.product_full %> recommends the following formula for determining the number of Doppler instances you need to achieve a loss rate of &lt; 1%:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Number of Doppler instances = Number of logs per second / 800</em>
+<p class="tip"><em>Number of Doppler instances = Number of logs per second / 2,000</em></p>
+
+You can also monitor and scale Doppler based on its ingress traffic. To do this, you need to sum two metrics and rate them per second:
+
+<p class="tip"><em>Number of Doppler instances = <code>doppler.ingress</code> + <code>DopplerServer.listeners.receivedEnvelopes</code> / 10,000</em></p>
+
+For ingress-based monitoring, <%= vars.product_full %> recommends planning for maximum values over a two-week period and following the guidelines above for scaling Doppler.
 
 ### Traffic Controller
 
-Traffic Controller resources are usually scaled in line with Doppler resources (one Traffic Controller instance per four Doppler instances). <%= vars.product_full %> recommends the following formula for determining the number of Traffic Controller instances you need to achieve a loss rate of &lt; 1%:
+Traffic Controller resources are usually scaled in line with Doppler resources. <%= vars.product_full %> recommends the following formula for determining the number of Traffic Controller instances you need:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Number of Traffic Controller instances = Number of logs per second / 3200</em>
+<p class="tip"><em>Number of Traffic Controller instances = Number of Doppler instances / 4</em></p>
 
 In addition, Traffic Controller resources can require scaling to accommodate the number of your log streams and Firehose subscriptions.
 
@@ -34,9 +40,13 @@ See <%=vars.logg_scaling %> for more information about scaling the Loggregator s
 
 ## <a id='scaling-nozzles'></a> Scaling Nozzles
 
-The number of nozzle instances should match the number of Traffic Controller instances. You can scale a [nozzle](./architecture.html#nozzles) using the subscription ID specified when the nozzle connects to the Firehose.
+You can scale a [nozzle](./architecture.html#nozzles) using the subscription ID specified when the nozzle connects to the Firehose. If you use the same subscription ID on each nozzle instance, the Firehose evenly distributes events across all instances of the nozzle. 
 
-If you use the same subscription ID on each nozzle instance, the Firehose evenly distributes events across all instances of the nozzle. For example, if you have two nozzles with the same subscription ID, the Firehose sends half of the events to one nozzle and half to the other. Similarly, if you have three nozzles with the same subscription ID, the Firehose sends each instance one-third of the event traffic.
+For example, if you have two nozzle instances with the same subscription ID, the Firehose sends half of the events to one nozzle instance and half to the other. Similarly, if you have three nozzle instances with the same subscription ID, the Firehose sends one-third of the event traffic to each instance.
+
+If you want to scale a nozzle, the number of nozzle instances should match the number of Traffic Controller instances:
+
+<p class="tip"><em>Number of nozzle instances = Number of Traffic Controllers</em></p>
 
 Stateless nozzles should handle scaling gracefully. If a nozzle buffers or caches the data, the nozzle author must test the results of scaling the number of nozzle instances up or down.
 
