@@ -25,7 +25,7 @@ If you do not use a monitoring platform, you can follow the instructions below t
 1. Run the following command:
 	<pre class='terminal'>$ cf nozzle -n | pv -l -i 10 -r > /dev/null</pre>
 
-### <a id='reliability-rate'></a>Measuring Message Reliability
+### <a id='reliability-rate'></a> Measuring Message Reliability
 
 To measure the message reliability rate of your Loggregator system, you can run black-box tests. If you want to use this method, see the open-source [cf-logmon](https://github.com/cloudfoundry-incubator/cf-logmon) app and the configuration instructions provided in the README.md file.
 
@@ -62,7 +62,7 @@ See <%=vars.logg_scaling %> for more information about scaling the Loggregator s
 
 ## <a id='scaling-nozzles'></a> Scaling Nozzles
 
-You can scale a [nozzle](./architecture.html#nozzles) using the subscription ID specified when the nozzle connects to the Firehose. If you use the same subscription ID on each nozzle instance, the Firehose evenly distributes data across all instances of the nozzle. 
+You can scale a [nozzle](./architecture.html#nozzles) using the subscription ID specified when the nozzle connects to the Firehose. If you use the same subscription ID on each nozzle instance, the Firehose evenly distributes data across all instances of the nozzle.
 
 For example, if you have two nozzle instances with the same subscription ID, the Firehose sends half of the data to one nozzle instance and half to the other. Similarly, if you have three nozzle instances with the same subscription ID, the Firehose sends one-third of the data to each instance.
 
