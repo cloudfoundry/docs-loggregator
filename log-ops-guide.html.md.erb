@@ -79,13 +79,9 @@ If a nozzle falls behind, Loggregator alerts the nozzle in two ways:
 
 - **TruncatingBuffer** alerts: If the nozzle consumes messages more slowly than they are produced, the Loggregator system may drop messages. In this case, Loggregator sends the log message, `TB: Output channel too full. Dropped N messages`, where `N` is the number of dropped messages. Loggregator also emits a **CounterEvent** with the name `doppler_proxy.slow_consumer`. The nozzle receives both messages from the Firehose, alerting the operator to the performance issue.
 
-
-
 ## <a id='syslog-forward'></a> Forwarding Logs to an External Service ##
 
-You can configure <%= vars.product_full %> to forward log data from components and apps to an external aggregator service instead of routing it to the Loggregator Firehose. <%=vars.logg_forwarding %> explains how to enable log forwarding by specifying the aggregator address, port, and protocol.
-
-[Using Log Management Services](../devguide/services/log-management.html) explains how to bind applications to the external service and configure it to receive logs from <%= vars.product_full %>.
+You can configure <%= vars.product_full %> to forward log data from apps to an external aggregator service. [Using Log Management Services](../devguide/services/log-management.html) explains how to bind apps to the external service and configure it to receive logs from <%= vars.product_full %>.
 
 ## <a id='log-message-size'></a> Log Message Size Constraints
 
