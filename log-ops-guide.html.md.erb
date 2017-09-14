@@ -85,5 +85,4 @@ You can configure <%= vars.product_full %> to forward log data from apps to an e
 
 ## <a id='log-message-size'></a> Log Message Size Constraints
 
-The Diego cell emits application logs as UDP messages to the Metron.
-Diego breaks up log messages greater than approximately 60KiB into multiple envelopes to mitigate this constraint.
+When a Diego Cell emits app logs to Metron, Diego breaks up log messages greater than approximately 60 KiB into multiple envelopes.
