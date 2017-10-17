@@ -46,10 +46,9 @@ You must authorize the example nozzle as a UAA client for your CF deployment. To
         ...
           example-nozzle:
             access-token-validity: 1209600
-            authorized-grant-types: authorization_code,client_credentials,refresh_token
+            authorized-grant-types: client_credentials
             override: true
             secret: example-nozzle
-            scope: openid,oauth.approvals,doppler.firehose
             authorities: oauth.login,doppler.firehose
     ```
 
@@ -63,7 +62,7 @@ You must authorize the example nozzle as a UAA client for your CF deployment. To
   Deployment set to `/Users/example_user/workspace/bosh-lite/cf.yml'
 </pre>
 
-1. Deploy your Cloud Foundry with BOSH.
+1. Deploy Cloud Foundry with BOSH.
 <pre class='terminal'>
   $ bosh deploy
   Acting as user 'admin' on deployment 'cf-warden' on 'Bosh Lite Director'
@@ -89,7 +88,7 @@ You must authorize the example nozzle as a UAA client for your CF deployment. To
   clients
   example-nozzle
       \+ access-token-validity: 1209600
-      \+ authorized-grant-types: authorization\_code,client\_credentials,refresh\_token
+      \+ authorized-grant-types: authorization_code,client_credentials,refresh_token
       \+ override: true
       \+ secret: example-nozzle
       \+ scope: openid,oauth.approvals,doppler.firehose
@@ -145,7 +144,7 @@ Complete the following steps to prepare the nozzle deployment manifest:
 
 1. Use [Spiff](https://github.com/cloudfoundry-incubator/spiff) to compile a deployment manifest from the template and stub, and save this manifest.
 <pre class='terminal'>
-  $ spiff merge templates/template.yml templates/bosh-lite-stub.yml > tmp/manifest\_bosh\_lite.yml
+  $ spiff merge templates/template.yml templates/bosh-lite-stub.yml > tmp/manifest_bosh_lite.yml
 </pre>
 
 1. Run ` bosh status --uuid` to obtain your BOSH director UUID.
@@ -172,8 +171,8 @@ director_uuid: PLACEHOLDER-DIRECTOR-UUID  # replace this
 
 Use the `bosh deployment` command to set the deployment manifest for the nozzle.
 <pre class='terminal'>
-  $ bosh deployment tmp/manifest\_bosh\_lite.yml
-  Deployment set to `/Users/example\_user/workspace/example-nozzle-release/templates/tmp/manifest\_bosh\_lite.yml'
+  $ bosh deployment tmp/manifest_bosh_lite.yml
+  Deployment set to `/Users/example_user/workspace/example-nozzle-release/templates/tmp/manifest_bosh_lite.yml'
 </pre>
 
 ## <a id='create'></a>Step 7: Create Nozzle BOSH Release ##
