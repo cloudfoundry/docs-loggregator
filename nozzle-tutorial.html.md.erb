@@ -177,18 +177,18 @@ Use the `bosh deployment` command to set the deployment manifest for the nozzle.
 
 ## <a id='create'></a>Step 7: Create Nozzle BOSH Release ##
 
-Use the `bosh create release --name RELEASE-NAME` command to create a BOSH release. Replace RELEASE-NAME with `example-nozzle` to match the [UAA client](#add-client) that you created in the CF deployment manifest.
+Use the `bosh <%= vars.bosh_create_release %> --name RELEASE-NAME` command to create a BOSH release. Replace RELEASE-NAME with `example-nozzle` to match the [UAA client](#add-client) that you created in the CF deployment manifest.
 <pre class='terminal'>
-  $ bosh create release --name example-nozzle
+  $ bosh <% vars.bosh_create_release %> --name example-nozzle
   Syncing blobs...
   ...
 </pre>
 
 ## <a id='upload'></a>Step 8: Upload Nozzle BOSH Release ##
 
-Run `bosh upload release` to upload the release that you created in [Step 7: Create Nozzle BOSH Release](#create).
+Run `bosh <%= vars.bosh_upload_release %>` to upload the release that you created in [Step 7: Create Nozzle BOSH Release](#create).
 <pre class='terminal'>
-  $ bosh upload release
+  $ bosh <%= vars.bosh_upload_release %>
   Acting as user 'admin' on 'Bosh Lite Director'<br>
   Copying packages
   \----------------
