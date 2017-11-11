@@ -147,9 +147,9 @@ Complete the following steps to prepare the nozzle deployment manifest:
   $ spiff merge templates/template.yml templates/bosh-lite-stub.yml > tmp/manifest_bosh_lite.yml
 </pre>
 
-1. Run ` bosh status --uuid` to obtain your BOSH director UUID.
+1. Run ` bosh env --uuid` to obtain your BOSH director UUID.
 <pre class='terminal'>
-  $ bosh status --uuid
+  $ bosh env --uuid
 </pre>
 
 1. In the compiled nozzle deployment manifest, locate the `director_uuid` property. Replace `PLACEHOLDER-DIRECTOR-UUID` with your BOSH director UUID.
