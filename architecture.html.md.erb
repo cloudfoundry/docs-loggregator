@@ -58,9 +58,12 @@ also exposes the Firehose.
 
 PCF uses the following components to send BOSH-reported system metrics to the Firehose:
 
-* The **BOSH System Metrics Plugin** is deployed on the BOSH Director. This plugin reads BOSH system health events such as VM heartbeats and alerts from the BOSH Health Monitor JSON plugin and streams them to the BOSH System Metrics Server.
-* The **BOSH System Metrics Server** is deployed on the BOSH Director. The server accepts connections from the BOSH System Metrics Forwarder and streams the events to the Forwarder over gRPC.
-* The **BOSH System Metrics Forwarder** is deployed on the Traffic Controller. When the BOSH System Metrics Server streams health events, the Forwarder ignores alerts, converts heartbeat events to Loggregator envelopes, and sends them to Metron over gRPC.
+* The **BOSH System Metrics Plugin** is deployed on the BOSH Director. This plugin reads health events such as VM heartbeats and alerts from the BOSH Health Monitor JSON plugin and streams them to the BOSH System Metrics Server.
+* The **BOSH System Metrics Server** is deployed on the BOSH Director. The server accepts connections from the BOSH System Metrics Forwarder and streams the health events to it over gRPC.
+
+  If two clients connect with the same subscription ID to the BOSH System Metrics Server, the server evenly distributes the event stream between them. If two clients connect with different subscription IDs, each client receives a copy of the event stream.
+
+* The **BOSH System Metrics Forwarder** is deployed on the Traffic Controller. When the BOSH System Metrics Server streams health events, the BOSH System Metrics Forwarder ignores alerts, converts heartbeat events to Loggregator envelopes, and sends them to Metron over gRPC.
 <% end %>
 
 ### <a name='firehose'></a>Firehose
