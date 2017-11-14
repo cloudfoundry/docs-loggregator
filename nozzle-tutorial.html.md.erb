@@ -56,9 +56,9 @@ You must authorize the example nozzle as a UAA client for your CF deployment. To
 
 ## <a id='redeploy'></a>Step 3: Redeploy Cloud Foundry ##
 
-1. Use the `bosh deployment` command to set the edited manifest file for your deployment.
+1. Use the following command to set the edited manifest file for your deployment.
 <pre class='terminal'>
-  $ bosh deployment cf.yml
+  $ bosh -e MY-ENV -d MY-DEPLOYMENT cf.yml
   Deployment set to `/Users/example_user/workspace/bosh-lite/cf.yml'
 </pre>
 
@@ -169,9 +169,9 @@ director_uuid: PLACEHOLDER-DIRECTOR-UUID  # replace this
 
 ## <a id='set-manifest'></a>Step 6: Set Nozzle Deployment Manifest ##
 
-Use the `bosh deployment` command to set the deployment manifest for the nozzle.
+Use the following command to set the deployment manifest for the nozzle.
 <pre class='terminal'>
-  $ bosh deployment tmp/manifest_bosh_lite.yml
+  $ bosh -e MY-ENV -d MY-DEPLOYMENT tmp/manifest_bosh_lite.yml
   Deployment set to `/Users/example_user/workspace/example-nozzle-release/templates/tmp/manifest_bosh_lite.yml'
 </pre>
 
