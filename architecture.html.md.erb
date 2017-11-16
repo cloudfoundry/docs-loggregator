@@ -5,9 +5,7 @@ owner: Logging and Metrics
 
 <strong><%= modified_date %></strong>
 
-Loggregator is the next generation system for aggregating and streaming logs and metrics from all of the user apps and system components in a<%= vars.product_full=='Cloud Foundry' ? "" : "n"  %> <%= vars.product_full %> deployment.
-
-View the [Loggregator repository on GitHub](https://github.com/cloudfoundry/loggregator).
+Loggregator gathers and streams logs and metrics from all of the apps in your <%= vars.first_product_name %> deployment as well as metrics from the <%= vars.product_name %> system components. See the [Loggregator repository on GitHub](https://github.com/cloudfoundry/loggregator).
 
 ## <a id='use-cases'></a> Using Loggregator
 
@@ -19,7 +17,9 @@ The primary use cases for Loggregator include the following:
 
 - Operators can deploy **nozzles** to the Firehose. A nozzle is a component that monitors the Firehose for specified events and metrics, and streams this data to external services.
 
-## <a id='components'></a> Loggregator Components
+## <a id='components'></a> Loggregator Architecture
+
+The diagram below shows the architecture of Loggregator, including the <%= vars.product_name %> components that it interacts with.
 
 <% if vars.product_name == 'CF' %>
 <%= image_tag 'architecture/loggregator.png' %>
@@ -41,31 +41,16 @@ Sources are logging agents that run on the Cloud Foundry components.
 
 ### <a name='metron'></a>Metron
 
-Metron agents are co-located with sources. They collect logs and forward them to the Doppler servers.
+Metron Agents are colocated with sources. They collect logs and forward them to the Doppler servers.
 
 ### <a name='doppler'></a>Doppler
 
-Dopplers gather logs from the Metron agents, store them in temporary buffers, and forward them to the Traffic Controller or to third-party syslog drains.
+Dopplers gather logs from the Metron Agents, store them in temporary buffers, and forward them to the Traffic Controller or to third-party syslog drains.
 
 ### <a name='traffic-controller'></a>Traffic Controller
 
 The Traffic Controller handles client requests for logs. It gathers and collates messages from all Doppler servers, and provides external API and message translation as needed for legacy APIs. The Traffic Controller
 also exposes the Firehose.
-
-<% if vars.product_name == 'CF' %>
-<% else %>
-### <a name='bosh-metrics'></a>BOSH System Metrics Forwarder
-
-PCF uses the following components to send BOSH-reported system metrics to the Firehose:
-
-* The **BOSH System Metrics Plugin** is deployed on the BOSH Director. This plugin reads health events such as VM heartbeats and alerts from the BOSH Health Monitor JSON plugin and streams them to the BOSH System Metrics Server.
-* The **BOSH System Metrics Server** is deployed on the BOSH Director. The server accepts connections from the BOSH System Metrics Forwarder and streams the health events to it over gRPC as follows:
-
-  * If two clients connect to the BOSH System Metrics Server using the same subscription ID, the server evenly distributes the event stream between them.
-  * If two clients connect to the BOSH System Metrics Server using different subscription IDs, each client receives a copy of the event stream.
-
-* The **BOSH System Metrics Forwarder** is deployed on the Traffic Controller. When the BOSH System Metrics Server streams data read from the BOSH Health Monitor JSON plugin, the BOSH System Metrics Forwarder ignores alerts, converts heartbeat events to Loggregator envelopes, and sends them to Metron over gRPC.
-<% end %>
 
 ### <a name='firehose'></a>Firehose
 
@@ -96,16 +81,6 @@ The Firehose carries both logs and metrics, which differ as follows:
   - Follow the syslog standard
   - Are not used to trigger alerts
 
-### <a name='nozzles'></a> Nozzles
-
-Nozzles are programs which consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and forward it to other applications and services. Example nozzles include the following:
-
-- The JMX Bridge OpenTSDB Firehose Nozzle, which installs with [JMX Bridge](http://docs.pivotal.io/jmx-bridge)
-- The [Datadog nozzle](https://github.com/cloudfoundry-incubator/datadog-firehose-nozzle), which publishes metrics coming from the Firehose to Datadog
-- The [Syslog nozzle](https://github.com/cloudfoundry-community/firehose-to-syslog), which filters out log messages coming from the Firehose and sends it to a syslog server
-
-For more information about nozzles, see the [Nozzle Tutorial](./nozzle-tutorial.html).
-
 <% if vars.product_name == 'CF' %>
 <% else %>
 ### <a name='syslog'></a> Scalable Syslog
@@ -129,3 +104,32 @@ RLPs are a BOSH jobs colocated with the Traffic Controller that collect  logs fr
 
 Syslog Adapters are BOSH VMs that manage connections with and write to syslog services, or drains. You can scale this component based on the number of drains. For more information about Syslog Adapter capacity planning, see [Scaling Loggregator](log-ops-guide.html#scaling).
 <% end %>
+
+## <a id='other-components'></a> Related Components
+
+This section provides information about the components that are related to the Loggregator system.
+
+<% if vars.product_name == 'CF' %>
+<% else %>
+### <a name='bosh-metrics'></a> BOSH System Metrics Forwarder
+
+PCF uses the following components to send BOSH-reported system metrics to Loggregator:
+
+* The **BOSH System Metrics Plugin** is deployed on the BOSH Director. This plugin reads health events such as VM heartbeats and alerts from the BOSH Health Monitor JSON plugin and streams them to the BOSH System Metrics Server.
+* The **BOSH System Metrics Server** is deployed on the BOSH Director. The server accepts connections from the BOSH System Metrics Forwarder and streams the health events to it over gRPC as follows:
+
+  * If two clients connect to the BOSH System Metrics Server using the same subscription ID, the server evenly distributes the event stream between them.
+  * If two clients connect to the BOSH System Metrics Server using different subscription IDs, each client receives a copy of the event stream.
+
+* The **BOSH System Metrics Forwarder** is colocated on the Traffic Controller. It initiates connections to the BOSH System Metrics Server and receives alerts and heartbeats over secure gRPC. The BOSH System Metrics Forwarder sends heartbeat events as envelopes to Loggregator through a colocated Metron Agent. It does not forward alerts.
+<% end %>
+
+### <a name='nozzles'></a> Nozzles
+
+Nozzles are programs which consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and forward it to other applications and services. Example nozzles include the following:
+
+- The JMX Bridge OpenTSDB Firehose Nozzle, which installs with [JMX Bridge](http://docs.pivotal.io/jmx-bridge)
+- The [Datadog nozzle](https://github.com/cloudfoundry-incubator/datadog-firehose-nozzle), which publishes metrics coming from the Firehose to Datadog
+- The [Syslog nozzle](https://github.com/cloudfoundry-community/firehose-to-syslog), which filters out log messages coming from the Firehose and sends it to a syslog server
+
+For more information about nozzles, see the [Nozzle Tutorial](./nozzle-tutorial.html).
