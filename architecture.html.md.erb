@@ -5,7 +5,7 @@ owner: Logging and Metrics
 
 <strong><%= modified_date %></strong>
 
-Loggregator gathers and streams logs and metrics from all of the apps in your <%= vars.first_product_name %> deployment as well as metrics from the <%= vars.product_name %> system components. See the [Loggregator repository on GitHub](https://github.com/cloudfoundry/loggregator).
+Loggregator gathers and streams logs and metrics from all of the apps in your <%= vars.first_product_name %> deployment as well as metrics from <%= vars.product_name %> components. See the [Loggregator repository on GitHub](https://github.com/cloudfoundry/loggregator).
 
 ## <a id='use-cases'></a> Using Loggregator
 
@@ -19,7 +19,7 @@ The primary use cases for Loggregator include the following:
 
 ## <a id='components'></a> Loggregator Architecture
 
-The diagram below shows the architecture of Loggregator, including the <%= vars.product_name %> components that it interacts with.
+The diagram below shows the architecture of Loggregator, including the Cloud Foundry components that it interacts with.
 
 <% if vars.product_name == 'CF' %>
 <%= image_tag 'architecture/loggregator.png' %>
