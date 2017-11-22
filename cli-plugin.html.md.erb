@@ -18,12 +18,12 @@ Refer to the [Installing the cf CLI](../cf-cli/install-go-cli.html) topic for in
 
 ## <a id='add'></a>Install the Plugin
 
-1. Run `cf add-plugin-repo REPO-NAME URL` to add the CF Community plugin repository to your cf CLI plugins.
+1. Run `cf add-plugin-repo REPOSITORY-NAME URL` to add the CF Community plugin repository to your cf CLI plugins.
 <pre class='terminal'>
 $ cf add-plugin-repo CF-Community <span>https</span>://plugins.cloudfoundry.org
 </pre>
 
-1. Run `cf install-plugin -r PLUGIN-REPO PLUGIN-NAME` to install the Firehose plugin from the CF Community plugin repository.
+1. Run `cf install-plugin -r PLUGIN-REPOSITORY PLUGIN-NAME` to install the Firehose plugin from the CF Community plugin repository.
 <pre class='terminal'>
 $ cf install-plugin -r CF-Community "Firehose Plugin"
 </pre>
