@@ -83,18 +83,18 @@ The Firehose carries both logs and metrics, which differ as follows:
 
 <% if vars.product_name == 'CF' %>
 <% else %>
-### <a name='syslog'></a> Scalable Syslog
+### <a name='syslog'></a> CF-Syslog
 
-This section describes the Scalable Syslog components of Loggregator.
+This section describes the CF-Syslog components of Loggregator.
 
-* **What Scalable Syslog does**:
-	* Loggregator uses the [Scalable Syslog BOSH release](https://github.com/cloudfoundry/scalable-syslog-release) to support developers who want to stream app logs to a syslog-compatible aggregation or analytics service. See [Streaming Application Logs to Log Management Services](../devguide/services/log-management.html#user-provided).  
-* **What Scalable Syslog consists of**:
-	* Scalable Syslog includes the Reverse Log Proxy (RLP) and Syslog Adapter components described below. These components run on VMs deployed with Pivotal Application Service (PAS) that you can scale independently to support large numbers of user-provided syslog drains. 
+* **What CF-Syslog does**:
+	* Loggregator uses the [CF Syslog Drain Release](https://github.com/cloudfoundry/cf-syslog-drain-release) to support developers who want to stream app logs to a syslog-compatible aggregation or analytics service. See [Streaming Application Logs to Log Management Services](../devguide/services/log-management.html#user-provided).
+* **What CF-Syslog consists of**:
+	* CF-Syslog includes the Reverse Log Proxy (RLP) and Syslog Adapter components described below. These components run on VMs deployed with Pivotal Application Service (PAS) that you can scale independently to support large numbers of user-provided syslog drains.
 * **How you can scale**:
 	* See [Configuring System Logging in PAS](../opsguide/logging-config-opsman.html#scaling).
 * **When to scale**:
-	* For guidance on monitoring and scaling, see the [Scalable Syslog Metrics](../monitoring/kpi.html#scalable-syslog) and [Scalable Syslog Scaling Indicator](../monitoring/key-cap-scaling.html#scalable-syslog) sections of the _Monitoring Pivotal Cloud Foundry_ guide.
+	* For guidance on scaling, see the [CF-Syslog Performance Scaling Indicators](../monitoring/key-cap-scaling.html#scalable-syslog) sections of the _Monitoring Pivotal Cloud Foundry_ guide.
 
 #### <a name='rlp'></a> Reverse Log Proxy (RLP)
 
