@@ -13,7 +13,7 @@ The primary use cases for Loggregator include the following:
 
 - App developers can tail their application logs or dump the recent logs from the Cloud Foundry Command Line Interface (cf CLI), or stream these to a third-party log archive and analysis service.
 
-- Operators and administrators can access the **Loggregator [Firehose](#firehose)**, the combined stream of logs from all apps, and the  metrics data from Cloud Foundry components.
+- Operators and administrators can access the **Loggregator [Firehose](#firehose)**, the combined stream of logs from all apps, and the metrics data from Cloud Foundry components.
 
 - Operators can deploy **nozzles** to the Firehose. A nozzle is a component that monitors the Firehose for specified events and metrics, and streams this data to external services.
 
@@ -54,7 +54,7 @@ also exposes the Firehose.
 
 ### <a name='firehose'></a>Firehose
 
-The Firehose is a WebSocket endpoint that streams all the event data coming from a<%= vars.product_full=='Cloud Foundry' ? "" : "n"  %>  <%= vars.product_full %> deployment. The data stream includes logs, HTTP events and container metrics from all applications, and metrics from all <%= vars.product_full %> system components. Logs from system components such as Cloud Controller are not included in the firehose and are typically accessed through rsyslog configuration.
+The Firehose is a WebSocket endpoint that streams all the event data coming from a Cloud Foundry deployment. The data stream includes logs, HTTP events, and container metrics from all applications, and metrics from all Cloud Foundry system components. Logs from system components such as Cloud Controller are not included in the Firehose and are typically accessed through rsyslog configuration.
 
 Because the data coming from the Firehose may contain sensitive information, such as customer information in the application logs, only users with the correct permissions can access the Firehose.
 
