@@ -54,7 +54,7 @@ also exposes the Firehose.
 
 ### <a name='firehose'></a>Firehose
 
-The Firehose is a WebSocket endpoint that streams all the event data coming from a Cloud Foundry deployment. The data stream includes logs, HTTP events, and container metrics from all applications, and metrics from all Cloud Foundry system components. Logs from system components such as Cloud Controller are not included in the Firehose and are typically accessed through rsyslog configuration.
+The Firehose is a WebSocket endpoint that streams all the event data coming from a Cloud Foundry deployment. The data stream includes logs, HTTP events, and container metrics from all applications, and metrics from all Cloud Foundry system components. Logs from system components such as the Cloud Controller are not included in the Firehose and are typically accessed through rsyslog configuration.
 
 Because the data coming from the Firehose may contain sensitive information, such as customer information in the application logs, only users with the correct permissions can access the Firehose.
 
