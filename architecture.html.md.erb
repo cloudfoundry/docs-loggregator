@@ -113,7 +113,7 @@ This section provides information about the components that are related to the L
 <% else %>
 ### <a name='bosh-metrics'></a> BOSH System Metrics Forwarder
 
-PCF uses the following components to send BOSH-reported system metrics to Loggregator:
+PCF uses the following components to send BOSH-reported component metrics to Loggregator:
 
 * The **BOSH System Metrics Plugin** is deployed on the BOSH Director. This plugin reads health events such as VM heartbeats and alerts from the BOSH Health Monitor JSON plugin and streams them to the BOSH System Metrics Server.
 * The **BOSH System Metrics Server** is deployed on the BOSH Director. The server accepts connections from the BOSH System Metrics Forwarder and streams the health events to it over gRPC as follows:
