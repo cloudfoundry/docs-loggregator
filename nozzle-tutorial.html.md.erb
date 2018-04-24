@@ -106,6 +106,11 @@ use with this tutorial.
   Cloning into 'example-nozzle-release'...
 </pre>
 
+1. Navigate to the `example-release` directory.
+<pre class='terminal'>
+  $ cd example-nozzle-release
+</pre>
+
 1. Run `git submodule update --init --recursive` to update all of the included submodules.
 <pre class='terminal'>
   $ git submodule update --init --recursive
@@ -114,11 +119,6 @@ use with this tutorial.
   ...
   Cloning into 'src/github.com/cloudfoundry-incubator/example-nozzle'...
   ...
-</pre>
-
-1. Navigate to the `example-release` directory.
-<pre class='terminal'>
-  $ cd example-nozzle-release
 </pre>
 
 ## <a id='step-id'></a>Step 5: Prepare Nozzle Manifest ##
@@ -141,9 +141,9 @@ Complete the following steps to prepare the nozzle deployment manifest:
   $ spiff merge templates/template.yml templates/bosh-lite-stub.yml > tmp/manifest_bosh_lite.yml
 </pre>
 
-1. Run ` bosh env --uuid` to obtain your BOSH director UUID.
+1. Run `bosh env --column=uuid` to obtain your BOSH director UUID.
 <pre class='terminal'>
-  $ bosh env --uuid
+  $ bosh env --column=uuid
 </pre>
 
 1. In the compiled nozzle deployment manifest, locate the `director_uuid` property. Replace `PLACEHOLDER-DIRECTOR-UUID` with your BOSH director UUID.
