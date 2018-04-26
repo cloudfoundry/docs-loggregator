@@ -28,4 +28,4 @@
 
 1. Run `bosh -e MY-ENV -d MY-DEPLOYMENT manifest > MY-MANIFEST.yml` to download and save the current BOSH deployment manifest. Replace `MY-ENV` with your BOSH Director alias, `MY-DEPLOYMENT` with the deployment name from the output of the previous step, and `MY-MANIFEST.yml` with a name you choose for the saved manifest file. You need this manifest to locate information about your databases.
 
-    <pre class='terminal'>$ bosh -e dev -d cf-example manifest cf.yml</pre>
+    <pre class='terminal'>$ bosh -e dev -d cf-example manifest > cf.yml</pre>

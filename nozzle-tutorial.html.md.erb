@@ -24,7 +24,7 @@ The procedure described below deploys this example nozzle to the Firehose of a C
 ## <a id='dl-bosh-manifest'></a>Step 1: Download Cloud Foundry BOSH Manifest ##
 <%= partial 'download_bosh_manifest' %>
 
-## <a id='add-client'></a>Step 2: Add UAA client ##
+## <a id='add-client'></a>Step 2: Add UAA Client ##
 
 You must authorize the example nozzle as a UAA client for your CF deployment. To do this, add an entry for the example nozzle as `client` for `uaa` under the `properties` key in your CF deployment manifest. You must enter the example nozzle object in the correct location in the manifest, and with the correct indentation, as described below.
 
@@ -63,7 +63,7 @@ Run `bosh -e MY-ENV deploy` to deploy Cloud Foundry with BOSH. Replace `MY-ENV` 
   Acting as user 'admin' on deployment 'cf-warden' on 'Bosh Lite Director'
   Getting deployment properties from director...<br>
   Detecting deployment changes
-  \----------------------------
+  ----------------------------
   Releases
   No changes<br>
   Compilation
@@ -82,17 +82,17 @@ Run `bosh -e MY-ENV deploy` to deploy Cloud Foundry with BOSH. Replace `MY-ENV` 
   uaa
   clients
   example-nozzle
-      \+ access-token-validity: 1209600
-      \+ authorized-grant-types: authorization_code,client_credentials,refresh_token
-      \+ override: true
-      \+ secret: example-nozzle
-      \+ scope: openid,oauth.approvals,doppler.firehose
-      \+ authorities: oauth.login,doppler.firehose<br>
+      + access-token-validity: 1209600
+      + authorized-grant-types: authorization_code,client_credentials,refresh_token
+      + override: true
+      + secret: example-nozzle
+      + scope: openid,oauth.approvals,doppler.firehose
+      + authorities: oauth.login,doppler.firehose<br>
   Meta
   No changes<br>
   Please review all changes carefully<br>
   Deploying
-  \---------
+  ---------
   Are you sure you want to deploy? (type 'yes' to continue):yes
 </pre>
 
