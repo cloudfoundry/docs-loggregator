@@ -17,14 +17,14 @@ The procedure described below deploys this example nozzle to the Firehose of a C
 - [BOSH CLI](https://bosh.io/docs/bosh-cli.html) installed locally.
 - Spiff installed locally and added to the load path of your shell. See [Spiff on GitHub](https://github.com/cloudfoundry-incubator/spiff).
 - BOSH Lite deployed locally using VirtualBox. See [BOSH Lite on GitHub](https://github.com/cloudfoundry/bosh-lite).
-- A working [Cloud Foundry](https://github.com/cloudfoundry/cf-release) deployment, including Loggregator, deployed with your local BOSH Lite. This serves as our source of data. See [Deploying Cloud Foundry using BOSH Lite](http://docs.cloudfoundry.org/deploying/boshlite/deploy_cf_boshlite.html), or use the `provision_cf` script included in the [BOSH Lite release](https://github.com/cloudfoundry/bosh-lite#deploy-cloud-foundry).
+- A working [Cloud Foundry](https://github.com/cloudfoundry/cf-release) deployment, including Loggregator, deployed with your local BOSH Lite. This serves as our source of data. See [Deploying Cloud Foundry using BOSH Lite](https://docs.cloudfoundry.org/deploying/boshlite/deploy_cf_boshlite.html), or use the `provision_cf` script included in the [BOSH Lite release](https://github.com/cloudfoundry/bosh-lite#deploy-cloud-foundry).
 
 <p class='note'><strong>Note</strong>: Deploying Cloud Foundry can take up to several hours, depending on your internet bandwith, even when using the automated <code>provision_cf</code> script.</p>
 
 ## <a id='dl-bosh-manifest'></a>Step 1: Download Cloud Foundry BOSH Manifest ##
 <%= partial 'download_bosh_manifest' %>
 
-## <a id='add-client'></a>Step 2: Add UAA client ##
+## <a id='add-client'></a>Step 2: Add UAA Client ##
 
 You must authorize the example nozzle as a UAA client for your CF deployment. To do this, add an entry for the example nozzle as `client` for `uaa` under the `properties` key in your CF deployment manifest. You must enter the example nozzle object in the correct location in the manifest, and with the correct indentation, as described below.
 
@@ -56,13 +56,13 @@ You must authorize the example nozzle as a UAA client for your CF deployment. To
 
 ## <a id='redeploy'></a>Step 3: Redeploy Cloud Foundry ##
 
-1. Use the `bosh deployment` command to set the edited manifest file for your deployment.
+1. Run `bosh deployment MANIFEST-NAME` to set the edited manifest file for your deployment. Replace `MANIFEST-NAME` with the name of your edited manifest.
 <pre class='terminal'>
   $ bosh deployment cf.yml
   Deployment set to `/Users/example_user/workspace/bosh-lite/cf.yml'
 </pre>
 
-1. Deploy Cloud Foundry with BOSH.
+1. Run `bosh deploy` to deploy Cloud Foundry with BOSH.
 <pre class='terminal'>
   $ bosh deploy
   Acting as user 'admin' on deployment 'cf-warden' on 'Bosh Lite Director'
