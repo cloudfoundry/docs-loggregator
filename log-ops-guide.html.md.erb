@@ -34,8 +34,9 @@ To measure the message reliability rate of your Loggregator system, you can run 
 Most Loggregator configurations are set to use preferred resource defaults. If you want to customize these defaults or plan the capacity of your Loggregator system, see the formulas below.
 
 ### Doppler
+It is important to ensure that your Dopplers are scaled to have apropriate CPU resources, before following these guidelines. At least a Medium CPU profile is recomended before following these recomendations. 
 
-Doppler resources can require scaling to accommodate your overall log and metric volume. <%= vars.product_full %> recommends the following formula for determining the number of Doppler instances you need to achieve a loss rate of &lt; 1%:
+Doppler resources can require scaling to accommodate your overall log and metric volume. <%= vars.product_full %> recommends the following formula for determining the number of Doppler instances you need to achieve a loss rate of &lt; 1%: 
 
 <p class="tip"><em>Number of Doppler instances = Number of logs per second / 2,000</em></p>
 
