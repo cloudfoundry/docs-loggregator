@@ -133,3 +133,11 @@ Nozzles are programs which consume data from the Loggregator Firehose. Nozzles c
 - The [Syslog nozzle](https://github.com/cloudfoundry-community/firehose-to-syslog), which filters out log messages coming from the Firehose and sends it to a syslog server
 
 For more information about nozzles, see the [Nozzle Tutorial](./nozzle-tutorial.html).
+
+### <a name="autoscaler"></a> App Autoscaler
+
+App Autoscaler allows you to configure rules that balance the performance and cost of apps by scaling them. 
+
+App Autoscaler relies on API endpoints from Loggregator's Log Cache. If you disable Log Cache, App Autoscaler will fail. 
+
+For more information, see [App Autoscaler Fails When Loggregator’s Log Cache Is Disabled](../pcf-release-notes/breaking-changes.html#autoscaler-log-cache).
