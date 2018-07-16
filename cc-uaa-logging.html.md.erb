@@ -1,11 +1,12 @@
 ---
-title: Security Event Logging for Cloud Controller and UAA
+title: Security Event Logging
 owner: Logging and Metrics
 ---
 
 <strong><%= modified_date %></strong>
 
-This topic describes how to enable and interpret security event logging for the Cloud Controller and the User Account and Authentication (UAA) server. Operators can use these logs to retrieve information about a subset of requests to the Cloud Controller and the UAA server for security or compliance purposes.
+This topic describes how to enable and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub.
+Operators can use these logs to retrieve information about a subset of requests to the Cloud Controller, UAA server, and CredHub for security or compliance purposes.
 
 ##<a id="cc"></a>Cloud Controller Logging
 
@@ -54,7 +55,7 @@ Refer to the following list for a description of the properties shown in the Clo
 * `SOURCE_ADDRESS`: The IP address of the client who originated the request.
 * `DESTINATION_ADDRESS`: The IP address of the Cloud Controller VM.
 * `X_FORWARDED_FOR_HEADER`: The contents of the X-Forwarded-For 
-header of the request. This is empty if the header is not present
+header of the request. This is empty if the header is not present.
 
 ###<a id="example"></a>Example Log Entries
 
@@ -201,3 +202,149 @@ sub=admin, iss=https://uaa.example.com/oauth/token)], identityZoneId=[uaa]
 * This entry records a `UserDeletedEvent`. 
 * The `admin` user originating at `<%=vars.example_ip_2%>` deleted a user named `bob@example.com`.
 
+##<a id="credhub"></a>CredHub Logging
+
+###<a id="credhub-format"></a>Format for Log Entries
+
+CredHub logs security events in the [Common Event Format](https://kc.mcafee.com/resources/sites/MCAFEE/content/live/CORP_KNOWLEDGEBASE/78000/KB78712/en_US/CEF_White_Paper_20100722.pdf) (CEF). CEF specifies the following format for log entries:
+
+```
+CEF:Version|Device Vendor|Device Product|Device Version|Signature ID|Name|Severity|Extension
+```
+
+Entries in the CredHub log use the following format:
+
+```
+CEF:0|cloud_foundry|credhub|CREDHUB_SERVER_VERSION|
+SIGNATURE_ID|NAME|0|rt=TIMESTAMP suser=USERNAME suid=USER_GUID
+cs1Label=userAuthenticationMechanism cs1=AUTH_MECHANISM 
+request=REQUEST requestMethod=REQUEST_METHOD
+cs3Label=versionUuid cs3=VERSION_UUID 
+cs4Label=httpStatusCode cs4=HTTP_STATUS_CODE src=SOURCE_ADDRESS dst=DESTINATION_ADDRESS
+cs2Label=resourceName cs2=RESOURCE_NAME
+cs5Label=resourceUuid cs5=RESOURCE_UUID deviceAction=OPERATION
+cs6Label=requestDetails cs6=REQUEST_DETAILS
+```
+
+Refer to the following sections for a description of the properties shown in the CredHub log.
+
+* `CEF_VERSION`: The version of CEF used in the logs.
+* `CREDHUB_SERVER_VERSION`: The current CredHub server version.
+* `SIGNATURE_ID`: The method and path of the request. For example, `GET /v2/app:GUID`.
+* `NAME`: The same as `SIGNATURE_ID`.
+* `TIMESTAMP`: The number of milliseconds since the Unix epoch.
+* `USERNAME`: The name of the user who originated the request, as defined by UAA. In the case of mTLS, no-auth, or not defined, this value is empty.
+* `USER_GUID`: The "actor" identifier. For example, `mtls-app:GUID`. If there is no authenticated user, this value is empty.
+* `AUTH_MECHANISM (cs1)`: The user authentication mechanism. This can be `oauth-access-token`, `mtls-auth`, or `no-auth`.
+* `REQUEST`: The request path and parameters. For example, `/v2/info?MY-PARAM=VALUE`.
+* `REQUEST_METHOD`: The method of the request. For example, `GET`.
+* `HTTP_STATUS_CODE (cs4)`. The HTTP status code of the response. For example, `200`.
+* `SOURCE_ADDRESS`: The IP address of the client who originated the request.
+* `DESTINATION_ADDRESS`: The IP address of the CredHub VM.
+* `RESOURCE_NAME (cs2)`: The credential path name. For example, `/my/awesome/credential`.
+* `RESOURCE_UUID (cs5)`: The top-level credential UUID. This is not the credential version.
+* `VERSION_UUID (cs3)`: The credential version UUID.
+* `OPERATION (deviceAction)`: The device action. The possible operations include the following:
+  * `get`
+  * `set`
+  * `generate`
+  * `regenerate`
+  * `bulk-regenerate`
+  * `delete`
+  * `find`
+  * `get-permissions`
+  * `add-permission`
+  * `delete-permission`
+  * `interpolate`
+  * `info`
+  * `version`
+  * `health`
+  * `key-usage`
+  * `update-transitional-version`
+* `REQUEST_DETAILS (cs6)`: A JSON blob that differs per request.
+
+<p class="note"><strong>Note</strong>: The CredHub logs include descriptions for each custom label. For example, the logs include <code>cs2Label=resourceName</code> to define the <code>cs2</code> label. The value for <code>resourceName</code> appears in the log next to <code>cs2=/path/to/credential</code>.</p>
+
+###<a id="credhub-example"></a>Example Log Entries
+
+The following sections provide several example requests with the corresponding CredHub log entries.
+
+#### Example 1
+
+```
+CEF:0|cloud_foundry|credhub|2.0.0-beta.28|GET /api/v1/data|
+GET /api/v1/data|0|rt=1530901816757
+suser=app:3c538393-d192-4e23-8c83-456654b3fa6c
+suid=mtls-app:3c538393-d192-4e23-8c83-456654b3fa6c
+cs1Label=userAuthenticationMechanism
+cs1=mutual_tls request=/api/v1/data?path=0b353167-0d5a-48c7-5036-7eaa
+requestMethod=GET
+cs3Label=versionUuid cs3=null
+cs4Label=httpStatusCode cs4=200 src=10.0.0.1 dst=credhub.service.cf.internal
+cs2Label=resourceName cs2=null
+cs5Label=resourceUuid cs5=null deviceAction=FIND
+cs6Label=requestDetails
+cs6={"nameLike":null,"path":"0b353167-0d5a-48c7-5036-7eaa","paths":null}
+```
+* A user authenticated to the CredHub instance using `mutual_tls` from `10.0.0.1`.
+* The authenticated user accessed a CredHub credential.
+
+#### Example 2
+
+```
+CEF:0|cloud_foundry|credhub|2.0.0-beta.28|PUT /api/v1/data|
+PUT /api/v1/data|0|rt=1530901097921
+suser=cc_service_key_client suid=uaa-client:cc_service_key_client
+cs1Label=userAuthenticationMechanism
+cs1=uaa request=/api/v1/data requestMethod=PUT
+cs3Label=versionUuid cs3=32b3d5bf-463a-4045-a6b5-65c97e61059a
+cs4Label=httpStatusCode cs4=200 src=10.0.0.1 dst=credhub.service.cf.internal
+cs2Label=resourceName cs2=/1530901097842989110
+cs5Label=resourceUuid cs5=ccda25c5-a40a-4512-b6f5-a42f8c3b5c4c deviceAction=SET
+cs6Label=requestDetails
+cs6={"name":"/1530901097842989110","type":"json","mode":null,
+"additionalPermissions":[{"actor":"uaa-client:cc_service_key_client",
+"allowedOperations":["READ","WRITE","DELETE","WRITE_ACL","READ_ACL"]}]}
+```
+* A user authenticated to the CredHub instance with UAA from `10.0.0.1`.
+* The authenticated user renamed a CredHub credential.
+
+#### Example 3
+
+```
+CEF:0|cloud_foundry|credhub|2.0.0-beta.28|POST /api/v1/data|
+POST /api/v1/data|0|rt=1530901403532
+suser=app:3c538393-d192-4e23-8c83-456654b3fa6c
+suid=mtls-app:3c538393-d192-4e23-8c83-456654b3fa6c
+cs1Label=userAuthenticationMechanism
+cs1=mutual_tls request=/api/v1/data requestMethod=POST
+cs3Label=versionUuid cs3=8c21b7b3-d4bf-4d8a-a0c5-64c8c207cb40
+cs4Label=httpStatusCode cs4=200 src=10.0.0.1 dst=credhub.service.cf.internal
+cs2Label=resourceName cs2=/0b353167-0d5a-48c7-5036-7eaa/2
+cs5Label=resourceUuid cs5=1d55cff3-5264-434c-a127-0810f341cb2b deviceAction=GENERATE
+cs6Label=requestDetails cs6={"name":"/my/awesome/credential","type":"password",
+"mode":null,"additionalPermissions":[{"actor":"mtls-app:3c538393-d192-4e23-8c83-456654b3fa6c",
+"allowedOperations":["READ","WRITE","DELETE","WRITE_ACL","READ_ACL"]}]}
+```
+* A user authenticated to the CredHub instance using `mutual_tls` from `10.0.0.1`.
+* The authenticated user generated a password credential named `/my/awesome/credential`.
+
+#### Example 4
+
+```
+CEF:0|cloud_foundry|credhub|2.0.0-beta.28|POST /api/v1/data|
+POST /api/v1/data|0|rt=1530901403532
+suser=app:3c538393-d192-4e23-8c83-456654b3fa6c
+suid=mtls-app:3c538393-d192-4e23-8c83-456654b3fa6c
+cs1Label=userAuthenticationMechanism
+cs1=mutual_tls request=/api/v1/data requestMethod=POST
+cs3Label=versionUuid cs3=8c21b7b3-d4bf-4d8a-a0c5-64c8c207cb40
+cs4Label=httpStatusCode cs4=200 src=10.0.0.1 dst=credhub.service.cf.internal
+cs2Label=resourceName cs2=/0b353167-0d5a-48c7-5036-7eaa/2
+cs5Label=resourceUuid cs5=1d55cff3-5264-434c-a127-0810f341cb2b deviceAction=GENERATE
+cs6Label=requestDetails cs6={"name":"/my/other/credential","type":"password",
+"mode":null,"additionalPermissions":[{"actor":"mtls-app:3c538393-d192-4e23-8c83-456654b3fa6c",
+"allowedOperations":["READ","WRITE","DELETE","WRITE_ACL","READ_ACL"]}]}
+```
+* A user authenticated to the CredHub instance using UAA from `10.0.0.1`.
+* The authenticated user generated a password credential named `/my/other/credential`.
