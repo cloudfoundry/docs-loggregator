@@ -12,6 +12,8 @@ The Cloud Foundry Loggregator team created an example nozzle application for use
 
 The procedure described below deploys this example nozzle to the Firehose of a Cloud Foundry installation deployed locally with BOSH Lite. For more information about BOSH Lite, see the [BOSH Lite GitHub repository](https://github.com/cloudfoundry/bosh-lite).
 
+To lighten the load on custom nozzles you develop, you can request Firehose subscriptions that emit only whitelisted metrics. For examples, see `rlpreader` and `rlptypereader` in the [loggregator-tools](https://github.com/cloudfoundry-incubator/loggregator-tools) repository, and see the _V2 Subscriptions_ page of the [loggregator-release](https://github.com/cloudfoundry/loggregator-release/blob/master/docs/v2-subscriptions.md) repository for more information. 
+
 ## Prerequisites
 
 - [BOSH CLI](https://bosh.io/docs/bosh-cli.html) installed locally.
