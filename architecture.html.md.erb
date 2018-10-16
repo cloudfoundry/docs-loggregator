@@ -118,14 +118,6 @@ Nozzles are programs which consume data from the Loggregator Firehose. Nozzles c
 
 For more information about nozzles, see the [Nozzle Tutorial](./nozzle-tutorial.html).
 
-### <a id="autoscaler"></a> App Autoscaler
-
-App Autoscaler allows you to configure rules that balance the performance and cost of apps by scaling them. 
-
-App Autoscaler relies on API endpoints from Loggregator's Log Cache. If you disable Log Cache, App Autoscaler will fail. 
-
- <%= vars.log_cache_app_autoscaler_link %>
-
 ### <a id="log-cache"></a> Log Cache
 
 Log Cache is a Loggregator feature that allows you to view data from the firehose over a specified period of time. It provides an in-memory caching layer and a RESTful interface for retrieving logs. 
@@ -150,7 +142,6 @@ Log Cache is closely related to these components in the logging and metrics ecos
 
 * Log Cache depends on **Loggregator** to view and filter logs, so its reliability is dependent on Loggregator's performance. Log Cache uses the available memory on a device to store logs, and so may impact device performance during periods of high memory contention. 
 * Log Cache is colocated on the **Doppler VMs**. It speeds up the retrieval of data from the Loggregator system, especially for deployments with a large number of Dopplers.
-* **App Autoscaler** relies on API endpoints from Loggregator’s Log Cache. If you disable Log Cache, App Autoscaler will fail.
   <%= vars.loggregator_log_cache_link_pas %>
 
 
