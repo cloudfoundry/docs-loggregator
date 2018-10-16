@@ -5,56 +5,49 @@ owner: Logging and Metrics
 
 <strong><%= modified_date %></strong>
 
-Loggregator is the next generation system for aggregating and streaming logs and metrics from all of the user apps and system components in a<%= vars.product_full=='Cloud Foundry' ? "" : "n"  %> <%= vars.product_full %> deployment.
+Loggregator gathers and streams logs and metrics from user apps in a <%= vars.first_product_name %> deployment as well as metrics from <%= vars.product_name %> components. See the [Loggregator repository on GitHub](https://github.com/cloudfoundry/loggregator).
 
-View the [Loggregator repository on GitHub](https://github.com/cloudfoundry/loggregator).
-
-# <a name='use-cases'></a> Using Loggregator
+# <a id='use-cases'></a> Using Loggregator
 
 The primary use cases for Loggregator include the following:
 
 - App developers can tail their application logs or dump the recent logs from the Cloud Foundry Command Line Interface (cf CLI), or stream these to a third-party log archive and analysis service.
 
-- Operators and administrators can access the **Loggregator [Firehose](#firehose)**, the combined stream of logs from all apps, and the  metrics data from Cloud Foundry components.
+- Operators and administrators can access the **Loggregator [Firehose](#firehose)**, the combined stream of logs from all apps, and the metrics data from <%= vars.product_name %> components.
 
 - Operators can deploy **nozzles** to the Firehose. A nozzle is a component that monitors the Firehose for specified events and metrics, and streams this data to external services.
 
-# <a name='use-cases'></a> Loggregator Components
+## <a id='components'></a> Loggregator Architecture
 
-<% if vars.product_name == 'CF' %>
-<%= image_tag 'architecture/loggregator.png' %>
-<% else %>
+The diagram below shows the architecture of Loggregator, including the <%= vars.product_name %> components that it interacts with.
+
 <%= image_tag 'architecture/loggregatornew.png' %>
-<% end %>
 
-<% if vars.product_name == 'CF' %>
-To see a larger version of this diagram, click <a href="./images/architecture/loggregator.png">here</a>.
-<% else %>
-To see a larger version of this diagram, click <a href="./images/architecture/loggregatornew.png">here</a>.
-<% end %>
+<a href="./images/architecture/loggregatornew.png">View a larger version of this image.</a>
 
 <p class="note"><strong>Note</strong>: The Loggregator system uses <a href="http://www.grpc.io/">gRPC</a> for communication between the Metron Agent and the Doppler, and between the Doppler and the Traffic Controller. This improves the stability and the performance of the Loggregator system, but it may require operators to scale their Dopplers.</p>
 
-## <a name='sources'></a>Source
+### <a id='sources'></a>Source
 
 Sources are logging agents that run on the Cloud Foundry components.
 
-## <a name='metron'></a>Metron
+### <a id='metron'></a>Metron
 
-Metron agents are co-located with sources. They collect logs and forward them to the Doppler servers.
+Metron Agents are colocated with sources. They collect logs and forward them to the Doppler servers.
 
-## <a name='doppler'></a>Doppler
+### <a id='doppler'></a>Doppler
 
-Dopplers gather logs from the Metron agents, store them in temporary buffers, and forward them to the Traffic Controller or to third-party syslog drains.
+Dopplers gather logs from the Metron Agents, store them in temporary buffers, and forward them to the Traffic Controller or to third-party syslog drains.
 
-## <a name='traffic-controller'></a>Traffic Controller
+
+### <a id='traffic-controller'></a>Traffic Controller
 
 The Traffic Controller handles client requests for logs. It gathers and collates messages from all Doppler servers, and provides external API and message translation as needed for legacy APIs. The Traffic Controller
 also exposes the Firehose.
 
-## <a name='firehose'></a>Firehose
+### <a id='firehose'></a>Firehose
 
-The Firehose is a WebSocket endpoint that streams all the event data coming from a<%= vars.product_full=='Cloud Foundry' ? "" : "n"  %>  <%= vars.product_full %> deployment. The data stream includes logs, HTTP events and container metrics from all applications, and metrics from all <%= vars.product_full %> system components. Logs from system components such as Cloud Controller are not included in the firehose and are typically accessed through rsyslog configuration.
+The Firehose is a WebSocket endpoint that streams all the event data coming from a <%= vars.product_full=='Cloud Foundry' ? "" : "n"  %>  <%= vars.product_full %> deployment. The data stream includes logs, HTTP events and container metrics from all applications, and metrics from all <%= vars.product_full %> system components. Logs from system components such as Cloud Controller are not included in the firehose and are typically accessed through rsyslog configuration.
 
 Because the data coming from the Firehose may contain sensitive information, such as customer information in the application logs, only users with the correct permissions can access the Firehose.
 
@@ -68,7 +61,7 @@ $ cf curl /v2/info | jq .doppler\_logging\_endpoint
 wss://doppler.192.0.2.34.xip.io:443
 </pre>
 
-### <a name='logs-vs-metrics'></a>Difference Between Logs and Metrics
+#### <a id='logs-vs-metrics'></a>Difference Between Logs and Metrics
 
 The Firehose carries both logs and metrics, which differ as follows:
 
@@ -81,7 +74,33 @@ The Firehose carries both logs and metrics, which differ as follows:
   - Follow the syslog standard
   - Are not used to trigger alerts
 
-## <a name='nozzles'></a> Nozzles
+### <a id='syslog'></a> Scalable Syslog
+
+
+This section describes the Scalable Syslog components of Loggregator.
+
+* **What Scalable Syslog does**:
+	* Loggregator uses the [Scalable Syslog BOSH release](https://github.com/cloudfoundry/scalable-syslog-release) to support developers who want to stream app logs to a syslog-compatible aggregation or analytics service. See [Streaming Application Logs to Log Management Services](../devguide/services/log-management.html#user-provided).  
+* **What Scalable Syslog consists of**:
+	* Scalable Syslog includes the Reverse Log Proxy (RLP) and Syslog Adapter components described below. These components run on VMs deployed with Elastic Runtime that you can scale independently to support large numbers of user-provided syslog drains. 
+* **How you can scale**:
+	* <%= vars.loggregator_scale_link %>
+* **When to scale**:
+    * <%= vars.loggregator_log_cache_link_syslog_scale %> 
+
+#### <a id='rlp'></a> Reverse Log Proxy (RLP)
+
+RLPs are BOSH jobs colocated with the Traffic Controller that collect logs from Dopplers and forward them to Syslog Adapters. You can scale this component based on your overall log volume.
+
+#### <a id='adapter'></a> Syslog Adapter
+
+Syslog Adapters are BOSH VMs that manage connections with and write to syslog services, or drains. You can scale this component based on the number of drains. For more information about Syslog Adapter capacity planning, see [Scaling Loggregator](log-ops-guide.html#scaling).
+
+## <a id='other-components'></a> Related Components
+
+This section provides information about the components that are related to the Loggregator system.
+
+### <a id='nozzles'></a> Nozzles
 
 Nozzles are programs which consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and forward it to other applications and services. Example nozzles include the following:
 
@@ -91,26 +110,3 @@ Nozzles are programs which consume data from the Loggregator Firehose. Nozzles c
 
 For more information about nozzles, see the [Nozzle Tutorial](./nozzle-tutorial.html).
 
-<% if vars.product_name == 'CF' %>
-<% else %>
-## <a name='syslog'></a> Scalable Syslog
-
-This section describes the Scalable Syslog components of Loggregator.
-
-* **What Scalable Syslog does**:
-	* Loggregator uses the [Scalable Syslog BOSH release](https://github.com/cloudfoundry/scalable-syslog-release) to support developers who want to stream app logs to a syslog-compatible aggregation or analytics service. See [Streaming Application Logs to Log Management Services](../devguide/services/log-management.html#user-provided).  
-* **What Scalable Syslog consists of**:
-	* Scalable Syslog includes the Reverse Log Proxy (RLP) and Syslog Adapter components described below. These components run on VMs deployed with Elastic Runtime that you can scale independently to support large numbers of user-provided syslog drains. 
-* **How you can scale**:
-	* See [Configuring System Logging in Elastic Runtime](../opsguide/logging-config-opsman.html#scaling).
-* **When to scale**:
-	* For guidance on monitoring and scaling, see the [Scalable Syslog Metrics](../monitoring/kpi.html#scalable-syslog) and [Scalable Syslog Scaling Indicator](../monitoring/key-cap-scaling.html#scalable-syslog) sections of the _Monitoring Pivotal Cloud Foundry_ guide.
-
-### <a name='rlp'></a> Reverse Log Proxy (RLP)
-
-RLPs are a BOSH jobs colocated with the Traffic Controller that collect  logs from Dopplers and forward them to Syslog Adapters. You can scale this component based on your overall log volume.
-
-### <a name='adapter'></a> Syslog Adapter
-
-Syslog Adapters are BOSH VMs that manage connections with and write to syslog services, or drains. You can scale this component based on the number of drains. For more information about Syslog Adapter capacity planning, see [Scaling Loggregator](log-ops-guide.html#scaling).
-<% end %>
