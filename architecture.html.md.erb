@@ -7,6 +7,7 @@ owner: Logging and Metrics
 
 Loggregator gathers and streams logs and metrics from user apps in a <%= vars.first_product_name %> deployment as well as metrics from <%= vars.product_name %> components. For more information, see the [Loggregator repository on GitHub](https://github.com/cloudfoundry/loggregator).
 
+
 ## <a id='use-cases'></a> Using Loggregator
 
 The primary use cases for Loggregator include the following:
@@ -17,34 +18,35 @@ The primary use cases for Loggregator include the following:
 
 - Operators can deploy **nozzles** to the Firehose. A nozzle is a component that monitors the Firehose for specified events and metrics, and streams this data to external services.
 
+
 ## <a id='components'></a> Loggregator Architecture
 
 The diagram below shows the architecture of Loggregator, including the <%= vars.product_name %> components that it interacts with.
 
 <%= image_tag 'architecture/loggregatornew.png' %>
 
-<a href="./images/architecture/loggregatornew.png">View a larger version of this image.</a>
+[View a larger version of this image.](./images/architecture/loggregatornew.png)
 
-<p class="note"><strong>Note</strong>: The Loggregator system uses <a href="http://www.grpc.io/">gRPC</a> for communication between the Metron Agent and the Doppler, and between the Doppler and the Traffic Controller. This improves the stability and the performance of the Loggregator system, but it may require operators to scale their Dopplers.</p>
+<p class="note"><strong>Note:</strong> The Loggregator system uses <a href="http://www.grpc.io/">gRPC</a> for communication between the Metron Agent and the Doppler, and between the Doppler and the Traffic Controller. This improves the stability and the performance of the Loggregator system, but it may require operators to scale their Dopplers.</p>
 
-### <a id='sources'></a>Source
+### <a id='sources'></a> Source
 
 Sources are logging agents that run on the Cloud Foundry components.
 
-### <a id='metron'></a>Metron
+### <a id='metron'></a> Metron
 
 Metron Agents are colocated with sources. They collect logs and forward them to the Doppler servers.
 
-### <a id='doppler'></a>Doppler
+### <a id='doppler'></a> Doppler
 
 Dopplers gather logs from the Metron Agents, store them in temporary buffers, and forward them to the Traffic Controller or to third-party syslog drains.
 
-### <a id='traffic-controller'></a>Traffic Controller
+### <a id='traffic-controller'></a> Traffic Controller
 
 The Traffic Controller handles client requests for logs. It gathers and collates messages from all Doppler servers, and provides external API and message translation as needed for legacy APIs. The Traffic Controller
 also exposes the Firehose.
 
-### <a id='firehose'></a>Firehose
+### <a id='firehose'></a> Firehose
 
 The Firehose is a WebSocket endpoint that streams all the event data coming from a Cloud Foundry deployment. The data stream includes logs, HTTP events, and container metrics from all applications, and metrics from all Cloud Foundry system components. Logs from system components such as the Cloud Controller are not included in the Firehose and are typically accessed through rsyslog configuration.
 
@@ -60,7 +62,7 @@ $ cf curl /v2/info | jq .doppler\_logging\_endpoint
 wss://doppler.192.0.2.34.xip.io:443
 </pre>
 
-#### <a id='logs-vs-metrics'></a>Difference Between Logs and Metrics
+#### <a id='logs-vs-metrics'></a> Difference Between Logs and Metrics
 
 The Firehose carries both logs and metrics, which differ as follows:
 
@@ -68,6 +70,7 @@ The Firehose carries both logs and metrics, which differ as follows:
   - Report a measurement from a VM, or the status of a VM, at its timestamp time
   - Follow [dropsonde](https://github.com/cloudfoundry/dropsonde-protocol) or [statsd](https://github.com/etsy/statsd) protocol
   - Can route to a monitoring platform to trigger alerts
+
 * **Logs**
   - Report events detected, actions taken, errors, or any other messages the operator or developer wanted to generate
   - Follow the syslog standard
@@ -79,8 +82,10 @@ This section describes the CF Syslog Drain components of Loggregator.
 
 * **What CF Syslog Drain does**:
 	* Loggregator uses the [CF Syslog Drain Release](https://github.com/cloudfoundry/cf-syslog-drain-release) to support developers who want to stream app logs to a syslog-compatible aggregation or analytics service. See [Streaming Application Logs to Log Management Services](../devguide/services/log-management.html#user-provided).
+
 * **What CF Syslog Drain consists of**:
 	* CF Syslog Drain includes the Reverse Log Proxy (RLP) and Syslog Adapter components described below. These components run on VMs deployed with <%= vars.product_name %> that you can scale independently to support large numbers of user-provided syslog drains.
+
 * **When to scale**:
   * <%= vars.loggregator_log_cache_link_syslog_scale %> 
 
@@ -92,6 +97,7 @@ RLPs are a BOSH jobs colocated with the Traffic Controller that collect logs fro
 
 Syslog Adapters are BOSH VMs that manage connections with and write to syslog services, or drains. You can scale this component based on the number of drains. For more information about Syslog Adapter capacity planning, see [Scaling Loggregator](log-ops-guide.html#scaling).
 
+
 ## <a id='other-components'></a> Related Components
 
 This section provides information about the components that are related to the Loggregator system.
@@ -101,8 +107,8 @@ This section provides information about the components that are related to the L
 <%= vars.product_name %> uses the following components to send BOSH-reported component metrics to Loggregator:
 
 * The **BOSH System Metrics Plugin** is deployed on the BOSH Director. This plugin reads health events such as VM heartbeats and alerts from the BOSH Health Monitor JSON plugin and streams them to the BOSH System Metrics Server.
-* The **BOSH System Metrics Server** is deployed on the BOSH Director. The server accepts connections from the BOSH System Metrics Forwarder and streams the health events to it over gRPC as follows:
 
+* The **BOSH System Metrics Server** is deployed on the BOSH Director. The server accepts connections from the BOSH System Metrics Forwarder and streams the health events to it over gRPC as follows:
   * If two clients connect to the BOSH System Metrics Server using the same subscription ID, the server evenly distributes the event stream between them.
   * If two clients connect to the BOSH System Metrics Server using different subscription IDs, each client receives a copy of the event stream.
 
@@ -118,13 +124,7 @@ Nozzles are programs which consume data from the Loggregator Firehose. Nozzles c
 
 For more information about nozzles, see the [Nozzle Tutorial](./nozzle-tutorial.html).
 
-### <a id="autoscaler"></a> App Autoscaler
-
-App Autoscaler allows you to configure rules that balance the performance and cost of apps by scaling them. 
-
-App Autoscaler relies on API endpoints from Loggregator's Log Cache. If you disable Log Cache, App Autoscaler will fail. 
-
- <%= vars.log_cache_app_autoscaler_link %>
+<%= vars.loggregator_log_cache_app_autoscaler_link %>
 
 ### <a id="log-cache"></a> Log Cache
 
@@ -144,13 +144,11 @@ Log Cache is colocated on the Doppler VM. Add more VMs to scale Log Cache. You c
 
 When scaled according to this formula, Log Cache provides logs for the last 15 minutes of event data, with the exception of redeployment. On redeploy, all logs are refreshed. Log Cache cannot display logs from previous deployments.
 
-#### Log Cache Dependencies
+#### <a id='log-cache-dependencies'></a> Log Cache Dependencies
 
 Log Cache is closely related to these components in the logging and metrics ecosystem:
 
-* Log Cache depends on **Loggregator** to view and filter logs, so its reliability is dependent on Loggregator's performance. Log Cache uses the available memory on a device to store logs, and so may impact device performance during periods of high memory contention. 
+* Log Cache depends on **Loggregator** to view and filter logs, so its reliability is dependent on Loggregator's performance. Log Cache uses the available memory on a device to store logs, and so may impact device performance during periods of high memory contention.
+
 * Log Cache is colocated on the **Doppler VMs**. It speeds up the retrieval of data from the Loggregator system, especially for deployments with a large number of Dopplers.
-* **App Autoscaler** relies on API endpoints from Loggregator’s Log Cache. If you disable Log Cache, App Autoscaler will fail.
   <%= vars.loggregator_log_cache_link_pas %>
-
-
