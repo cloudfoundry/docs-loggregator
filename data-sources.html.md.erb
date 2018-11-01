@@ -5,18 +5,101 @@ owner: Logging and Metrics
 
 <strong><%= modified_date %></strong>
 
-Cloud Foundry logs and metrics come from several sources.
+Logs and metrics are collected on the platform and application levels of Cloud Foundry (CF) deployments. The following sources collect CF logs and metrics:
 
-- Loggregator is the next generation logging and metrics system for Cloud Foundry (CF). Loggregator aggregates metrics from applications and CF system components and streams these out to the Cloud Foundry Command Line Interface (cf CLI) or to third-party log management services. See [Loggregator for Operators](./log-ops-guide.html) for more information.
+- **Loggregator**: Loggregator collects logs and metrics from applications. It also collects metrics from CF components on the platform level. For more information about the Loggregator system, including Loggregator architecture and components, see [Overview of the Loggregator System](./architecture.html).
+- **CF components**: CF components collect logs on the platform level. On Linux machines, this collection process is faciliated by rsyslogd.
 
-- CF components can also forward syslog logs in syslog format directly to a syslog drain, bypassing Loggregator.
+The table below shows the source of logs and metrics on the platform and application CF deployment levels.
 
-- The BOSH Health Monitor continually listens for one **heartbeat** per minute from each deployed virtual machine (VM). These heartbeats contain status updates and lifecycle events. Health Monitor can be extended by plugins to forward heartbeat data to other CF components or third-party services.
+<table>
+	<tr>
+		<th></th>
+		<th>Logs</th>
+		<th>Metrics</th>
+	</tr>
+	<tr>
+		<td>
+			Application
+		</td>
+		<td>
+			Loggregator 
+		</td>	
+		</td>	
+		<td>
+			Loggregator
+	</tr>
+	<tr>
+		<td>
+			Platform
+		</td>
+		<td>
+			CF component syslogs (rsyslogd)			
+		</td>
+		<td>
+			Loggregator	
+		</td>	
+	</tr>	
+</table>
 
-Cloud Foundry supports all of these metrics pipelines. Data from each of these sources can be streamed to a variety of services including the following:
+##About Logs and Metrics
 
-- JMX Bridge
-- Datadog
-- AWS CloudWatch
+The types of information included in logs and metrics vary based on the CF deployment level.
 
-See [Using Log Management Services](../devguide/services/log-management.html) for more information about draining logs from <%= vars.product_full %>.
+Metrics include the following content:
+
+- **Platform Level**: Metrics on the platform level include measurements of CF platform components as well as system metrics from VMs. For more information about collecting metrics on VMs using the BOSH Health Monitor, see [Configuring a Monitoring System](https://docs.pivotal.io/pivotalcf/monitoring/metrics.html#bosh-cf).
+- **Application Level**: Metrics on the application level include container metrics, such as CPU, memory, and disk usage. They also include custom metrics configured by the user. For more information about configuring an application to emit custom metrics to Loggregator, see [Metrics Forwarder for PCF] (https://docs.pivotal.io/metrics-forwarder/).
+
+Logs include the following content:
+
+- **Platform Level**: Logs on the platform level incude every system event logged by CF platform components.
+- **Application Level**: Logs on the application level include all application process events. For more information about application logging, see [Application Logging in Cloud Foundry](https://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html).
+
+##Viewing Logs and Metrics
+
+The table below lists the options for viewing logs and metrics on the platform and application CF deployment levels.
+
+<table>
+	<tr>
+		<th></th>
+		<th>Logs</th>
+		<th>Metrics</th>
+	</tr>
+	<tr>
+		<td>
+			Application
+		</td>
+		<td>
+			<ul>
+				<li>cf CLI</li>
+				<li>Apps Manager</li>
+				<li>Syslog forwarding</li>
+				<li>Loggregator Firehose</li>
+				<li>Loggregator Log Cache</li>
+			</ul>			 
+		</td>	
+		<td>
+			<ul>
+				<li>PCF Metrics</li>
+				<li>Log Cache CLI Plugin</li>
+				<li>Loggregator Firehose</li>
+			</ul>
+		</td>	
+	</tr>
+	<tr>
+		<td>
+			Platform
+		</td>
+		<td>
+			Configure rsyslogd to send platofrm logs to a third-party service.
+		</td>
+		<td>
+			<ul>
+				<li>PCF Healthwatch</li>
+				<li>Log Cache CLI Plugin</li>
+				<li>Loggregator Firehose</li>
+			</ul>
+		</td>	
+	</tr>	
+</table>
