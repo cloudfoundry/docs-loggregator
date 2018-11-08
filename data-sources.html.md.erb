@@ -1,105 +1,151 @@
 ---
-title: Logs and Metrics Sources
+title: Overview of Logging and Metrics
 owner: Logging and Metrics
 ---
 
 <strong><%= modified_date %></strong>
 
-Logs and metrics are collected on the platform and application levels of Cloud Foundry (CF) deployments. The following sources collect CF logs and metrics:
+This topic provides an overview of logging and metrics in Cloud Foundry (CF).
 
-- **Loggregator**: Loggregator collects logs and metrics from applications. It also collects metrics from CF components on the platform level. For more information about the Loggregator system, including Loggregator architecture and components, see [Overview of the Loggregator System](./architecture.html).
-- **CF components**: CF components collect logs on the platform level. On Linux machines, this collection process is faciliated by rsyslogd.
+## <a id="sources"></a>Sources of Logs and Metrics
 
-The table below shows the source of logs and metrics on the platform and application CF deployment levels.
+There are two sources of CF logs and metrics: 
+
+ - CF platform components, such as a Diego Cell, MySQL Server, or Cloud Controller
+ - Apps deployed on CF
+
+The table below describes the data included in logs and metrics from each source.
 
 <table>
 	<tr>
-		<th></th>
-		<th>Logs</th>
-		<th>Metrics</th>
+		<th width="20%">Source</th>
+		<th width="40%">Logs Data</th>
+		<th>Metrics Data</th>
 	</tr>
 	<tr>
 		<td>
-			Application
+			Platform components
 		</td>
 		<td>
-			Loggregator 
-		</td>	
-		</td>	
+			Logs from CF components	
+		</td>
 		<td>
-			Loggregator
+			<ul>
+				<li>Platform metrics from CF components. For example, Cell Capacity Remaining.</li>
+				<li>VM health metrics from BOSH *</li>
+				<li>Metrics for any service tile that self-publishes to the Loggregator Firehose. For example, Redis, MySQL, and Healthwatch.</li>
+			</ul>	
+		</td>	
 	</tr>
 	<tr>
 		<td>
-			Platform
+			Apps
 		</td>
 		<td>
-			CF component syslogs (rsyslogd)			
-		</td>
+			Logs from apps ** 
+		</td>		
 		<td>
-			Loggregator	
+			<ul>
+				<li>App container metrics. For example, CPU, memory, and disk usage.</li>
+				<li>Custom metrics ***</li>
+				<li>Metrics for any service tile that self-publishes to the Loggregator Firehose. For example, Redis, MySQL, and Healthwatch.</li>
+			</ul>
 		</td>	
 	</tr>	
 </table>
 
-##About Logs and Metrics
+* For more information about using the BOSH Health Monitor to collect health metrics on VMs, see Configuring a Monitoring System.
 
-The types of information included in logs and metrics vary based on the CF deployment level.
+** For more information about application logging, see Application Logging in Cloud Foundry.
 
-Metrics include the following content:
+*** For more information about configuring an application to stream custom metrics to Loggregator, see Metrics Forwarder for PCF.
 
-- **Platform Level**: Metrics on the platform level include measurements of CF platform components as well as system metrics from VMs. For more information about collecting metrics on VMs using the BOSH Health Monitor, see [Configuring a Monitoring System](https://docs.pivotal.io/pivotalcf/monitoring/metrics.html#bosh-cf).
-- **Application Level**: Metrics on the application level include container metrics, such as CPU, memory, and disk usage. They also include custom metrics configured by the user. For more information about configuring an application to emit custom metrics to Loggregator, see [Metrics Forwarder for PCF] (https://docs.pivotal.io/metrics-forwarder/).
+## <a id="transport"></a>Transport Systems for Logs and Metrics
 
-Logs include the following content:
+The following transport systems deliver logs and metrics from their source to an observability product for viewing:
 
-- **Platform Level**: Logs on the platform level incude every system event logged by CF platform components.
-- **Application Level**: Logs on the application level include all application process events. For more information about application logging, see [Application Logging in Cloud Foundry](https://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html).
+- **Loggregator**: Loggregator is the transport system for both logs and metrics on apps deployed on CF as well as metrics on CF platform components. For more information about the Loggregator system, including Loggregator architecture and components, see [Overview of the Loggregator System](./architecture.html).
+- **rsyslogd on CF component VMs**: rsyslogd is the transport system for CF component logs. Users can configure rsyslogd to transport component logs to a third-party syslog server.
 
-##Viewing Logs and Metrics
-
-The table below lists the options for viewing logs and metrics on the platform and application CF deployment levels.
+The table below lists the transport system for logs and metrics on CF platform components and apps.
 
 <table>
 	<tr>
-		<th></th>
-		<th>Logs</th>
-		<th>Metrics</th>
+		<th width="20%">Source</th>
+		<th width="40%">Logs Transport System</th>
+		<th>Metrics Transport System</th>
 	</tr>
 	<tr>
 		<td>
-			Application
+			Platform components
 		</td>
 		<td>
-			<ul>
-				<li>cf CLI</li>
-				<li>Apps Manager</li>
-				<li>Syslog forwarding</li>
-				<li>Loggregator Firehose</li>
-				<li>Loggregator Log Cache</li>
-			</ul>			 
-		</td>	
+			rsyslogd on CF component VMs		
+		</td>
 		<td>
-			<ul>
-				<li>PCF Metrics</li>
-				<li>Log Cache CLI Plugin</li>
-				<li>Loggregator Firehose</li>
-			</ul>
+			Loggregator	
 		</td>	
 	</tr>
 	<tr>
 		<td>
-			Platform
+			Apps
 		</td>
 		<td>
-			Configure rsyslogd to send platofrm logs to a third-party service.
-		</td>
+			Loggregator 
+		</td>		
 		<td>
+			Loggregator
+		</td>	
+	</tr>	
+</table>
+
+## <a id="viewing"></a> Viewing Logs and Metrics
+
+The table below lists the products and tools for viewing CF logs and metrics.
+
+<table>
+	<tr>
+		<th width="20%">Source</th>
+		<th width="40%">Products and Tools for Viewing Logs</th>
+		<th>Products and Tools for Viewing Metrics</th>
+	</tr>
+	<tr>
+		<td>
+			Platform components
+		</td>
+		<td valign="top">
+			To view system logs from CF components, configure rsyslogd to transport logs to a third-party product.
+		</td>
+		<td valign="top">
+			You can use the following products or tools to view platform component and VM metrics: 
 			<ul>
-				<li>PCF Healthwatch</li>
-				<li>Log Cache CLI Plugin</li>
-				<li>Loggregator Firehose</li>
-			</ul>
+				<li>PCF Healthwatch. See PCF Healthwatch.</li>
+				<li>Loggregator Firehose CLI Plugin. See Installing the Loggregator Firehose Plugin for CLI.</li>
+				<li>Loggregator Log Cache CLI Plugin. See Cloud Foundry Community cf CLI Plugins.</li>
+			</ul>	
+		</td>	
+	</tr>
+	<tr>
+		<td>
+			Apps
+		</td>
+		<td valign="top">
+			You can use the following products or tools to view app logs: 
+			<ul>
+				<li>cf CLI cf logs command. See Cloud Foundry CLI Reference Guide.</li>
+				<li>Apps Manager. See Managing Apps and Service Instances Using Apps Manager.</li>
+				<li>Syslog forwarding. See Streaming Application Logs to Log Management Services.</li>
+				<li>Loggregator Firehose CLI Plugin. See Installing the Loggregator Firehose Plugin for CLI.</li>
+				<li>Loggregator Log Cache CLI Plugin. See Cloud Foundry Community cf CLI Plugins.</li>
+			</ul>	
+		</td>		
+		<td valign="top">
+			You can use the following products or tools to view app metrics: 
+			<ul>
+				<li>PCF Metrics. See PCF Metrics.</li>
+				<li>Loggregator Firehose CLI Plugin. See Installing the Loggregator Firehose Plugin for CLI.</li>
+				<li>Loggregator Log Cache CLI Plugin. See Cloud Foundry Community cf CLI Plugins.</li>
+			</ul>	
 		</td>	
 	</tr>	
 </table>
