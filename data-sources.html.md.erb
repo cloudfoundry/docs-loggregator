@@ -50,7 +50,7 @@ The table below describes the data included in logs and metrics from each source
 			<ul>
 				<li>App container metrics. For example, CPU, memory, and disk usage.</li>
 				
-				<% if vars.dumpling %>
+				<% if not vars.product_name == 'CF' %>
 
 					<li>Custom metrics ***</li>
 
@@ -62,11 +62,11 @@ The table below describes the data included in logs and metrics from each source
 	</tr>	
 </table>
 
-\* For more information about using the BOSH Health Monitor to collect health metrics on VMs, see <% if vars.dumpling %>[Configuring a Monitoring System](https://docs.pivotal.io/pivotalcf/monitoring/metrics.html#bosh-cf)<% else %>[Configuring Health Monitor Notifications](https://docs.cloudfoundry.org/running/hm-notifications.html)<% end %>.
+\* For more information about using the BOSH Health Monitor to collect health metrics on VMs, see <%= vars.health_monitor_footnote %>.
 
-** For more information about application logging, see <% if vars.dumpling %>[Application Logging in Cloud Foundry](https://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html)<% else %>[Application Logging in Cloud Foundry](https://docs.cloudfoundry.org/devguide/deploy-apps/streaming-logs.html)<% end %>.
+** For more information about app logging, see <%= vars.app_logging_footnote %>. 
 
-<% if vars.dumpling %>*** For more information about configuring an application to stream custom metrics to Loggregator, see [Metrics Forwarder for PCF](https://docs.pivotal.io/metrics-forwarder/).<% end %>
+<%= vars.custom_metrics_footnote %>
 
 ## <a id="transport"></a>Transport Systems for Logs and Metrics
 
@@ -125,18 +125,16 @@ The table below lists the products and tools for viewing CF logs and metrics.
 			To view system logs from CF components, configure rsyslogd to transport logs to a third-party product.
 		</td>
 		<td valign="top">
-			You can use the following products or tools to view platform component and VM metrics: 
+			You can use the following products or tools to view platform component and VM metrics: 	
 			<ul>
-				<% if vars.dumpling %>
-
-					<li>PCF Healthwatch. See <a href="https://docs.pivotal.io/pcf-healthwatch/index.html">PCF Healthwatch</a>.</li>
-
-				<% end %>
-				
 				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
 				
 				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
-			</ul>	
+				<% if not vars.product_name == 'CF' %>
+					<li><%= vars.platform_metric_tool_ref %></li>
+				<% end %>
+			</ul>
+				
 		</td>	
 	</tr>
 	<tr>
@@ -147,22 +145,12 @@ The table below lists the products and tools for viewing CF logs and metrics.
 			You can use the following products or tools to view app logs: 
 			<ul>
 				<li>cf CLI cf logs command. See <a href="https://cli.cloudfoundry.org/en-US/cf/logs.html">Cloud Foundry CLI Reference Guide.</a></li>
-				
-				<% if vars.dumpling %>
 
-					<li>Apps Manager. See <a href="https://docs.pivotal.io/pivotalcf/console/manage-apps.html#logs">Managing Apps and Service Instances Using Apps Manager</a>.</li>
-
-				<% end %>	
-				
-				<% if vars.dumpling %>
-
-					<li>Syslog forwarding. See <a href="https://docs.pivotal.io/pivotalcf/devguide/services/log-management.html">Streaming Application Logs to Log Management Services</a>.</li>
-				
-				<% else %>
-					
-					<li>Syslog forwarding. See <a href="https://docs.cloudfoundry.org/devguide/services/log-management.html">Streaming Application Logs to Log Management Services</a>.</li>
-
+				<% if not vars.product_name == 'CF' %>
+					<li><%= vars.manage_apps_service_instances_ref %></li>
 				<% end %>
+
+				<li><%= vars.syslog_forwarding_ref %></li>
 				
 				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
 				
@@ -171,16 +159,15 @@ The table below lists the products and tools for viewing CF logs and metrics.
 		</td>		
 		<td valign="top">
 			You can use the following products or tools to view app metrics: 
-			<ul>
-				<% if vars.dumpling %>
-
-					<li>PCF Metrics. See <a href="https://docs.pivotal.io/pcf-metrics/index.html">PCF Metrics</a>.</li>
-
-				<% end %>
+			<ul>	
 				
 				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
 				
 				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
+
+				<% if not vars.product_name == 'CF' %>
+					<li><%= vars.metrics_product_ref %></li>
+				<% end %>
 			</ul>	
 		</td>	
 	</tr>	
