@@ -12,7 +12,7 @@ This topic provides an overview of logging and metrics in Cloud Foundry (CF). It
 There are two sources of CF logs and metrics: 
 
  - CF platform components, such as a Diego Cell, MySQL Server, or Cloud Controller
- - Apps deployed on CF
+ - Apps and app containers deployed on CF
 
 The table below describes the data included in logs and metrics from each source.
 
@@ -31,9 +31,9 @@ The table below describes the data included in logs and metrics from each source
 		</td>
 		<td>
 			<ul>
-				<li>Platform metrics from CF components. For example, Cell Capacity Remaining.</li>
-				
-				<li>VM health metrics from BOSH *</li>
+				<li>Health metrics from BOSH-deployed VMs*</li>
+
+				<li>Platform metrics from CF components. For example, cell capacity remaining and router throughput.</li>
 				
 				<li>Metrics for any service tile that self-publishes to the Loggregator Firehose. For example, Redis and MySQL.</li>
 			</ul>	
@@ -55,8 +55,7 @@ The table below describes the data included in logs and metrics from each source
 					<li>Custom metrics ***</li>
 
 				<% end %>
-				
-				<li>Metrics for any service tile that self-publishes to the Loggregator Firehose. For example, Redis and MySQL.</li>
+
 			</ul>
 		</td>	
 	</tr>	
