@@ -3,7 +3,7 @@ title: Logging and Metrics
 owner: Logging and Metrics
 ---
 
-This documentation describes logging and metrics in Cloud Foundry (CF). It includes topics related to monitoring, event logging, CF data sources, and viewing logs and metrics. It also includes information about the Loggregator system, which aggregates and streams logs and metrics from apps and platform components in <%=vars.product_full%> (PAS).
+This documentation describes logging and metrics in Cloud Foundry (CF). It includes topics related to monitoring, event logging, CF data sources, and viewing logs and metrics. It also includes information about the Loggregator system, which aggregates and streams logs and metrics from apps and platform components in <%=vars.product_full%>.
 
 ## Table of Contents
 
@@ -15,14 +15,30 @@ This documentation describes logging and metrics in Cloud Foundry (CF). It inclu
 
 * <a href="./cc-uaa-logging.html" class="subnav">Security Event Logging</a>
 
+<% if not vars.product_name == 'CF' %>
+
+* <a href="../customizing/custom-syslog-rules.html">Customizing Platform Log Forwarding</a>
+
+* <a href="../metric-registrar/index.html">Configuring the Metric Registrar</a>
+
+<% else %>
+
+* <a href="../running/all_metrics.html">Cloud Foundry Component Metrics</a>
+
+<% end %>
+
+<% if not vars.product_name == 'CF' %>
+
 ## See Also
 
-* <a href="https://docs.pivotal.io/pivotalcf/monitoring/index.html">Monitoring Pivotal Cloud Foundry</a>
+* <%= vars.monitoring_cf_ref %>
 
-* <a href="https://docs.pivotal.io/pivotalcf/opsguide/logging-config-opsman.html">Configuring Logging in PAS</a>
+* <%= vars.configuring_logging_ref %>
 
-* <a href="https://docs.pivotal.io/pivotalcf/opsguide/accounting-report-apps-man.html">Monitoring Instance Usage with Apps Manager</a>
+* <%= vars.monitoring_instance_usage_ref %>
 
-* <a href="https://docs.pivotal.io/pivotalcf/opsguide/accounting-report.html">Monitoring App, Task, and Service Instance Usage</a>
+* <%= vars.monitoring_app_task_service_usage %>
 
-* <a href="https://docs.pivotal.io/pivotalcf/customizing/monitoring.html">Monitoring Virtual Machines in Pivotal Cloud Foundry</a>
+* <%= vars.monitoring_vm_ref %>
+
+<% end %>
