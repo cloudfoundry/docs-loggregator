@@ -1,22 +1,173 @@
 ---
-title: Logs and Metrics Sources
+title: Overview of Logging and Metrics
 owner: Logging and Metrics
 ---
 
 <strong><%= modified_date %></strong>
 
-Cloud Foundry logs and metrics come from several sources.
+This topic provides an overview of logging and metrics in Cloud Foundry (CF). It includes information about logs and metrics sources and transport systems. It also lists products for viewing logs and metrics.
 
-- Loggregator is the next generation logging and metrics system for Cloud Foundry (CF). Loggregator aggregates metrics from applications and CF system components and streams these out to the Cloud Foundry Command Line Interface (cf CLI) or to third-party log management services. See [Loggregator for Operators](./log-ops-guide.html) for more information.
+## <a id="sources"></a>Sources of Logs and Metrics
 
-- CF components can also forward syslog logs in syslog format directly to a syslog drain, bypassing Loggregator.
+There are two sources of CF logs and metrics: 
 
-- The BOSH Health Monitor continually listens for one **heartbeat** per minute from each deployed virtual machine (VM). These heartbeats contain status updates and lifecycle events. Health Monitor can be extended by plugins to forward heartbeat data to other CF components or third-party services.
+ - CF platform components, such as a Diego Cell, MySQL Server, or Cloud Controller
+ - Apps and app containers deployed on CF
 
-Cloud Foundry supports all of these metrics pipelines. Data from each of these sources can be streamed to a variety of services including the following:
+The table below describes the data included in logs and metrics from each source.
 
-- JMX Bridge
-- Datadog
-- AWS CloudWatch
+<table>
+	<tr>
+		<th width="20%">Source</th>
+		<th width="40%">Logs Data</th>
+		<th>Metrics Data</th>
+	</tr>
+	<tr>
+		<td>
+			Platform components
+		</td>
+		<td>
+			Logs from CF components	
+		</td>
+		<td>
+			<ul>
+				<li>Health metrics from BOSH-deployed VMs*</li>
 
-See [Using Log Management Services](../devguide/services/log-management.html) for more information about draining logs from <%= vars.product_full %>.
+				<li>Platform metrics from CF components. For example, cell capacity remaining and router throughput.</li>
+				
+				<li>Metrics for any service tile that self-publishes to the Loggregator Firehose. For example, Redis and MySQL.</li>
+			</ul>	
+		</td>	
+	</tr>
+	<tr>
+		<td>
+			Apps
+		</td>
+		<td>
+			Logs from apps ** 
+		</td>		
+		<td>
+			<ul>
+				<li>App container metrics. For example, CPU, memory, and disk usage.</li>
+				
+				<% if not vars.product_name == 'CF' %>
+
+					<li>Custom metrics ***</li>
+
+				<% end %>
+
+			</ul>
+		</td>	
+	</tr>	
+</table>
+
+\* For more information about using the BOSH Health Monitor to collect health metrics on VMs, see <%= vars.health_monitor_footnote %>.
+
+** For more information about app logging, see <%= vars.app_logging_footnote %>. 
+
+<%= vars.custom_metrics_footnote %>
+
+## <a id="transport"></a>Transport Systems for Logs and Metrics
+
+The following transport systems deliver logs and metrics from their source to an observability product for viewing:
+
+- **Loggregator**: Loggregator is the transport system for both logs and metrics on apps deployed on CF as well as metrics on CF platform components. For more information about the Loggregator system, including Loggregator architecture and components, see [Overview of the Loggregator System](./architecture.html).
+- **rsyslogd on CF component VMs**: rsyslogd is the transport system for CF component logs. Users can configure rsyslogd to transport component logs to a third-party syslog server.
+
+The table below lists the transport system for logs and metrics on CF platform components and apps.
+
+<table>
+	<tr>
+		<th width="20%">Source</th>
+		<th width="40%">Logs Transport System</th>
+		<th>Metrics Transport System</th>
+	</tr>
+	<tr>
+		<td>
+			Platform components
+		</td>
+		<td>
+			rsyslogd on CF component VMs		
+		</td>
+		<td>
+			Loggregator	
+		</td>	
+	</tr>
+	<tr>
+		<td>
+			Apps
+		</td>
+		<td>
+			Loggregator 
+		</td>		
+		<td>
+			Loggregator
+		</td>	
+	</tr>	
+</table>
+
+## <a id="viewing"></a> Viewing Logs and Metrics
+
+The table below lists the products and tools for viewing CF logs and metrics.
+
+<table>
+	<tr>
+		<th width="20%">Source</th>
+		<th width="40%">Products and Tools for Viewing Logs</th>
+		<th>Products and Tools for Viewing Metrics</th>
+	</tr>
+	<tr>
+		<td>
+			Platform components
+		</td>
+		<td valign="top">
+			To view system logs from CF components, configure rsyslogd to transport logs to a third-party product.
+		</td>
+		<td valign="top">
+			You can use the following products or tools to view platform component and VM metrics: 	
+			<ul>
+				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
+				
+				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
+				<% if not vars.product_name == 'CF' %>
+					<li><%= vars.platform_metric_tool_ref %></li>
+				<% end %>
+			</ul>
+				
+		</td>	
+	</tr>
+	<tr>
+		<td>
+			Apps
+		</td>
+		<td valign="top">
+			You can use the following products or tools to view app logs: 
+			<ul>
+				<li>cf CLI cf logs command. See <a href="https://cli.cloudfoundry.org/en-US/cf/logs.html">Cloud Foundry CLI Reference Guide.</a></li>
+
+				<% if not vars.product_name == 'CF' %>
+					<li><%= vars.manage_apps_service_instances_ref %></li>
+				<% end %>
+
+				<li><%= vars.syslog_forwarding_ref %></li>
+				
+				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
+				
+				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
+			</ul>	
+		</td>		
+		<td valign="top">
+			You can use the following products or tools to view app metrics: 
+			<ul>	
+				
+				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
+				
+				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
+
+				<% if not vars.product_name == 'CF' %>
+					<li><%= vars.metrics_product_ref %></li>
+				<% end %>
+			</ul>	
+		</td>	
+	</tr>	
+</table>
