@@ -29,36 +29,9 @@ If you do not use a monitoring platform, you can follow the instructions below t
 
 To measure the message reliability rate of your Loggregator system, you can run black-box tests. If you want to use this method, see the open-source [cf-logmon](https://github.com/cloudfoundry-incubator/cf-logmon) app and the configuration instructions provided in the README.md file.
 
-## <a id='scaling'></a> Scaling Loggregator ##
+## <a id='scaling'></a> Scaling Loggregator
 
-Most Loggregator configurations are set to use preferred resource defaults. If you want to customize these defaults or plan the capacity of your Loggregator system, see the formulas below.
-
-### Doppler
-
-Doppler resources can require scaling to accommodate your overall log and metric volume. <%= vars.product_full %> recommends the following formula for determining the number of Doppler instances you need to achieve a loss rate of &lt; 1%:
-
-<p class="tip"><em>Number of Doppler instances = Number of logs per second / 2,000</em></p>
-
-Because it can be challenging to understand the ratio of metrics to logs, <%= vars.product_full %> also recommends monitoring and scaling Doppler based on its ingress traffic. To do this, you need to sum two metrics and rate them per second:
-
-<p class="tip"><em>Number of Doppler instances = <code>doppler.ingress</code> + <code>DopplerServer.listeners.receivedEnvelopes</code> / 10,000</em></p>
-
-Using maximum values over a two-week period is a recommended approach for ingress-based capacity planning.
-
-### Traffic Controller
-
-Traffic Controller resources are usually scaled in line with Doppler resources. <%= vars.product_full %> recommends the following formula for determining the number of Traffic Controller instances:
-
-<p class="tip"><em>Number of Traffic Controller instances = Number of Doppler instances / 4</em></p>
-
-In addition, Traffic Controller resources can require scaling to accommodate the number of your log streams and Firehose subscriptions.
-
-<% if vars.product_name == 'CF' %>
-<% else %>
-<%= partial '../opsguide/scaling_syslog_adapters' %>
-<% end %>
-
-See <%=vars.logg_scaling %> for more information about scaling the Loggregator system.
+Most Loggregator configurations use preferred resource defaults. For more information about customizing these defaults and planning the capacity of your Loggregator system, see [Key Capacity Scaling Indicators](../monitoring/key-cap-scaling.html).
 
 ## <a id='scaling-nozzles'></a> Scaling Nozzles
 
