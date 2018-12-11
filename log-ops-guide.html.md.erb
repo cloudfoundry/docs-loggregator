@@ -31,7 +31,37 @@ To measure the message reliability rate of your Loggregator system, you can run 
 
 ## <a id='scaling'></a> Scaling Loggregator
 
+<% if not vars.product_name == 'CF' %>
+
 Most Loggregator configurations use preferred resource defaults. For more information about customizing these defaults and planning the capacity of your Loggregator system, see [Key Capacity Scaling Indicators](../monitoring/key-cap-scaling.html).
+
+<% else %>
+
+Most Loggregator configurations are set to use preferred resource defaults. If you want to customize these defaults or plan the capacity of your Loggregator system, see the formulas below.
+
+### <a id='doppler'></a> Doppler
+
+Doppler resources can require scaling to accommodate your overall log and metric volume. Cloud Foundry recommends the following formula for determining the number of Doppler instances you need to achieve a loss rate of < 1%:
+
+<p class="tip"><em>Number of Doppler instances = Number of logs per second / 2,000</em></p>
+
+Because it can be challenging to understand the ratio of metrics to logs, Cloud Foundry also recommends monitoring and scaling Doppler based on its ingress traffic. To do this, you need to sum two metrics and rate them per second:
+
+<p class="tip"><em>Number of Doppler instances = <code>doppler.ingress</code> + <code>DopplerServer.listeners.receivedEnvelopes</code> / 10,000</em></p>
+
+Using maximum values over a two-week period is a recommended approach for ingress-based capacity planning.
+
+### <a id='traffic-controller'></a>Traffic Controller
+
+Traffic Controller resources are usually scaled in line with Doppler resources. Cloud Foundry recommends the following formula for determining the number of Traffic Controller instances:
+
+<p class="tip"><em>Number of Traffic Controller instances = Number of Doppler instances / 4</em></p>
+
+In addition, Traffic Controller resources can require scaling to accommodate the number of your log streams and Firehose subscriptions.
+
+See [Configuring System Logging](../running/managing-cf/logging-config.html#scaling) for more information about scaling the Loggregator system.
+
+<% end %>
 
 ## <a id='scaling-nozzles'></a> Scaling Nozzles
 
