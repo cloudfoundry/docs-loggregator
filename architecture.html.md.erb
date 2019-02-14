@@ -5,21 +5,21 @@ owner: Logging and Metrics
 
 <strong><%= modified_date %></strong>
 
-This topic describes the Loggregator architecture and components. It also describes the components of the BOSH System Metrics Forwarder, which sends BOSH-reported VM metrics to Loggregator.
+This topic describes the Loggregator architecture and components. It also describes the <%= vars.product_name %> components that send BOSH-reported VM metrics to Loggregator.
 
 ## <a id='overview'></a> Overview
 
 Loggregator gathers and streams logs and metrics from user apps in a <%= vars.first_product_name %> deployment as well as metrics from <%= vars.product_name %> components. For more information, see the [Loggregator repository on GitHub](https://github.com/cloudfoundry/loggregator).
 
-Loggregator includes components for collecting, storing, and forwarding logs and metrics. Loggregator allows users to view logs and metrics through the Loggregator CLI plugins or through a third-party service. For more information about viewing logs and metrics in <%= vars.product_name %>, see [Overview of Logging and Metrics](./data-sources.html).
+Loggregator allows users to view logs and metrics through the Loggregator CLI plugins or through a third-party service. For more information about viewing logs and metrics in <%= vars.product_name %>, see [Overview of Logging and Metrics](./data-sources.html).
 
 ## <a id='components'></a> Loggregator Architecture and Components
 
-The diagram below shows the architecture of Loggregator, including the <%= vars.product_name %> components with which it interacts.
+The Loggregator architecture includes components for collecting, storing, and forwarding logs and metrics. The diagram below shows the architecture of Loggregator, including the <%= vars.product_name %> components with which it interacts.
 
-<%= image_tag 'architecture/loggregatornew.png' %>
+<%= image_tag 'architecture/loggregator_2_4.png' %>
 
-[View a larger version of this image.](./images/architecture/loggregatornew.png)
+[View a larger version of this image.](./images/architecture/loggregator_2_4.png)
 
 The following are Loggregator components, as shown in the diagram above:
 
@@ -32,16 +32,18 @@ The following are Loggregator components, as shown in the diagram above:
 - **Log Cache**: The Log Cache allows users to view logs and metrics from the Firehose over a specified period of time. The Log Cache includes API endpoints and a CLI plugin for users to query and filter logs and metrics. To download the Log Cache CLI plugin, see [Cloud Foundry Plugins](https://plugins.cloudfoundry.org/). The Log Cache API endpoints are available by default. 
 - **Nozzles**: Nozzles are programs that consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and to forward it to other apps and services. For more information about creating and deploying nozzles, see [Deploying a Nozzle to the Loggregator Firehose](./nozzle-tutorial.html).
 
-## <a id='bosh-metrics'></a> BOSH System Metrics Forwarder Components
+## <a id='bosh-metrics'></a>Related BOSH Components
 
-The BOSH System Metrics Forwarder is located on the Loggregator Traffic Controller. It sends BOSH-reported VM metrics to Loggregator. 
+This section describes the <%= vars.product_name %> components that forward BOSH-reported VM metrics to Loggregator. BOSH-reported VM metrics measure the health of BOSH-deployed VMs on which apps and <%= vars.product_name %> components are deployed. 
 
-The following are BOSH System Metrics Forwarder components:
+The following are the <%= vars.product_name %> components that send BOSH-reported VM metrics to Loggregator:
 
-* **BOSH Agent**: BOSH Agents are located on <%= vars.product_name %> component VMs and Diego cell VMs. They collect metrics, such as cell capacity remaining, from the VM and forward them to the BOSH Health Monitor.
+* **BOSH Agent**: BOSH Agents are located on component VMs and Diego cell VMs. They collect metrics, such as cell capacity remaining, from the VM and forward them to the BOSH Health Monitor.
 
-* **BOSH Health Monitor**: The BOSH Health Monitor receives metrics from the BOSH Agents. It can then forward the metrics to a third-party service or to the BOSH System Metrics Forwarder.
+* **BOSH Health Monitor**: The BOSH Health Monitor receives metrics from the BOSH Agents. It then forwards the metrics to a third-party service or to the BOSH System Metrics Forwarder.
 
 * **BOSH System Metrics Plugin**: This plugin reads health events, such as VM heartbeats and alerts from the BOSH Health Monitor, and streams them to the BOSH System Metrics Server.
 
-* **BOSH System Metrics Server**: The BOSH System Metrics Server streams metrics and heartbeat events to the BOSH System Metrics Forwarder over gRPC. The BOSH System Metrics Forwarder can then forward these heartbeat events as envelopes to Loggregator through a Loggregator Agent.
+* **BOSH System Metrics Server**: The BOSH System Metrics Server streams metrics and heartbeat events to the BOSH System Metrics Forwarder over gRPC. 
+
+* **BOSH System Metrics Forwarder**: The BOSH System Metrics Forwarder is located on the Loggregator Traffic Controller. It forwards heartbeat events from the BOSH System Metrics Server as envelopes to Loggregator through a Loggregator Agent.
