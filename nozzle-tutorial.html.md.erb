@@ -7,29 +7,33 @@ owner: Logging and Metrics
 
 <% $this_topic = 'nozzle-tutorial' %>
 
-This topic describes deploying a [nozzle](./architecture.html#nozzles) application to the Cloud Foundry (CF) [Loggregator Firehose](./architecture.html#firehose).
+This topic describes deploying a nozzle app to the Cloud Foundry (CF) Loggregator Firehose. For more information about nozzles and the Loggregator Firehose, see [Loggregator Architecture](./architecture.html).
 The Cloud Foundry Loggregator team created an example nozzle application for use with this tutorial.
 
 The procedure described below deploys this example nozzle to the Firehose of a Cloud Foundry installation deployed locally with BOSH Lite. For more information about BOSH Lite, see the [BOSH Lite GitHub repository](https://github.com/cloudfoundry/bosh-lite).
 
 ## Prerequisites
 
-- [BOSH CLI](https://bosh.io/docs/bosh-cli.html) installed locally.
+Before you deploy a nozzle to the Loggregator Firehose, you must have the following:
+
+- BOSH CLI. See [BOSH CLI](https://bosh.io/docs/bosh-cli.html) installed locally.
 - Spiff installed locally and added to the load path of your shell. See [Spiff on GitHub](https://github.com/cloudfoundry-incubator/spiff).
 - BOSH Lite deployed locally using VirtualBox. See [BOSH Lite on GitHub](https://github.com/cloudfoundry/bosh-lite).
-- A working [Cloud Foundry](https://github.com/cloudfoundry/cf-release) deployment, including Loggregator, deployed with your local BOSH Lite. This serves as our source of data. See [Deploying Cloud Foundry using BOSH Lite](https://docs.cloudfoundry.org/deploying/boshlite/deploy_cf_boshlite.html), or use the `provision_cf` script included in the [BOSH Lite release](https://github.com/cloudfoundry/bosh-lite#deploy-cloud-foundry).
+- A working Cloud Foundry deployment, including Loggregator, deployed with your local BOSH Lite. This serves as the source of data. See [Deploying Cloud Foundry using BOSH Lite](https://docs.cloudfoundry.org/deploying/boshlite/deploy_cf_boshlite.html), or use the `provision_cf` script included in the BOSH Lite release. See [BOSH Lite](https://github.com/cloudfoundry/bosh-lite#deploy-cloud-foundry) on GitHub.
 
-<p class='note'><strong>Note</strong>: Deploying Cloud Foundry can take up to several hours, depending on your internet bandwith, even when using the automated <code>provision_cf</code> script.</p>
+<p class='note'><strong>Note</strong>: Deploying Cloud Foundry can take several hours depending on your internet bandwith, even when using the automated <code>provision_cf</code> script.</p>
 
 ## <a id='dl-bosh-manifest'></a>Step 1: Download Cloud Foundry BOSH Manifest ##
+
+To download the BOSH manifest, do the following:
+
 <%= partial 'download_bosh_manifest' %>
 
-## <a id='add-client'></a>Step 2: Add UAA Client ##
+## <a id='add-client'></a>Step 2: Add UAA Client
 
-You must authorize the example nozzle as a UAA client for your CF deployment. To do this, add an entry for the example nozzle as `client` for `uaa` under the `properties` key in your CF deployment manifest. You must enter the example nozzle object in the correct location in the manifest, and with the correct indentation, as described below.
+You must authorize the example nozzle as a UAA client for your CF deployment. To do this, add an entry for the example nozzle as `client` for `uaa` under the `properties` key in your CF deployment manifest YAML file. You must enter the example nozzle object in the correct location in the manifest, and with the correct indentation.
 
-<p class='note'>Deployment manifests are YAML files. Visit <a href='http://www.yaml.org/start.html'>YAML</a> to learn about YAML syntax.
-</p>
+To add the nozzle as a UAA client for your deployment, do the following:
 
 1. Open the deployment manifest in a text editor.
 1. Locate the left-aligned `properties` key.
@@ -56,7 +60,15 @@ You must authorize the example nozzle as a UAA client for your CF deployment. To
 
 ## <a id='redeploy'></a>Step 3: Redeploy Cloud Foundry ##
 
-Run `bosh -e MY-ENV deploy` to deploy Cloud Foundry with BOSH. Replace `MY-ENV` with the alias you set for your BOSH Director. For example:
+To deploy Cloud Foundry with BOSH, run the following command:
+
+```
+bosh -e MY-ENV deploy
+```
+
+WHERE `MY-ENV` is the alias you set for your BOSH Director. 
+
+For example:
 
 <pre class='terminal'>
   $ bosh -e dev deploy
@@ -98,8 +110,9 @@ Run `bosh -e MY-ENV deploy` to deploy Cloud Foundry with BOSH. Replace `MY-ENV` 
 
 ## <a id='dl-release'></a>Step 4: Clone Example Release ##
 
-The Cloud Foundry Loggregator team created an example nozzle application for
-use with this tutorial.
+The Cloud Foundry Loggregator team created an example nozzle app for use with this tutorial.
+
+To clone the example nozzle release, do the following:
 
 1. Run `git clone` to clone the main release repository from [GitHub](https://github.com/cloudfoundry-incubator/example-nozzle-release).
 <pre class='terminal'>
@@ -124,7 +137,7 @@ use with this tutorial.
 
 ## <a id='step-id'></a>Step 5: Prepare Nozzle Manifest ##
 
-Complete the following steps to prepare the nozzle deployment manifest:
+To prepare the nozzle deployment manifest, do the following:
 
 1. In the `example-nozzle-release` directory, navigate to the `templates` directory.
 <pre class='terminal'>
@@ -166,7 +179,18 @@ director_uuid: PLACEHOLDER-DIRECTOR-UUID  # replace this
 
 ## <a id='create'></a>Step 6: Create Nozzle BOSH Release ##
 
-Use the `bosh -e MY-ENV create-release --name RELEASE-NAME` command to create a BOSH release. Replace `MY-ENV` with the alias you set for your BOSH Director. Replace RELEASE-NAME with `example-nozzle` to match the [UAA client](#add-client) that you created in the CF deployment manifest. For example:
+To create a nozzle BOSH release, run the following command:
+
+```
+bosh -e MY-ENV create-release --name RELEASE-NAME
+``` 
+
+WHERE:
+
+- `MY-ENV` is the alias you set for your BOSH Director. 
+- RELEASE-NAME is `example-nozzle` to match the UAA client that you created in the CF deployment manifest. 
+
+For example:
 <pre class='terminal'>
   $ bosh -e dev create-release --name example-nozzle
   Syncing blobs...
@@ -175,7 +199,17 @@ Use the `bosh -e MY-ENV create-release --name RELEASE-NAME` command to create a 
 
 ## <a id='upload'></a>Step 7: Upload Nozzle BOSH Release ##
 
-Run `bosh -e MY-ENV upload-release` to upload the release that you created in [Step 6: Create Nozzle BOSH Release](#create). Replace `MY-ENV` with the alias you set for your BOSH Director. For example:
+Upload the nozzle BOSH release that you created as part of [Step 6: Create Nozzle BOSH Release](#create).
+
+To upload the BOSH release, run the following command:
+
+```
+bosh -e MY-ENV upload-release
+``` 
+
+WHERE `MY-ENV` is the alias you set for your BOSH Director. 
+
+For example:
 <pre class='terminal'>
   $ bosh -e dev upload-release
   Acting as user 'admin' on 'Bosh Lite Director'<br>
@@ -206,7 +240,14 @@ Run `bosh -e MY-ENV upload-release` to upload the release that you created in [S
 
 ## <a id='deploy'></a>Step 8: Deploy Nozzle ##
 
-Run `bosh -e MY-ENV deploy` to deploy the nozzle. Replace `MY-ENV` with the alias you set for your BOSH Director. For example:
+To deploy the nozzle, run the following command:
+
+```
+bosh -e MY-ENV deploy
+``` 
+WHERE `MY-ENV` is the alias you set for your BOSH Director. 
+
+For example:
 <pre class='terminal'>
   $ bosh -e dev deploy
   Acting as user 'admin' on deployment 'example-nozzle-lite' on 'Bosh Lite Director'
@@ -222,6 +263,8 @@ Run `bosh -e MY-ENV deploy` to deploy the nozzle. Replace `MY-ENV` with the alia
 ## <a id='view'></a>Step 9: View Nozzle Output ##
 
 The example nozzle outputs all of the data originating coming from the Firehose to its log files. To view this data, SSH into the example-nozzle VM and examine the logs.
+
+To view nozzle output, do the following:
 
 1. Run `bosh -e MY-ENV ssh` to access the nozzle VM at the IP configured in the nozzle's manifest template stub `./templates/bosh-lite-stub.yml`. Replace `MY-ENV` with the alias you set for your BOSH Director. For example:
 <pre class='terminal'>
