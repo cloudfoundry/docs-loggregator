@@ -24,6 +24,7 @@ The diagram below shows the architecture of Loggregator, including the <%= vars.
 The following are Loggregator components, as shown in the diagram above:
 
 - **Loggregator Agent**: Loggregator Agents run on both <%= vars.product_name %> component VMs and Diego cell VMs. They receive logs and metrics from the apps and <%= vars.product_name %> components located on those VMs. Loggregator Agents then forward the logs and metrics to Dopplers.
+- **System Metrics Agent**: A standalone agent to provide VM system metrics using a Prometheus-scrapable endpoint.
 - **Doppler**: Dopplers receive logs and metrics from Loggregator Agents, store them in temporary buffers, and forward them to Traffic Controllers.
 - **Traffic Controller**: Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. The Loggregator Firehose is located on the Traffic Controller.
 - **Reverse Log Proxy**: Reverse Log Proxies (RLPs) collect logs and metrics from Dopplers and forward them to Syslog Adapters for syslog drains. Operators can scale up the number of RLPs based on overall log volume. 
