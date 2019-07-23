@@ -3,8 +3,6 @@ title: Loggregator Architecture
 owner: Logging and Metrics
 ---
 
-
-
 This topic describes the Loggregator architecture and components. It also describes the <%= vars.first_product_name %> components that send BOSH-reported VM metrics to Loggregator.
 
 ## <a id='overview'></a> Overview
@@ -15,13 +13,38 @@ The Loggregator architecture includes components for collecting, storing, and fo
 
 ## <a id='components'></a> Loggregator Architecture and Components
 
-The diagram below shows the architecture of Loggregator, including the <%= vars.product_name %> components with which it interacts.
+This section includes diagrams of Loggregator architecture. 
+
+<%= vars.loggregator_architecture_syslog %> 
+
+### <a id='loggregator-w-syslog-adapter'></a> Loggregator Architecture with Syslog Adapter
+
+The following diagram shows the architecture of a Loggregator deployment that uses Syslog Adapter.
 
 <%= image_tag 'architecture/loggregator_w_syslog_adapter.png' %>
 
 [View a larger version of this image.](./images/architecture/loggregator_w_syslog_adapter.png)
 
-The following are Loggregator components, as shown in the diagram above:
+### <a id='loggregator-w-syslog-ageents'></a> Loggregator Architecture with Syslog Agents
+
+The following diagram shows the architecture of a Loggregator deployment that uses Syslog Agents. 
+
+<%= image_tag 'architecture/loggregator_w_syslog_agents.png' %>
+
+[View a larger version of this image.](./images/architecture/loggregator_w_syslog_agents.png)
+
+### <a id='system-metrics-agents'></a> Loggregator Architecture with System Metrics Agents
+
+The following diagram shows the architecture of a Loggregator deployment that uses System Metrics Agents
+to collect VM and system-level metrics. 
+
+<%= image_tag 'architecture/loggregator_system_metrics_arch.png' %>
+
+[View a larger version of this image.](./images/architecture/loggregator_system_metrics_arch.png)
+
+### <a id="loggregator-components"></a> Loggregator Components
+
+The following are Loggregator components, as shown in the diagrams above:
 
 - **Loggregator Agent**: Loggregator Agents run on both <%= vars.product_name %> component VMs and Diego cell VMs. They receive logs and metrics from the apps and <%= vars.product_name %> components located on those VMs. Loggregator Agents then forward the logs and metrics to Dopplers.
 - **System Metrics Agent**: A standalone agent to provide VM system metrics using a Prometheus-scrapable endpoint.
@@ -29,8 +52,8 @@ The following are Loggregator components, as shown in the diagram above:
 - **Traffic Controller**: Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. The Loggregator Firehose is located on the Traffic Controller.
 - **Reverse Log Proxy**: Reverse Log Proxies (RLPs) collect logs and metrics from Dopplers and forward them to Syslog Adapters for syslog drains. Operators can scale up the number of RLPs based on overall log volume. 
 - **Syslog Adapter**: Syslog Adapters manage connections with and write to syslog drains. Operators can scale the Syslog Adapter component based on the number of syslog drains. <%= vars.key_capacity_scaling_link %>
-- **Syslog Agents**: When used instead of Syslog Adapters, Syslog Agents  increase the number of syslog drain service bindings supported by the Loggregator system and reduce the workload for Loggregator VMs. Agents run on the Loggregator Trafficcontroller VM, which removes the need for the Syslog Adapter and Syslog Scheduler VM. 
-	- **Syslog Binding Cache**: Syslog Agents can overwhelm CAPI when querying for existing bindings. This component acts a a proxy for the CAPI Binding query.
+- **Syslog Agents**: When used instead of Syslog Adapters, Syslog Agents increase the number of syslog drain service bindings supported by the Loggregator system and reduce the workload for Loggregator VMs. Agents run on the Loggregator Trafficcontroller VM, which removes the need for the Syslog Adapter and Syslog Scheduler VM. 
+- **Syslog Binding Cache**: Syslog Agents can overwhelm CAPI when querying for existing bindings. This component acts a a proxy for the CAPI Binding query.
 - **Firehose**: The Firehose is a WebSocket endpoint that streams all the event data from a <%= vars.product_name %> deployment. The data stream includes HTTP events, app logs, container metrics from apps, and metrics from <%= vars.product_name %> platform components. The Firehose cf CLI plugin allows you to view the output of the Firehose. For more information about the Firehose plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](./cli-plugin.html).
 - **Log Cache**: The Log Cache allows you to view logs and metrics from the Firehose over a specified period of time. The Log Cache includes API endpoints and a CLI plugin to query and filter logs and metrics. To download the Log Cache CLI plugin, see [Cloud Foundry Plugins](https://plugins.cloudfoundry.org/). The Log Cache API endpoints are available by default. For more information about using the Log Cache API, see [Log Cache](https://github.com/cloudfoundry/log-cache#restful-api-via-gateway) on GitHub.
 - **Nozzles**: Nozzles are programs that consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and to forward it to other apps and services. For more information about creating and deploying nozzles, see [Deploying a Nozzle to the Loggregator Firehose](./nozzle-tutorial.html).
