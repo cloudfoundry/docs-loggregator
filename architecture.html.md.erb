@@ -9,7 +9,7 @@ This topic describes the Loggregator architecture and components. It also descri
 
 Loggregator gathers and streams logs and metrics from user apps in a <%= vars.product_name %> deployment. It also gathers and streams metrics from <%= vars.product_name %> components and health metrics from BOSH-deployed VMs. Loggregator allows you to view these logs and metrics through the Loggregator CLI plugins or through a third-party service. For more information, see [loggregator](https://github.com/cloudfoundry/loggregator) in GitHub.
 
-The Loggregator architecture includes components for collecting, storing, and forwarding logs and metrics. 
+Loggregator architecture includes components for collecting, storing, and forwarding logs and metrics. 
 
 ## <a id='components'></a> Loggregator Architecture and Components
 
@@ -17,21 +17,13 @@ This section includes diagrams of Loggregator architecture.
 
 <%= vars.loggregator_architecture_syslog %> 
 
-### <a id='loggregator-w-syslog-adapter'></a> Loggregator Architecture with Syslog Adapter
+### <a id='loggregator-w-syslog-ageents'></a> Loggregator Architecture
 
-The following diagram shows the architecture of a Loggregator deployment that uses Syslog Adapter.
+The following diagram shows the architecture of a Loggregator deployment. 
 
-<%= image_tag 'architecture/loggregator_w_syslog_adapter.png' %>
+<%= image_tag 'architecture/loggregator.png' %>
 
-[View a larger version of this image.](./images/architecture/loggregator_w_syslog_adapter.png)
-
-### <a id='loggregator-w-syslog-ageents'></a> Loggregator Architecture with Syslog Agents
-
-The following diagram shows the architecture of a Loggregator deployment that uses Syslog Agents. 
-
-<%= image_tag 'architecture/loggregator_w_syslog_agents.png' %>
-
-[View a larger version of this image.](./images/architecture/loggregator_w_syslog_agents.png)
+[View a larger version of this image.](./images/architecture/loggregator.png)
 
 ### <a id='system-metrics-agents'></a> Loggregator Architecture with System Metrics Agents
 
@@ -51,7 +43,6 @@ The following are Loggregator components, as shown in the diagrams above:
 - **Doppler**: Dopplers receive logs and metrics from Loggregator Agents, store them in temporary buffers, and forward them to Traffic Controllers.
 - **Traffic Controller**: Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. The Loggregator Firehose is located on the Traffic Controller.
 - **Reverse Log Proxy**: Reverse Log Proxies (RLPs) collect logs and metrics from Dopplers and forward them to Syslog Adapters for syslog drains. Operators can scale up the number of RLPs based on overall log volume. 
-- **Syslog Adapter**: Syslog Adapters manage connections with and write to syslog drains. Operators can scale the Syslog Adapter component based on the number of syslog drains. <%= vars.key_capacity_scaling_link %>
 - **Syslog Agents**: When used instead of Syslog Adapters, Syslog Agents increase the number of syslog drain service bindings supported by the Loggregator system and reduce the workload for Loggregator VMs. Agents run on the Loggregator Trafficcontroller VM, which removes the need for the Syslog Adapter and Syslog Scheduler VM. 
 - **Syslog Binding Cache**: Syslog Agents can overwhelm CAPI when querying for existing bindings. This component acts a a proxy for the CAPI Binding query.
 - **Firehose**: The Firehose is a WebSocket endpoint that streams all the event data from a <%= vars.product_name %> deployment. The data stream includes HTTP events, app logs, container metrics from apps, and metrics from <%= vars.product_name %> platform components. The Firehose cf CLI plugin allows you to view the output of the Firehose. For more information about the Firehose plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](./cli-plugin.html).
