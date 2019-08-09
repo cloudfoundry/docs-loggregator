@@ -21,7 +21,7 @@ This section includes diagrams of Loggregator architecture.
 
 The following diagram shows the architecture of a Loggregator deployment. 
 
-<img src='images/architecture/loggregator.png' alt="Depicts Loggregator architecture and components">
+<img src='images/architecture/loggregator.png' alt="A Loggregator Agent appears in squares that depict 'Host VM' and 'Cloud Controller VMs'. Represented by arrows, the Loggregator Agent receives logs from a Forwarder Agent, which forwards logs received from a Syslog Agent. Loggregator Agents send the logs to Dopplers over gRPC communication. Dopplers then forward the logs to Traffic Controllers. For more descriptions of all of the components in Loggregator, see the 'Loggregator Components' section below.">
 
 [View a larger version of this image.](./images/architecture/loggregator.png)
 
@@ -30,7 +30,7 @@ The following diagram shows the architecture of a Loggregator deployment.
 The following diagram shows the architecture of a Loggregator deployment that uses System Metrics Agents
 to collect VM and system-level metrics. 
 
-<img src='images/architecture/loggregator_system_metrics_arch.png' alt="Depicts System Metrics Agent within Loggregator architecture">
+<img src='images/architecture/loggregator_system_metrics_arch.png' alt="System Metrics Agent appear in squares that depict 'Host VMs'. Represented by arrows, the System Metrics Agents send VM system-level metrics to a System Metrics Scraper, which forwards these metrics to Loggregator Agents over mTLS. For more descriptions of all of the components in Loggregator, see the 'Loggregator Components' section below.">
 
 [View a larger version of this image.](./images/architecture/loggregator_system_metrics_arch.png)
 
