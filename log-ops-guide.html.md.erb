@@ -3,9 +3,8 @@ title: Loggregator Guide for Cloud Foundry Operators
 owner: Logging and Metrics
 ---
 
-
-
 This topic contains information for Cloud Foundry deployments operators about how to configure the [Loggregator system](./architecture.html) to avoid data loss with high volumes of logging and metrics data.
+
 
 ## <a id='throughput-reliability'></a> Loggregator Message Throughput and Reliability
 
@@ -29,6 +28,7 @@ If you do not use a monitoring platform, you can follow the instructions below t
 
 To measure the message reliability rate of your Loggregator system, you can run black-box tests. If you want to use this method, see the open-source [cf-logmon](https://github.com/cloudfoundry-incubator/cf-logmon) app and the configuration instructions provided in the README.md file.
 
+
 ## <a id='scaling'></a> Scaling Loggregator
 
 <% if not vars.product_name == 'CF' %>
@@ -51,7 +51,7 @@ Because it can be challenging to understand the ratio of metrics to logs, Cloud 
 
 Using maximum values over a two-week period is a recommended approach for ingress-based capacity planning.
 
-### <a id='traffic-controller'></a>Traffic Controller
+### <a id='traffic-controller'></a> Traffic Controller
 
 Traffic Controller resources are usually scaled in line with Doppler resources. Cloud Foundry recommends the following formula for determining the number of Traffic Controller instances:
 
@@ -62,6 +62,7 @@ In addition, Traffic Controller resources can require scaling to accommodate the
 See [Configuring System Logging](../running/managing-cf/logging-config.html#scaling) for more information about scaling the Loggregator system.
 
 <% end %>
+
 
 ## <a id='scaling-nozzles'></a> Scaling Nozzles
 
@@ -75,17 +76,20 @@ If you want to scale a nozzle, the number of nozzle instances should match the n
 
 Stateless nozzles should handle scaling gracefully. If a nozzle buffers or caches the data, the nozzle author must test the results of scaling the number of nozzle instances up or down.
 
-## <a id='slow-noz'></a> Slow Nozzle Alerts ##
+
+## <a id='slow-noz'></a> Slow Nozzle Alerts
 
 The [Traffic Controller](./architecture.html#traffic-controller) alerts nozzles if they consume events too slowly.
 If a nozzle falls behind, Loggregator alerts the nozzle in two ways:
 
 - **TruncatingBuffer** alerts: If the nozzle consumes messages more slowly than they are produced, the Loggregator system may drop messages. In this case, Loggregator sends the log message, `TB: Output channel too full. Dropped N messages`, where `N` is the number of dropped messages. Loggregator also emits a **CounterEvent** with the name `doppler_proxy.slow_consumer`. The nozzle receives both messages from the Firehose, alerting the operator to the performance issue.
 
-## <a id='syslog-forward'></a> Forwarding Logs to an External Service ##
+
+## <a id='syslog-forward'></a> Forwarding Logs to an External Service
 
 You can configure <%= vars.product_full %> to forward log data from apps to an external aggregator service. [Using Log Management Services](../devguide/services/log-management.html) explains how to bind apps to the external service and configure it to receive logs from <%= vars.product_full %>.
 
+
 ## <a id='log-message-size'></a> Log Message Size Constraints
 
-When a Diego Cell emits app logs to Metron, Diego breaks up log messages greater than approximately 60 KiB into multiple envelopes.
+When a Diego Cell emits app logs to Metron, Diego breaks up log messages greater than approximately 60&nbsp;KiB into multiple envelopes.
