@@ -50,7 +50,7 @@ The table below describes the data included in logs and metrics from each source
 			<ul>
 				<li>App container metrics. For example, CPU, memory, and disk usage.</li>
 				
-				<% if not vars.product_name == 'CF' %>
+				<% if not vars.platform_code == 'CF' %>
 
 					<li>Custom metrics ***</li>
 
@@ -129,7 +129,7 @@ The table below lists the products and tools for viewing CF logs and metrics.
 				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
 				
 				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
-				<% if not vars.product_name == 'CF' %>
+				<% if not vars.platform_code == 'CF' %>
 					<li><%= vars.platform_metric_tool_ref %></li>
 				<% end %>
 			</ul>
@@ -145,7 +145,7 @@ The table below lists the products and tools for viewing CF logs and metrics.
 			<ul>
 				<li>cf CLI cf logs command. See <a href="https://cli.cloudfoundry.org/en-US/cf/logs.html">Cloud Foundry CLI Reference Guide.</a></li>
 
-				<% if not vars.product_name == 'CF' %>
+				<% if not vars.platform_code == 'CF' %>
 					<li><%= vars.manage_apps_service_instances_ref %></li>
 				<% end %>
 
@@ -164,7 +164,7 @@ The table below lists the products and tools for viewing CF logs and metrics.
 				
 				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
 
-				<% if not vars.product_name == 'CF' %>
+				<% if not vars.platform_code == 'CF' %>
 					<li><%= vars.metrics_product_ref %></li>
 				<% end %>
 			</ul>	
