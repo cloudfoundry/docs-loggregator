@@ -80,10 +80,10 @@ Stateless nozzles should handle scaling gracefully. If a nozzle buffers or cache
 ## <a id='slow-noz'></a> Slow Nozzle Alerts
 
 The [Traffic Controller](./architecture.html#traffic-controller) alerts nozzles if they consume events too slowly.
-If a nozzle falls behind, Loggregator alerts the nozzle in two ways:
+The following metrics can be used to identify slow consumers:
 
-- **TruncatingBuffer** alerts: If the nozzle consumes messages more slowly than they are produced, the Loggregator system may drop messages. In this case, Loggregator sends the log message, `TB: Output channel too full. Dropped N messages`, where `N` is the number of dropped messages. Loggregator also emits a **CounterEvent** with the name `doppler_proxy.slow_consumer`. The nozzle receives both messages from the Firehose, alerting the operator to the performance issue.
-
+- v1 consumers: `doppler_proxy.slow_consumer` is incremented as consumers are disconnected for being slow
+- v2 consumers: `doppler.dropped{direction="egress"}` or `rlp.dropped{direction="egress"}` are incremented when a v2 consumer fails to keep up.
 
 ## <a id='syslog-forward'></a> Forwarding Logs to an External Service
 
