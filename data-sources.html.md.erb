@@ -31,7 +31,7 @@ The table below describes the data included in logs and metrics from each source
 		</td>
 		<td>
 			<ul>
-				<li>Health metrics from BOSH-deployed VMs*</li>
+				<li>Health metrics from BOSH-deployed VMs<sup>1</sup></li>
 
 				<li>Platform metrics from CF components. For example, cell capacity remaining and router throughput.</li>
 				
@@ -41,18 +41,18 @@ The table below describes the data included in logs and metrics from each source
 	</tr>
 	<tr>
 		<td>
-			Apps
+			Apps and app containers
 		</td>
 		<td>
-			Logs from apps ** 
+			Logs from apps<sup>2</sup> 
 		</td>		
 		<td>
 			<ul>
-				<li>App container metrics. For example, CPU, memory, and disk usage.</li>
+				<li>Container metrics<sup>3</sup></li>
 				
 				<% if not vars.platform_code == 'CF' %>
 
-					<li>Custom metrics ***</li>
+					<li>Custom app metrics<sup>4</sup></li>
 
 				<% end %>
 
@@ -61,9 +61,11 @@ The table below describes the data included in logs and metrics from each source
 	</tr>	
 </table>
 
-\* For more information about using the BOSH Health Monitor to collect health metrics on VMs, see <%= vars.health_monitor_footnote %>.
+<sup>1</sup>For more information about using the BOSH Health Monitor to collect health metrics on VMs, see <%= vars.health_monitor_footnote %>.
 
-** For more information about app logging, see <%= vars.app_logging_footnote %>. 
+<sup>2</sup>For more information about app logging, see <%= vars.app_logging_footnote %>. 
+
+<sup>3</sup>For more information about container metrics, see [Container Metrics](./container-metrics.html). 
 
 <%= vars.custom_metrics_footnote %>
 
