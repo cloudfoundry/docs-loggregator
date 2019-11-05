@@ -1,0 +1,75 @@
+---
+title:  Default Container Metrics
+owner: 
+---
+
+This topic describes the metrics that are emitted by all containers managed by <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) and its scheduling system, Diego.
+
+Container metrics are also called app metrics.
+
+## <a id="container-metrics"></a> Diego Container Metrics
+
+Diego containers emit the following resource usage metrics for their app instance (AI).  Each metric is averaged over and emitted every 60 seconds.
+
+| Metric | Description | Unit |
+|---|---|---|
+| `CpuPercentage` | CPU time used by AI as a percentage of a single CPU core | `float64` |
+| `AbsoluteCPUUsage` | CPU time used by AI | `uint64` |
+| `AbsoluteCPUEntitlement` | CPU time used by AI multiplied by the number of CPU cores on the cell | `uint64` |
+| `MemoryBytes` | RAM memory used by AI, in MB | `uint64` |
+| `MemoryBytesQuota` | RAM memory available, in GB | `uint64` |
+| `DiskBytes` | Disk space used by AI, in MB | `uint64` |
+| `DiskBytesQuota` | Disk space available, in GB | `uint64` |
+| `ContainerAge` | Age of container, in seconds | `uint64` |
+
+The Diego container metrics are packaged in the `ContainerMetric` structure defined by the [Diego Logging Client repository](https://github.com/cloudfoundry/diego-logging-client/blob/master/client.go#L30-L43) on Github.
+
+### <a id="cpu-notes"></a> CPU Metrics Notes
+
+- The `CpuPercentage` is usually no greater than `100% * the number of vCPUs on the host Diego cell`, but it may be more when measurements experience timing discrepancies.
+- The minimum CPU that the Diego cell provides to a running app instance is `min(app memory, 8 GB) * (Diego cell vCPUs/Diego cell memory) * 100%`.
+    - The platform operator can provide the Diego cell vCPU/memory ratio to developers.
+    - If a Diego cell is not at capacity or if other workloads on it are idle, the cell can provide more than the minimum CPU.
+
+## <a id="cf-cli"></a> Metrics from the cf CLI
+
+You can use Cloud Foundry command-line interface (cf CLI) commands to return container metrics.
+
+### <a id="cf-app"></a> cf app: cpu, memory, disk
+
+Run the command `cf app APP-NAME` to see current container metrics values for each instance of the app.
+The command output lists metric values as follows, based on the [Diego Container Metrics](#container-metrics) described above:
+
+| Label in Output | Container Metrics Listed |
+|---|---|
+| `cpu` | `CpuPercentage` |
+| `memory` | `MemoryBytes` of `MemoryBytesQuota` |
+| `disk` | `DiskBytes` of `DiskBytesQuota` |
+
+For example:
+
+<pre class="terminal">
+$ cf app dora-example
+Showing health and status for app dora-example in org o / space s as admin...
+
+name:              dora-example
+requested state:   started
+routes:            dora-example.bosh-lite.com
+last uploaded:     Fri 05 Apr 10:41:21 PDT 2019
+stack:             cflinuxfs3
+buildpacks:        ruby
+
+type:           web
+instances:      1/1
+memory usage:   256M
+     state     since                  cpu    memory          disk          details
+#0   running   2019-04-05T17:41:31Z   0.4%   39.5M of 256M   89.9M of 1G
+</pre>
+
+### <a id="cf-app"></a> cf cpu-entitlement (Experimental)
+
+To see app instance `AbsoluteCPUEntitlement` metrics from the command line:
+
+1. Install the CPU Entitlement Plugin from [github](https://github.com/cloudfoundry/cpu-entitlement-plugin).
+
+1. Run the command `cf cpu-entitlement APP-NAME`.
