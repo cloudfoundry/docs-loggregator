@@ -20,7 +20,7 @@ Diego containers emit the following resource usage metrics for their app instanc
 | `MemoryBytesQuota` | RAM memory available, in GB | `uint64` |
 | `DiskBytes` | Disk space used by AI, in MB | `uint64` |
 | `DiskBytesQuota` | Disk space available, in GB | `uint64` |
-| `ContainerAge` | Age of container, in seconds | `uint64` |
+| `ContainerAge` | Age of container, in nanoseconds | `uint64` |
 
 The Diego container metrics are packaged in the `ContainerMetric` structure defined by the [Diego Logging Client repository](https://github.com/cloudfoundry/diego-logging-client/blob/master/client.go#L30-L43) on Github.
 
