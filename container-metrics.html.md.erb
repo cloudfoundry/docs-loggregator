@@ -11,31 +11,60 @@ App metrics include the container metrics described below, plus any custom app m
 
 Diego containers emit the following resource usage metrics for their app instance (AI).  Each metric is averaged over and emitted every 15 seconds.
 
-| Metric | Description | Unit |
-|---|---|---|
-| `CpuPercentage` | CPU time used by AI as a percentage of a single CPU core | `float64` |
-| `AbsoluteCPUUsage` | CPU time used by AI | `uint64` |
-| `AbsoluteCPUEntitlement` | CPU time used by AI multiplied by the number of CPU cores on the cell | `uint64` |
-| `MemoryBytes` | RAM memory used by AI, in MB | `uint64` |
-| `MemoryBytesQuota` | RAM memory available, in GB | `uint64` |
-| `DiskBytes` | Disk space used by AI, in MB | `uint64` |
-| `DiskBytesQuota` | Disk space available, in GB | `uint64` |
-| `ContainerAge` | Age of container, in nanoseconds | `uint64` |
+<table id='container-metrics' border="1" class="nice" >
+  <tr>
+    <th width=20%>Metric</th>
+    <th width=65%>Description</th>
+    <th width=15%>Unit</th>
+  </tr><tr>
+    <td><code>CpuPercentage</code></td>
+    <td>CPU time used by AI as a percentage of a single CPU core
+    <ul><li>This is usually no greater than <code>100% * the number of vCPUs on the host Diego cell</code>, but it may be more due to discrepancies in measurement timing.</li></ul></td>
+    <td><code>float64</code></td>
+  </tr><tr>
+    <td><code>AbsoluteCPUEntitlement</code></td>
+    <td>CPU time that the AI was entitled to use
+    <ul><li>At minimum, the CPU time that a Diego cell provides an AI is <code>min(app memory, 8 GB) * (Diego cell vCPUs/Diego cell memory) * 100%</code>.
+        <ul>
+          <li>The platform operator can provide the Diego cell <code>vCPUs/memory</code> ratio to developers.</li>
+          <li>If a Diego cell is not at capacity or if other workloads on it are idle, the cell can provide more than the minimum CPU.</li></ul></li>
+        </ul></td>
+    <td><code>uint64</code></td>
+  </tr><tr>
+    <td><code>AbsoluteCPUUsage</code></td>
+    <td>CPU time used by AI
+    <ul><li><code>AbsoluteCPUUsage / AbsoluteCPUEntitlement</code> calculates a 0-100% range of AI usage per entitlement.</li></ul></td>
+    <td><code>uint64</code></td>
+  </tr><tr>
+    <td><code>MemoryBytes</code></td>
+    <td>RAM memory used by AI, in MB</td>
+    <td><code>uint64</code></td>
+  </tr><tr>
+    <td><code>MemoryBytesQuota</code></td>
+    <td>RAM memory available, in GB</td>
+    <td><code>uint64</code></td>
+  </tr><tr>
+    <td><code>DiskBytes</code></td>
+    <td>Disk space used by AI, in MB</td>
+    <td><code>uint64</code></td>
+  </tr><tr>
+    <td><code>DiskBytesQuota</code></td>
+    <td>Disk space available, in GB</td>
+    <td><code>uint64</code></td>
+  </tr><tr>
+    <td><code>ContainerAge</code></td>
+    <td>Age of container, in nanoseconds</td>
+    <td><code>uint64</code></td>
+  </tr>
+</table>
 
-The Diego container metrics are packaged in the `ContainerMetric` structure defined by the [Diego Logging Client repository](https://github.com/cloudfoundry/diego-logging-client/blob/master/client.go#L30-L43) on Github.
+The Diego container metrics are packaged in the `ContainerMetric` structure. See the `ContainerMetric` structure definition in [diego-logging-client](https://github.com/cloudfoundry/diego-logging-client/blob/master/client.go#L30-L43) in GitHub.
 
-### <a id="cpu-notes"></a> CPU Metrics Notes
-
-- The `CpuPercentage` is usually no greater than `100% * the number of vCPUs on the host Diego cell`, but it may be more when measurements experience timing discrepancies.
-- The minimum CPU that the Diego cell provides to a running app instance is `min(app memory, 8 GB) * (Diego cell vCPUs/Diego cell memory) * 100%`.
-    - The platform operator can provide the Diego cell vCPU/memory ratio to developers.
-    - If a Diego cell is not at capacity or if other workloads on it are idle, the cell can provide more than the minimum CPU.
-
-## <a id="cf-cli"></a> Metrics from the cf CLI
+## <a id="cf-cli"></a> Retrieve Container Metrics from the cf CLI
 
 You can use Cloud Foundry command-line interface (cf CLI) commands to return container metrics.
 
-### <a id="cf-app"></a> cf app: cpu, memory, disk
+### <a id="cf-app"></a> Retrieve CPU, Memory, and Disk Metrics
 
 Run the command `cf app APP-NAME` to see current container metrics values for each instance of the app.
 The command output lists metric values as follows, based on the [Diego Container Metrics](#container-metrics) described above:
@@ -66,10 +95,25 @@ memory usage:   256M
 #0   running   2019-04-05T17:41:31Z   0.4%   39.5M of 256M   89.9M of 1G
 </pre>
 
-### <a id="cf-app"></a> cf cpu-entitlement (Experimental)
+### <a id="cf-app"></a> Retrieve CPU Entitlement Metrics (Experimental)
 
 To see app instance `AbsoluteCPUEntitlement` metrics from the command line:
 
-1. Install the CPU Entitlement Plugin from [github](https://github.com/cloudfoundry/cpu-entitlement-plugin).
+1. Install the CPU Entitlement Plugin from [cpu-entitlement-plugin](https://github.com/cloudfoundry/cpu-entitlement-plugin) in GitHub.
 
 1. Run the command `cf cpu-entitlement APP-NAME`.
+
+For example:
+
+<pre class="terminal">
+$ cf cpu-entitlement dora-example
+Note: This feature is experimental.
+Showing CPU usage against entitlement for app dora-example in org example-org / space example-org-staging as dora@example.com ...
+​
+     avg usage   curr usage
+#0   1.62%       1.66%
+#1   2.93%       3.09%
+#2   2.51%       2.62%
+​
+</pre>
+
