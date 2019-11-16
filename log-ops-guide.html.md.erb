@@ -3,27 +3,40 @@ title: Loggregator Guide for Cloud Foundry Operators
 owner: Logging and Metrics
 ---
 
+<% current_page.data.title = "Loggregator Guide for " + vars.product_short + " Operators" %>
 
+This topic contains information for <%= vars.product_runtime %> (<%= vars.product_short %>) deployments operators about how to configure the Loggregator system to avoid data loss with high volumes of logging and metrics data.
 
-This topic contains information for Cloud Foundry deployments operators about how to configure the [Loggregator system](./architecture.html) to avoid data loss with high volumes of logging and metrics data.
 
 ## <a id='throughput-reliability'></a> Loggregator Message Throughput and Reliability
 
-For determining the message throughput and reliability rates of your Loggregator system, see the section below.
+You can measure both the message throughput and message reliability rates of your Loggregator system.
 
 ### <a id='throughput-rate'></a> Measuring Message Throughput
 
 To measure the message throughput of the Loggregator system, you can monitor the total number of egress messages from all Metrons on your platform using the `metron.egress` metric.
 
-If you do not use a monitoring platform, you can follow the instructions below to measure the overall message throughput of your Loggregator system:
+If you do not use a monitoring platform, you can measure the overall message throughput of your Loggregator system. To measure the overall message throughput:
 
-1. Log in to the Cloud Foundry Command Line Interface (cf CLI) with your admin credentials:
-	<pre class='terminal'>$ cf login</pre>
-1. [Install](cli-plugin.html#add) the Cloud Foundry Firehose plugin.
-1. Install Pipe Viewer:
-	<pre class='terminal'>$ apt-get install pv</pre>
-1. Run the following command:
-	<pre class='terminal'>$ cf nozzle -n | pv -l -i 10 -r > /dev/null</pre>
+1. Log in to the Cloud Foundry Command Line Interface (cf CLI) with your admin credentials by running:
+
+	```
+	cf login
+	```
+
+1. Install the <%= vars.product_short %> Firehose plugin. For more information, see the [Install the Plugin](cli-plugin.html#add) section of the _Installing the Loggregator Firehose Plugin for cf CLI_ topic.
+
+1. Install Pipe Viewer by running:
+
+	```
+	apt-get install pv
+	```
+
+1. Run:
+
+	```
+	cf nozzle -n | pv -l -i 10 -r > /dev/null
+	```
 
 ### <a id='reliability-rate'></a> Measuring Message Reliability
 
@@ -41,25 +54,25 @@ Most Loggregator configurations are set to use preferred resource defaults. If y
 
 ### <a id='doppler'></a> Doppler
 
-Doppler resources can require scaling to accommodate your overall log and metric volume. Cloud Foundry recommends the following formula for determining the number of Doppler instances you need to achieve a loss rate of < 1%:
+Doppler resources can require scaling to accommodate your overall log and metric volume. The recommended formula for determining the number of Doppler instances you need to achieve a loss rate of < 1% is:
 
 <p class="tip"><em>Number of Doppler instances = Number of envelopes per second / 16,000</em></p>
 
-Because it can be challenging to understand the ratio of metrics to logs, Cloud Foundry also recommends monitoring and scaling Doppler based on its ingress traffic. To do this, you need to sum two metrics and rate them per second:
+Because it can be challenging to understand the ratio of metrics to logs, it is also recommended to monitor and scale Doppler based on its ingress traffic. To do this, you must sum two metrics and rate them per second:
 
 <p class="tip"><em>Number of Doppler instances = <code>doppler.ingress</code> / 16,000</em></p>
 
 Using maximum values over a two-week period is a recommended approach for ingress-based capacity planning.
 
-### <a id='traffic-controller'></a>Traffic Controller
+### <a id='traffic-controller'></a> Traffic Controller
 
-Traffic Controller resources are usually scaled in line with Doppler resources. Cloud Foundry recommends the following formula for determining the number of Traffic Controller instances:
+Traffic Controller resources are usually scaled in line with Doppler resources. The recommended formula for determining the number of Traffic Controller instances is:
 
 <p class="tip"><em>Number of Traffic Controller instances = Number of Doppler instances / 4</em></p>
 
 In addition, Traffic Controller resources can require scaling to accommodate the number of your log streams and Firehose subscriptions.
 
-See [Configuring System Logging](../running/managing-cf/logging-config.html#scaling) for more information about scaling the Loggregator system.
+For more information about scaling the Loggregator system, see the [Scaling Loggregator](../running/managing-cf/logging-config.html#scaling) section of the _Configuring System Logging_ topic.
 
 <% end %>
 
@@ -75,17 +88,23 @@ If you want to scale a nozzle, the number of nozzle instances should match the n
 
 Stateless nozzles should handle scaling gracefully. If a nozzle buffers or caches the data, the nozzle author must test the results of scaling the number of nozzle instances up or down.
 
-## <a id='slow-noz'></a> Slow Nozzle Alerts ##
 
-The [Traffic Controller](./architecture.html#traffic-controller) alerts nozzles if they consume events too slowly.
-If a nozzle falls behind, Loggregator alerts the nozzle in two ways:
+## <a id='slow-noz'></a> Slow Nozzle Alerts
 
-- **TruncatingBuffer** alerts: If the nozzle consumes messages more slowly than they are produced, the Loggregator system may drop messages. In this case, Loggregator sends the log message, `TB: Output channel too full. Dropped N messages`, where `N` is the number of dropped messages. Loggregator also emits a **CounterEvent** with the name `doppler_proxy.slow_consumer`. The nozzle receives both messages from the Firehose, alerting the operator to the performance issue.
+The Traffic Controller alerts nozzles if they consume events too slowly. If a nozzle falls behind, Loggregator alerts the nozzle in two ways:
 
-## <a id='syslog-forward'></a> Forwarding Logs to an External Service ##
+* **TruncatingBuffer** alerts: If the nozzle consumes messages more slowly than they are produced, the Loggregator system may drop messages. In this case, Loggregator sends the log message, `TB: Output channel too full. Dropped N messages`, where `N` is the number of dropped messages.
 
-You can configure <%= vars.product_full %> to forward log data from apps to an external aggregator service. [Using Log Management Services](../devguide/services/log-management.html) explains how to bind apps to the external service and configure it to receive logs from <%= vars.product_full %>.
+* **CounterEvent**: Loggregator also emits a **CounterEvent** with the name `doppler_proxy.slow_consumer`. The nozzle receives both messages from the Firehose, alerting the operator to the performance issue.
+
+For more information about the Traffic Controller, see the [Loggregator Architecture](./architecture.html#loggregator-architecture) section of the _Loggregator Architecture_ topic.
+
+
+## <a id='syslog-forward'></a> Forwarding Logs to an External Service
+
+You can configure <%= vars.product_short %> to forward log data from apps to an external aggregator service. For information about how to bind apps to the external service and configure it to receive logs from <%= vars.product_short %>, see [Streaming App Logs to Log Management Services](../devguide/services/log-management.html).
+
 
 ## <a id='log-message-size'></a> Log Message Size Constraints
 
-When a Diego Cell emits app logs to Metron, Diego breaks up log messages greater than approximately 60 KiB into multiple envelopes.
+When a Diego Cell emits app logs to Metron, Diego breaks up log messages greater than approximately 60&nbsp;KiB into multiple envelopes.
