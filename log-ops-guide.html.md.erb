@@ -92,14 +92,16 @@ If you want to scale a nozzle, the number of nozzle instances should match the n
 
 Stateless nozzles should handle scaling gracefully. If a nozzle buffers or caches the data, the nozzle author must test the results of scaling the number of nozzle instances up or down.
 
+<p class='note'><strong>Note:</strong> In <%= vars.app_runtime_abbr %> v2.8, you can disable the Firehose. In place of the Firehose, you can either configure an aggregate log and metric drain for your foundation, or use Metrics Discovery Release to register Prometheus-formatted metrics endpoints in your Pivotal Platform deployment. For more information, see <a href="https://docs.pivotal.io/platform/2-8/pcf-release-notes/runtime-rn.html#disable-v2-firehose">V2 Firehose Can Be Disabled</a> and <a href="https://docs.pivotal.io/platform/2-8/pcf-release-notes/runtime-rn.html#prometheus">All Platform Metrics Exposed on Prometheus Endpoints</a> in the <em>Pivotal Application Service v2.8 Release Notes</em>.</p>
+
 
 ## <a id='slow-noz'></a> Slow Nozzle Alerts
 
-The Traffic Controller alerts nozzles if they consume events too slowly.
-The following metrics can be used to identify slow consumers:
+The Traffic Controller alerts nozzles if they consume events too slowly. The following metrics can be used to identify slow consumers:
 
-- v1 consumers: `doppler_proxy.slow_consumer` is incremented as consumers are disconnected for being slow
-- v2 consumers: `doppler.dropped{direction="egress"}` or `rlp.dropped{direction="egress"}` are incremented when a v2 consumer fails to keep up.
+* For v1 consumers: `doppler_proxy.slow_consumer` is incremented as consumers are disconnected for being slow.
+
+* For v2 consumers: `doppler.dropped{direction="egress"}` or `rlp.dropped{direction="egress"}` are incremented when a v2 consumer fails to keep up.
 
 For more information about the Traffic Controller, see the [Loggregator Architecture](./architecture.html#loggregator-architecture) section of the _Loggregator Architecture_ topic.
 
