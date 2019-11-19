@@ -3,44 +3,53 @@ title: Deploying a Nozzle to the Loggregator Firehose
 owner: Logging and Metrics
 ---
 
-
-
 <% $this_topic = 'nozzle-tutorial' %>
 
-This topic describes deploying a nozzle app to the Cloud Foundry (CF) Loggregator Firehose. For more information about nozzles and the Loggregator Firehose, see [Loggregator Architecture](./architecture.html).
-The Cloud Foundry Loggregator team created an example nozzle application for use with this tutorial.
+This topic describes deploying a nozzle app to the <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) Loggregator Firehose. For more information about nozzles and the Loggregator Firehose, see [Loggregator Architecture](./architecture.html). The Cloud Foundry Loggregator team created an example nozzle app for use with this tutorial.
 
-The procedure described below deploys this example nozzle to the Firehose of a Cloud Foundry installation deployed locally with BOSH Lite. For more information about BOSH Lite, see the [BOSH Lite GitHub repository](https://github.com/cloudfoundry/bosh-lite).
 
-To lighten the load on custom nozzles you develop, you can request Firehose subscriptions that emit only whitelisted metrics. For examples, see `rlpreader` and `rlptypereader` in the [loggregator-tools](https://github.com/cloudfoundry-incubator/loggregator-tools) repository, and see the _V2 Subscriptions_ page of the [loggregator-release](https://github.com/cloudfoundry/loggregator-release/blob/master/docs/v2-subscriptions.md) repository for more information. 
+## <a id='overview'></a> Overview
 
-## Prerequisites
+The procedure described below deploys this example nozzle to the Firehose of a <%= vars.app_runtime_abbr %> installation deployed locally with BOSH Lite. For more information about BOSH Lite, see the [BOSH Lite](https://github.com/cloudfoundry/bosh-lite) repository on GitHub.
 
-Before you deploy a nozzle to the Loggregator Firehose, you must have the following:
+To lighten the load on custom nozzles you develop, you can request Firehose subscriptions that emit only whitelisted metrics. For examples, see `rlpreader` and `rlptypereader` in the [loggregator-tools](https://github.com/cloudfoundry-incubator/loggregator-tools) repository and [V2 Subscriptions](https://github.com/cloudfoundry/loggregator-release/blob/master/docs/v2-subscriptions.md) in the loggregator-release repository. 
 
-- BOSH CLI. See [BOSH CLI](https://bosh.io/docs/bosh-cli.html) installed locally.
-- Spiff installed locally and added to the load path of your shell. See [Spiff on GitHub](https://github.com/cloudfoundry-incubator/spiff).
-- BOSH Lite deployed locally using VirtualBox. See [BOSH Lite on GitHub](https://github.com/cloudfoundry/bosh-lite).
-- A working Cloud Foundry deployment, including Loggregator, deployed with your local BOSH Lite. This serves as the source of data. See [Deploying Cloud Foundry using BOSH Lite](https://docs.cloudfoundry.org/deploying/boshlite/deploy_cf_boshlite.html), or use the `provision_cf` script included in the BOSH Lite release. See [BOSH Lite](https://github.com/cloudfoundry/bosh-lite#deploy-cloud-foundry) on GitHub.
 
-<p class='note'><strong>Note</strong>: Deploying Cloud Foundry can take several hours depending on your internet bandwith, even when using the automated <code>provision_cf</code> script.</p>
+## <a id='prerequisites'></a> Prerequisites
 
-## <a id='dl-bosh-manifest'></a>Step 1: Download Cloud Foundry BOSH Manifest ##
+Before you deploy a nozzle to the Loggregator Firehose, you must have:
 
-To download the BOSH manifest, do the following:
+- BOSH CLI. For more information, see [BOSH CLI](https://bosh.io/docs/bosh-cli.html) in the BOSH documentation.
+
+- Spiff installed locally and added to the load path of your shell. For more information, see the [Spiff](https://github.com/cloudfoundry-incubator/spiff) repository on GitHub.
+
+- BOSH Lite deployed locally using VirtualBox. For more information, see the [BOSH Lite](https://github.com/cloudfoundry/bosh-lite) repository on GitHub.
+
+- A working <%= vars.app_runtime_abbr %> deployment, including Loggregator, deployed with your local BOSH Lite. This serves as the source of data. For more information, see [Deploying Cloud Foundry with BOSH Lite v2](http://operator-workshop.cloudfoundry.org/labs/deploy-cf/), or use the `provision_cf` script included in the BOSH Lite release.
+
+<p class='note'><strong>Note:</strong> Deploying <%= vars.app_runtime_abbr %> can take several hours depending on your Internet bandwith, even when using the automated <code>provision_cf</code> script.</p>
+
+
+## <a id='dl-bosh-manifest'></a> Step 1: Download Cloud Foundry BOSH Manifest
+
+To download the BOSH manifest:
 
 <%= partial 'download_bosh_manifest' %>
 
-## <a id='add-client'></a>Step 2: Add UAA Client
+## <a id='add-client'></a> Step 2: Add UAA Client
 
-You must authorize the example nozzle as a UAA client for your CF deployment. To do this, add an entry for the example nozzle as `client` for `uaa` under the `properties` key in your CF deployment manifest YAML file. You must enter the example nozzle object in the correct location in the manifest, and with the correct indentation.
+You must authorize the example nozzle as a UAA client for your <%= vars.app_runtime_abbr %> deployment. To do this, add an entry for the example nozzle as `client` for `uaa` under the `properties` key in your <%= vars.app_runtime_abbr %> deployment manifest YAML file. You must enter the example nozzle object in the correct location in the manifest, and with the correct indentation.
 
-To add the nozzle as a UAA client for your deployment, do the following:
+To add the nozzle as a UAA client for your deployment:
 
 1. Open the deployment manifest in a text editor.
+
 1. Locate the left-aligned `properties` key.
+
 1. Under the `properties` key, locate `uaa` at the next level of indentation.
+
 1. Under the `uaa` key, locate the `clients` key at the next level of indentation.
+
 1. Enter properties for the `example-nozzle` at the next level of indentation, exactly as shown below. The `...` in the text below indicate other properties that may populate the manifest at each level in the hierarchy.
 
     ```
@@ -60,9 +69,10 @@ To add the nozzle as a UAA client for your deployment, do the following:
 
 1. Save the deployment manifest file.
 
-## <a id='redeploy'></a>Step 3: Redeploy Cloud Foundry ##
 
-To deploy Cloud Foundry with BOSH, run the following command:
+## <a id='redeploy'></a> Step 3: Redeploy <%= vars.app_runtime_abbr %>
+
+To deploy <%= vars.app_runtime_abbr %> with BOSH, run:
 
 ```
 bosh -e MY-ENV deploy
@@ -110,22 +120,24 @@ For example:
   Are you sure you want to deploy? (type 'yes' to continue):yes
 </pre>
 
-## <a id='dl-release'></a>Step 4: Clone Example Release ##
 
-The Cloud Foundry Loggregator team created an example nozzle app for use with this tutorial.
+## <a id='dl-release'></a> Step 4: Clone Example Release
 
-To clone the example nozzle release, do the following:
+The <%= vars.app_runtime_abbr %> Loggregator team created an example nozzle app for use with this tutorial.
 
-1. Run `git clone` to clone the main release repository from [GitHub](https://github.com/cloudfoundry-incubator/example-nozzle-release).
+To clone the example nozzle release:
+
+1. Run `git clone` to clone the main release repository from the example-nozzle-release repository on GitHub.
 <pre class='terminal'>
   $ git clone http<span>s</span>://github.com/cloudfoundry-incubator/example-nozzle-release.git
   Cloning into 'example-nozzle-release'...
 </pre>
 
-1. Navigate to the `example-nozzle-release` directory.
-<pre class='terminal'>
-  $ cd example-nozzle-release
-</pre>
+1. Navigate to the `example-nozzle-release` directory by running:
+
+  ```
+  cd example-nozzle-release
+  ```
 
 1. Run `git submodule update --init --recursive` to update all of the included submodules.
 <pre class='terminal'>
@@ -137,60 +149,62 @@ To clone the example nozzle release, do the following:
   ...
 </pre>
 
-## <a id='step-id'></a>Step 5: Prepare Nozzle Manifest ##
 
-To prepare the nozzle deployment manifest, do the following:
+## <a id='step-id'></a> Step 5: Prepare Nozzle Manifest
 
-1. In the `example-nozzle-release` directory, navigate to the `templates` directory.
-<pre class='terminal'>
-  $ cd templates
-</pre>
-  Within this directory, examine the two YAML files.
-  `bosh-lite-stub.yml` contains the values used to populate the missing
-  information in `template.yml`.
-  By combining these two files we create a deployment manifest for our nozzle.
+To prepare the nozzle deployment manifest:
+
+1. In the `example-nozzle-release` directory, navigate to the `templates` directory by running:
+
+    ```
+    cd templates
+    ```
+    Within this directory, examine the two YAML files. `bosh-lite-stub.yml` contains the values used to populate the missing information in `template.yml`. By combining these two files, you can create a deployment manifest for the nozzle.
 
 1. Create a `tmp` directory for the compiled manifest.
 
-1. Use [Spiff](https://github.com/cloudfoundry-incubator/spiff) to compile a deployment manifest from the template and stub, and save this manifest.
-<pre class='terminal'>
-  $ spiff merge templates/template.yml templates/bosh-lite-stub.yml > tmp/manifest_bosh_lite.yml
-</pre>
+1. Use Spiff to compile a deployment manifest from the template and stub by running:
+
+    ```
+    spiff merge templates/template.yml templates/bosh-lite-stub.yml > tmp/manifest_bosh_lite.yml
+    ```
+    Save this manifest.
 
 1. Run `bosh -e MY-ENV deployments` to identify the names of all deployments in the environment you specify. Replace `MY-ENV` with the alias you set for your BOSH Director. 
 
 1. Run `bosh -e MY-ENV env --column=uuid` to obtain your BOSH Director UUID. Replace `MY-ENV` with the alias you set for your BOSH Director. For example:
-<pre class='terminal'>
-  $ bosh -e dev env --column=uuid
-</pre>
+
+    ```
+    bosh -e dev env --column=uuid
+    ```
 
 1. In the compiled nozzle deployment manifest, locate the `director_uuid` property. Replace `PLACEHOLDER-DIRECTOR-UUID` with your BOSH Director UUID.
 
     ```
-  compilation:
-    cloud_properties:
-      name: default
-  network: example-nozzle-net
-  reuse_compilation_vms: true
-  workers: 1
-director_uuid: PLACEHOLDER-DIRECTOR-UUID  # replace this
+    compilation:
+      cloud_properties:
+        name: default
+    network: example-nozzle-net
+    reuse_compilation_vms: true
+    workers: 1
+    director_uuid: PLACEHOLDER-DIRECTOR-UUID
     ```
+    Where `PLACEHOLDER-DIRECTOR-UUID` is your BOSH Director UUID.
 
-<p class='note'><strong>Note</strong>: If you do not want to see the complete deployment procedure, run the following command to automatically prepare the manifest: <code>scripts/make_manifest_spiff_bosh_lite</code>
-</p>
+<p class='note'><strong>Note:</strong> If you do not want to see the complete deployment procedure, run <code>scripts/make_manifest_spiff_bosh_lite</code> to automatically prepare the manifest.</p>
 
-## <a id='create'></a>Step 6: Create Nozzle BOSH Release ##
 
-To create a nozzle BOSH release, run the following command:
+## <a id='create'></a> Step 6: Create Nozzle BOSH Release
+
+To create a nozzle BOSH release, run:
 
 ```
 bosh -e MY-ENV create-release --name RELEASE-NAME
 ``` 
 
 WHERE:
-
-- `MY-ENV` is the alias you set for your BOSH Director. 
-- RELEASE-NAME is `example-nozzle` to match the UAA client that you created in the CF deployment manifest. 
+* `MY-ENV` is the alias you set for your BOSH Director. 
+* RELEASE-NAME is `example-nozzle` to match the UAA client that you created in the <%= vars.app_runtime_abbr %> deployment manifest. 
 
 For example:
 <pre class='terminal'>
@@ -199,11 +213,12 @@ For example:
   ...
 </pre>
 
-## <a id='upload'></a>Step 7: Upload Nozzle BOSH Release ##
+
+## <a id='upload'></a> Step 7: Upload Nozzle BOSH Release
 
 Upload the nozzle BOSH release that you created as part of [Step 6: Create Nozzle BOSH Release](#create).
 
-To upload the BOSH release, run the following command:
+To upload the BOSH release, run:
 
 ```
 bosh -e MY-ENV upload-release
@@ -240,13 +255,15 @@ For example:
   Uploading release
 </pre>
 
-## <a id='deploy'></a>Step 8: Deploy Nozzle ##
 
-To deploy the nozzle, run the following command:
+## <a id='deploy'></a> Step 8: Deploy Nozzle
+
+To deploy the nozzle, run:
 
 ```
 bosh -e MY-ENV deploy
 ``` 
+
 WHERE `MY-ENV` is the alias you set for your BOSH Director. 
 
 For example:
@@ -262,11 +279,12 @@ For example:
   Are you sure you want to deploy? (type 'yes' to continue):yes
 </pre>
 
-## <a id='view'></a>Step 9: View Nozzle Output ##
 
-The example nozzle outputs all of the data originating coming from the Firehose to its log files. To view this data, SSH into the example-nozzle VM and examine the logs.
+## <a id='view'></a> Step 9: View Nozzle Output
 
-To view nozzle output, do the following:
+The example nozzle outputs all of the data originating coming from the Firehose to its log files. To view this data, SSH into the `example-nozzle` VM and examine the logs.
+
+To view nozzle output:
 
 1. Run `bosh -e MY-ENV ssh` to access the nozzle VM at the IP configured in the nozzle's manifest template stub `./templates/bosh-lite-stub.yml`. Replace `MY-ENV` with the alias you set for your BOSH Director. For example:
 <pre class='terminal'>
@@ -278,7 +296,7 @@ To view nozzle output, do the following:
 
 1. Use the `cat` command to output the `stdout` log file.
 
-    <pre class='terminal'>
+  <pre class='terminal'>
   $ cat /var/vcap/sys/log/example-nozzle/example-nozzle.stdout.log
   ===== Streaming Firehose (will only succeed if you have admin credentials)
   origin:"bosh-system-metrics-forwarder" eventType:ValueMetric timestamp:1541091851000000000 deployment:"cf-c42ae2c4dfb6f67b6c27" job:"loggregator_trafficcontroller" index:"d1dffe15-5894-44de-b7f0-ad43161a0a7b" ip:"" tags:&gt;key:"id" value:"d1dffe15-5894-44de-b7f0-ad43161a0a7b" > tags:&gt;key:"source_id" value:"bosh-system-metrics-forwarder" > valueMetric:&gt;"system.swap.percent" value:0 unit:"Percent" >
@@ -291,4 +309,4 @@ To view nozzle output, do the following:
   origin:"netmon" eventType:ValueMetric timestamp:1541091851234292367 deployment:"cf-c56ab7c4dfb6f67b6c28" job:"diego_cell" index:"8007afda-3bff-4856-857f-a47a43cbf994" ip:"10.0.4.18" tags:&gt;key:"source_id" value:"netmon" > valueMetric:&gt;"memoryStats.numBytesAllocated" value:542328 unit:"count" >
   origin:"netmon" eventType:ValueMetric timestamp:1541091851234279470 deployment:"cf-c56ab7c4dfb6f67b6c28" job:"diego_cell" index:"8007afda-3bff-4856-857f-a47a43cbf994" ip:"10.0.4.18" tags:&gt;key:"source_id" value:"netmon" > valueMetric:&gt;"memoryStats.numBytesAllocatedStack" value:655360 unit:"count" >
   . . .
-</pre>
+  </pre>
