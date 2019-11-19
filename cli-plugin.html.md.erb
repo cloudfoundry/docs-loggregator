@@ -3,50 +3,72 @@ title: Installing the Loggregator Firehose Plugin for cf CLI
 owner: Logging and Metrics
 ---
 
+This topic describes how to install the Loggregator Firehose Plugin for the Cloud Foundry Command Line Interface (cf CLI).
 
 
-The Loggregator Firehose plugin for the Cloud Foundry Command Line Interface (cf CLI) allows Cloud Foundry (CF) administrators to access the output of the Loggregator Firehose. The output of the Firehose includes logs and metrics from apps deployed on CF as well as metrics from CF platform components. For more information about the Firehose, see [Overview of the Loggregator System](./architecture.html#firehose).
+## <a id='overview'></a> Overview
+
+The Loggregator Firehose plugin for the cf CLI allows <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) admins to access the output of the Loggregator Firehose. The output of the Firehose includes logs and metrics from apps deployed on <%= vars.app_runtime_abbr %> as well as metrics from <%= vars.app_runtime_abbr %> platform components. For more information about the Firehose, see [Overview of the Loggregator System](./architecture.html#firehose).
 
 For more information about using plugins with the cf CLI, see [Using cf CLI Plugins](../cf-cli/use-cli-plugins.html).
 
-## <a id='prerequisites'></a>Prerequisites
 
-- Administrator access to the Cloud Foundry deployment that you want to monitor
-- Cloud Foundry Command Line Interface (cf CLI) 6.12.2 or later
+## <a id='prerequisites'></a> Prerequisites
 
-Refer to the [Installing the cf CLI](../cf-cli/install-go-cli.html) topic for information about downloading, installing, and uninstalling the cf CLI.
+Before installing the Loggregator Firehose plugin, you need:
 
-## <a id='add'></a>Install the Plugin
+- Admin access to the <%= vars.app_runtime_abbr %> deployment that you want to monitor
 
-1. Run `cf add-plugin-repo REPOSITORY-NAME URL` to add the CF Community plugin repository to your cf CLI plugins.
-<pre class='terminal'>
-$ cf add-plugin-repo CF-Community <span>https</span>://plugins.cloudfoundry.org
-</pre>
+- Cloud Foundry Command Line Interface (cf CLI) v6.12.2 or later
 
-1. Run `cf install-plugin -r PLUGIN-REPOSITORY PLUGIN-NAME` to install the Firehose plugin from the CF Community plugin repository.
-<pre class='terminal'>
-$ cf install-plugin -r CF-Community "Firehose Plugin"
-</pre>
+For information about downloading, installing, and uninstalling the cf CLI, see [Installing the cf CLI](../cf-cli/install-go-cli.html).
 
-## <a id='usage'></a> View the Firehose ##
 
-Run `cf nozzle --debug` to view the streaming output of the Firehose, which includes logging events and metrics from CF system components. For more information about logging and metrics in CF, see [Overview of the Loggregator System](./architecture.html).
-<pre class='terminal'>
-$ cf nozzle --debug
-</pre>
+## <a id='add'></a> Install the Plugin
 
-<p class='note'><strong>Note</strong>: You must be logged in as a Cloud Foundry administrator to access the Firehose.</p>
+To install the Loggregator Firehose plugin:
 
-## <a id='uninstall'></a>Uninstall the Plugin ##
-Run `cf plugins` to see a list of installed plugins.
-<pre class='terminal'>
-$ cf plugins
-Listing Installed Plugins...
-OK
-Plugin Name      Version   Command Name   Command Help
-FirehosePlugin   0.6.0     nozzle         Command to print out messages from the firehose
-</pre>
+1. Add the CF Community plugin repository to your cf CLI plugins by running:
 
-Run `cf uninstall-plugin PLUGIN-NAME` to uninstall the plugin.
-<pre class='terminal'>$ cf uninstall-plugin FirehosePlugin</pre>
+	```
+	cf add-plugin-repo CF-Community <span>https</span>://plugins.cloudfoundry.org
+	```
 
+1. Install the Firehose plugin from the CF Community plugin repository by running:
+
+	```
+	cf install-plugin -r CF-Community "Firehose Plugin"
+	```
+
+
+## <a id='usage'></a> View the Firehose
+
+To view the streaming output of the Firehose, which includes logging events and metrics from <%= vars.app_runtime_abbr %> system components, run:
+
+```
+cf nozzle --debug
+```
+
+<p class='note'><strong>Note:</strong> You must be logged in as a <%= vars.app_runtime_abbr %> admin to access the Firehose.</p>
+
+For more information about logging and metrics in <%= vars.app_runtime_abbr %>, see [Loggregator Architecture](./architecture.html).
+
+
+## <a id='uninstall'></a> Uninstall the Plugin
+
+To uninstall the Loggregator Firehose plugin:
+
+1. Run `cf plugins` to see a list of installed plugins.
+	<pre class='terminal'>
+	$ cf plugins
+	Listing Installed Plugins...
+	OK
+	Plugin Name      Version   Command Name   Command Help
+	FirehosePlugin   0.6.0     nozzle         Command to print out messages from the firehose
+	</pre>
+
+1. Uninstall the plugin by running:
+
+	```
+	cf uninstall-plugin FirehosePlugin
+	```
