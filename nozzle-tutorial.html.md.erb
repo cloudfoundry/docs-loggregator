@@ -5,12 +5,12 @@ owner: Logging and Metrics
 
 <% $this_topic = 'nozzle-tutorial' %>
 
-This topic describes deploying a nozzle app to the <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) Loggregator Firehose. For more information about nozzles and the Loggregator Firehose, see [Loggregator Architecture](./architecture.html). The Cloud Foundry Loggregator team created an example nozzle app for use with this tutorial.
+This topic describes deploying a nozzle app to the <%= vars.product_runtime %> (<%= vars.product_short %>) Loggregator Firehose. For more information about nozzles and the Loggregator Firehose, see [Loggregator Architecture](./architecture.html). The <%= vars.product_short %> Loggregator team created an example nozzle app for use with this tutorial.
 
 
 ## <a id='overview'></a> Overview
 
-The procedure described below deploys this example nozzle to the Firehose of a <%= vars.app_runtime_abbr %> installation deployed locally with BOSH Lite. For more information about BOSH Lite, see the [BOSH Lite](https://github.com/cloudfoundry/bosh-lite) repository on GitHub.
+The procedure described below deploys this example nozzle to the Firehose of a <%= vars.product_short %> installation deployed locally with BOSH Lite. For more information about BOSH Lite, see the [BOSH Lite](https://github.com/cloudfoundry/bosh-lite) repository on GitHub.
 
 To lighten the load on custom nozzles you develop, you can request Firehose subscriptions that emit only whitelisted metrics. For examples, see `rlpreader` and `rlptypereader` in the [loggregator-tools](https://github.com/cloudfoundry-incubator/loggregator-tools) repository and [V2 Subscriptions](https://github.com/cloudfoundry/loggregator-release/blob/master/docs/v2-subscriptions.md) in the loggregator-release repository. 
 
@@ -25,9 +25,9 @@ Before you deploy a nozzle to the Loggregator Firehose, you must have:
 
 - BOSH Lite deployed locally using VirtualBox. For more information, see the [BOSH Lite](https://github.com/cloudfoundry/bosh-lite) repository on GitHub.
 
-- A working <%= vars.app_runtime_abbr %> deployment, including Loggregator, deployed with your local BOSH Lite. This serves as the source of data. For more information, see [Deploying Cloud Foundry with BOSH Lite v2](http://operator-workshop.cloudfoundry.org/labs/deploy-cf/), or use the `provision_cf` script included in the BOSH Lite release.
+- A working <%= vars.product_short %> deployment, including Loggregator, deployed with your local BOSH Lite. This serves as the source of data. For more information, see [Deploying Cloud Foundry with BOSH Lite v2](http://operator-workshop.cloudfoundry.org/labs/deploy-cf/), or use the `provision_cf` script included in the BOSH Lite release.
 
-<p class='note'><strong>Note:</strong> Deploying <%= vars.app_runtime_abbr %> can take several hours depending on your Internet bandwith, even when using the automated <code>provision_cf</code> script.</p>
+<p class='note'><strong>Note:</strong> Deploying <%= vars.product_short %> can take several hours depending on your Internet bandwith, even when using the automated <code>provision_cf</code> script.</p>
 
 
 ## <a id='dl-bosh-manifest'></a> Step 1: Download Cloud Foundry BOSH Manifest
@@ -38,7 +38,7 @@ To download the BOSH manifest:
 
 ## <a id='add-client'></a> Step 2: Add UAA Client
 
-You must authorize the example nozzle as a UAA client for your <%= vars.app_runtime_abbr %> deployment. To do this, add an entry for the example nozzle as `client` for `uaa` under the `properties` key in your <%= vars.app_runtime_abbr %> deployment manifest YAML file. You must enter the example nozzle object in the correct location in the manifest, and with the correct indentation.
+You must authorize the example nozzle as a UAA client for your <%= vars.product_short %> deployment. To do this, add an entry for the example nozzle as `client` for `uaa` under the `properties` key in your <%= vars.product_short %> deployment manifest YAML file. You must enter the example nozzle object in the correct location in the manifest, and with the correct indentation.
 
 To add the nozzle as a UAA client for your deployment:
 
@@ -70,9 +70,9 @@ To add the nozzle as a UAA client for your deployment:
 1. Save the deployment manifest file.
 
 
-## <a id='redeploy'></a> Step 3: Redeploy <%= vars.app_runtime_abbr %>
+## <a id='redeploy'></a> Step 3: Redeploy <%= vars.product_short %>
 
-To deploy <%= vars.app_runtime_abbr %> with BOSH, run:
+To deploy <%= vars.product_short %> with BOSH, run:
 
 ```
 bosh -e MY-ENV deploy
@@ -123,7 +123,7 @@ For example:
 
 ## <a id='dl-release'></a> Step 4: Clone Example Release
 
-The <%= vars.app_runtime_abbr %> Loggregator team created an example nozzle app for use with this tutorial.
+The <%= vars.product_short %> Loggregator team created an example nozzle app for use with this tutorial.
 
 To clone the example nozzle release:
 
@@ -204,7 +204,7 @@ bosh -e MY-ENV create-release --name RELEASE-NAME
 
 WHERE:
 * `MY-ENV` is the alias you set for your BOSH Director. 
-* RELEASE-NAME is `example-nozzle` to match the UAA client that you created in the <%= vars.app_runtime_abbr %> deployment manifest. 
+* RELEASE-NAME is `example-nozzle` to match the UAA client that you created in the <%= vars.product_short %> deployment manifest. 
 
 For example:
 <pre class='terminal'>
