@@ -8,7 +8,7 @@ This topic describes how to install the Loggregator Firehose Plugin for the Clou
 
 ## <a id='overview'></a> Overview
 
-The Loggregator Firehose plugin for the cf CLI allows <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) admins to access the output of the Loggregator Firehose. The output of the Firehose includes logs and metrics from apps deployed on <%= vars.app_runtime_abbr %> as well as metrics from <%= vars.app_runtime_abbr %> platform components. For more information about the Firehose, see [Overview of the Loggregator System](./architecture.html#firehose).
+The Loggregator Firehose plugin for the cf CLI allows <%= vars.product_runtime %> (<%= vars.product_short %>) admins to access the output of the Loggregator Firehose. The output of the Firehose includes logs and metrics from apps deployed on <%= vars.product_short %> as well as metrics from <%= vars.product_short %> platform components. For more information about the Firehose, see [Overview of the Loggregator System](./architecture.html#firehose).
 
 For more information about using plugins with the cf CLI, see [Using cf CLI Plugins](../cf-cli/use-cli-plugins.html).
 
@@ -17,7 +17,7 @@ For more information about using plugins with the cf CLI, see [Using cf CLI Plug
 
 Before installing the Loggregator Firehose plugin, you need:
 
-- Admin access to the <%= vars.app_runtime_abbr %> deployment that you want to monitor
+- Admin access to the <%= vars.product_short %> deployment that you want to monitor
 
 - Cloud Foundry Command Line Interface (cf CLI) v6.12.2 or later
 
@@ -43,15 +43,15 @@ To install the Loggregator Firehose plugin:
 
 ## <a id='usage'></a> View the Firehose
 
-To view the streaming output of the Firehose, which includes logging events and metrics from <%= vars.app_runtime_abbr %> system components, run:
+To view the streaming output of the Firehose, which includes logging events and metrics from <%= vars.product_short %> system components, run:
 
 ```
 cf nozzle --debug
 ```
 
-<p class='note'><strong>Note:</strong> You must be logged in as a <%= vars.app_runtime_abbr %> admin to access the Firehose.</p>
+<p class='note'><strong>Note:</strong> You must be logged in as a <%= vars.product_short %> admin to access the Firehose.</p>
 
-For more information about logging and metrics in <%= vars.app_runtime_abbr %>, see [Loggregator Architecture](./architecture.html).
+For more information about logging and metrics in <%= vars.product_short %>, see [Loggregator Architecture](./architecture.html).
 
 
 ## <a id='uninstall'></a> Uninstall the Plugin
