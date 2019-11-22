@@ -14,7 +14,7 @@ The procedure described below deploys this example nozzle to the Firehose of a <
 
 To lighten the load on custom nozzles you develop, you can request Firehose subscriptions that emit only whitelisted metrics. For examples, see `rlpreader` and `rlptypereader` in the [loggregator-tools](https://github.com/cloudfoundry-incubator/loggregator-tools) repository and [V2 Subscriptions](https://github.com/cloudfoundry/loggregator-release/blob/master/docs/v2-subscriptions.md) in the loggregator-release repository.
 
-<p class='note'><strong>Note:</strong> In <%= vars.app_runtime_abbr %> v2.8, you can disable the Firehose. In place of the Firehose, you can either configure an aggregate log and metric drain for your foundation, or use Metrics Discovery Release to register Prometheus-formatted metrics endpoints in your Pivotal Platform deployment. For more information, see <a href="https://docs.pivotal.io/platform/2-8/pcf-release-notes/runtime-rn.html#disable-v2-firehose">V2 Firehose Can Be Disabled</a> and <a href="https://docs.pivotal.io/platform/2-8/pcf-release-notes/runtime-rn.html#prometheus">All Platform Metrics Exposed on Prometheus Endpoints</a> in the <em>Pivotal Application Service v2.8 Release Notes</em>.</p>
+<p class='note'><strong>Note:</strong> You can disable the Firehose. In place of the Firehose, you can either configure an aggregate log and metric drain for your foundation, or you can use Metrics Discovery Release to register Prometheus-formatted metrics endpoints in your Pivotal Platform deployment. For more information about Metrics Discovery release, see the <a href="https://github.com/cloudfoundry/metrics-discovery-release">Metrics Discovery Release</a> repository on GitHub.</p>
 
 
 ## <a id='prerequisites'></a> Prerequisites

@@ -92,7 +92,7 @@ If you want to scale a nozzle, the number of nozzle instances should match the n
 
 Stateless nozzles should handle scaling gracefully. If a nozzle buffers or caches the data, the nozzle author must test the results of scaling the number of nozzle instances up or down.
 
-<p class='note'><strong>Note:</strong> In <%= vars.app_runtime_abbr %> v2.8, you can disable the Firehose. In place of the Firehose, you can either configure an aggregate log and metric drain for your foundation, or use Metrics Discovery Release to register Prometheus-formatted metrics endpoints in your Pivotal Platform deployment. For more information, see <a href="https://docs.pivotal.io/platform/2-8/pcf-release-notes/runtime-rn.html#disable-v2-firehose">V2 Firehose Can Be Disabled</a> and <a href="https://docs.pivotal.io/platform/2-8/pcf-release-notes/runtime-rn.html#prometheus">All Platform Metrics Exposed on Prometheus Endpoints</a> in the <em>Pivotal Application Service v2.8 Release Notes</em>.</p>
+<p class='note'><strong>Note:</strong> You can disable the Firehose. In place of the Firehose, you can either configure an aggregate log and metric drain for your foundation, or you can use Metrics Discovery Release to register Prometheus-formatted metrics endpoints in your Pivotal Platform deployment. For more information about Metrics Discovery release, see the <a href="https://github.com/cloudfoundry/metrics-discovery-release">Metrics Discovery Release</a> repository on GitHub.</p>
 
 
 ## <a id='slow-noz'></a> Slow Nozzle Alerts
