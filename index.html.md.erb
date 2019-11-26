@@ -3,41 +3,41 @@ title: Logging and Metrics
 owner: Logging and Metrics
 ---
 
-This documentation describes logging and metrics in Cloud Foundry (CF). It includes topics related to monitoring, event logging, CF data sources, and viewing logs and metrics. It also includes information about the Loggregator system, which aggregates and streams logs and metrics from apps and platform components in <%=vars.product_full%>.
+This documentation describes logging and metrics in <%= vars.product_runtime %> (<%= vars.product_short %>). It includes topics related to monitoring, event logging, <%= vars.product_short %> data sources, and viewing logs and metrics. It also includes information about the Loggregator system, which aggregates and streams logs and metrics from apps and platform components in <%= vars.product_short %>.
 
 ## Contents
 
 ### Logging and Metrics
 
-* <a href="./data-sources.html">Overview of Logging and Metrics</a>: This topic provides an overview of logging and metrics in CF.
+* [Overview of Logging and Metrics](./data-sources.html): This topic provides an overview of logging and metrics in <%= vars.product_short %>.
 
-* <a href="../devguide/deploy-apps/streaming-logs.html">Application Logging in Cloud Foundry</a>: This topic describes log types and their messages. It also explains how to view logs from the cf CLI.
+* [App Logging in <%= vars.product_short %>](../devguide/deploy-apps/streaming-logs.html): This topic describes log types and their messages. It also explains how to view logs from the cf CLI.
 
 <% if not vars.product_name == 'CF' %>
 
-* <a href="../customizing/custom-syslog-rules.html">Customizing Platform Log Forwarding</a>: This topic describes how to modify log forwarding rules. 
+* [Customizing Platform Log Forwarding](../customizing/custom-syslog-rules.html): This topic describes how to modify log forwarding rules. 
 
 * <%= vars.configuring_registrar_ref %>: <%= vars.configuring_registrar_toc %>
 
-* <a href="../opsguide/identify-metric-source.html">Identifying the Source Deployments of Metrics</a>: This topic describes how to identify which runtime deployment is the source of metrics.
+* [Identifying the Source Deployments of Metrics](../opsguide/identify-metric-source.html): This topic describes how to identify which runtime deployment is the source of metrics.
 
 <% else %>
 
-* <a href="../running/all_metrics.html">Cloud Foundry Component Metrics</a>
+* [<%= vars.product_short %> Component Metrics](../running/all_metrics.html)
 
-* <a href="./cc-uaa-logging.html">Security Event Logging</a>: This topic describes how to enable and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub. 
+* [Security Event Logging](./cc-uaa-logging.html): This topic describes how to enable and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub. 
 
 <% end %>
 
 ### Loggregator
 
-* <a href="./architecture.html">Loggregator Architecture</a>: This topic describes the architecture of the Loggregator system.
+* [Loggregator Architecture](./architecture.html): This topic describes the architecture of the Loggregator system.
 
-* <a href="./log-ops-guide.html">Loggregator Guide for Cloud Foundry Operators</a>: The topic provides information about configuring Loggregator to avoid data loss with high volumes of logging and metrics data.
+* [Loggregator Guide for <%= vars.product_short %> Operators](./log-ops-guide.html): The topic provides information about configuring Loggregator to avoid data loss with high volumes of logging and metrics data.
 
-* <a href="./nozzle-tutorial.html">Deploying a Nozzle to the Loggregator Firehose</a>: This topic describes deploying a nozzle application to the Loggregator Firehose. 
+* [Deploying a Nozzle to the Loggregator Firehose](./nozzle-tutorial.html): This topic describes deploying a nozzle application to the Loggregator Firehose. 
 
-* <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for cf CLI</a>: This topic describes how to use the Loggregator Firehose Plugin for cf CLI to access the output of the Firehose.
+* [Installing the Loggregator Firehose Plugin for cf CLI](./cli-plugin.html): This topic describes how to use the Loggregator Firehose Plugin for cf CLI to access the output of the Firehose.
 
 <% if not vars.product_name == 'CF' %>
 
@@ -47,7 +47,7 @@ For more information about logging, monitoring, and reporting, see the topics be
 
 * <%= vars.configuring_logging_ref %>: This topic describes how to forward system logs to an external service, scale Loggregator component VMs, and manage app traffic logging.
 
-* <a href="./cc-uaa-logging.html">Security Event Logging</a>: This topic describes how to enable and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub. 
+* [Security Event Logging](./cc-uaa-logging.html): This topic describes how to enable and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub. 
 
 * <%= vars.monitoring_cf_ref %>: This topic describes how operators can monitor their deployments. It includes information about selecting and configuring a monitoring system.
 
@@ -57,6 +57,6 @@ For more information about logging, monitoring, and reporting, see the topics be
 
 * <%= vars.monitoring_vm_ref %>: This topic describes how to check current VM status.
 
-* <a href="https://docs.pivotal.io/pivotalcf/2-6/windows/troubleshooting.html#logs">Access Windows Event Logs</a>: This topic section describes how to access log messages from Windows Diego cells.
+* [Access Windows Event Logs](../windows/troubleshooting.html#logs): This topic section describes how to access log messages from Windows Diego cells.
 
 <% end %>
