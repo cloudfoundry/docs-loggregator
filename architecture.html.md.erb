@@ -63,7 +63,7 @@ The following describes the components of a Loggregator deployment that uses Sys
 
 * **Loggregator Agent**: Loggregator Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the apps and <%= vars.platform_name %> components located on those VMs. Loggregator Agents then forward the logs and metrics to Dopplers.
 
-* **System Metrics Agent**: A standalone agent to provide VM system metrics using a Prometheus-scrapable endpoint. System Metrics Agents also convert Loggregator metrics from the Loggregator Agent into Prometheus-formatted metrics and host them on a Prometheus-scrapable endpoint. For more information, see [Using Metrics Agent](https://github.com/cloudfoundry/metrics-discovery-release/blob/develop/docs/metrics-agent.md) in the Metrics Discovery Release repository on GitHub.
+* **System Metrics Agent**: A standalone agent to provide VM system metrics using a Prometheus-scrapable endpoint.
 
 * **System Metrics Scraper**: The System Metrics Scraper forwards metrics from System Metrics Agents to Loggregator Agents over mTLS.
 
