@@ -1,0 +1,50 @@
+---
+title: Pivotal Platform Observability Fabric (Beta)
+owner: Log Egress, Metric Egress
+---
+
+This topic describes the components of the Pivotal Platform Observability Fabric (Beta).
+
+## Overview
+
+The Pivotal Platform Observability Fabric is a collection of agents that collect from a shared-nothing architecture. 
+
+This experimental approach allows operators and developers to use the features of the Loggregator system with several fewer VMs. 
+
+## Metrics
+
+Operators are now able to access the familiar set of Firehose metrics via a purely pull based architecture. That observability fabric also includes a mechanism to register endpoints in the Pivotal Application Service runtime automatically. This is made possible by the following metrics related agents. 
+
+The following describes the agents in the Observability Fabric architecture that enable pull-based metrics:
+
+* **Metrics Agent**: The Metrics Agent is the successor to the Loggregator Agent. It takes in Loggregator V2 envelopes and exposes them via a Prometheus endpoint. 
+* **Service Metrics Agent**: The Service Metrics Agent receives metrics from service instances and exposes them through a Prometheus endpoint. 
+* **Metrics Discovery Registrar**: The Metrics Discovery Registrar publishes the scrape location to NATs for automating scrape config (see reference architecture for application). 
+
+## Logs
+
+To match the features set for Loggregator, operators will need to take advantage of aggregate drains and operator log-cache in as a cache for viewing logs from the CLI. 
+
+The following describes the components in the Observability Fabric architecture that enable log egress:
+
+* **Syslog Agent**: Syslog Agents transports app logs, router logs, and API logs over the syslog protocol to a specified destination. This log destination can be specified by an app developer using syslog drains, or by the operator in the PAS tile. 
+* **Aggregate Syslog Drains**: The aggregate syslog drain configures all syslog agents to send logs to a shared destination. You can configure an aggregate syslog drain to receive all logs directly from Syslog Agents, rather than through the Loggregator Firehose. 
+* **Log Cache**: Log Cache enables the `cf logs` cf CLI command. Log Cache is deployed on the Doppler instance group.
+
+## Observability Fabric Reference Architectures
+
+This section includes sample reference architectures for using Observability Fabric with Telegraf or Prometheus.
+
+### Telegraf Reference Architecture (Beta)
+
+You can deploy Telegraf with Observability Fabric to use push-based metrics collection formats. 
+
+`cf-telegraf-operator` deploys Telegraf and a sidecar that manages the scrape configuration. 
+
+For more information, see [cf-telegraf-operator](https://github.com/cloudfoundry-incubator/cf-telegraf-operator) on GitHub.
+
+### Prometheus Reference Architecture (Beta)
+
+You can use the following Prometheus reference architecture to enable networking and encrypt metric transport with security groups and certificates from Credhub. 
+
+For more information, see [cf-prometheus-operator](https://github.com/cloudfoundry-incubator/cf-prometheus-operator) on GitHub.
