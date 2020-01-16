@@ -5,15 +5,19 @@ owner: Log Egress, Metric Egress
 
 This topic describes the components of the Pivotal Platform Observability Fabric (Beta).
 
-## Overview
+## <a id="overview"></a> Overview
 
-The Pivotal Platform Observability Fabric is a collection of agents that collect from a shared-nothing architecture. 
+Pivotal Platform Observability Fabric (Beta) includes components that collect, store, and forward logs and metrics in your Pivotal Platform deployment. 
 
-This experimental approach allows operators and developers to use the features of the Loggregator system with several fewer VMs. 
+The components of Observability Fabric use a shared-nothing atchitecture that requires several fewer VMs than the Loggregator system. 
 
-## Metrics
+For more information about the components of Loggregator, see [Loggregator Architecture](architecture.html).
 
-Operators are now able to access the familiar set of Firehose metrics via a purely pull based architecture. That observability fabric also includes a mechanism to register endpoints in the Pivotal Application Service runtime automatically. This is made possible by the following metrics related agents. 
+## <a id="metric-egress"></a> Metric Egress Components
+
+Observability Fabric allows you to access the same metrics available through the Loggregator Firehose with a pull-based architecture. 
+
+Observability Fabric also registers metrics endpoints in Pivotal Application Service (PAS) automatically. 
 
 The following describes the agents in the Observability Fabric architecture that enable pull-based metrics:
 
@@ -21,9 +25,9 @@ The following describes the agents in the Observability Fabric architecture that
 * **Service Metrics Agent**: The Service Metrics Agent receives metrics from service instances and exposes them through a Prometheus endpoint. 
 * **Metrics Discovery Registrar**: The Metrics Discovery Registrar publishes the scrape location to NATs for automating scrape config (see reference architecture for application). 
 
-## Logs
+## <a id="log-egress"></a> Log Egress Components
 
-To match the features set for Loggregator, operators will need to take advantage of aggregate drains and operator log-cache in as a cache for viewing logs from the CLI. 
+Observability Fabric includes the following components to enable log egress and log caching. These components also enable log egress and log caching as part of the Loggregator system.
 
 The following describes the components in the Observability Fabric architecture that enable log egress:
 
@@ -31,11 +35,11 @@ The following describes the components in the Observability Fabric architecture 
 * **Aggregate Syslog Drains**: The aggregate syslog drain configures all syslog agents to send logs to a shared destination. You can configure an aggregate syslog drain to receive all logs directly from Syslog Agents, rather than through the Loggregator Firehose. 
 * **Log Cache**: Log Cache enables the `cf logs` cf CLI command. Log Cache is deployed on the Doppler instance group.
 
-## Observability Fabric Reference Architectures
+## <a id="reference-architecture"></a> Observability Fabric Reference Architectures
 
-This section includes sample reference architectures for using Observability Fabric with Telegraf or Prometheus.
+This section includes sample reference architectures for using Observability Fabric with Telegraf or Prometheus to export logs and metrics from Pivotal Platform to an external source.
 
-### Telegraf Reference Architecture (Beta)
+### <a id="telegraf-reference-architecture"></a> Telegraf Reference Architecture (Beta)
 
 You can deploy Telegraf with Observability Fabric to use push-based metrics collection formats. 
 
@@ -43,7 +47,7 @@ You can deploy Telegraf with Observability Fabric to use push-based metrics coll
 
 For more information, see [cf-telegraf-operator](https://github.com/cloudfoundry-incubator/cf-telegraf-operator) on GitHub.
 
-### Prometheus Reference Architecture (Beta)
+### <a id="prometheus-reference-architecture"></a> Prometheus Reference Architecture (Beta)
 
 You can use the following Prometheus reference architecture to enable networking and encrypt metric transport with security groups and certificates from Credhub. 
 
