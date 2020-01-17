@@ -41,13 +41,13 @@ The following are Loggregator components, as shown in the diagram above:
 
 * **Reverse Log Proxy**: Reverse Log Proxies (RLPs) collect logs and metrics from Dopplers and forward them to Log Cache and Traffic Controllers. Operators can scale up the number of RLPs based on overall log volume.
 
-* **Syslog Agents**: Syslog Agents run on <%= vars.platform_name %> component VMs and host VMs to collect and forward logs and metrics to configured syslog drains. This includes syslog drains for individual apps as well as aggregate drains for all apps in your foundation. 
+* **Syslog Agents**: <%= partial 'syslog_agents' %>
 
 * **Syslog Binding Cache**: Syslog Agents can overwhelm CAPI when querying for existing bindings. This component acts a a proxy for the CAPI Binding query.
 
 * **Firehose**: The Firehose is a WebSocket endpoint that streams all the event data from a <%= vars.platform_name %> deployment. The data stream includes HTTP events, app logs, container metrics from apps, and metrics from <%= vars.platform_name %> platform components. The Firehose cf CLI plugin allows you to view the output of the Firehose. For more information about the Firehose plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](./cli-plugin.html).
 
-* **Log Cache**: The Log Cache allows you to view logs and metrics from the Firehose over a specified period of time. The Log Cache includes API endpoints and a CLI plugin to query and filter logs and metrics. To download the Log Cache CLI plugin, see [Cloud Foundry Plugins](https://plugins.cloudfoundry.org/). The Log Cache API endpoints are available by default. For more information about using the Log Cache API, see [Log Cache](https://github.com/cloudfoundry/log-cache#restful-api-via-gateway) on GitHub.
+* **Log Cache**: <%= partial 'log_cache' %>
 
 * **Nozzles**: Nozzles are programs that consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and to forward it to other apps and services. For more information about creating and deploying nozzles, see [Deploying a Nozzle to the Loggregator Firehose](./nozzle-tutorial.html).
 
