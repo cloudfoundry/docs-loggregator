@@ -9,23 +9,23 @@ This topic describes the components of the <%= vars.platform_name %> Observabili
 
 <%= vars.platform_name %> Observability Fabric (Beta) includes components that collect, store, and forward logs and metrics in your <%= vars.platform_name %> deployment. 
 
-The components of Observability Fabric use a shared-nothing atchitecture that requires several fewer VMs than the Loggregator system. 
-
-For more information about the components of Loggregator, see [Loggregator Architecture](architecture.html).
+The components of Observability Fabric use a shared-nothing architecture that requires several fewer VMs than the Loggregator system. For more information about the components of Loggregator, see [Loggregator Architecture](architecture.html).
 
 ## <a id="metric-egress"></a> Metric Egress Components
 
+The Loggregator system uses a push-based model for forwarding metrics, in which all data is sent though the Firehose. 
+
 Observability Fabric includes components that allow you to access the same metrics available through the Loggregator Firehose with a pull-based architecture. 
 
-Observability Fabric also registers metrics endpoints in Pivotal Application Service (PAS) automatically. 
+You can also use Observability Fabric to register metrics endpoints in Pivotal Application Service (PAS) automatically. 
 
 The following Observability Fabric components enable pull-based metrics egress:
 
-* **Metrics Agent**: The Metrics Agent ingests Loggregator V2 envelopes and makes them available on a Prometheus endpoint. The Metrics Agent performs a similar function to the Loggregator Agent in the Loggregator system. 
+* **Metrics Agent**: The Metrics Agent collects Loggregator V2 envelopes and makes them available on a Prometheus endpoint. The Metrics Agent performs a similar function to the Loggregator Agent in the Loggregator system. 
 
 * **Service Metrics Agent**: The Service Metrics Agent receives metrics from service instances on your <%= vars.platform_name %> deployment and makes them available on a Prometheus endpoint. 
 
-* **Metrics Discovery Registrar**: The Metrics Discovery Registrar publishes the location of the Prometheus endpoint defined by the Metrics Agent and Service Metrics Agent to NATs. This is helpful for configuring automation to scrape metric data from the endpoint. See [Telegraf Reference Architecture (Beta)](#telegraf-reference-architecture).
+* **Metrics Discovery Registrar**: The Metrics Discovery Registrar publishes the location of the Prometheus endpoint defined by the Metrics Agent and Service Metrics Agent to NATs. This is helpful for configuring automation to scrape metric data from the endpoint. For more information about automating metric scraping, see [Telegraf Reference Architecture (Beta)](#telegraf-reference-architecture).
 
 ## <a id="log-egress"></a> Log Egress Components
 
