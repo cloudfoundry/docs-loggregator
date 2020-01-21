@@ -21,11 +21,11 @@ Observability Fabric also registers metrics endpoints in Pivotal Application Ser
 
 The following Observability Fabric components enable pull-based metrics egress:
 
-* **Metrics Agent**: The Metrics Agent is the successor to the Loggregator Agent. It takes in Loggregator V2 envelopes and exposes them via a Prometheus endpoint. 
+* **Metrics Agent**: The Metrics Agent ingests Loggregator V2 envelopes and makes them available on a Prometheus endpoint. The Metrics Agent performs a similar function to the Loggregator Agent in the Loggregator system. 
 
-* **Service Metrics Agent**: The Service Metrics Agent receives metrics from service instances and exposes them through a Prometheus endpoint. 
+* **Service Metrics Agent**: The Service Metrics Agent receives metrics from service instances on your <%= vars.platform_name %> deployment and makes them available on a Prometheus endpoint. 
 
-* **Metrics Discovery Registrar**: The Metrics Discovery Registrar publishes the scrape location to NATs for automating scrape config (see reference architecture for application). 
+* **Metrics Discovery Registrar**: The Metrics Discovery Registrar publishes the location of the Prometheus endpoint defined by the Metrics Agent and Service Metrics Agent to NATs. This is helpful for automating metric scraping. See [Telegraf Reference Architecture (Beta)](#telegraf-reference-architecture).
 
 ## <a id="log-egress"></a> Log Egress Components
 
