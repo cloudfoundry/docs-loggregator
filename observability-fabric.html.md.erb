@@ -7,9 +7,9 @@ This topic describes the components of <%= vars.platform_name %> Observability F
 
 ## <a id="overview"></a> Overview
 
-Observability Fabric is a group of components that allow you to access all the same logs and metrics that you can access through the Loggregator system. The components of Observability Fabric use a shared-nothing architecture that requires several fewer VMs than the Loggregator system. 
+<%= vars.platform_name %> Observability Fabric (Beta) is a group of components that allow you to access all the same logs and metrics that you can access through the Loggregator system. The components of Observability Fabric use a shared-nothing architecture that requires several fewer VMs than the Loggregator system. 
 
-<%= vars.platform_name %> Observability Fabric (Beta) includes components that collect, store, and forward logs and metrics in your <%= vars.platform_name %> deployment.  
+Observability Fabric includes components that collect, store, and forward logs and metrics in your <%= vars.platform_name %> deployment.  
 
 For more information about the components of Loggregator, see [Loggregator Architecture](architecture.html).
 
@@ -35,7 +35,7 @@ These components are also a part of the Loggregator system. For more information
 
 The following Observability Fabric components enable access to logs:
 
-* **Syslog Agent**: <%= partial 'syslog_agents' %>
+* **Syslog Agent**:<%= partial 'syslog_agents' %>
 
 * **Aggregate Syslog Drain**: The aggregate syslog drain feature allows you to configure all Syslog Agents on your deployment to send logs to a single destination. You can use the aggregate syslog drain feature rather than the Loggregator Firehose to forward all logs for your deployment. 
 
