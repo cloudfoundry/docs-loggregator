@@ -7,23 +7,19 @@ This topic describes the components of <%= vars.platform_name %> Observability F
 
 ## <a id="overview"></a> Overview
 
-<%= vars.platform_name %> Observability Fabric (Beta) includes components that collect, store, and forward logs and metrics in your <%= vars.platform_name %> deployment. 
+Observability Fabric is a group of components that allow you to access all the same logs and metrics that you can access through the Loggregator system. The components of Observability Fabric use a shared-nothing architecture that requires several fewer VMs than the Loggregator system. 
 
-Observability Fabric allows you to access all the same logs and metrics that you can access through the Loggregator system. 
-
-The components of Observability Fabric use a shared-nothing architecture that requires several fewer VMs than the Loggregator system. 
+<%= vars.platform_name %> Observability Fabric (Beta) includes components that collect, store, and forward logs and metrics in your <%= vars.platform_name %> deployment.  
 
 For more information about the components of Loggregator, see [Loggregator Architecture](architecture.html).
 
-## <a id="metric-egress"></a> Metric Egress Components
+## <a id="metric-egress"></a> Metric Components
 
-The Loggregator system uses a push-based model for forwarding metrics, in which all data is sent though the Firehose. 
+This section describes the components of Observability Fabric that allow you to access metrics for your foundation. 
 
-Observability Fabric includes components that allow you to access the same metrics available through the Loggregator Firehose with a pull-based architecture. 
+These components allow you to access the same metrics available through the Loggregator Firehose with a pull-based architecture. The Loggregator system uses a push-based model for forwarding metrics, in which all data is sent though the Firehose.  
 
-You can also use Observability Fabric to automatically register Prometheus endpoints for metrics in Pivotal Application Service (PAS). 
-
-The following Observability Fabric components enable pull-based metrics egress:
+The following Observability Fabric components enable pull-based access to metrics:
 
 * **Metrics Agent**: The Metrics Agent collects Loggregator V2 envelopes and makes them available on a Prometheus endpoint. The Metrics Agent performs a similar function to the Loggregator Agent in the Loggregator system. 
 
@@ -31,11 +27,13 @@ The following Observability Fabric components enable pull-based metrics egress:
 
 * **Metrics Discovery Registrar**: The Metrics Discovery Registrar publishes the location of the Prometheus endpoint defined by the Metrics Agent and Service Metrics Agent to NATs. This is helpful for configuring automation to scrape metric data from the endpoint. For more information about automating metric scraping, see [Telegraf Reference Architecture (Beta)](#telegraf-reference-architecture).
 
-## <a id="log-egress"></a> Log Egress Components
+## <a id="log-egress"></a> Log Components
 
-Observability Fabric uses additional components to enable log egress. You can also use these components with the Loggregator system. For more information about using these components as part of the Loggregator system, see [Loggregator Architecture](architecture.html). 
+This section describes the Observability Fabric components that allow you to access logs on your foundation. 
 
-The following Observability Fabric components enable log egress:
+These components are also a part of the Loggregator system. For more information about how these components function as part of the Loggregator system, see [Loggregator Architecture](architecture.html). 
+
+The following Observability Fabric components enable access to logs:
 
 * **Syslog Agent**: <%= partial 'syslog_agents' %>
 
@@ -45,7 +43,9 @@ The following Observability Fabric components enable log egress:
 
 ## <a id="reference-architecture"></a> Observability Fabric Reference Architectures
 
-This section includes sample reference architectures for using Observability Fabric with Telegraf or Prometheus to export logs and metrics from <%= vars.platform_name %> to an external source.
+This section includes sample reference architectures for using Observability Fabric with Telegraf or Prometheus to export logs and metrics from <%= vars.platform_name %> to an external source. 
+
+These reference architectures allow you to use external tools to better manage how Observability Fabric components collect and forward logs and metrics. 
 
 ### <a id="telegraf-reference-architecture"></a> Telegraf Reference Architecture (Beta)
 
