@@ -21,11 +21,11 @@ These components allow you to access the same metrics available through the Logg
 
 The following Observability Fabric components enable pull-based access to metrics:
 
-* **Metrics Agent**: The Metrics Agent collects Loggregator V2 envelopes and makes them available on a Prometheus endpoint. The Metrics Agent performs a similar function to the Loggregator Agent in the Loggregator system. 
+* **Metrics Agent**: <br>The Metrics Agent collects Loggregator V2 envelopes and makes them available on a Prometheus endpoint. The Metrics Agent performs a similar function to the Loggregator Agent in the Loggregator system. 
 
-* **Service Metrics Agent**: The Service Metrics Agent receives metrics from service instances on your <%= vars.platform_name %> deployment and makes them available on a Prometheus endpoint. 
+* **Service Metrics Agent**: <br>The Service Metrics Agent receives metrics from service instances on your <%= vars.platform_name %> deployment and makes them available on a Prometheus endpoint. 
 
-* **Metrics Discovery Registrar**: The Metrics Discovery Registrar publishes the location of the Prometheus endpoint defined by the Metrics Agent and Service Metrics Agent to NATs. This is helpful for configuring automation to scrape metric data from the endpoint. For more information about automating metric scraping, see [Telegraf Reference Architecture (Beta)](#telegraf-reference-architecture).
+* **Metrics Discovery Registrar**: <br>The Metrics Discovery Registrar publishes the location of the Prometheus endpoint defined by the Metrics Agent and Service Metrics Agent to NATs. This is helpful for configuring automation to scrape metric data from the endpoint. For more information about automating metric scraping, see [Telegraf Reference Architecture (Beta)](#telegraf-reference-architecture).
 
 ## <a id="log-egress"></a> Log Components
 
@@ -37,7 +37,7 @@ The following Observability Fabric components enable access to logs:
 
 * **Syslog Agent**:<%= partial 'syslog_agents' %>
 
-* **Aggregate Syslog Drain**: The aggregate syslog drain feature allows you to configure all Syslog Agents on your deployment to send logs to a single destination. You can use the aggregate syslog drain feature rather than the Loggregator Firehose to forward all logs for your deployment. 
+* **Aggregate Syslog Drain**: <br>The aggregate syslog drain feature allows you to configure all Syslog Agents on your deployment to send logs to a single destination. You can use the aggregate syslog drain feature rather than the Loggregator Firehose to forward all logs for your deployment. 
 
 * **Log Cache**: <%= partial 'log_cache' %>
 
@@ -54,9 +54,3 @@ You can deploy Telegraf with Observability Fabric to use push-based metrics coll
 `cf-telegraf-operator` deploys Telegraf and a sidecar that manages the scrape configuration. 
 
 For more information, see [cf-telegraf-operator](https://github.com/cloudfoundry-incubator/cf-telegraf-operator) on GitHub.
-
-### <a id="prometheus-reference-architecture"></a> Prometheus Reference Architecture (Beta)
-
-You can use Prometheus with Observability Fabric to enable networking and encrypt metric transport with security groups and certificates from Credhub. 
-
-For more information, see [cf-prometheus-operator](https://github.com/cloudfoundry-incubator/cf-prometheus-operator) on GitHub.
