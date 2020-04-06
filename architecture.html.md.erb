@@ -45,11 +45,11 @@ The following are Loggregator components, as shown in the diagram above:
 
 * **Syslog Binding Cache**: Syslog Agents can overwhelm CAPI when querying for existing bindings. This component acts a a proxy for the CAPI Binding query.
 
-* **Firehose**: The Firehose is a WebSocket endpoint that streams all the event data from a <%= vars.platform_name %> deployment. The data stream includes HTTP events, app logs, container metrics from apps, and metrics from <%= vars.platform_name %> platform components. The Firehose cf CLI plugin allows you to view the output of the Firehose. For more information about the Firehose plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](./cli-plugin.html).
+* **Firehose**: The Firehose is a WebSocket endpoint that streams all the event data from a <%= vars.platform_name %> deployment. The data stream includes HTTP events, app logs, container metrics from apps, and metrics from <%= vars.platform_name %> platform components. The Firehose cf CLI plugin allows you to view the output of the Firehose. For more information about the Firehose plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](cli-plugin.html).
 
 * **Log Cache**: <%= partial 'log_cache' %>
 
-* **Nozzles**: Nozzles are programs that consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and to forward it to other apps and services. For more information about creating and deploying nozzles, see [Deploying a Nozzle to the Loggregator Firehose](./nozzle-tutorial.html).
+* **Nozzles**: Nozzles are programs that consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and to forward it to other apps and services. For more information about creating and deploying nozzles, see [Deploying a Nozzle to the Loggregator Firehose](nozzle-tutorial.html).
 
 ### <a id='system-metrics-agents'></a> System Metrics Agents Architecture
 
