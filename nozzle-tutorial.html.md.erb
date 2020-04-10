@@ -75,10 +75,10 @@ To add the nozzle as a UAA client for your deployment:
 To deploy <%= vars.app_runtime_abbr %> with BOSH, run:
 
 ```
-bosh -e MY-ENV deploy
+bosh -e BOSH-ENVIRONMENT deploy
 ```
 
-WHERE `MY-ENV` is the alias you set for your BOSH Director. 
+WHERE `BOSH-ENVIRONMENT` is the alias you set for your BOSH Director. 
 
 For example:
 
@@ -170,9 +170,9 @@ To prepare the nozzle deployment manifest:
     ```
     Save this manifest.
 
-1. Run `bosh -e MY-ENV deployments` to identify the names of all deployments in the environment you specify. Replace `MY-ENV` with the alias you set for your BOSH Director. 
+1. Run `bosh -e BOSH-ENVIRONMENT deployments` to identify the names of all deployments in the environment you specify. Replace `BOSH-ENVIRONMENT` with the alias you set for your BOSH Director. 
 
-1. Run `bosh -e MY-ENV env --column=uuid` to obtain your BOSH Director UUID. Replace `MY-ENV` with the alias you set for your BOSH Director. For example:
+1. Run `bosh -e BOSH-ENVIRONMENT env --column=uuid` to obtain your BOSH Director UUID. Replace `BOSH-ENVIRONMENT` with the alias you set for your BOSH Director. For example:
 
     ```
     bosh -e dev env --column=uuid
@@ -199,12 +199,13 @@ To prepare the nozzle deployment manifest:
 To create a nozzle BOSH release, run:
 
 ```
-bosh -e MY-ENV create-release --name RELEASE-NAME
+bosh -e BOSH-ENVIRONMENT create-release --name RELEASE-NAME
 ``` 
 
-WHERE:
-* `MY-ENV` is the alias you set for your BOSH Director. 
-* RELEASE-NAME is `example-nozzle` to match the UAA client that you created in the <%= vars.app_runtime_abbr %> deployment manifest. 
+Where:
+
+* `BOSH-ENVIRONMENT` is the alias you set for your BOSH Director. 
+* `RELEASE-NAME` is `example-nozzle` to match the UAA client that you created in the <%= vars.app_runtime_abbr %> deployment manifest. 
 
 For example:
 <pre class='terminal'>
@@ -221,10 +222,10 @@ Upload the nozzle BOSH release that you created as part of [Step 6: Create Nozzl
 To upload the BOSH release, run:
 
 ```
-bosh -e MY-ENV upload-release
+bosh -e BOSH-ENVIRONMENT upload-release
 ``` 
 
-WHERE `MY-ENV` is the alias you set for your BOSH Director. 
+WHERE `BOSH-ENVIRONMENT` is the alias you set for your BOSH Director. 
 
 For example:
 <pre class='terminal'>
@@ -261,10 +262,10 @@ For example:
 To deploy the nozzle, run:
 
 ```
-bosh -e MY-ENV deploy
+bosh -e BOSH-ENVIRONMENT deploy
 ``` 
 
-WHERE `MY-ENV` is the alias you set for your BOSH Director. 
+WHERE `BOSH-ENVIRONMENT` is the alias you set for your BOSH Director. 
 
 For example:
 <pre class='terminal'>
@@ -286,7 +287,7 @@ The example nozzle outputs all of the data originating coming from the Firehose 
 
 To view nozzle output:
 
-1. Run `bosh -e MY-ENV ssh` to access the nozzle VM at the IP configured in the nozzle's manifest template stub `./templates/bosh-lite-stub.yml`. Replace `MY-ENV` with the alias you set for your BOSH Director. For example:
+1. Run `bosh -e BOSH-ENVIRONMENT ssh` to access the nozzle VM at the IP configured in the nozzle's manifest template stub `./templates/bosh-lite-stub.yml`. Replace `BOSH-ENVIRONMENT` with the alias you set for your BOSH Director. For example:
 <pre class='terminal'>
   $ bosh -e dev ssh example-nozzle
   Welcome to Ubuntu 14.04.1 LTS (GNU/Linux 3.19.0-25-generic x86_64)
