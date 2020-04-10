@@ -1,4 +1,4 @@
-1. Run `bosh -e MY-ENV deployments` to identify the names of all deployments in the environment you specify. Replace `MY-ENV` with the alias you set for your BOSH Director. For example:
+1. Run `bosh -e BOSH-ENVIRONMENT deployments` to identify the names of all deployments in the environment you specify. Replace `BOSH-ENVIRONMENT` with the alias you set for your BOSH Director. For example:
 
     <pre class="terminal">
     $ bosh -e dev deployments
@@ -26,6 +26,6 @@
     Succeeded
     </pre>
 
-1. Run `bosh -e MY-ENV -d MY-DEPLOYMENT manifest > MY-MANIFEST.yml` to download and save the current BOSH deployment manifest. Replace `MY-ENV` with your BOSH Director alias, `MY-DEPLOYMENT` with the deployment name from the output of the previous step, and `MY-MANIFEST.yml` with a name you choose for the saved manifest file. You need this manifest to locate information about your databases.
+1. Run `bosh -e BOSH-ENVIRONMENT -d BOSH-DEPLOYMENT manifest > PATH-TO-MANIFEST.yml` to download and save the current BOSH deployment manifest. Replace `BOSH-ENVIRONMENT` with your BOSH Director alias, `BOSH-DEPLOYMENT` with the deployment name from the output of the previous step, and `PATH-TO-MANIFEST.yml` with a name you choose for the saved manifest file. You need this manifest to locate information about your databases.
 
     <pre class='terminal'>$ bosh -e dev -d cf-example manifest > cf.yml</pre>
