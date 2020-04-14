@@ -101,41 +101,41 @@ Where `BOSH-ENVIRONMENT` is the alias that you set for your BOSH Director.
 For example:
 
 <pre class='terminal'>
-  $ bosh -e dev deploy
-  Acting as user 'admin' on deployment 'cf-warden' on 'Bosh Lite Director'
-  Getting deployment properties from director...
-  Detecting deployment changes
-  ----------------------------
-  Releases
-  No changes
-  Compilation
-  No changes
-  Update
-  No changes
-  Resource pools
-  No changes
-  Disk pools
-  No changes
-  Networks
-  No changes
-  Jobs
-  No changes
-  Properties
-  uaa
-  clients
-  example-nozzle
-      + access-token-validity: 1209600
-      + authorized-grant-types: authorization_code,client_credentials,refresh_token
-      + override: true
-      + secret: example-nozzle
-      + scope: openid,oauth.approvals,doppler.firehose
-      + authorities: oauth.login,doppler.firehose
-  Meta
-  No changes
-  Please review all changes carefully
-  Deploying
-  ---------
-  Are you sure you want to deploy? (type 'yes' to continue):yes
+$ bosh -e dev deploy
+Acting as user 'admin' on deployment 'cf-warden' on 'Bosh Lite Director'
+Getting deployment properties from director...
+Detecting deployment changes
+----------------------------
+Releases
+No changes
+Compilation
+No changes
+Update
+No changes
+Resource pools
+No changes
+Disk pools
+No changes
+Networks
+No changes
+Jobs
+No changes
+Properties
+uaa
+clients
+example-nozzle
+    + access-token-validity: 1209600
+    + authorized-grant-types: authorization_code,client_credentials,refresh_token
+    + override: true
+    + secret: example-nozzle
+    + scope: openid,oauth.approvals,doppler.firehose
+    + authorities: oauth.login,doppler.firehose
+Meta
+No changes
+Please review all changes carefully
+Deploying
+---------
+Are you sure you want to deploy? (type 'yes' to continue):yes
 </pre>
 
 ## <a id='clone-example-release'></a> Step 4: Clone Example Release
