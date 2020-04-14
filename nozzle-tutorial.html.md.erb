@@ -13,14 +13,14 @@ nozzle app for use with this tutorial.
 ## <a id='overview'></a> Overview
 
 The procedure described below deploys an example nozzle to the Firehose of a <%= vars.app_runtime_abbr %>
-installation deployed locally with BOSH Lite. For more information about BOSH Lite, see the
-[BOSH Lite](https://github.com/cloudfoundry/bosh-lite) repository on GitHub.
+installation deployed locally with BOSH Lite v2. For more information about BOSH Lite v2, see
+[VirtualBox BOSH Lite v2](https://bosh.io/docs/bosh-lite/) in the BOSH documentation.
 
 To reduce the load on custom nozzles that you develop, you can request Firehose subscriptions that emit only
 metrics on an allow list. For examples, see `rlpreader` and `rlptypereader` in the
-[loggregator-tools](https://github.com/cloudfoundry-incubator/loggregator-tools) repository and
+[Loggregator Tools](https://github.com/cloudfoundry-incubator/loggregator-tools) repository and
 [V2 Subscriptions](https://github.com/cloudfoundry/loggregator-release/blob/master/docs/v2-subscriptions.md) in the
-loggregator-release repository.
+Loggregator Relese repository in GitHub.
 
 ## <a id='prerequisites'></a> Prerequisites
 
@@ -32,15 +32,16 @@ documentation.
 * Spiff installed locally and added to the load path of your shell. For more information, see the
 [Spiff](https://github.com/cloudfoundry-incubator/spiff) repository on GitHub.
 
-* BOSH Lite deployed locally using VirtualBox. For more information, see the 
-[BOSH Lite](https://github.com/cloudfoundry/bosh-lite) repository on GitHub.
+* BOSH Lite v2 deployed locally using VirtualBox. For more information about BOSH Lite v2, see
+[VirtualBox BOSH Lite v2](https://bosh.io/docs/bosh-lite/) in the BOSH documentation.
 
-* A working <%= vars.app_runtime_abbr %> deployment, including Loggregator, deployed with your local BOSH Lite. This
+* A working <%= vars.app_runtime_abbr %> deployment, including Loggregator, deployed with your local BOSH Lite v2. This
 deployment serves as the source of data. For more information, see
-[Deploying Cloud Foundry with BOSH Lite v2](http://operator-workshop.cloudfoundry.org/labs/deploy-cf/), or use the
-`provision_cf` script included in the BOSH Lite release.
+[Deploying Cloud Foundry with BOSH Lite v2](https://operator-workshop.cloudfoundry.org/labs/deploy-cf/) in the
+Operating the Foundry documentation, or use the `provision_cf` script included in the BOSH Lite v2 release.
 
-<p class='note'><strong>Note:</strong> Deploying <%= vars.app_runtime_abbr %> can take several hours depending on your internet bandwith, even when using the automated <code>provision_cf</code> script.</p>
+<p class='note'><strong>Note:</strong> Deploying <%= vars.app_runtime_abbr %> can take several hours depending on your
+internet bandwith, even when using the automated <code>provision_cf</code> script.</p>
 
 ## <a id='download-manifest'></a> Step 1: Download Cloud Foundry BOSH Manifest
 
@@ -66,7 +67,7 @@ To add the nozzle as a UAA client for your deployment:
 1. Under the `uaa` key, locate the `clients` key at the next level of indentation.
 
 1. Enter properties for the `example-nozzle` at the next level of indentation, exactly as shown below. The `...` in the
-text below indicate other properties that may populate the manifest at each level in the hierarchy.
+text below indicate other properties that might populate the manifest at each level in the hierarchy.
 
     ```
     properties:
@@ -230,13 +231,13 @@ To create a nozzle BOSH release, run:
 
 ```
 bosh -e BOSH-ENVIRONMENT create-release --name RELEASE-NAME
-``` 
+```
 
 Where:
 
 * `BOSH-ENVIRONMENT` is the alias that you set for your BOSH Director.
 * `RELEASE-NAME` is `example-nozzle` to match the UAA client that you created in the <%= vars.app_runtime_abbr %>
-deployment manifest. 
+deployment manifest.
 
 For example:
 <pre class='terminal'>
@@ -247,13 +248,13 @@ Syncing blobs...
 
 ## <a id='upload-nozzle-bosh-release'></a> Step 7: Upload Nozzle BOSH Release
 
-Upload the nozzle BOSH release that you created in [Step 6: Create Nozzle BOSH Release](#create-nozzle-bosh-release).
+Upload the nozzle BOSH release that you created in [Step 6: Create Nozzle BOSH Release](#create-nozzle-bosh-release) above.
 
 To upload the BOSH release, run:
 
 ```
 bosh -e BOSH-ENVIRONMENT upload-release
-``` 
+```
 
 Where `BOSH-ENVIRONMENT` is the alias that you set for your BOSH Director.
 
@@ -292,7 +293,7 @@ To deploy the nozzle, run:
 
 ```
 bosh -e BOSH-ENVIRONMENT deploy
-``` 
+```
 
 Where `BOSH-ENVIRONMENT` is the alias that you set for your BOSH Director.
 
