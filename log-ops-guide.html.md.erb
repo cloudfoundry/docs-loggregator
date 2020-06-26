@@ -57,7 +57,7 @@ Most Loggregator configurations use preferred resource defaults. For more inform
 
 Most Loggregator configurations are set to use preferred resource defaults. If you want to customize these defaults or plan the capacity of your Loggregator system, see the formulas below.
 
-### <a id='doppler'></a> Doppler
+### <a name='doppler'></a> Doppler
 
 Doppler resources can require scaling to accommodate your overall log and metric volume. The recommended formula for determining the number of Doppler instances you need to achieve a loss rate of < 1% is:
 
@@ -69,7 +69,7 @@ Because it can be challenging to understand the ratio of metrics to logs, it is 
 
 Using maximum values over a two-week period is a recommended approach for ingress-based capacity planning.
 
-### <a id='traffic-controller'></a> Traffic Controller
+### <a name='traffic-controller'></a> Traffic Controller
 
 Traffic Controller resources are usually scaled in line with Doppler resources. The recommended formula for determining the number of Traffic Controller instances is:
 
