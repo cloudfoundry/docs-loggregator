@@ -26,7 +26,9 @@ If you do not use a monitoring platform, you can measure the overall message thr
 	cf login
 	```
 
-1. Install the <%= vars.app_runtime_abbr %> Firehose plugin. For more information, see the [Install the Plugin](cli-plugin.html#add) section of the _Installing the Loggregator Firehose Plugin for cf CLI_ topic.
+1. Install the <%= vars.app_runtime_abbr %> Firehose plugin.
+   For more information, see [Install the Plugin](cli-plugin.html#add) in
+   _Installing the Loggregator Firehose Plugin for cf CLI_.
 
 1. Install Pipe Viewer by running:
 
@@ -59,11 +61,11 @@ Most Loggregator configurations are set to use preferred resource defaults. If y
 
 Doppler resources can require scaling to accommodate your overall log and metric volume. The recommended formula for determining the number of Doppler instances you need to achieve a loss rate of < 1% is:
 
-<p class="tip"><em>Number of Doppler instances = Number of envelopes per second / 16,000</em></p>
+<p class="tip"><em>Number of Doppler instances = Number of envelopes per second / 16&nbsp;000</em></p>
 
 Because it can be challenging to understand the ratio of metrics to logs, it is also recommended to monitor and scale Doppler based on its ingress traffic. To do this, you must sum two metrics and rate them per second:
 
-<p class="tip"><em>Number of Doppler instances = `doppler.ingress` / 16,000</em></p>
+<p class="tip"><em>Number of Doppler instances = doppler.ingress / 16&nbsp;000</em></p>
 
 Using maximum values over a two-week period is a recommended approach for ingress-based capacity planning.
 
@@ -75,7 +77,8 @@ Traffic Controller resources are usually scaled in line with Doppler resources. 
 
 In addition, Traffic Controller resources can require scaling to accommodate the number of your log streams and Firehose subscriptions.
 
-For more information about scaling the Loggregator system, see the [Scaling Loggregator](../running/managing-cf/logging-config.html#scaling) section of the _Configuring System Logging_ topic.
+For more information about scaling the Loggregator system,
+see [Scaling Loggregator](../running/managing-cf/logging-config.html#scaling) in _Configuring System Logging_.
 
 <% end %>
 
@@ -102,7 +105,8 @@ If a nozzle falls behind, Loggregator alerts the nozzle in two ways:
 
 * **CounterEvent**: Loggregator also emits a **CounterEvent** with the name `doppler_proxy.slow_consumer`. The nozzle receives both messages from the Firehose, alerting the operator to the performance issue.
 
-For more information about the Traffic Controller, see the [Loggregator Architecture](./architecture.html#loggregator-architecture) section of the _Loggregator Architecture_ topic.
+For more information about the Traffic Controller,
+see [Loggregator Architecture](./architecture.html#loggregator-architecture) in _Loggregator Architecture_.
 
 
 ## <a id='syslog-forward'></a> Forwarding Logs to an External Service
