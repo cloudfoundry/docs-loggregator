@@ -15,58 +15,90 @@ Loggregator architecture includes components for collecting, storing, and forwar
 
 ## <a id='components'></a> Loggregator Architecture and Components
 
-This section includes the following Loggregator architecture diagrams:
+This section includes the following Loggregator architecture diagrams, describing parallel paths for log and metric delivery:
 
-* [Loggregator Architecture](#loggregator-architecture)
+* [Firehose Architecture](#firehose-architecture)
+
+* [Shared-Nothing Architecture](#shared-nothing-architecture)
 
 * [System Metrics Agents Architecture](#system-metrics-agents)
 
 <%= vars.loggregator_architecture_syslog %>
 
-### <a id='loggregator-architecture'></a> Loggregator Architecture
+### <a id='firehose-architecture'></a> Firehose Architecture
+<a id='loggregator-architecture'></a>
 
-The following diagram shows the architecture of a Loggregator deployment.
+The following diagram shows the architecture of log/metric delivery via the Loggregator firehose.
 
-<img src='images/architecture/loggregator.png' alt="A Loggregator Agent appears in squares that depict 'Host VM' and 'Cloud Controller VMs'. Represented by arrows, the Loggregator Agent receives logs from a Forwarder Agent, which forwards logs received from a Syslog Agent. Loggregator Agents send the logs to Dopplers over gRPC communication. Dopplers then forward the logs to Traffic Controllers. For more descriptions of all of the components in Loggregator, see the 'Loggregator Components' section below.">
+<img src='images/architecture/firehose-reference.png' alt="A Forwarder Agent appears in squares that depict 'Diego Cell VMs' and 'Component VMs'. Within the Diego Cell VMs, applications, Diego Rep and Prom Scraper send logs and metrics to the Forwarder Agent. Within the Component VMs, Diego, Prom Scraper and Statsd Injector send metrics to the Forwarder Agent. The Forwarder Agent sends to the Loggregator Agents, which in turn send to the Dopplers. Dopplers send to Traffic Controllers and Reverse Log Proxies, which each send logs and metrics to different consumers. Traffic Controllers send to V1 Firehose Consumers, and Reverse Log Proxies send to V2 Firehose Consumers. V2 Firehose External Consumers are serviced through the Reverse Log Proxy Gateway. Logs and metrics are also sent to Log Cache via the Log Cache Nozzle. Cloud Controller consumes app metrics from Log Cache, and developer tools consume logs and metrics via the Log Cache CF Auth Proxy. For more descriptions of all of the components in Loggregator, see the list of components below.">
 
-[View a larger version of this image.](./images/architecture/loggregator.png)
+[View a larger version of this image.](./images/architecture/firehose-reference.png)
 
-The following are Loggregator components, as shown in the diagram above:
+<table class="nice"></table>
 
-* **Loggregator Agent**: Loggregator Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the apps and <%= vars.platform_name %> components located on those VMs. Loggregator Agents then forward the logs and metrics to Dopplers.
+The following components are included in the Loggregator Firehose, as shown in the diagram above:
 
-* **Doppler**: Dopplers receive logs and metrics from Loggregator Agents, store them in temporary buffers, and forward them to Traffic Controllers.
+* **Prom Scraper**: Prom Scrapers run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They aggregate metrics from <%= vars.platform_name %> components located on those VMs via Prometheus exposition. Prom Scrapers then forward those metrics to Forwarder Agents.
 
-* **Traffic Controller**: Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. The Loggregator Firehose is located on the Traffic Controller.
+* **Statsd Injector**: Statsd Injectors run on <%= vars.platform_name %> component VMs. They receive metrics from <%= vars.platform_name %> components over the Statsd protocol. Statsd Injectors then forward those metrics to Forwarder Agents.
 
-* **Reverse Log Proxy**: Reverse Log Proxies (RLPs) collect logs and metrics from Dopplers and forward them to Log Cache and Traffic Controllers. Operators can scale up the number of RLPs based on overall log volume.
+* **Forwarder Agent**: Forwarder Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the apps and <%= vars.platform_name %> components located on those VMs. Forwarder Agents then forward the logs and metrics to Loggregator Agents and other agents.
 
-* **Syslog Agents**: <%= partial 'syslog_agents' %>
+* **Loggregator Agent**: Loggregator Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the Forwarder Agents, then forward the logs and metrics via multiple downstream Dopplers.
 
-* **Syslog Binding Cache**: Syslog Agents can overwhelm CAPI when querying for existing bindings. This component acts a a proxy for the CAPI Binding query.
+* **Doppler**: Dopplers receive logs and metrics from Loggregator Agents, store them in temporary buffers, and forward them to Traffic Controllers and Reverse Log Proxies.
 
-* **Firehose**: The Firehose is a WebSocket endpoint that streams all the event data from a <%= vars.platform_name %> deployment. The data stream includes HTTP events, app logs, container metrics from apps, and metrics from <%= vars.platform_name %> platform components. The Firehose cf CLI plugin allows you to view the output of the Firehose. For more information about the Firehose plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](./cli-plugin.html).
+* **Traffic Controller**: Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. It services the Firehose Endpoint (also known as the V1 Firehose). The Firehose cf CLI plugin allows you to view the output of the Firehose. For more information about the Firehose plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](./cli-plugin.html).
+
+* **Reverse Log Proxy (V2 Firehose)**: Reverse Log Proxies (RLPs) collect logs and metrics from Dopplers and forward them to Log Cache and other consumers via gRPC. Operators can scale up the number of RLPs based on overall log volume.
+
+* **Reverse Log Proxy Gateway (V2 Firehose)**: Reverse Log Proxies Gateways (RLP Gateways) collect logs and metrics from Reverse Log Proxies and forward them to consumers via HTTP. Collecting logs and metrics via the RLP Gateway will have lower throughput compared to consuming from the Traffic Controller or Reverse Log Proxy.
 
 * **Log Cache**: <%= partial 'log_cache' %>
 
-* **Nozzles**: Nozzles are programs that consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and to forward it to other apps and services. For more information about creating and deploying nozzles, see [Deploying a Nozzle to the Loggregator Firehose](./nozzle-tutorial.html).
+* **rsyslog**: While not part of the firehose itself, rsyslog is responsible for delivering logs from platform components to outside consumers.
+
+### <a id='shared-nothing-architecture'></a> Shared-Nothing Architecture
+
+The following diagram shows the architecture of log/metric delivery via the Shared-Nothing Architecture.
+
+<img src='images/architecture/shared-nothing-reference.png' alt="A Forwarder Agent appears in squares that depict 'Diego Cell VMs' and 'Component VMs'. Within the Diego Cell VMs, applications, Diego Rep and Prom Scraper send logs and metrics to the Forwarder Agent. Within the Component VMs, Diego, Prom Scraper and Statsd Injector send metrics to the Forwarder Agent. The Forwarder Agent sends to both Syslog Agents and Metrics Agents on the same VM. Syslog Agents send logs to Syslog Drain Consumers and logs/metrics to the Log Cache Syslog Server via Syslog RFC 5424. Metrics Agents expose metrics via Prometheus exposition which can be scraped by Metric Scrapers. Metrics Discovery Registrars on the same VM register the Metrics Agents' endpoints with NATS for discovery by Metric Scrapers. Cloud Controller consumes app metrics from Log Cache, and developer tools consume logs and metrics via the Log Cache CF Auth Proxy. For more descriptions of all of the components in Loggregator, see the list of components below.">
+
+[View a larger version of this image.](./images/architecture/shared-nothing-reference.png)
+
+The following components are included in the Shared-Nothing Architecture, as shown in the diagram above:
+
+* **Prom Scraper**: Prom Scrapers run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They aggregate metrics from <%= vars.platform_name %> components located on those VMs via Prometheus exposition. Prom Scrapers then forward those metrics to Forwarder Agents.
+
+* **Statsd Injector**: Statsd Injectors run on <%= vars.platform_name %> component VMs. They receive metrics from <%= vars.platform_name %> components over the Statsd protocol. Statsd Injectors then forward those metrics to Forwarder Agents.
+
+* **Forwarder Agent**: Forwarder Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the apps and <%= vars.platform_name %> components located on those VMs. Forwarder Agents then forward the logs and metrics to Loggregator Agents and other agents.
+
+* **Syslog Agent**: <%= partial 'syslog_agents' %>
+
+* **Syslog Binding Cache** (not pictured): Syslog Agents can overwhelm CAPI when querying for existing bindings. This component acts a a caching proxy between the Syslog Agents and CAPI.
+
+* **Metrics Agents**: Metrics Agents receive metrics from Forwarder Agents, and make them available to Metric Scrapers via Prometheus Exposition.
+
+* **Metrics Discovery Registrars**: Metrics Discovery Registrars register each scrapeable endpoint with NATS, for discovery by Metrics Scrapers.
+
+* **Log Cache**: <%= partial 'log_cache' %>
+
+* **Log Cache Syslog Server**: The Log Cache Syslog Server takes the place of the Log Cache Nozzle (only one will be active at a time). It receives logs and metrics from Syslog Agents and sends them to Log Cache.
 
 ### <a id='system-metrics-agents'></a> System Metrics Agents Architecture
 
 The following diagram shows the architecture of a Loggregator deployment that uses System Metrics Agents to collect VM and system-level metrics.
 
-<img src='images/architecture/loggregator_system_metrics_arch.png' alt="System Metrics Agent appear in squares that depict 'Host VMs'. Represented by arrows, the System Metrics Agents send VM system-level metrics to a System Metrics Scraper, which forwards these metrics to Loggregator Agents over mTLS. For more descriptions of all of the components in Loggregator, see the 'Loggregator Components' section below.">
+<img src='images/architecture/system-metrics-agents.png' alt="System Metrics Agent appear in squares that depict 'Host VMs'. Represented by arrows, the System Metrics Agents send VM system-level metrics to a System Metrics Scraper, which forwards these metrics to Loggregator Agents over mTLS. For more descriptions of all of the components in Loggregator, see the 'Loggregator Components' section below.">
 
-[View a larger version of this image.](./images/architecture/loggregator_system_metrics_arch.png)
+[View a larger version of this image.](./images/architecture/system-metrics-agents.png)
 
 The following describes the components of a Loggregator deployment that uses System Metrics Agents, as shown in the diagram above:
-
-* **Loggregator Agent**: Loggregator Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the apps and <%= vars.platform_name %> components located on those VMs. Loggregator Agents then forward the logs and metrics to Dopplers.
 
 * **System Metrics Agent**: A standalone agent to provide VM system metrics using a Prometheus-scrapable endpoint.
 
 * **System Metrics Scraper**: The System Metrics Scraper forwards metrics from System Metrics Agents to Loggregator Agents over mTLS.
-
 
 ## <a id='bosh-metrics'></a> Related BOSH Components
 
