@@ -38,25 +38,35 @@ The following diagram shows the architecture of log/metric delivery via the Logg
 
 The following components are included in the Loggregator Firehose, as shown in the diagram above:
 
-* **Prom Scraper**: Prom Scrapers run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They aggregate metrics from <%= vars.platform_name %> components located on those VMs via Prometheus exposition. Prom Scrapers then forward those metrics to Forwarder Agents.
+* **Prom Scraper**:<br>
+Prom Scrapers run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They aggregate metrics from <%= vars.platform_name %> components located on those VMs via Prometheus exposition. Prom Scrapers then forward those metrics to Forwarder Agents.
 
-* **Statsd Injector**: Statsd Injectors run on <%= vars.platform_name %> component VMs. They receive metrics from <%= vars.platform_name %> components over the Statsd protocol. Statsd Injectors then forward those metrics to Forwarder Agents.
+* **Statsd Injector**:<br>
+ Statsd Injectors run on <%= vars.platform_name %> component VMs. They receive metrics from <%= vars.platform_name %> components over the Statsd protocol. Statsd Injectors then forward those metrics to Forwarder Agents.
 
-* **Forwarder Agent**: Forwarder Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the apps and <%= vars.platform_name %> components located on those VMs. Forwarder Agents then forward the logs and metrics to Loggregator Agents and other agents.
+* **Forwarder Agent**:<br>
+ Forwarder Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the apps and <%= vars.platform_name %> components located on those VMs. Forwarder Agents then forward the logs and metrics to Loggregator Agents and other agents.
 
-* **Loggregator Agent**: Loggregator Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the Forwarder Agents, then forward the logs and metrics via multiple downstream Dopplers.
+* **Loggregator Agent**:<br>
+ Loggregator Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the Forwarder Agents, then forward the logs and metrics via multiple downstream Dopplers.
 
-* **Doppler**: Dopplers receive logs and metrics from Loggregator Agents, store them in temporary buffers, and forward them to Traffic Controllers and Reverse Log Proxies.
+* **Doppler**:<br>
+ Dopplers receive logs and metrics from Loggregator Agents, store them in temporary buffers, and forward them to Traffic Controllers and Reverse Log Proxies.
 
-* **Traffic Controller**: Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. It services the Firehose Endpoint (also known as the V1 Firehose). The Firehose cf CLI plugin allows you to view the output of the Firehose. For more information about the Firehose plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](./cli-plugin.html).
+* **Traffic Controller**:<br>
+ Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. It services the Firehose Endpoint (also known as the V1 Firehose). The Firehose cf CLI plugin allows you to view the output of the Firehose. For more information about the Firehose plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](./cli-plugin.html).
 
-* **Reverse Log Proxy (V2 Firehose)**: Reverse Log Proxies (RLPs) collect logs and metrics from Dopplers and forward them to Log Cache and other consumers via gRPC. Operators can scale up the number of RLPs based on overall log volume.
+* **Reverse Log Proxy (V2 Firehose)**:<br>
+ Reverse Log Proxies (RLPs) collect logs and metrics from Dopplers and forward them to Log Cache and other consumers via gRPC. Operators can scale up the number of RLPs based on overall log volume.
 
-* **Reverse Log Proxy Gateway (V2 Firehose)**: Reverse Log Proxies Gateways (RLP Gateways) collect logs and metrics from Reverse Log Proxies and forward them to consumers via HTTP. Collecting logs and metrics via the RLP Gateway will have lower throughput compared to consuming from the Traffic Controller or Reverse Log Proxy.
+* **Reverse Log Proxy Gateway (V2 Firehose)**:<br>
+ Reverse Log Proxies Gateways (RLP Gateways) collect logs and metrics from Reverse Log Proxies and forward them to consumers via HTTP. Collecting logs and metrics via the RLP Gateway will have lower throughput compared to consuming from the Traffic Controller or Reverse Log Proxy.
 
-* **Log Cache**: <%= partial 'log_cache' %>
+* **Log Cache**:<br>
+ <%= partial 'log_cache' %>
 
-* **rsyslog**: While not part of the firehose itself, rsyslog is responsible for delivering logs from platform components to outside consumers.
+* **rsyslog**:<br>
+ While not part of the firehose itself, rsyslog is responsible for delivering logs from platform components to outside consumers.
 
 ### <a id='shared-nothing-architecture'></a> Shared-Nothing Architecture
 
@@ -68,23 +78,31 @@ The following diagram shows the architecture of log/metric delivery via the Shar
 
 The following components are included in the Shared-Nothing Architecture, as shown in the diagram above:
 
-* **Prom Scraper**: Prom Scrapers run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They aggregate metrics from <%= vars.platform_name %> components located on those VMs via Prometheus exposition. Prom Scrapers then forward those metrics to Forwarder Agents.
+* **Prom Scraper**:<br>
+ Prom Scrapers run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They aggregate metrics from <%= vars.platform_name %> components located on those VMs via Prometheus exposition. Prom Scrapers then forward those metrics to Forwarder Agents.
 
-* **Statsd Injector**: Statsd Injectors run on <%= vars.platform_name %> component VMs. They receive metrics from <%= vars.platform_name %> components over the Statsd protocol. Statsd Injectors then forward those metrics to Forwarder Agents.
+* **Statsd Injector**:<br>
+ Statsd Injectors run on <%= vars.platform_name %> component VMs. They receive metrics from <%= vars.platform_name %> components over the Statsd protocol. Statsd Injectors then forward those metrics to Forwarder Agents.
 
-* **Forwarder Agent**: Forwarder Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the apps and <%= vars.platform_name %> components located on those VMs. Forwarder Agents then forward the logs and metrics to Loggregator Agents and other agents.
+* **Forwarder Agent**:<br>
+ Forwarder Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the apps and <%= vars.platform_name %> components located on those VMs. Forwarder Agents then forward the logs and metrics to Loggregator Agents and other agents.
 
-* **Syslog Agent**: <%= partial 'syslog_agents' %>
+* **Syslog Agent**:<br>
+ <%= partial 'syslog_agents' %>
 
 * **Syslog Binding Cache** (not pictured): Syslog Agents can overwhelm CAPI when querying for existing bindings. This component acts a a caching proxy between the Syslog Agents and CAPI.
 
-* **Metrics Agents**: Metrics Agents receive metrics from Forwarder Agents, and make them available to Metric Scrapers via Prometheus Exposition.
+* **Metrics Agents**:<br>
+ Metrics Agents receive metrics from Forwarder Agents, and make them available to Metric Scrapers via Prometheus Exposition.
 
-* **Metrics Discovery Registrars**: Metrics Discovery Registrars register each scrapeable endpoint with NATS, for discovery by Metrics Scrapers.
+* **Metrics Discovery Registrars**:<br>
+ Metrics Discovery Registrars register each scrapeable endpoint with NATS, for discovery by Metrics Scrapers.
 
-* **Log Cache**: <%= partial 'log_cache' %>
+* **Log Cache**:<br>
+ <%= partial 'log_cache' %>
 
-* **Log Cache Syslog Server**: The Log Cache Syslog Server takes the place of the Log Cache Nozzle (only one will be active at a time). It receives logs and metrics from Syslog Agents and sends them to Log Cache.
+* **Log Cache Syslog Server**:<br>
+ The Log Cache Syslog Server takes the place of the Log Cache Nozzle (only one will be active at a time). It receives logs and metrics from Syslog Agents and sends them to Log Cache.
 
 ### <a id='system-metrics-agents'></a> System Metrics Agents Architecture
 
