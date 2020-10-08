@@ -3,7 +3,7 @@ title: Loggregator Architecture
 owner: Logging and Metrics
 ---
 
-This topic describes the Loggregator architecture and components. It also describes the <%= vars.platform_name %> components that send BOSH-reported VM metrics to Loggregator.
+This topic describes the log and metric egress architecture options. These architecture options include the Loggregator Firehose architecture and a shared-nothing atchitecture. It also describes the components that send BOSH-reported VM metrics to Loggregator.
 
 
 ## <a id='overview'></a> Overview of Log and Metric Egress Architecture
@@ -30,7 +30,7 @@ The following diagram shows how logs and metrics are transported from components
 You can use this diagram to:
 * Understand the components that transport logs and metrics to the Firehose.
 * Diagnose performance issues related to logging and metrics. 
-* Make decisions about how to best scale the Loggregator components or Firehose consumers described in this architecture.
+* Make decisions about how to scale the components or Firehose consumers described in this architecture.
 
 <img src='images/architecture/firehose-reference.png' alt="A Forwarder Agent appears in squares that depict 'Diego Cell VMs' and 'Component VMs'. Within the Diego Cell VMs, applications, Diego Rep and Prom Scraper send logs and metrics to the Forwarder Agent. Within the Component VMs, Diego, Prom Scraper and Statsd Injector send metrics to the Forwarder Agent. The Forwarder Agent sends to the Loggregator Agents, which in turn send to the Dopplers. Dopplers send to Traffic Controllers and Reverse Log Proxies, which each send logs and metrics to different consumers. Traffic Controllers send to V1 Firehose Consumers, and Reverse Log Proxies send to V2 Firehose Consumers. V2 Firehose External Consumers are serviced through the Reverse Log Proxy Gateway. Logs and metrics are also sent to Log Cache via the Log Cache Nozzle. Cloud Controller consumes app metrics from Log Cache, and developer tools consume logs and metrics via the Log Cache CF Auth Proxy. For more descriptions of all of the components in Loggregator, see the list of components below.">
 
