@@ -59,13 +59,11 @@ Most Loggregator configurations are set to use preferred resource defaults. If y
 
 ### <a id='doppler'></a> Doppler
 
-Doppler resources can require scaling to accommodate your overall log and metric volume. The recommended formula for determining the number of Doppler instances you need to achieve a loss rate of < 1% is:
-
-<p class="tip"><em>Number of Doppler instances = Number of envelopes per second / 16&nbsp;000</em></p>
-
-Because it can be challenging to understand the ratio of metrics to logs, it is also recommended to monitor and scale Doppler based on its ingress traffic. To do this, you must sum two metrics and rate them per second:
+Doppler resources can require scaling to accommodate your overall log and metric volume. The recommended formula for estimating the number of Doppler instances you need to achieve a loss rate of < 1% is:
 
 <p class="tip"><em>Number of Doppler instances = doppler.ingress / 16&nbsp;000</em></p>
+
+where `doppler.ingress` represents the per-second rate of change of the `ingress` metric from the `doppler` source, summed over all VMs in your deployment.
 
 Using maximum values over a two-week period is a recommended approach for ingress-based capacity planning.
 
