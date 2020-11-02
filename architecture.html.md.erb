@@ -28,6 +28,7 @@ This topic includes the following architecture diagrams:
 The following diagram shows how logs and metrics are transported from components and apps in your deployment to Loggregator Firehose consumers, such as nozzles, monitoring tools, or third-party software.
 
 You can use this diagram to:
+
 * Understand the components that transport logs and metrics to the Firehose.
 * Diagnose performance issues related to logging and metrics. 
 * Make decisions about how to scale the components or Firehose consumers described in this architecture.
@@ -64,9 +65,10 @@ This section describes the shared-nothing architecture for transporting logs and
 
 Similar to the Loggregator Firehose Architecture, this shared-nothing architecture allows you to forward logs and metrics from your deployment to external and internal consumers.
 
-In contrast to the Loggregator Firehose architecture, the shared-nothing architecture allows logs and metrics to pass through fewer components during egress. For example, the shared-nothing architecture does not require the Forwarder agent, Syslog agent, or Metrics agent. 
+In contrast to the Loggregator Firehose architecture, the shared-nothing architecture allows logs and metrics to pass through fewer components during egress. For example, the shared-nothing architecture does not require the Forwarder Agent, Syslog Agent, or Metrics Agent. 
 
 You can use this diagram to:
+
 * Understand the components that transport logs and metrics to the Firehose.
 * Diagnose performance issues related to logging and metrics. 
 * Make decisions about how to best scale the Loggregator components or Firehose consumers described in this architecture.
