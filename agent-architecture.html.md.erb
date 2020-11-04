@@ -43,9 +43,3 @@ The following components of the Log and Metric Agent Architecture enable access 
 * **Aggregate Syslog Drain**: <br>The aggregate syslog drain feature allows you to configure all Syslog Agents on your deployment to send logs to a single destination. You can use the aggregate syslog drain feature rather than the Loggregator Firehose to forward all logs for your deployment.
 
 * **Log Cache**: <%= partial 'log_cache' %>
-
-## <a id="reference-architecture"></a> Reference Architectures
-
-This section includes sample reference architectures for using the Log and Metric Agent Architecture with Telegraf or Prometheus to export logs and metrics from <%= vars.platform_name %> to an external source.
-
-These reference architectures allow you to use external tools to better manage how the components of the Log and Metric Agent Architecture collect and forward logs and metrics. 
