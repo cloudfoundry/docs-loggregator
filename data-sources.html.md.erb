@@ -5,10 +5,31 @@ owner: Logging and Metrics
 
 This topic provides an overview of logging and metrics in <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>). It includes information about logs and metrics sources and transport systems. It also lists products for viewing logs and metrics.
 
+## <a id="sources"></a> Accessing Logs and Metrics
+
+You can use either the `cf nozzle` command in the cf CLI or the Log Cache CLI plugin to access log metrics.
+
+### cf Nozzle Command
+
+Use the `cf nozzle` command in the cf CLI to access log metrics.
+
+1. Log in to the cf CLI by running:
+```cf login -a API-URL -u USERNAME -p PASSWORD -0 system -s app-metrics-v2```
+Where:
+* `API-URL` is your API endpoint.
+* `USERNAME` is your username.
+* `PASSWORD` is your password.
+
+1. Run the following command followed by the Diego auctioneer metric you want to see and any parameters.
+```cf nozzle -no-filter | grep bbs | grep -i ConvergenceLRPDuration```
+
+### Log Cache CLI plugin
+
+Use the `cf nozzle` command in the cf CLI to access log metrics. For more information, see [Log Cache CLI Plugin](https://plugins.cloudfoundry.org/#log-cache).
 
 ## <a id="sources"></a> Sources of Logs and Metrics
 
-There are two sources of <%= vars.app_runtime_abbr %> logs and metrics: 
+There are two sources of <%= vars.app_runtime_abbr %> logs and metrics:
 
  * <%= vars.app_runtime_abbr %> platform components, such as a Diego Cell, MySQL Server, or Cloud Controller
  * Apps and app containers deployed on <%= vars.app_runtime_abbr %>
@@ -29,12 +50,12 @@ The table below describes the data included in logs and metrics from each source
 				<li>Health metrics from BOSH-deployed VMs<sup>1</sup></li>
 				<li>Platform metrics from <%= vars.app_runtime_abbr %> components. For example, Diego Cell capacity remaining and Gorouter throughput.</li>
 				<li>Metrics for any service tile that self-publishes to the Loggregator Firehose. For example, Redis and MySQL.</li>
-			</ul>	
-		</td>	
+			</ul>
+		</td>
 	</tr>
 	<tr>
 		<td>Apps and app containers</td>
-		<td>Logs from apps<sup>2</sup></td>		
+		<td>Logs from apps<sup>2</sup></td>
 		<td>
 			<ul>
 				<li>Container metrics<sup>3</sup></li>
@@ -42,15 +63,15 @@ The table below describes the data included in logs and metrics from each source
 				<li>Custom app metrics<sup>4</sup></li>
 				<% end %>
 			</ul>
-		</td>	
-	</tr>	
+		</td>
+	</tr>
 </table>
 
 <sup>1</sup>For more information about using the BOSH Health Monitor to collect health metrics on VMs, see <%= vars.health_monitor_footnote %>.
 
-<sup>2</sup>For more information about app logging, see <%= vars.app_logging_footnote %>. 
+<sup>2</sup>For more information about app logging, see <%= vars.app_logging_footnote %>.
 
-<sup>3</sup>For more information about container metrics, see [Container Metrics](./container-metrics.html). 
+<sup>3</sup>For more information about container metrics, see [Container Metrics](./container-metrics.html).
 
 <%= vars.custom_metrics_footnote %>
 
@@ -74,13 +95,13 @@ The table below lists the transport system for logs and metrics on <%= vars.app_
 	<tr>
 		<td>Platform components</td>
 		<td>rsyslogd on <%= vars.app_runtime_abbr %> component VMs</td>
-		<td>Loggregator</td>	
+		<td>Loggregator</td>
 	</tr>
 	<tr>
 		<td>Apps</td>
-		<td>Loggregator</td>		
-		<td>Loggregator</td>	
-	</tr>	
+		<td>Loggregator</td>
+		<td>Loggregator</td>
+	</tr>
 </table>
 
 
@@ -98,7 +119,7 @@ The table below lists the products and tools for viewing <%= vars.app_runtime_ab
 		<td>Platform components</td>
 		<td valign="top">To view system logs from <%= vars.app_runtime_abbr %> components, configure rsyslogd to transport logs to a third-party product.</td>
 		<td valign="top">
-			You can use the following products or tools to view platform component and VM metrics: 	
+			You can use the following products or tools to view platform component and VM metrics:
 			<ul>
 				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
 				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
@@ -106,12 +127,12 @@ The table below lists the products and tools for viewing <%= vars.app_runtime_ab
 				<li><%= vars.platform_metric_tool_ref %></li>
 				<% end %>
 			</ul>
-		</td>	
+		</td>
 	</tr>
 	<tr>
 		<td>Apps</td>
 		<td valign="top">
-			You can use the following products or tools to view app logs: 
+			You can use the following products or tools to view app logs:
 			<ul>
 				<li>cf CLI cf logs command. See <a href="https://cli.cloudfoundry.org/en-US/cf/logs.html">Cloud Foundry CLI Reference Guide.</a></li>
 				<% if not vars.platform_code == 'CF' %>
@@ -120,17 +141,17 @@ The table below lists the products and tools for viewing <%= vars.app_runtime_ab
 				<li><%= vars.syslog_forwarding_ref %></li>
 				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
 				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
-			</ul>	
-		</td>		
+			</ul>
+		</td>
 		<td valign="top">
-			You can use the following products or tools to view app metrics: 
-			<ul>	
+			You can use the following products or tools to view app metrics:
+			<ul>
 				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
 				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
 				<% if not vars.platform_code == 'CF' %>
 				<li><%= vars.metrics_product_ref %></li>
 				<% end %>
-			</ul>	
-		</td>	
-	</tr>	
+			</ul>
+		</td>
+	</tr>
 </table>
