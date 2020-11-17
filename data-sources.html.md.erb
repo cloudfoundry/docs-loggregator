@@ -5,9 +5,10 @@ owner: Logging and Metrics
 
 This topic provides an overview of logging and metrics in <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>). It includes information about logs and metrics sources and transport systems. It also lists products for viewing logs and metrics.
 
-## <a id="sources"></a> Accessing Logs and Metrics
+## <a id="sources"></a> Accessing Metrics
 
-You can use either the `cf nozzle` command in the cf CLI or the Log Cache CLI plugin to access log metrics.
+You must use a cf CLI plugin to access and view metrics directly from the command line.
+You can use either the `cf nozzle` command in the cf CLI or the Log Cache CLI plugin to access metrics.
 
 ### cf Nozzle Command
 
@@ -22,6 +23,9 @@ Where:
 
 1. Run the following command followed by the Diego auctioneer metric you want to see and any parameters.
 ```cf nozzle -no-filter | grep bbs | grep -i ConvergenceLRPDuration```
+```cf nozzle -no-filter | grep SOURCE-ID | grep -i METRIC-NAME```
+
+For more information about nozzles, see [Logs, Metrics, and Nozzles](https://docs.pivotal.io/tiledev/2-2/nozzle.html#nozzle).
 
 ### Log Cache CLI plugin
 
