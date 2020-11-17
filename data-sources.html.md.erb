@@ -8,28 +8,61 @@ This topic provides an overview of logging and metrics in <%= vars.app_runtime_f
 ## <a id="sources"></a> Accessing Metrics
 
 You must use a cf CLI plugin to access and view metrics directly from the command line.
-You can use either the `cf nozzle` command in the cf CLI or the Log Cache CLI plugin to access metrics.
+You can use either the Firehose plugin or the Log Cache plugin to access metrics through the cf CLI.
 
-### cf Nozzle Command
+### Log Cache CLI plugin
 
-Use the `cf nozzle` command in the cf CLI to access log metrics.
+Use the Log Cache plugin with the cf CLI to access metrics.
 
 1. Log in to the cf CLI by running:
-```cf login -a API-URL -u USERNAME -p PASSWORD -0 system -s app-metrics-v2```
+```cf login -a API-URL -u USERNAME -p PASSWORD```
+
 Where:
 * `API-URL` is your API endpoint.
 * `USERNAME` is your username.
 * `PASSWORD` is your password.
 
-1. Run the following command followed by the Diego auctioneer metric you want to see and any parameters.
-```cf nozzle -no-filter | grep bbs | grep -i ConvergenceLRPDuration```
+1. Install the Log Cache CLI plugin. For more information, see [cf CLI Plugins](https://plugins.cloudfoundry.org/#log-cache).
+
+1. Run the following command followed by the metric you want to see and any parameters.
+```cf query 'METRIC-NAME{source_id="SOURCE-ID"}' ```
+
+Where:
+* `METRIC-NAME` is the name of your metric.
+* `SOURCE-ID` is the ID of your source.
+
+To find the source ID and metric name of Key Performance Indicators, see [Key Performance Indicators](https://docs.pivotal.io/application-service/2-10/overview/monitoring/kpi.html).
+To find the source ID and metric name of Key Capacity Scaling Indactors, see [Key Capacity Scaling Indicators](https://docs.pivotal.io/application-service/2-10/overview/monitoring/key-cap-scaling.html#doppler-egress-dropped).
+
+### cf Nozzle Command
+
+Use the Firehose plugin `cf nozzle` command in the cf CLI to access metrics.
+
+1. Log in to the cf CLI by running:
+```cf login -a API-URL -u USERNAME -p PASSWORD```
+Where:
+* `API-URL` is your API endpoint.
+* `USERNAME` is your username.
+* `PASSWORD` is your password.
+
+1. Install the Firehose cf CLI plugin. For more information, see [cf ClI Plugins](https://plugins.cloudfoundry.org/#Firehose%20Plugin).
+
+1. Run the following command followed by the metric you want to see and any parameters.
 ```cf nozzle -no-filter | grep SOURCE-ID | grep -i METRIC-NAME```
 
+Where:
+* `METRIC-NAME` is the name of your metric.
+* `SOURCE-ID` is the ID of your source.
+
+For example:
+```cf nozzle -no-filter | grep bbs | grep -i ConvergenceLRPDuration```
+
+To find the source ID and metric name of Key Performance Indicators, see [Key Performance Indicators](https://docs.pivotal.io/application-service/2-10/overview/monitoring/kpi.html).
+To find the source ID and metric name of Key Capacity Scaling Indactors, see [Key Capacity Scaling Indicators](https://docs.pivotal.io/application-service/2-10/overview/monitoring/key-cap-scaling.html#doppler-egress-dropped).
+
+<p class="note"><strong>Note:</strong> Run the `cf nozzle` command until you have recieved all expected metrics have been recieved.</p>
+
 For more information about nozzles, see [Logs, Metrics, and Nozzles](https://docs.pivotal.io/tiledev/2-2/nozzle.html#nozzle).
-
-### Log Cache CLI plugin
-
-Use the `cf nozzle` command in the cf CLI to access log metrics. For more information, see [Log Cache CLI Plugin](https://plugins.cloudfoundry.org/#log-cache).
 
 ## <a id="sources"></a> Sources of Logs and Metrics
 
