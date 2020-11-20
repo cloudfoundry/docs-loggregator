@@ -1,0 +1,136 @@
+---
+title: App Log Rate Limiting
+owner: Logging and Metrics
+---
+
+This topic describes app log rate limiting for apps in <%= vars.app_runtime_full %>
+(<%= vars.app_runtime_abbr %>).
+
+
+## <a id='overview'></a> Overview of App Log Rate Limiting
+
+In <%= vars.app_runtime_abbr %>, you can limit the number of log lines each app instance can
+generate per second by configuring <%= vars.app_rate_log_limit_config %>.
+
+App log rate limiting is disabled by default. Enabling this feature prevents app instances
+from overloading the Loggregator Agent with logs, so the Loggregator Agent does not drop logs
+for other app instances on the same Diego Cell. Enabling this feature also prevents apps from
+reporting inaccurate app metrics in the Cloud Foundry Command Line Interface (cf CLI) or
+increasing the CPU usage on the Diego Cell VM.
+
+<% if not vars.platform_code == "CF" %>
+<%= vars.app_rate_log_limit_config_procedure %>
+<% else %>
+
+<% end %>
+
+
+## <a id='determine-limit'></a> Determining the Ideal App Log Rate Limit
+
+The ideal app logging rate for a deployment depends on characteristics such as VM sizes and
+the number and type of apps in <%= vars.app_runtime_abbr %>. <%= vars.company_name %> recommends
+using at minimum the default limit of `100` to avoid feedback latency.
+
+When you enable app log rate limiting, Diego applies the rate limit to each app instance. For
+example, if there are five instances of an app running, Diego does not sum the logging rates
+of all five instances when determining if the rate limit has been exceeded. Instead, Diego
+evaluates the logging rate of each individual app instance and only limits instances that exceed
+the rate limit.
+
+
+## <a id='determine-exceeded'></a> How Diego Cells Determine When an App Instance Has Exceeded the App Log Rate Limit
+
+The Diego Cell containing the app instance emits the `AppInstanceExceededLogRateLimitCount`
+counter metric when it exceeds the rate limit, similar to the following example:
+
+<pre class="terminal">
+origin:"rep" eventType:CounterEvent timestamp:1582582740243576212 deployment:"cf" job:"diego-cell" index:"0e98fd00-47b2-4589-94f0-385f78b3a04d" ip:"10.0.1.12" tags:<key:"instance_id" value:"0e98fd00-47b2-4589-94f0-385f78b3a04d" > tags:<key:"source_id" value:"rep" > counterEvent:<name:"AppInstanceExceededLogRateLimitCount" delta:1 total:206 >
+</pre>
+
+Each Diego Cell in a deployment has a unique `AppInstanceExceededLogRateLimitCount` counter.
+The `total` value of the counter is the sum total of all app instances on that Diego Cell that
+have exceeded the rate limit since the creation of the Diego Cell. When there are no app instances
+exceeding the rate limit, Diego Cells do not emit the `AppInstanceExceededLogRateLimitCount`
+metric.
+
+For example, `app-instanceA` and `app-instanceB` are running on one Diego Cell, `app-instanceC`
+and `app-instanceD` are running on a second Diego Cell, and the current `total` for the
+`AppInstanceExceededLogRateLimitCount` is `125` on the first Diego Cell and `43` on the second
+Diego Cell. If `app-instanceD` exceeds the rate limit, the second Diego Cell emits the
+`AppInstanceExceededLogRateLimitCount` metric with a incremented `total` value of `44`. However,
+the first Diego Cell does not emit the `AppInstanceExceededLogRateLimitCount` metric, and the
+`total` value for the `AppInstanceExceededLogRateLimitCount` metric on the first Diego Cell
+is still `125`.
+
+A Diego Cell emits the `AppInstanceExceededLogRateLimitCount` metric conditionally when an
+app instance on that Diego Cell begins to exceed the rate limit. For example, `app-instanceC`
+and `app-instanceD` are on the same Diego Cell. If `app-instanceC` exceeds the rate limit
+continually over a ten-minute period, and `app-instanceD` exceeds the rate limit during the
+first three minutes of each five-minute interval within that ten-minute period and then stops,
+the Diego Cell emits the `AppInstanceExceededLogRateLimitCount` metric three times within that
+ten-minute period.
+
+
+## <a id='exceed-limit'></a> What Happens When App Instances Exceed the App Log Rate Limit
+
+When an app instance exceeds the configured rate limit, Diego stores the app logs in a buffer
+and releases them into the logging stream at the per-second rate you configure through
+<%= vars.app_rate_log_limit_config %>.
+
+For more information about how the buffer that Diego uses stores and releases app logs, see
+[package rate](https://godoc.org/golang.org/x/time/rate) in the Go documentation.
+
+
+## <a id='view-counter'></a> Identify Apps That Exceed the App Log Rate Limit
+
+Diego also logs when a noisy app instance exceeds the rate limit set in <%= vars.app_runtime_abbr %>.
+A log message similar to the example below appears in the log stream for the noisy app:
+
+<pre class="terminal">
+2020-02-24T12:42:18.90-0800 [APP/PROC/WEB/0] OUT app instance exceeded log rate limit (100 log-lines/sec) set by platform operator
+</pre>
+
+To identify which app instances are exceeding the app log rate limit:
+
+<p class='note'><strong>Note:</strong> The Firehose and Log Cache plugins were developed by
+  the open-source Cloud Foundry community and are not supported by VMware.</p>
+
+1. Install the Firehose plugin by running:
+
+    ```
+    cf install-plugin 'Firehose Plugin'
+    ```
+
+1. Install the Log Cache plugin by running:
+
+    ```
+    cf install-plugin 'log-cache'
+    ```
+
+1. Filter your app log messages by running:
+
+    ```
+    cf nozzle -f LogMessage | grep "app instance exceeded log rate limit"
+    ```
+    The command returns all logs with log messages containing `"app instance exceeded log rate
+    limit"`, similar to the following example:
+
+    <pre class="terminal">
+    origin:"rep" eventType:LogMessage timestamp:1583859621886751670 deployment:"warp-drive" job:"diego-cell" index:"3a574bde-91df-48b8-ae21-1d6913da0908" ip:"10.0.1.33" tags:<key:"app_id" value:"34bcfafc-402b-4bb4-84db-aea5401b79eb" > tags:<key:"app_name" value:"app-2" > tags:<key:"instance_id" value:"0" > tags:<key:"organization_id" value:"a30f39c2-4ff3-48a1-a869-a9ed21812a61" > tags:<key:"organization_name" value:"test" > tags:<key:"process_id" value:"34bcfafc-402b-4bb4-84db-aea5401b79eb" > tags:<key:"process_instance_id" value:"92e2ee78-3a1d-41a6-4933-e47b" > tags:<key:"process_type" value:"web" > tags:<key:"source_id" value:"34bcfafc-402b-4bb4-84db-aea5401b79eb" > tags:<key:"space_id" value:"0e2d2d58-3ef5-43f3-b880-c8a30903a96b" > tags:<key:"space_name" value:"test-2" > logMessage:<message:"app instance exceeded log rate limit (100 log-lines/sec) set by platform operator" message_type:OUT timestamp:1583859621886751670 app_id:"34bcfafc-402b-4bb4-84db-aea5401b79eb" source_type:"APP/PROC/WEB" source_instance:"0" >
+    </pre>
+    You can inspect these logs to identify the app instances that are exceeding the app log
+    rate limit.
+
+
+## <a id='alert-exceeded'></a> Configure an Alert for the AppInstanceExceededLogRateLimitCount Metric
+
+If you are using a third-party log management service, you can configure an alert for when
+the aggregated sum of the `AppInstanceExceededLogRateLimitCount` metric across all the Diego
+Cells on <%= vars.app_runtime_abbr %> has been incremented more than a certain number of times
+or over a certain percentage in the last five or more minutes. When you configure this alert,
+consider the number of app instances running on <%= vars.app_runtime_abbr %>, the logging rate
+that you configured in <%= vars.app_runtime_abbr %>, your other <%= vars.app_runtime_abbr %>
+configuration settings, and so on.
+
+For more information about third-party log management services, see [Streaming App Logs to
+Log Management Services](../devguide/services/log-management.html).
