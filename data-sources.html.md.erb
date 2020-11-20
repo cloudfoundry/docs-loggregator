@@ -3,72 +3,106 @@ title: Overview of Logging and Metrics
 owner: Logging and Metrics
 ---
 
-This topic provides an overview of logging and metrics in <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>). It includes information about logs and metrics sources and transport systems. It also lists products for viewing logs and metrics.
+This topic provides an overview of logging and metrics in <%= vars.app_runtime_full %>
+(<%= vars.app_runtime_abbr %>). It includes information about logs and metrics sources and
+transport systems. It also lists products for viewing logs and metrics.
+
 
 ## <a id="sources"></a> Accessing Metrics
 
-You must use a cf CLI plugin to access and view metrics directly from the command line.
-You can use either the Firehose plugin or the Log Cache plugin to access metrics through the cf CLI.
+You must use a Cloud Foundry Command-Line Interface (cf CLI) plugin to access and view metrics
+directly from the command line. You can use either the Firehose plugin or the Log Cache plugin.
 
-### Log Cache CLI plugin
+### <a id='log-cache'></a> Access Metrics Using the Log Cache CLI Plugin
 
-Use the Log Cache plugin with the cf CLI to access metrics.
-
-1. Log in to the cf CLI by running:
-```cf login -a API-URL -u USERNAME -p PASSWORD```
-
-Where:
-* `API-URL` is your API endpoint.
-* `USERNAME` is your username.
-* `PASSWORD` is your password.
-
-1. Install the Log Cache CLI plugin. For more information, see [cf CLI Plugins](https://plugins.cloudfoundry.org/#log-cache).
-
-1. Run the following command followed by the metric you want to see and any parameters.
-```cf query 'METRIC-NAME{source_id="SOURCE-ID"}' ```
-
-Where:
-* `METRIC-NAME` is the name of your metric.
-* `SOURCE-ID` is the ID of your source.
-
-To find the source ID and metric name of Key Performance Indicators, see [Key Performance Indicators](https://docs.pivotal.io/application-service/2-10/overview/monitoring/kpi.html).
-To find the source ID and metric name of Key Capacity Scaling Indactors, see [Key Capacity Scaling Indicators](https://docs.pivotal.io/application-service/2-10/overview/monitoring/key-cap-scaling.html#doppler-egress-dropped).
-
-### cf Nozzle Command
-
-Use the Firehose plugin `cf nozzle` command in the cf CLI to access metrics.
+To access metrics using the Log Cache plugin:
 
 1. Log in to the cf CLI by running:
-```cf login -a API-URL -u USERNAME -p PASSWORD```
-Where:
-* `API-URL` is your API endpoint.
-* `USERNAME` is your username.
-* `PASSWORD` is your password.
 
-1. Install the Firehose cf CLI plugin. For more information, see [cf ClI Plugins](https://plugins.cloudfoundry.org/#Firehose%20Plugin).
+    ```
+    cf login -a API-URL -u USERNAME -p PASSWORD
+    ```
+    Where:
+    * `API-URL` is your API endpoint.
+    * `USERNAME` is your username.
+    * `PASSWORD` is your password.
 
-1. Run the following command followed by the metric you want to see and any parameters.
-```cf nozzle -no-filter | grep SOURCE-ID | grep -i METRIC-NAME```
+1. Install the Log Cache CLI plugin by running:
 
-Where:
-* `METRIC-NAME` is the name of your metric.
-* `SOURCE-ID` is the ID of your source.
+    ```
+    cf install-plugin -r CF-Community "log-cache"
+    ```
+    For more information, see [log-cache](https://plugins.cloudfoundry.org/#log-cache) in _cf
+    CLI Plugins_ on the Cloud Foundry website.
 
-For example:
-```cf nozzle -no-filter | grep bbs | grep -i ConvergenceLRPDuration```
+1. Run:
 
-To find the source ID and metric name of Key Performance Indicators, see [Key Performance Indicators](https://docs.pivotal.io/application-service/2-10/overview/monitoring/kpi.html).
-To find the source ID and metric name of Key Capacity Scaling Indactors, see [Key Capacity Scaling Indicators](https://docs.pivotal.io/application-service/2-10/overview/monitoring/key-cap-scaling.html#doppler-egress-dropped).
+    ```
+    cf query 'METRIC-NAME{source_id="SOURCE-ID"}' 
+    ```
+    Where:
+    * `METRIC-NAME` is the name of the metric you want to view.
+    * `SOURCE-ID` is the source ID of the component for which you want to view metrics.
+    <br>
+    <br>
+    To find the source ID and metric name of the metric you want to view, see [Key Performance
+    Indicators](../overview/monitoring/kpi.html) and [Key Capacity Scaling Indicators](../overview/monitoring/key-cap-scaling.html).
 
-<p class="note"><strong>Note:</strong> Run the `cf nozzle` command until you have recieved all expected metrics have been recieved.</p>
+### <a id='cf-nozzle'></a> Access Metrics Using the Firehose Plugin
 
-For more information about nozzles, see [Logs, Metrics, and Nozzles](https://docs.pivotal.io/tiledev/2-2/nozzle.html#nozzle).
+To access metrics using the Firehose plugin:
+
+1. Log in to the cf CLI by running:
+
+    ```
+    cf login -a API-URL -u USERNAME -p PASSWORD
+    ```
+    Where:
+    * `API-URL` is your API endpoint.
+    * `USERNAME` is your username.
+    * `PASSWORD` is your password.
+
+1. Install the Firehose cf CLI plugin by running:
+
+    ```
+    cf install-plugin -r CF-Community "Firehose Plugin"
+    ```
+    For more information, see [Firehose Plugins](https://plugins.cloudfoundry.org/#Firehose%20Plugin)
+    in _cf CLI Plugins_ on the Cloud Foundry website.
+
+1. Run:
+
+    ```
+    cf nozzle -no-filter | grep SOURCE-ID | grep -i METRIC-NAME
+    ```
+    Where:
+    * `METRIC-NAME` is the name of the metric you want to view.
+    * `SOURCE-ID` is the source ID of the component for which you want to view metrics.
+    <br>
+    <br>
+    For example:
+
+    ```
+    cf nozzle -no-filter | grep bbs | grep -i ConvergenceLRPDuration
+    ```
+    Because metrics are scraped at different intervals, it may take up to fifteen minutes for
+    the Firehose to receive all metrics for the component. Re-run `cf nozzle` until you have
+    received a complete set of metrics for a component. For more information, see [Firehose
+    Architecture](../loggregator/architecture.html#firehose-architecture) in _Loggregator Architecture_.
+    <br>
+    <br>
+    To find the source ID and metric name of the metric you want to view, see [Key Performance
+    Indicators](../overview/monitoring/kpi.html) and [Key Capacity Scaling Indicators](../overview/monitoring/key-cap-scaling.html).
+
+For more information about nozzles, see [Nozzles](https://docs.pivotal.io/tiledev/<%= vars.current_major_version.sub('.','-') %>/nozzle.html#nozzle) in _Logs, Metrics, and Nozzles_ in the <%= vars.platform_name %> Tile Developer Guide.
+
 
 ## <a id="sources"></a> Sources of Logs and Metrics
 
 There are two sources of <%= vars.app_runtime_abbr %> logs and metrics:
 
- * <%= vars.app_runtime_abbr %> platform components, such as a Diego Cell, MySQL Server, or Cloud Controller
+ * <%= vars.app_runtime_abbr %> platform components, such as a Diego Cell, MySQL Server, or
+ Cloud Controller
  * Apps and app containers deployed on <%= vars.app_runtime_abbr %>
 
 The table below describes the data included in logs and metrics from each source:
@@ -85,8 +119,10 @@ The table below describes the data included in logs and metrics from each source
 		<td>
 			<ul>
 				<li>Health metrics from BOSH-deployed VMs<sup>1</sup></li>
-				<li>Platform metrics from <%= vars.app_runtime_abbr %> components. For example, Diego Cell capacity remaining and Gorouter throughput.</li>
-				<li>Metrics for any service tile that self-publishes to the Loggregator Firehose. For example, Redis and MySQL.</li>
+				<li>Platform metrics from <%= vars.app_runtime_abbr %> components. For example, Diego
+          Cell capacity remaining and Gorouter throughput.</li>
+				<li>Metrics for any service tile that self-publishes to the Loggregator Firehose. For
+          example, Redis and MySQL.</li>
 			</ul>
 		</td>
 	</tr>
@@ -104,24 +140,32 @@ The table below describes the data included in logs and metrics from each source
 	</tr>
 </table>
 
-<sup>1</sup>For more information about using the BOSH Health Monitor to collect health metrics on VMs, see <%= vars.health_monitor_footnote %>.
+<sup>1</sup>For more information about using the BOSH Health Monitor to collect health metrics
+on VMs, see <%= vars.health_monitor_footnote %>.
 
 <sup>2</sup>For more information about app logging, see <%= vars.app_logging_footnote %>.
 
-<sup>3</sup>For more information about container metrics, see [Container Metrics](./container-metrics.html).
+<sup>3</sup>For more information about container metrics, see [Container Metrics](container-metrics.html).
 
 <%= vars.custom_metrics_footnote %>
 
 
 ## <a id="transport"></a> Transport Systems for Logs and Metrics
 
-The following transport systems deliver logs and metrics from their source to an observability product for viewing:
+The following transport systems deliver logs and metrics from their source to an observability
+product for viewing:
 
-* **Loggregator:** Loggregator is the transport system for both logs and metrics on apps deployed on <%= vars.app_runtime_abbr %>, as well as metrics on <%= vars.app_runtime_abbr %> platform components. For more information about the Loggregator system, including Loggregator architecture and components, see [Overview of the Loggregator System](./architecture.html).
+* **Loggregator:** Loggregator is the transport system for both logs and metrics on apps deployed
+on <%= vars.app_runtime_abbr %>, as well as metrics on <%= vars.app_runtime_abbr %> platform
+components. For more information about the Loggregator system, including Loggregator architecture
+and components, see [Overview of the Loggregator System](architecture.html).
 
-* **rsyslogd on <%= vars.app_runtime_abbr %> component VMs:** rsyslogd is the transport system for <%= vars.app_runtime_abbr %> component logs. Users can configure rsyslogd to transport component logs to a third-party syslog server.
+* **rsyslogd on <%= vars.app_runtime_abbr %> component VMs:** rsyslogd is the transport system
+for <%= vars.app_runtime_abbr %> component logs. Users can configure rsyslogd to transport
+component logs to a third-party syslog server.
 
-The table below lists the transport system for logs and metrics on <%= vars.app_runtime_abbr %> platform components and apps:
+The table below lists the transport system for logs and metrics on <%= vars.app_runtime_abbr %>
+platform components and apps:
 
 <table>
 	<tr>
@@ -144,7 +188,8 @@ The table below lists the transport system for logs and metrics on <%= vars.app_
 
 ## <a id="viewing"></a> Viewing Logs and Metrics
 
-The table below lists the products and tools for viewing <%= vars.app_runtime_abbr %> logs and metrics:
+The table below lists the products and tools for viewing <%= vars.app_runtime_abbr %> logs
+and metrics:
 
 <table>
 	<tr>
@@ -154,12 +199,15 @@ The table below lists the products and tools for viewing <%= vars.app_runtime_ab
 	</tr>
 	<tr>
 		<td>Platform components</td>
-		<td valign="top">To view system logs from <%= vars.app_runtime_abbr %> components, configure rsyslogd to transport logs to a third-party product.</td>
+		<td valign="top">To view system logs from <%= vars.app_runtime_abbr %> components, configure
+      rsyslogd to transport logs to a third-party product.</td>
 		<td valign="top">
 			You can use the following products or tools to view platform component and VM metrics:
 			<ul>
-				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
-				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
+				<li>Loggregator Firehose CLI Plugin. See <a href="cli-plugin.html">Installing the Loggregator
+          Firehose Plugin for CLI</a>.</li>
+				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">
+          Cloud Foundry Community cf CLI Plugins</a>.</li>
 				<% if not vars.platform_code == 'CF' %>
 				<li><%= vars.platform_metric_tool_ref %></li>
 				<% end %>
@@ -171,20 +219,25 @@ The table below lists the products and tools for viewing <%= vars.app_runtime_ab
 		<td valign="top">
 			You can use the following products or tools to view app logs:
 			<ul>
-				<li>cf CLI cf logs command. See <a href="https://cli.cloudfoundry.org/en-US/cf/logs.html">Cloud Foundry CLI Reference Guide.</a></li>
+				<li>cf CLI cf logs command. See <a href="https://cli.cloudfoundry.org/en-US/cf/logs.html">
+          Cloud Foundry CLI Reference Guide.</a></li>
 				<% if not vars.platform_code == 'CF' %>
 				<li><%= vars.manage_apps_service_instances_ref %></li>
 				<% end %>
 				<li><%= vars.syslog_forwarding_ref %></li>
-				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
-				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
+				<li>Loggregator Firehose CLI Plugin. See <a href="cli-plugin.html">Installing the Loggregator
+          Firehose Plugin for CLI</a>.</li>
+				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">
+          Cloud Foundry Community cf CLI Plugins</a>.</li>
 			</ul>
 		</td>
 		<td valign="top">
 			You can use the following products or tools to view app metrics:
 			<ul>
-				<li>Loggregator Firehose CLI Plugin. See <a href="./cli-plugin.html">Installing the Loggregator Firehose Plugin for CLI</a>.</li>
-				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">Cloud Foundry Community cf CLI Plugins</a>.</li>
+				<li>Loggregator Firehose CLI Plugin. See <a href="cli-plugin.html">Installing the Loggregator
+          Firehose Plugin for CLI</a>.</li>
+				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">
+          Cloud Foundry Community cf CLI Plugins</a>.</li>
 				<% if not vars.platform_code == 'CF' %>
 				<li><%= vars.metrics_product_ref %></li>
 				<% end %>
