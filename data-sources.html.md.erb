@@ -45,8 +45,7 @@ To access metrics using the Log Cache plugin:
     * `SOURCE-ID` is the source ID of the component for which you want to view metrics.
     <br>
     <br>
-    To find the source ID and metric name of the metric you want to view, see [Key Performance
-    Indicators](../overview/monitoring/kpi.html) and [Key Capacity Scaling Indicators](../overview/monitoring/key-cap-scaling.html).
+    To find the source ID and metric name of the metric you want to view, <%= vars.find_metric_name_source_id %>.
 
 ### <a id='cf-nozzle'></a> Access Metrics Using the Firehose Plugin
 
@@ -91,10 +90,9 @@ To access metrics using the Firehose plugin:
     Architecture](../loggregator/architecture.html#firehose-architecture) in _Loggregator Architecture_.
     <br>
     <br>
-    To find the source ID and metric name of the metric you want to view, see [Key Performance
-    Indicators](../overview/monitoring/kpi.html) and [Key Capacity Scaling Indicators](../overview/monitoring/key-cap-scaling.html).
+    To find the source ID and metric name of the metric you want to view, <%= vars.find_metric_name_source_id %>.
 
-For more information about nozzles, see [Nozzles](https://docs.pivotal.io/tiledev/<%= vars.current_major_version.sub('.','-') %>/nozzle.html#nozzle) in _Logs, Metrics, and Nozzles_ in the <%= vars.platform_name %> Tile Developer Guide.
+For more information about nozzles, <%= vars.nozzle_info_link %>.
 
 
 ## <a id="sources"></a> Sources of Logs and Metrics
@@ -158,7 +156,7 @@ product for viewing:
 * **Loggregator:** Loggregator is the transport system for both logs and metrics on apps deployed
 on <%= vars.app_runtime_abbr %>, as well as metrics on <%= vars.app_runtime_abbr %> platform
 components. For more information about the Loggregator system, including Loggregator architecture
-and components, see [Overview of the Loggregator System](architecture.html).
+and components, see [Loggregator Architecture](architecture.html).
 
 * **rsyslogd on <%= vars.app_runtime_abbr %> component VMs:** rsyslogd is the transport system
 for <%= vars.app_runtime_abbr %> component logs. Users can configure rsyslogd to transport
