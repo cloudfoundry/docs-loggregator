@@ -36,6 +36,16 @@ evaluates the logging rate of each individual app instance and only limits insta
 the rate limit.
 
 
+## <a id='exceed-limit'></a> What Happens When App Instances Exceed the App Log Rate Limit
+
+When an app instance exceeds the configured rate limit, Diego stores the app logs in a buffer
+and releases them into the logging stream at the per-second rate you configure through
+<%= vars.app_rate_log_limit_config %>.
+
+For more information about how the buffer that Diego uses stores and releases app logs, see
+[package rate](https://godoc.org/golang.org/x/time/rate) in the Go documentation.
+
+
 ## <a id='determine-exceeded'></a> How Diego Cells Determine When an App Instance Has Exceeded the App Log Rate Limit
 
 The Diego Cell containing the app instance emits the `AppInstanceExceededLogRateLimitCount`
@@ -69,14 +79,18 @@ the Diego Cell emits the `AppInstanceExceededLogRateLimitCount` metric three tim
 ten-minute period.
 
 
-## <a id='exceed-limit'></a> What Happens When App Instances Exceed the App Log Rate Limit
+## <a id='alert-exceeded'></a> Configure an Alert for the AppInstanceExceededLogRateLimitCount Metric
 
-When an app instance exceeds the configured rate limit, Diego stores the app logs in a buffer
-and releases them into the logging stream at the per-second rate you configure through
-<%= vars.app_rate_log_limit_config %>.
+If you are using a third-party log management service, you can configure an alert for when
+the aggregated sum of the `AppInstanceExceededLogRateLimitCount` metric across all the Diego
+Cells on <%= vars.app_runtime_abbr %> has been incremented more than a certain number of times
+or over a certain percentage in the last five or more minutes. When you configure this alert,
+consider the number of app instances running on <%= vars.app_runtime_abbr %>, the logging rate
+that you configured in <%= vars.app_runtime_abbr %>, your other <%= vars.app_runtime_abbr %>
+configuration settings, and so on.
 
-For more information about how the buffer that Diego uses stores and releases app logs, see
-[package rate](https://godoc.org/golang.org/x/time/rate) in the Go documentation.
+For more information about third-party log management services, see [Streaming App Logs to
+Log Management Services](../devguide/services/log-management.html).
 
 
 ## <a id='view-counter'></a> Identify Apps That Exceed the App Log Rate Limit
@@ -118,17 +132,3 @@ To identify which app instances are exceeding the app log rate limit:
     </pre>
     You can inspect these logs to identify the app instances that are exceeding the app log
     rate limit.
-
-
-## <a id='alert-exceeded'></a> Configure an Alert for the AppInstanceExceededLogRateLimitCount Metric
-
-If you are using a third-party log management service, you can configure an alert for when
-the aggregated sum of the `AppInstanceExceededLogRateLimitCount` metric across all the Diego
-Cells on <%= vars.app_runtime_abbr %> has been incremented more than a certain number of times
-or over a certain percentage in the last five or more minutes. When you configure this alert,
-consider the number of app instances running on <%= vars.app_runtime_abbr %>, the logging rate
-that you configured in <%= vars.app_runtime_abbr %>, your other <%= vars.app_runtime_abbr %>
-configuration settings, and so on.
-
-For more information about third-party log management services, see [Streaming App Logs to
-Log Management Services](../devguide/services/log-management.html).
