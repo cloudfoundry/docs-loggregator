@@ -58,7 +58,8 @@ The following table describes all Diego container metrics:
   </tr>
 </table>
 
-The Diego container metrics are packaged in the `ContainerMetric` structure. See the `ContainerMetric` structure definition in [diego-logging-client](https://github.com/cloudfoundry/diego-logging-client/blob/master/client.go#L30-L43) in GitHub.
+For loggregator v1 most of the container metrics are emitted in a `ContainerMetric` envelope. The `AbsoluteCPUEntitlement`, `AbsoluteCPUUsage` and `ContainerAge` container metrics are emitted as separate `ValueMetric` envelopes.
+For loggregator v2 all container metrics are emitted in gauge envelopes. The `AbsoluteCPUEntitlement`, `AbsoluteCPUUsage` and `ContainerAge` container metrics are emitted in a separate envelope to the other container metrics.
 
 ## <a id="cf-cli"></a> Retrieve Container Metrics from the cf CLI
 
