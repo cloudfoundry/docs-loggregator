@@ -13,7 +13,7 @@ Diego containers emit the following resource usage metrics for their app instanc
 
 The following table describes all Diego container metrics:
 
-<table id='container-metrics' border="1" class="nice" >
+<table id='container-metrics' class="nice" >
   <tr>
     <th width=20%>Metric</th>
     <th width=65%>Description</th>
@@ -58,8 +58,13 @@ The following table describes all Diego container metrics:
   </tr>
 </table>
 
-For loggregator v1 most of the container metrics are emitted in a `ContainerMetric` envelope. The `AbsoluteCPUEntitlement`, `AbsoluteCPUUsage` and `ContainerAge` container metrics are emitted as separate `ValueMetric` envelopes.
-For loggregator v2 all container metrics are emitted in gauge envelopes. The `AbsoluteCPUEntitlement`, `AbsoluteCPUUsage` and `ContainerAge` container metrics are emitted in a separate envelope to the other container metrics.
+**Loggregator v1**: Most of the container metrics are emitted in a `ContainerMetric` envelope.
+The `AbsoluteCPUEntitlement`, `AbsoluteCPUUsage`, and `ContainerAge` container metrics are emitted
+as separate `ValueMetric` envelopes.
+
+**Loggregator v2**: All container metrics are emitted in gauge envelopes. The
+`AbsoluteCPUEntitlement`, `AbsoluteCPUUsage`, and `ContainerAge` container metrics are emitted in a
+separate envelope to the other container metrics.
 
 ## <a id="cf-cli"></a> Retrieve Container Metrics from the cf CLI
 
