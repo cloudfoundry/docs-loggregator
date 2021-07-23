@@ -46,14 +46,9 @@ If you do not use a monitoring platform, you can measure the overall message thr
 
 To measure the message reliability rate of your Loggregator system, you can run black-box tests.
 
-
 ## <a id='scaling'></a> Scaling Loggregator
 
-<% if not vars.platform_code == 'CF' %>
-
-Most Loggregator configurations use preferred resource defaults. For more information about customizing these defaults and planning the capacity of your Loggregator system, see [Key Capacity Scaling Indicators](<%= vars.url_path %>/monitoring/key-cap-scaling.html).
-
-<% else %>
+<% if vars.platform_code == 'CF' %>
 
 Most Loggregator configurations are set to use preferred resource defaults. If you want to customize these defaults or plan the capacity of your Loggregator system, see the formulas below.
 
@@ -79,6 +74,10 @@ In addition, Traffic Controller resources can require scaling to accommodate the
 
 For more information about scaling the Loggregator system,
 see [Scaling Loggregator](../running/managing-cf/logging-config.html#scaling) in _Configuring System Logging_.
+
+<% else %>
+
+Most Loggregator configurations use preferred resource defaults. For more information about customizing these defaults and planning the capacity of your Loggregator system, see <%= vars.key_cap_link %>.
 
 <% end %>
 
