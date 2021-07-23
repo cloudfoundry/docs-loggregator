@@ -49,7 +49,13 @@ To measure the message reliability rate of your Loggregator system, you can run 
 
 ## <a id='scaling'></a> Scaling Loggregator
 
-<%= vars.key_cap_link %>
+<% if not vars.platform_code == 'CF' %>
+
+Most Loggregator configurations use preferred resource defaults. For more information about customizing these defaults and planning the capacity of your Loggregator system, see [Key Capacity Scaling Indicators](<%= vars.url_path %>/operating/monitoring/key-cap-scaling.html).
+
+<% else %>
+
+Most Loggregator configurations are set to use preferred resource defaults. If you want to customize these defaults or plan the capacity of your Loggregator system, see the formulas below.
 
 ### <a id='doppler'></a> Doppler
 
