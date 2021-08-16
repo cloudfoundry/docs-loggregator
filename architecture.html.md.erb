@@ -115,19 +115,19 @@ The following describes the components of a Loggregator deployment that uses Sys
 
 * **System Metrics Scraper**: The System Metrics Scraper forwards metrics from System Metrics Agents to Loggregator Agents over mTLS.
 
-## <a id='data-flow'></a> 
+## <a id='data-flow'></a> How Components Transport Logs and Metrics
 
 This section provides detailed desriptions of how the components in the Loggregator Firehose architecture and in the shared-nothing architecture transport logs and metrics on your deployment.
 
 It describes the transport of logs and metrics through the following phases:
 
-* How Logs and Metrics are Transported from VMs
-* How the Loggregator Firehose Forwards Logs and Metrics
-* How Consumers Receive Logs and Metrics
+* How components in the logging and metrics architectures collect and forward metrics from VMs on your deployment. See [How Logs and Metrics Egress from VMs](#vms-egress).
+* How components in a Loggregator Firehose architecture collect and forward logs and metrics. See [How the Loggregator Firehose Forwards Logs and Metrics](#firehose).
+* How the logging and metrics architectures expose logs and metrics to consumers. See [How Consumers Receive Logs and Metrics](#consumers).
 
-### <a id='vms-egress'></a> How Logs and Metrics are Transported from VMs
+### <a id='vms-egress'></a> How Logs and Metrics Egress from VMs
 
-The following describes the transport of logs and metrics from VMs, through system components, and to a destination:
+The following describes the transport of logs and metrics from VMs through system components and to a destination:
 
   1. Apps and component VMs on your deployment emit logs and metrics.
   2. Logs and metrics pass through two forwarders:
@@ -173,7 +173,7 @@ Proxies. V2 Firehose Consumers can also receive logs and metrics from Reverse Lo
 
 ### <a id="consumers"></a> How Consumers Receive Logs and Metrics
 
-There are different ways that a consumer of logs and metrics can receive logs and metrics from your deployment. Consumers of logs and metrics include the Cloud Foundry Command Line Interface (cf CLI), Cloud Foundry web UIs such as Stratos, and any observability or monitoring product integrations.
+Consumers of logs and metrics include the Cloud Foundry Command Line Interface (cf CLI), Cloud Foundry web UIs such as Stratos, and any observability or monitoring product integrations.
 
 The cf CLI and any Cloud Foundry web UIs can access logs and metrics through Log Cache. Log Cache receives logs and metrics from either the Firehose or directly from VMs through syslog. Log Cache provides short-term storage for logs and metrics where the cf CLI and web UIs can access them.
 
