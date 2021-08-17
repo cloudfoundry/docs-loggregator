@@ -34,23 +34,23 @@ This section includes the following diagrams:
 
 The following diagram shows how logs and metrics are transported from components and apps on your deployment to Loggregator Firehose consumers, such as nozzles, monitoring tools, or third-party software.
 
-<img src='images/architecture/firehose-reference.png' alt="A Forwarder Agent appears in squares that depict 'Diego Cell VMs' and 'Component VMs'. Within the Diego Cell VMs, applications, Diego Rep and Prom Scraper send logs and metrics to the Forwarder Agent. Within the Component VMs, Diego, Prom Scraper and Statsd Injector send metrics to the Forwarder Agent. The Forwarder Agent sends to the Loggregator Agents, which in turn send to the Dopplers. Dopplers send to Traffic Controllers and Reverse Log Proxies, which each send logs and metrics to different consumers. Traffic Controllers send to V1 Firehose Consumers, and Reverse Log Proxies send to V2 Firehose Consumers. V2 Firehose External Consumers are serviced through the Reverse Log Proxy Gateway. Logs and metrics are also sent to Log Cache via the Log Cache Nozzle. Cloud Controller consumes app metrics from Log Cache, and developer tools consume logs and metrics via the Log Cache CF Auth Proxy. For more descriptions of all of the components in Loggregator, see the list of components below.">
+<img src='images/architecture/firehose-reference.png' alt="A Forwarder Agent appears in squares that depict 'Diego Cell VMs' and 'Component VMs'. Within the Diego Cell VMs, applications, Diego Rep and Prom Scraper send logs and metrics to the Forwarder Agent. Within the Component VMs, Diego, Prom Scraper and Statsd Injector send metrics to the Forwarder Agent. The Forwarder Agent sends to the Loggregator Agents, which in turn send to the Dopplers. Dopplers send to Traffic Controllers and Reverse Log Proxies, which each send logs and metrics to different consumers. Traffic Controllers send to V1 Firehose Consumers, and Reverse Log Proxies send to V2 Firehose Consumers. V2 Firehose External Consumers are serviced through the Reverse Log Proxy Gateway. Logs and metrics are also sent to Log Cache by the Log Cache Nozzle. Cloud Controller consumes app metrics from Log Cache, and developer tools consume logs and metrics through the Log Cache CF Auth Proxy. For more descriptions of all of the components in Loggregator, see the list of components below.">
 
 [View a larger version of this image.](./images/architecture/firehose-reference.png)
 
 The following components are included in the Loggregator Firehose architecture, as shown in the diagram above:
 
-* **Prom Scraper**: Prom Scrapers run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They aggregate metrics from <%= vars.platform_name %> components located on those VMs via Prometheus exposition. Prom Scrapers then forward those metrics to Forwarder Agents.
+* **Prom Scraper**: Prom Scrapers run on both component VMs and Diego Cell VMs. They aggregate metrics from components located on those VMs through Prometheus exposition. Prom Scrapers then forward the metrics to Forwarder Agents.
 
-* **Statsd Injector**: Statsd Injectors run on <%= vars.platform_name %> component VMs. They receive metrics from <%= vars.platform_name %> components over the Statsd protocol. Statsd Injectors then forward those metrics to Forwarder Agents.
+* **Statsd Injector**: Statsd Injectors run on component VMs. They receive metrics from components over the Statsd protocol. Statsd Injectors then forward the metrics to Forwarder Agents.
 
-* **Forwarder Agent**: Forwarder Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the apps and <%= vars.platform_name %> components located on those VMs. Forwarder Agents then forward the logs and metrics to Loggregator Agents and other agents.
+* **Forwarder Agent**: Forwarder Agents run on both component VMs and Diego Cell VMs. They receive logs and metrics from the apps and components located on those VMs. Forwarder Agents then forward the logs and metrics to Loggregator Agents and other agents.
 
-* **Loggregator Agent**: Loggregator Agents run on both <%= vars.platform_name %> component VMs and Diego Cell VMs. They receive logs and metrics from the Forwarder Agents, then forward the logs and metrics via multiple downstream Dopplers.
+* **Loggregator Agent**: Loggregator Agents run on both component VMs and Diego Cell VMs. They receive logs and metrics from the Forwarder Agents, then forward the logs and metrics from multiple Dopplers.
 
 * **Doppler**: Dopplers receive logs and metrics from Loggregator Agents, store them in temporary buffers, and forward them to Traffic Controllers and Reverse Log Proxies.
 
-* **Traffic Controller**: Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. It services the Firehose Endpoint (also known as the V1 Firehose). The Firehose cf CLI plugin allows you to view the output of the Firehose. For more information about the Firehose plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](./cli-plugin.html).
+* **Traffic Controller**: Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. It services the Firehose Endpoint, also known as the V1 Firehose. The Firehose cf CLI plugin allows you to view the output of the Firehose. For more information about the Firehose plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](./cli-plugin.html).
 
 * **Reverse Log Proxy (V2 Firehose)**: Reverse Log Proxies (RLPs) collect logs and metrics from Dopplers and forward them to Log Cache and other consumers over gRPC. Operators can scale up the number of RLPs based on overall log volume.
 
@@ -66,7 +66,7 @@ Similar to the Loggregator Firehose Architecture, the shared-nothing architectur
 
 In contrast to the Loggregator Firehose architecture, logs and metrics to pass through fewer components in the shared-nothing architecture. For example, the shared-nothing architecture does not require the Forwarder Agent, Syslog Agent, or Metrics Agent.
 
-<img src='images/architecture/shared-nothing-reference.png' alt="A Forwarder Agent appears in squares that depict 'Diego Cell VMs' and 'Component VMs'. Within the Diego Cell VMs, applications, Diego Rep and Prom Scraper send logs and metrics to the Forwarder Agent. Within the Component VMs, Diego, Prom Scraper and Statsd Injector send metrics to the Forwarder Agent. The Forwarder Agent sends to both Syslog Agents and Metrics Agents on the same VM. Syslog Agents send logs to Syslog Drain Consumers and logs/metrics to the Log Cache Syslog Server via Syslog RFC 5424. Metrics Agents expose metrics via Prometheus exposition which can be scraped by Metric Scrapers. Metrics Discovery Registrars on the same VM register the Metrics Agents' endpoints with NATS for discovery by Metric Scrapers. Cloud Controller consumes app metrics from Log Cache, and developer tools consume logs and metrics via the Log Cache CF Auth Proxy. For more descriptions of all of the components in Loggregator, see the list of components below.">
+<img src='images/architecture/shared-nothing-reference.png' alt="A Forwarder Agent appears in squares that depict 'Diego Cell VMs' and 'Component VMs'. Within the Diego Cell VMs, applications, Diego Rep and Prom Scraper send logs and metrics to the Forwarder Agent. Within the Component VMs, Diego, Prom Scraper and Statsd Injector send metrics to the Forwarder Agent. The Forwarder Agent sends to both Syslog Agents and Metrics Agents on the same VM. Syslog Agents send logs to Syslog Drain Consumers and logs/metrics to the Log Cache Syslog Server over Syslog RFC 5424. Metrics Agents expose metrics through Prometheus exposition which can be scraped by Metric Scrapers. Metrics Discovery Registrars on the same VM register the Metrics Agents' endpoints with NATS for discovery by Metric Scrapers. Cloud Controller consumes app metrics from Log Cache, and developer tools consume logs and metrics from the Log Cache CF Auth Proxy. For more descriptions of all of the components in Loggregator, see the list of components below.">
 
 [View a larger version of this image.](./images/architecture/shared-nothing-reference.png)
 
@@ -120,16 +120,16 @@ The following describes the transport of logs and metrics from VMs through syste
 
   1. Apps and component VMs on your deployment emit logs and metrics.
   2. Logs and metrics pass through two forwarders:
-    * rsyslog. This sends logs from the component VMs in Syslog RFC5424 format.
+    * rsyslog. This sends logs from the component VMs in Syslog RFC 5424 format.
     * The Forwarder Agent. This sends metrics and app logs to the Syslog Agent, the Metrics Agent, and the Loggregator Agent.
   3. From the Forwarder Agent, logs and metrics then pass through each of the following agents:
-    * The Syslog Agent. This sends app logs in Syslog RFC5424 format to aggregate and app log destinations.
+    * The Syslog Agent. This sends app logs in Syslog RFC 5424 format to aggregate and app log destinations.
     * The Metrics Agent. This exposes metrics for Prometheus-style scraping.
     * The Loggregator Agent. This sends metrics and app logs to the Loggregator Firehose. For more information about how logs and metrics flow through the Loggregator Firehose, see [How the Loggregator Firehose Forwards Logs and Metrics](#firehose) below.
 
 The following diagram shows the transport of logs and metrics from VMs on your deployment as described above:
 
-<img src='images/architecture/vms.png' alt="A Forwarder Agent appears inside a square labeled VMs. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent. Components also send logs to rsyslon, which then sends platform logs outside the system via syslog RFC5424. The Forwarder Agent sends to three downstream consumers. The Syslog Agent sends application logs via syslog RFC5424. The Metrics Agent exposes metrics via Prometheus endpoints. Finally, the Loggregator Agent sends metrics and application logs via syslog RFC5424.">
+<img src='images/architecture/vms.png' alt="A Forwarder Agent appears inside a square labeled VMs. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent. Components also send logs to rsyslon, which then sends platform logs outside the system over syslog RFC 5424. The Forwarder Agent sends to three downstream consumers. The Syslog Agent sends application logs over syslog RFC 5424. The Metrics Agent exposes metrics on Prometheus endpoints. Finally, the Loggregator Agent sends metrics and application logs over syslog RFC 5424.">
 
 ### <a id='firehose'></a> How the Loggregator Firehose Forwards Logs and Metrics
 
@@ -166,14 +166,14 @@ Consumers of logs and metrics include the Cloud Foundry Command Line Interface (
 
 The cf CLI and any Cloud Foundry web UIs can access logs and metrics through Log Cache. Log Cache receives logs and metrics from either the Firehose or directly from VMs through syslog. Log Cache provides short-term storage for logs and metrics where the cf CLI and web UIs can access them.
 
-Integrations with observabiliy or monitoring products can receive logs and metrics through one of the following methods, depending on the logging and metrics architecture that your deployment uses:
+Integrations with observabiliy or monitoring products receive logs and metrics through one of the following methods, depending on the logging and metrics architecture that your deployment uses:
 
   * Connect to the Loggregator Firehose for access to both logs and metrics.
   * Receive logs in syslog RFC 5424 format and scrape metrics from Prometheus endpoints.
 
 The following diagram shows how consumers of logs and metrics receive logs and metrics from your deployment:
 
-<img src='images/architecture/consumers.png' alt="A Forwarder Agent appears inside a square labeled VMs. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent. Components also send logs to rsyslog, which then sends platform logs outside the system through syslog RFC5424. The Forwarder Agent sends to three downstream consumers. The Syslog Agent sends application logs through syslog RFC5424. The Metrics Agent exposes metrics through Prometheus endpoints. Finally, the Loggregator Agent sends metrics and application logs through syslog RFC5424.">
+<img src='images/architecture/consumers.png' alt="A Forwarder Agent appears inside a square labeled VMs. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent. Components also send logs to rsyslog, which then sends platform logs outside the system through syslog RFC 5424. The Forwarder Agent sends to three downstream consumers. The Syslog Agent sends application logs through syslog RFC 5424. The Metrics Agent exposes metrics through Prometheus endpoints. Finally, the Loggregator Agent sends metrics and application logs through syslog RFC 5424.">
 
 ## <a id='bosh-metrics'></a> Related BOSH Components
 
