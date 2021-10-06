@@ -139,7 +139,7 @@ The following describes how the Loggregator Firehose sends logs and metrics thro
 
  1. The Loggregator Agent sends each log and metric to one Doppler. It distributes the logs and metrics among a random group of five Dopplers.
  2. Dopplers make a copy of each log and metric for each consumer. The Dopplers then send the logs and metrics to Traffic Controllers and Reverse Log Proxies for distribution.
- 3. Traffice Controllers and Reverse Log Proxies distribute logs and metrics in the following ways:
+ 3. Traffic Controllers and Reverse Log Proxies distribute logs and metrics in the following ways:
       * Traffic Controllers receive Websocket connections from V1 Firehose Consumers, and send
         logs and metrics as V1 Envelopes.<br/><br/>
         If any of these consumers start to fall behind, Traffic Controllers log a slow consumer
