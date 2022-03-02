@@ -16,7 +16,7 @@ You can measure both the message throughput and message reliability rates of you
 
 ### <a id='throughput-rate'></a> Measuring Message Throughput
 
-To measure the message throughput of the Loggregator system, you can monitor the total number of egress messages from all Metrons on your platform using the `metron.egress` metric.
+To measure the message throughput of the Loggregator system, you can monitor the total number of egress messages from all Loggregator Agents on your platform using the `metron.egress` metric.
 
 If you do not use a monitoring platform, you can measure the overall message throughput of your Loggregator system. To measure the overall message throughput:
 
@@ -114,4 +114,4 @@ You can configure <%= vars.app_runtime_abbr %> to forward log data from apps to 
 
 ## <a id='log-message-size'></a> Log Message Size Constraints
 
-When a Diego Cell emits app logs to Metron, Diego breaks up log messages greater than approximately 60&nbsp;KiB into multiple envelopes.
+When a Diego Cell emits app logs to Loggregator, Diego breaks up log messages greater than approximately 60&nbsp;KiB into multiple envelopes.
