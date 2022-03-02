@@ -70,6 +70,11 @@ Traffic Controller resources are usually scaled in line with Doppler resources. 
 
 In addition, Traffic Controller resources can require scaling to accommodate the number of your log streams and Firehose subscriptions.
 
+### <a id='log-cache'></a> Log Cache
+
+Log Cache is intended as an ephemeral in-memory store of logs/metrics. Operators typically scale Log Cache to ensure that at least 15 minutes of
+logs and metrics are available. We recommend scaling Log Cache when the `log_cache_cache_period` metric drops below 900000 milliseconds.
+
 For more information about scaling the Loggregator system,
 see [Scaling Loggregator](../running/managing-cf/logging-config.html#scaling) in _Configuring System Logging_.
 
