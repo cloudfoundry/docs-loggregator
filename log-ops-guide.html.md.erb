@@ -16,7 +16,7 @@ You can measure both the message throughput and message reliability rates of you
 
 ### <a id='throughput-rate'></a> Measuring Message Throughput
 
-To measure the message throughput of the Loggregator system, you can monitor the total number of egress messages from all Loggregator Agents on your platform using the `metron.egress` metric.
+To measure the message throughput of the Loggregator system, you can monitor the total number of egress messages from all Loggregator Agents in your deployment using the `metron.egress` metric.
 
 If you do not use a monitoring platform, you can measure the overall message throughput of your Loggregator system. To measure the overall message throughput:
 
@@ -72,8 +72,8 @@ In addition, Traffic Controller resources can require scaling to accommodate the
 
 ### <a id='log-cache'></a> Log Cache
 
-Log Cache is intended as an ephemeral in-memory store of logs/metrics. Operators typically scale Log Cache to ensure that at least 15 minutes of
-logs and metrics are available. We recommend scaling Log Cache when the `log_cache_cache_period` metric drops below 900000 milliseconds.
+Log Cache is an ephemeral in-memory store of logs and metrics. Operators scale Log Cache to make sure that at least 15 minutes of
+logs and metrics are available at a time. <%= vars.recommended_by %> recommends scaling Log Cache when the `log_cache_cache_period` metric drops below 900000 milliseconds.
 
 For more information about scaling the Loggregator system,
 see [Scaling Loggregator](../running/managing-cf/logging-config.html#scaling) in _Configuring System Logging_.
