@@ -12,11 +12,12 @@ This topic describes app log rate limiting for apps in <%= vars.app_runtime_full
 In <%= vars.app_runtime_abbr %>, you can limit the number of log lines each app instance can
 generate per second by configuring <%= vars.app_rate_log_limit_config %>.
 
-App log rate limiting is disabled by default. Enabling this feature prevents app instances
+App log rate limiting is disabled by default. <%= vars.company_name %> recomends enabling this feature to prevent app instances
 from overloading the Loggregator Agent with logs, so the Loggregator Agent does not drop logs
-for other app instances on the same Diego Cell. Enabling this feature also prevents apps from
-reporting inaccurate app metrics in the Cloud Foundry Command Line Interface (cf CLI) or
-increasing the CPU usage on the Diego Cell VM.
+for other app instances on the same Diego Cell. Enabling this feature can also prevent apps from
+reporting inaccurate app metrics in the Cloud Foundry Command Line Interface (cf CLI) which can happen
+if Log Cache evicts metrics from the cache in order to store large volumes of logs. It also can
+limit the CPU usage of logging agents on the Diego Cell VM.
 
 <% if not vars.platform_code == "CF" %>
 <%= vars.app_rate_log_limit_config_procedure %>
@@ -27,7 +28,8 @@ increasing the CPU usage on the Diego Cell VM.
 
 The ideal app logging rate for a deployment depends on characteristics such as VM sizes and
 the number and type of apps in <%= vars.app_runtime_abbr %>. <%= vars.company_name %> recommends
-using at minimum the default limit of `100` to avoid feedback latency.
+using at minimum the default limit of `100` as otherwise logs can be substantially delayed given the buffer size.
+
 
 When you enable app log rate limiting, Diego applies the rate limit to each app instance. For
 example, if there are five instances of an app running, Diego does not sum the logging rates
@@ -40,9 +42,12 @@ the rate limit.
 
 When an app instance exceeds the configured rate limit, Diego stores the app logs in a buffer
 and releases them into the logging stream at the per-second rate you configure through
-<%= vars.app_rate_log_limit_config %>.
+<%= vars.app_rate_log_limit_config %>. This buffer holds approximately 5Mb to 10Mb of logs. If an app's
+logs exceed the size of the buffer the log lines will be dropped before being forwarded off the Diego
+Cell. While there are app logs in the buffer a message indiciating the app is exceeding the rate limit
+will appear in the app log stream once per second.
 
-For more information about how the buffer that Diego uses stores and releases app logs, see
+For more information about how Diego rate limits app logs, see
 [package rate](https://godoc.org/golang.org/x/time/rate) in the Go documentation.
 
 
