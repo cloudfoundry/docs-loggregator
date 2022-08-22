@@ -3,6 +3,12 @@ title: App Log Rate Limiting
 owner: Logging and Metrics
 ---
 
+<p class="note warning"><strong>Warning:</strong> 
+Previously, Diego was placing logs into a buffer and releasing them in accordance with the log line limit that was set. 
+If the buffer overflowed, logs would be dropped. The new behavior is to immediately output logs without placing them into a buffer. 
+When the limit is reached, logs are dropped. This change makes the timestamps of logs match when they were actually output by the app.
+</p>
+
 This topic describes app log rate limiting for apps in <%= vars.app_runtime_full %>
 (<%= vars.app_runtime_abbr %>).
 
@@ -28,7 +34,7 @@ limit the CPU usage of logging agents on the Diego Cell VM.
 
 The ideal app logging rate for a deployment depends on characteristics such as VM sizes and
 the number and type of apps in <%= vars.app_runtime_abbr %>. <%= vars.company_name %> recommends
-using at minimum the default limit of `100` as otherwise logs can be substantially delayed given the buffer size.
+using at minimum the default limit of `100` lines/second.
 
 
 When you enable app log rate limiting, Diego applies the rate limit to each app instance. For
@@ -40,12 +46,9 @@ the rate limit.
 
 ## <a id='exceed-limit'></a> What Happens When App Instances Exceed the App Log Rate Limit
 
-When an app instance exceeds the configured rate limit, Diego stores the app logs in a buffer
-and releases them into the logging stream at the per-second rate you configure through
-<%= vars.app_rate_log_limit_config %>. This buffer holds approximately 5Mb to 10Mb of logs. If an app's
-logs exceed the size of the buffer the log lines will be dropped before being forwarded off the Diego
-Cell. While there are app logs in the buffer a message indiciating the app is exceeding the rate limit
-will appear in the app log stream once per second.
+When an app instance exceeds the configured rate limit, Diego will drop the app logs which exceed
+the per-second rate you configured through <%= vars.app_rate_log_limit_config %>. 
+When this happens, there will be a message indiciating that logs are being dropped.
 
 For more information about how Diego rate limits app logs, see
 [package rate](https://godoc.org/golang.org/x/time/rate) in the Go documentation.
