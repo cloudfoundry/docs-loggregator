@@ -19,7 +19,7 @@ This topic describes app log rate limiting for apps in <%= vars.app_runtime_full
 In <%= vars.app_runtime_abbr %>, you can limit the number of log lines each app instance can
 generate per second by configuring <%= vars.app_rate_log_limit_config %>.
 
-App log rate limiting is disabled by default. <%= vars.company_name %> recomends enabling this feature to prevent app instances
+App log rate limiting is disabled by default. <%= vars.company_name %> recommends enabling this feature to prevent app instances
 from overloading the Loggregator Agent with logs, so the Loggregator Agent does not drop logs
 for other app instances on the same Diego Cell. Enabling this feature can also prevent apps from
 reporting inaccurate app metrics in the Cloud Foundry Command Line Interface (cf CLI) which can happen
@@ -49,7 +49,7 @@ the rate limit.
 
 When an app instance exceeds the configured rate limit, Diego will drop the app logs which exceed
 the per-second rate you configured through <%= vars.app_rate_log_limit_config %>. 
-When this happens, there will be a message indiciating that logs are being dropped.
+When this happens, there will be a message indicating that logs are being dropped.
 
 For more information about how Diego rate limits app logs, see
 [package rate](https://godoc.org/golang.org/x/time/rate) in the Go documentation.
