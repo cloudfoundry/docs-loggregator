@@ -13,8 +13,7 @@ This topic describes app log rate limiting for apps in <%= vars.app_runtime_full
 
 ## <a id='overview'></a> Overview of App Log Rate Limiting
 
-In <%= vars.app_runtime_abbr %>, you can limit the number of bytes each app instance can
-generate per second by configuring <%= vars.app_rate_log_limit_config %>.
+Log rate limits are a feature that limits the number of logs that can be sent to an app.
 
 App log rate limiting is disabled by default. <%= vars.company_name %> recommends enabling this feature to prevent app instances
 from overloading the Loggregator Agent with logs, so the Loggregator Agent does not drop logs
@@ -22,6 +21,26 @@ for other app instances on the same Diego Cell. Enabling this feature can also p
 reporting inaccurate app metrics in the Cloud Foundry Command Line Interface (cf CLI) which can happen
 if Log Cache evicts metrics from the cache in order to store large volumes of logs. It also can
 limit the CPU usage of logging agents on the Diego Cell VM.
+
+Log rate limits can be enabled on a per-app basis in bytes/second (preferred) or globally in lines/second (deprecated).
+
+### <a id='overview-byte-limit'></a> App Log Rate Limiting in Bytes/Second
+
+In <%= vars.app_runtime_abbr %>, you can limit the number of bytes each app instance can
+generate per second.
+
+This setting can be specified on a per-app basis in the application manifest or using the CLI.
+In addition, the log rate limit can be enforced on an org or space level using quota plans,
+see [Creating and Modifying Quota Plans](../adminguide/quota-plans.html).
+
+### <a id='overview-line-limit'></a> Deprecated: Global Log Rate Limiting in Lines/Second
+
+This feature has been deprecated in favor of log rate limits in bytes/second.
+<%= vars.company_name %> recommends migrating to log rate limits in bytes/second.
+
+In <%= vars.app_runtime_abbr %>, you can limit the number of log lines each app instance can
+generate per second by configuring <%= vars.app_rate_log_limit_config %>. This is a global setting that
+will apply to all applications.
 
 <% if not vars.platform_code == "CF" %>
 <%= vars.app_rate_log_limit_config_procedure %>
@@ -57,7 +76,7 @@ The Diego Cell containing the app instance emits the `AppInstanceExceededLogRate
 counter metric when it exceeds the rate limit, similar to the following example:
 
 <pre class="terminal">
-origin:"rep" eventType:CounterEvent timestamp:1582582740243576212 deployment:"cf" job:"diego-cell" index:"0e98fd00-47b2-4589-94f0-385f78b3a04d" ip:"10.0.1.12" tags:&#60;key:"instance_id" value:"0e98fd00-47b2-4589-94f0-385f78b3a04d" > tags:&#60;key:"source_id" value:"rep" > counterEvent:&#60;name:"AppInstanceExceededLogRateLimitCount" delta:1 total:206 >
+origin:"rep" eventType:CounterEvent timestamp:1582582740243576212 deployment:"cf" job:"diego-cell" index:"0e98fd00-47b2-4589-94f0-385f78b3a04d" ip:"10.0.1.12" tags:<key:"instance_id" value:"0e98fd00-47b2-4589-94f0-385f78b3a04d" > tags:<key:"source_id" value:"rep" > counterEvent:<name:"AppInstanceExceededLogRateLimitCount" delta:1 total:206 >
 </pre>
 
 Each Diego Cell in a deployment has a unique `AppInstanceExceededLogRateLimitCount` counter.
