@@ -19,51 +19,51 @@ The following table describes all Diego container metrics:
     <th width=65%>Description</th>
     <th width=15%>Unit</th>
   </tr><tr>
-    <td><code>CpuPercentage</code></td>
+    <td><code>cpu</code></td>
     <td>CPU time used by AI as a percentage of a single CPU core.<br><br>
     This is usually no greater than <code>100% * the number of vCPUs on the host Diego cell</code>, but it may be more due to discrepancies in measurement timing.</td>
     <td><code>float64</code></td>
   </tr><tr>
-    <td><code>AbsoluteCPUEntitlement</code></td>
+    <td><code>absolute_entitlement</code></td>
     <td>CPU time that the AI was entitled to use.<br><br>
     At minimum, the CPU time that a Diego cell provides an AI is <code>min(app memory, 8 GB) * (Diego cell vCPUs/Diego cell memory) * 100%</code>.<br><br>
     The platform operator can provide the Diego cell <code>vCPUs/memory</code> ratio to developers.<br>
     If a Diego cell is not at capacity or if other workloads on it are idle, the cell can provide more than the minimum CPU.</td>
-    <td><code>uint64</code></td>
+    <td><code>float64</code></td>
   </tr><tr>
-    <td><code>AbsoluteCPUUsage</code></td>
+    <td><code>absolute_usage</code></td>
     <td>CPU time used by AI.<br><br>
-    <code>AbsoluteCPUUsage / AbsoluteCPUEntitlement</code> calculates a 0-100% range of AI usage per entitlement.</td>
+    <code>absolute_usage / absolute_entitlement</code> calculates a 0-100% range of AI usage per entitlement.</td>
+    <td><code>float64</code></td>
+  </tr><tr>
+    <td><code>memory</code></td>
+    <td>RAM memory used by AI, in bytes.</td>
     <td><code>uint64</code></td>
   </tr><tr>
-    <td><code>MemoryBytes</code></td>
-    <td>RAM memory used by AI, in MB.</td>
-    <td><code>uint64</code></td>
+    <td><code>memory_quota</code></td>
+    <td>RAM memory available, in bytes.</td>
+    <td><code>float64</code></td>
   </tr><tr>
-    <td><code>MemoryBytesQuota</code></td>
-    <td>RAM memory available, in GB.</td>
-    <td><code>uint64</code></td>
+    <td><code>disk</code></td>
+    <td>Disk space used by AI, in bytes.</td>
+    <td><code>float64</code></td>
   </tr><tr>
-    <td><code>DiskBytes</code></td>
-    <td>Disk space used by AI, in MB.</td>
-    <td><code>uint64</code></td>
+    <td><code>disk_quota</code></td>
+    <td>Disk space available, in bytes.</td>
+    <td><code>float64</code></td>
   </tr><tr>
-    <td><code>DiskBytesQuota</code></td>
-    <td>Disk space available, in GB.</td>
-    <td><code>uint64</code></td>
-  </tr><tr>
-    <td><code>ContainerAge</code></td>
+    <td><code>container_age</code></td>
     <td>Age of container, in nanoseconds.</td>
-    <td><code>uint64</code></td>
+    <td><code>float64</code></td>
   </tr>
 </table>
 
 **Loggregator v1**: Most of the container metrics are emitted in a `ContainerMetric` envelope.
-The `AbsoluteCPUEntitlement`, `AbsoluteCPUUsage`, and `ContainerAge` container metrics are emitted
+The `absolute_entitlement`, `absolute_usage`, and `container_age` container metrics are emitted
 as separate `ValueMetric` envelopes.
 
 **Loggregator v2**: All container metrics are emitted in gauge envelopes. The
-`AbsoluteCPUEntitlement`, `AbsoluteCPUUsage`, and `ContainerAge` container metrics are emitted in a
+`absolute_entitlement`, `absolute_usage`, and `container_age` container metrics are emitted in a
 separate envelope to the other container metrics.
 
 ## <a id="cf-cli"></a> Retrieve Container Metrics from the cf CLI
@@ -80,9 +80,9 @@ The command output lists Diego container metric values as follows:
 
 | Label in Output | Metrics listed, as described in [Diego Container Metrics](#container-metrics), above |
 |---|---|
-| `cpu` | `CpuPercentage` |
-| `memory` | `MemoryBytes` of `MemoryBytesQuota` |
-| `disk` | `DiskBytes` of `DiskBytesQuota` |
+| `cpu` | `cpu` |
+| `memory` | `memory` of `memory_quota` |
+| `disk` | `disk` of `disk_quota` |
 
 For example:
 
@@ -106,7 +106,7 @@ memory usage:   256M
 
 ### <a id="cf-app"></a> Retrieve CPU Entitlement Metrics (Experimental)
 
-To see app instance `AbsoluteCPUEntitlement` metrics from the command line:
+To see app instance `absolute_entitlement` metrics from the command line:
 
 1. Install the CPU Entitlement Plugin from [cpu-entitlement-plugin](https://github.com/cloudfoundry/cpu-entitlement-plugin) in GitHub.
 
