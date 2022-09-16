@@ -55,16 +55,25 @@ The following table describes all Diego container metrics:
     <td><code>container_age</code></td>
     <td>Age of container, in nanoseconds.</td>
     <td><code>float64</code></td>
+  </tr><tr>
+    <td><code>log_rate</code></td>
+    <td>Log rate used by AI, in bytes per second.</td>
+    <td><code>float64</code></td>
+  </tr><tr>
+    <td><code>log_rate_limit</code></td>
+    <td>Log rate available, in bytes per second.</td>
+    <td><code>float64</code></td>
   </tr>
+
 </table>
 
 **Loggregator v1**: Most of the container metrics are emitted in a `ContainerMetric` envelope.
-The `absolute_entitlement`, `absolute_usage`, and `container_age` container metrics are emitted
-as separate `ValueMetric` envelopes.
+The `absolute_entitlement`, `absolute_usage`, `container_age`, `log_rate` and `log_rate_limit`
+container metrics are emitted as separate `ValueMetric` envelopes.
 
 **Loggregator v2**: All container metrics are emitted in gauge envelopes. The
-`absolute_entitlement`, `absolute_usage`, and `container_age` container metrics are emitted in a
-separate envelope to the other container metrics.
+`absolute_entitlement`, `absolute_usage`, `container_age`, `log_rate` and `log_rate_limit`
+container metrics are emitted in separate envelopes to the other container metrics.
 
 ## <a id="cf-cli"></a> Retrieve Container Metrics from the cf CLI
 
@@ -92,16 +101,19 @@ Showing health and status for app dora-example in org o / space s as admin...
 
 name:              dora-example
 requested state:   started
-routes:            dora-example.bosh-lite.com
-last uploaded:     Fri 05 Apr 10:41:21 PDT 2019
+routes:            dora-example.example.com
+last uploaded:     Fri 16 Sep 01:38:32 UTC 2022
 stack:             cflinuxfs3
-buildpacks:        ruby
+buildpacks:
+	name             version   detect output   buildpack name
+	ruby_buildpack   1.8.58    ruby            ruby
 
 type:           web
+sidecars:
 instances:      1/1
-memory usage:   256M
-     state     since                  cpu    memory          disk          details
-#0   running   2019-04-05T17:41:31Z   0.4%   39.5M of 256M   89.9M of 1G
+memory usage:   1024M
+     state     since                  cpu    memory        disk          logging            details
+#0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
 </pre>
 
 ### <a id="cf-app"></a> Retrieve CPU Entitlement Metrics (Experimental)
