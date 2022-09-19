@@ -108,7 +108,7 @@ Using the `cf app APP_NAME` command for your application will show you what perc
 
 ### <a id="cf-app"></a> Retrieve CPU Entitlement Metrics
 
-The new metric shows the amount of CPU usage relative to your entitlement. 
+The new `AbsoluteCPUEntitlement` metric shows the amount of CPU usage relative to an app's entitlement. 
 
 To see app instance `AbsoluteCPUEntitlement` metrics from the command line:
 
@@ -130,9 +130,9 @@ Showing CPU usage against entitlement for app dora-example in org example-org / 
 ​
 </pre>
 
-### <a id="cf-app"></a> The CPU overentitlement plugin
+### <a id="cf-app"></a> The CPU Overentitlement Plugin
 
-The plugin shows when your app has been throttled which helps you forecast when to upscale.
+The CPU overentitlement plugin shows when an app has been throttled. This information helps determine if the app needs to be scaled.
 
 You can check all the so called bad applications in your organization by using the CPU overentitlement plugin and the `cf over-entitlement-instances` command.
 
