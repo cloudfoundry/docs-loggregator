@@ -134,6 +134,8 @@ Showing CPU usage against entitlement for app dora-example in org example-org / 
 
 The CPU overentitlement plugin shows when an app has been throttled. This information helps determine if the app needs to be scaled.
 
+The avarage usage from the CPU entitlement plugin is used to split the application into 2 groups - good and bad apps. Good apps are those that have an average CPU usage under 100% of their CPU entitlement, respectively bad apps are those whose average CPU usage exceeds 100% of their entitlements.
+
 You can check all the so called bad applications in your organization by using the CPU overentitlement plugin and the `cf over-entitlement-instances` command.
 
 1. Install the CPU Overentitlement Plugin from [cpu-entitlement-plugin](https://github.com/cloudfoundry/cpu-entitlement-plugin) in GitHub.
