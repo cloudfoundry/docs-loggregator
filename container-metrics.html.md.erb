@@ -1,17 +1,22 @@
 ---
-title:  Container Metrics
-owner: 
+title: Container Metrics
+owner:
 ---
 
-This topic describes the metrics that are emitted by all containers managed by <%= vars.app_runtime_first %> and its scheduling system, Diego.
+This topic describes the metrics that are emitted by all containers managed by <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) and its scheduling
+system, Diego.
 
-App metrics include the container metrics described below, plus any custom app metrics that developers create.
 
-## <a id="container-metrics"></a> Diego Container Metrics
+## <a id='overview'></a> Overview of Container Metrics
 
-Diego containers emit the following resource usage metrics for their app instance (AI).  Each metric is averaged over and emitted every 15 seconds.
+App metrics include the container metrics described below, as well as any custom app metrics that developers create.
 
-The following table describes all Diego container metrics:
+
+## <a id='container-metrics'></a> Diego Container Metrics
+
+Diego containers emit resource usage metrics for the app instance. Diego averages and emits each metric every 15 seconds.
+
+The following table describes the metrics that Diego containers emit:
 
 <table id='container-metrics' class="nice" >
   <tr>
@@ -20,121 +25,131 @@ The following table describes all Diego container metrics:
     <th width=15%>Unit</th>
   </tr><tr>
     <td><code>cpu</code></td>
-    <td>CPU time used by AI as a percentage of a single CPU core.<br><br>
-    This is usually no greater than <code>100% * the number of vCPUs on the host Diego cell</code>, but it may be more due to discrepancies in measurement timing.</td>
+    <td>The CPU time that an app instance has used, as a percentage of a single CPU core.
+      <br>
+      <br>
+      This value is usually no greater than <code>100% * the number of vCPUs on the host Diego cell</code>. However, discrepancies in measurement timing may
+      cause the value to be greater.</td>
     <td><code>float64</code></td>
   </tr><tr>
     <td><code>absolute_entitlement</code></td>
-    <td>CPU time that the AI was entitled to use.<br><br>
-    At minimum, the CPU time that a Diego cell provides an AI is <code>min(app memory, 8 GB) * (Diego cell vCPUs/Diego cell memory) * 100%</code>.<br><br>
-    The platform operator can provide the Diego cell <code>vCPUs/memory</code> ratio to developers.<br>
-    If a Diego cell is not at capacity or if other workloads on it are idle, the cell can provide more than the minimum CPU.</td>
+    <td>The amount of CPU time that a Diego Cell has allocated to an app instance.
+      <br>
+      <br>
+      At minimum, the CPU time that a Diego Cell allocates to an app instance is
+      <code>min(app memory, 8&nbsp;GB) * (Diego cell vCPUs/Diego cell memory) * 100%</code>. The operator of your <%= vars.app_runtime_abbr %> deployment can
+      provide the <code>vCPUs/memory</code> ratio of the Diego Cell to developers.
+      <br>
+      If a Diego Cell is not already working at capacity, or if other workloads on the Diego Cell are idle, the Diego Cell can allocate more than the minimum
+      amount of CPU time to an app instance.</td>
     <td><code>float64</code></td>
   </tr><tr>
     <td><code>absolute_usage</code></td>
-    <td>CPU time used by AI.<br><br>
-    <code>absolute_usage / absolute_entitlement</code> calculates a 0-100% range of AI usage per entitlement.</td>
+    <td>The CPU time that an app instance has used.
+      <br>
+      <br>
+      <code>absolute_usage / absolute_entitlement</code> calculates a 0-100% range of app instance usage per entitlement.</td>
     <td><code>float64</code></td>
   </tr><tr>
     <td><code>memory</code></td>
-    <td>RAM memory used by AI, in bytes.</td>
+    <td>The amount of RAM memory in bytes that an app instance has used.</td>
     <td><code>uint64</code></td>
   </tr><tr>
     <td><code>memory_quota</code></td>
-    <td>RAM memory available, in bytes.</td>
+    <td>The amount of RAM memory in bytes that is available for an app instance to use.</td>
     <td><code>float64</code></td>
   </tr><tr>
     <td><code>disk</code></td>
-    <td>Disk space used by AI, in bytes.</td>
+    <td>The amount of disk space in bytes that an app instance has used.</td>
     <td><code>float64</code></td>
   </tr><tr>
     <td><code>disk_quota</code></td>
-    <td>Disk space available, in bytes.</td>
+    <td>The amount of disk space in bytes that is available for an app instance to use.</td>
     <td><code>float64</code></td>
   </tr><tr>
     <td><code>container_age</code></td>
-    <td>Age of container, in nanoseconds.</td>
+    <td>The age in nanoseconds of the Diego container.</td>
     <td><code>float64</code></td>
   </tr><tr>
     <td><code>log_rate</code></td>
-    <td>Log rate used by AI, in bytes per second.</td>
+    <td>The current log rate in bytes per second for an app instance.</td>
     <td><code>float64</code></td>
   </tr><tr>
     <td><code>log_rate_limit</code></td>
-    <td>Log rate available, in bytes per second.</td>
+    <td>The log rate limit in bytes per second for an app instance.</td>
     <td><code>float64</code></td>
   </tr>
-
 </table>
 
-**Loggregator v1**: Most of the container metrics are emitted in a `ContainerMetric` envelope.
-The `absolute_entitlement`, `absolute_usage`, `container_age`, `log_rate` and `log_rate_limit`
-container metrics are emitted as separate `ValueMetric` envelopes.
+The way that Diego emits container metrics differs depending on the version of Loggregator used in your <%= vars.app_runtime_abbr %> deployment:
 
-**Loggregator v2**: All container metrics are emitted in gauge envelopes. The
-`absolute_entitlement`, `absolute_usage`, `container_age`, `log_rate` and `log_rate_limit`
-container metrics are emitted in separate envelopes to the other container metrics.
+* **Loggregator v1:** Diego emits most container metrics in a `ContainerMetric` envelope. Diego emits the `absolute_entitlement`, `absolute_usage`,
+`container_age`, `log_rate`, and `log_rate_limit` container metrics in `ValueMetric` envelopes.
 
-## <a id="cf-cli"></a> Retrieve Container Metrics from the cf CLI
+* **Loggregator v2:** Diego emits all container metrics in gauge envelopes. Diego emits the `absolute_entitlement`, `absolute_usage`, `container_age`,
+`log_rate`, and `log_rate_limit` container metrics in separate gauge envelopes from other container metrics.
 
-You can use Cloud Foundry command-line interface (cf CLI) commands to return container metrics.
 
-### <a id="cf-app"></a> Retrieve CPU, Memory, and Disk Metrics
+## <a id='cf-cli'></a> Retrieving Container Metrics Using the cf CLI
+
+You can retrieve container metrics using the Cloud Foundry Command Line Interface (cf CLI).
+
+To retrieve CPU, memory, and disk metrics for all instances of an app, see [Retrieve CPU, Memory, and Disk Metrics](#cpu-mem-disk) below.
+
+To retrieve CPU entitlement metrics for all instances of an app, see [Retrieve CPU Entitlement Metrics](#cpu-entitlement) below.
+
+### <a id='cpu-mem-disk'></a> Retrieve CPU, Memory, and Disk Metrics
 
 To retrieve CPU, memory, and disk metrics for all instances of an app:
 
-1. Run the command `cf app APP-NAME`.
+1. In a terminal window, run:
 
-The command output lists Diego container metric values as follows:
+    ```
+    cf app APP-NAME
+    ```
 
-| Label in Output | Metrics listed, as described in [Diego Container Metrics](#container-metrics), above |
-|---|---|
-| `cpu` | `cpu` |
-| `memory` | `memory` of `memory_quota` |
-| `disk` | `disk` of `disk_quota` |
+    <pre class='terminal'>
+    Showing health and status for app dora-example in org o / space s as admin...
 
-For example:
+    name:              dora-example
+    requested state:   started
+    routes:            dora-example.example.com
+    last uploaded:     Fri 16 Sep 01:38:32 UTC 2022
+    stack:             cflinuxfs3
+    buildpacks:
+    	name             version   detect output   buildpack name
+    	ruby_buildpack   1.8.58    ruby            ruby
 
-<pre class="terminal">
-$ cf app dora-example
-Showing health and status for app dora-example in org o / space s as admin...
+    type:           web
+    sidecars:
+    instances:      1/1
+    memory usage:   1024M
+         state     since                  cpu    memory        disk          logging            details
+    #0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
+    </pre>
 
-name:              dora-example
-requested state:   started
-routes:            dora-example.example.com
-last uploaded:     Fri 16 Sep 01:38:32 UTC 2022
-stack:             cflinuxfs3
-buildpacks:
-	name             version   detect output   buildpack name
-	ruby_buildpack   1.8.58    ruby            ruby
+### <a id='cpu-entitlement'></a> Retrieve CPU Entitlement Metrics
 
-type:           web
-sidecars:
-instances:      1/1
-memory usage:   1024M
-     state     since                  cpu    memory        disk          logging            details
-#0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
-</pre>
+<p class='note'><strong>Note:</strong> This feature is experimental.</p>
 
-### <a id="cf-app"></a> Retrieve CPU Entitlement Metrics (Experimental)
+To retrieve `absolute_entitlement` metrics for all instances of an app:
 
-To see app instance `absolute_entitlement` metrics from the command line:
+1. Install the CPU Entitlement Plugin from the [cpu-entitlement-plugin](https://github.com/cloudfoundry/cpu-entitlement-plugin) repository on GitHub.
 
-1. Install the CPU Entitlement Plugin from [cpu-entitlement-plugin](https://github.com/cloudfoundry/cpu-entitlement-plugin) in GitHub.
+1. In a terminal window, run:
 
-1. Run the command `cf cpu-entitlement APP-NAME`.
-
-For example:
-
-<pre class="terminal">
-$ cf cpu-entitlement dora-example
-Note: This feature is experimental.
-Showing CPU usage against entitlement for app dora-example in org example-org / space example-org-staging as dora@example.com ...
-​
-     avg usage   curr usage
-#0   1.62%       1.66%
-#1   2.93%       3.09%
-#2   2.51%       2.62%
-​
-</pre>
-
+    ```
+    cf cpu-entitlement APP-NAME
+    ```
+    Where `APP-NAME` is the name of the app.
+    <br>
+    <br>
+    The above command returns `absolute_entitlement` metrics for all instances of the app, similar to the following example:
+    <pre class='terminal'>
+    Showing CPU usage against entitlement for app dora-example in org example-org / space example-org-staging as dora@example.com ...
+    ​
+         avg usage   curr usage
+    #0   1.62%       1.66%
+    #1   2.93%       3.09%
+    #2   2.51%       2.62%
+    </pre>
