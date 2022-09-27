@@ -104,11 +104,11 @@ memory usage:   256M
 #0   running   2019-04-05T17:41:31Z   0.4%   39.5M of 256M   89.9M of 1G
 </pre>
 
-Using the `cf app APP_NAME` command for your application will show you what percentage of CPU the app is currently using relative to the total CPU on the host machine.
+The `cf app APP_NAME` command will show you what percentage of CPU the app is currently using relative to the total CPU on the host machine.
 
 ### <a id="cf-app"></a> Retrieve CPU Entitlement Metrics
 
-The new `AbsoluteCPUEntitlement` metric shows the amount of CPU usage relative to an app's entitlement. 
+The metric `AbsoluteCPUEntitlement` shows an app's CPU usage relative to an its entitlement.
 
 To see app instance `AbsoluteCPUEntitlement` metrics from the command line:
 
@@ -134,7 +134,7 @@ Showing CPU usage against entitlement for app dora-example in org example-org / 
 
 The CPU overentitlement plugin shows when an app has been throttled. This information helps determine if the app needs to be scaled.
 
-The avarage usage from the CPU entitlement plugin is used to split the application into 2 groups - good and bad apps. Good apps are those that have an average CPU usage under 100% of their CPU entitlement, respectively bad apps are those whose average CPU usage exceeds 100% of their entitlements.
+When [`experimental_cpu_throttling`](https://github.com/cloudfoundry/garden-runc-release/blob/dbe55cff0c883f36d4c3ccf56b903ae41ae0d7d8/jobs/garden/spec#L225-L227) is enabled then applications are split into 2 groups - good and bad apps. Good apps have an average CPU usage under 100% of their CPU entitlement. Bad apps have an average CPU usage that exceeds 100% of their entitlements.
 
 You can check all the so called bad applications in your organization by using the CPU overentitlement plugin and the `cf over-entitlement-instances` command.
 
