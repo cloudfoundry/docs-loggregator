@@ -20,8 +20,8 @@ The following table describes the metrics that Diego containers emit:
 
 <table id='container-metrics' class="nice" >
   <tr>
-    <th width=20%>Metric</th>
-    <th width=65%>Description</th>
+    <th width=27%>Metric</th>
+    <th width=58%>Description</th>
     <th width=15%>Unit</th>
   </tr><tr>
     <td><code>cpu</code></td>
@@ -107,7 +107,10 @@ To retrieve CPU, memory, and disk metrics for all instances of an app:
     ```
     cf app APP-NAME
     ```
-
+    Where `APP-NAME` is the name of the app.
+    <br>
+    <br>
+    The above command returns CPU, memory, and disk metrics for all instances of the app, similar to the following example:
     <pre class='terminal'>
     Showing health and status for app dora-example in org o / space s as admin...
 
@@ -125,7 +128,7 @@ To retrieve CPU, memory, and disk metrics for all instances of an app:
     instances:      1/1
     memory usage:   1024M
          state     since                  cpu    memory        disk          logging            details
-    #0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
+    &#35;0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
     </pre>
 
 ### <a id='cpu-entitlement'></a> Retrieve CPU Entitlement Metrics
@@ -149,7 +152,7 @@ To retrieve `absolute_entitlement` metrics for all instances of an app:
     Showing CPU usage against entitlement for app dora-example in org example-org / space example-org-staging as dora@example.com ...
     ​
          avg usage   curr usage
-    #0   1.62%       1.66%
-    #1   2.93%       3.09%
-    #2   2.51%       2.62%
+    &#35;0   1.62%       1.66%
+    &#35;1   2.93%       3.09%
+    &#35;2   2.51%       2.62%
     </pre>
