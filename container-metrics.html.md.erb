@@ -1,6 +1,6 @@
 ---
 title:  Container Metrics
-owner: 
+owner:
 ---
 
 This topic describes the metrics that are emitted by all containers managed by <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) and its scheduling
@@ -12,7 +12,7 @@ system, Diego.
 App metrics include the container metrics described below, as well as any custom app metrics that developers create.
 
 
-## <a id="container-metrics"></a> Diego Container Metrics
+## <a id='container-metrics'></a> Diego Container Metrics
 
 Diego containers emit resource usage metrics for the app instance. Diego averages and emits each metric every 15 seconds.
 
@@ -90,7 +90,7 @@ The way that Diego emits container metrics differs depending on the version of L
 `log_rate`, and `log_rate_limit` container metrics in separate gauge envelopes from other container metrics.
 
 
-## <a id="cf-cli"></a> Retrieve Container Metrics from the cf CLI
+## <a id='cf-cli'></a> Retrieve Container Metrics from the cf CLI
 
 You can retrieve container metrics using the Cloud Foundry Command Line Interface (cf CLI).
 
@@ -98,7 +98,9 @@ To retrieve CPU, memory, and disk metrics for all instances of an app, see [Retr
 
 To retrieve CPU entitlement metrics for all instances of an app, see [Retrieve CPU Entitlement Metrics](#cpu-entitlement) below.
 
-### <a id="cf-mem-disk"></a> Retrieve CPU, Memory, and Disk Metrics
+To determine when an app has exceeded its CPU entitlement, see [Monitor Apps That Exceed Their CPU Entitlement](#cpu-entitlement) below.
+
+### <a id='cf-mem-disk'></a> Retrieve CPU, Memory, and Disk Metrics
 
 To retrieve CPU, memory, and disk metrics for all instances of an app:
 
@@ -130,18 +132,19 @@ To retrieve CPU, memory, and disk metrics for all instances of an app:
          state     since                  cpu    memory        disk          logging            details
     &#35;0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
     </pre>
+    <p class='note'><strong>Note:</strong> The above command shows what percentage of CPU the app is currently using relative to the total CPU on the host
+      machine.</p>
 
-The `cf app APP_NAME` command will show you what percentage of CPU the app is currently using relative to the total CPU on the host machine.
+### <a id='cf-entitlement'></a> Retrieve CPU Entitlement Metrics
 
-### <a id="cf-entitlement"></a> Retrieve CPU Entitlement Metrics
-
-The metric `absolute_entitlement` shows an app's CPU usage relative to an its entitlement.
+The `absolute_entitlement` metric shows the amount of CPU an app is using relative to its CPU entitlement.
 
 To retrieve `absolute_entitlement` metrics for all instances of an app:
 
-1. Install the CPU Entitlement Plugin from [cpu-entitlement-plugin](https://github.com/cloudfoundry/cpu-entitlement-plugin) in GitHub.
+1. Install the Cloud Foundry CPU Entitlement Plugin from the [Cloud Foundry CPU Entitlement Plugin](https://github.com/cloudfoundry/cpu-entitlement-plugin)
+repository on GitHub.
 
-2. In a terminal window, run:
+1. In a terminal window, run:
 
     ```
     cf cpu-entitlement APP-NAME
@@ -159,33 +162,35 @@ To retrieve `absolute_entitlement` metrics for all instances of an app:
     &#35;2   2.51%       2.62%
     </pre>
 
-### <a id="cf-app"></a> The CPU Overentitlement Plugin
+### <a id='cpu-entitlement'></a> Monitor Apps That Exceed Their CPU Entitlement
 
-The CPU overentitlement plugin shows when an app has been throttled. This information helps determine if the app needs to be scaled.
+You can use the Cloud Foundry CPU Entitlement Plugin to determine when an app has exceeded its CPU entitlement and may need to be scaled up.
 
-When [`experimental_cpu_throttling`](https://github.com/cloudfoundry/garden-runc-release/blob/dbe55cff0c883f36d4c3ccf56b903ae41ae0d7d8/jobs/garden/spec#L225-L227) is enabled then applications are split into 2 groups - good and bad apps. Good apps have an average CPU usage under 100% of their CPU entitlement. Bad apps have an average CPU usage that exceeds 100% of their entitlements.
+When you allow CPU throttling in your <%= vars.app_runtime_abbr %> deployment, apps are split into two groups:
 
-You can check all the so called bad applications in your organization by using the CPU overentitlement plugin and the `cf over-entitlement-instances` command.
+* Apps with an average CPU usage under 100% of their CPU entitlement
 
-1. Install the CPU Overentitlement Plugin from [cpu-entitlement-plugin](https://github.com/cloudfoundry/cpu-entitlement-plugin) in GitHub.
+* Apps with an average CPU usage that exceeds 100% of their entitlements
 
-2. In a terminal window, run:
+To determine which apps in your org have exceeded their CPU entitlements:
+
+1. Install the Cloud Foundry CPU Entitlement Plugin from the [Cloud Foundry CPU Entitlement Plugin](https://github.com/cloudfoundry/cpu-entitlement-plugin)
+repository on GitHub.
+
+1. In a terminal window, run:
 
   ```
   cf over-entitlement-instances
   ```
-  <br>
-  <br>
-  <pre class="terminal">
-  $ cf over-entitlement-instances
+  The above command returns output similar to the following example:
+  <pre class='terminal'>
   Note: This feature is experimental.
   Showing over-entitlement apps in org example-org / space example-org-staging as dora@example.com ...
   ​
        space                     app
-  #0   example-org-staging       dora-example-2     
-  #1   example-org-staging       dora-example-3
-  #2   example-org-staging       dora-example-4
-  ​
+  &#35;0   example-org-staging       dora-example-2
+  &#35;1   example-org-staging       dora-example-3
+  &#35;2   example-org-staging       dora-example-4
   </pre>
-
-This shows that these 3 applications have an average CPU usage that exceeds 100% of their entitlements. Operators should consider increasing the CPU entitlement for these applications to ensure that they won't be throttled.
+  The above example output shows that the three listed apps have an average CPU usage that exceeds 100% of their entitlements. When an app's average CPU usage
+  exceeds its CPU entitlement, consider increasing their CPU entitlement to ensure that they do not become throttled.
