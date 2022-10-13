@@ -33,7 +33,7 @@ In <%= vars.app_runtime_abbr %>, you can limit the number of bytes each app inst
 
 You can configure app log rate limiting in bytes per second on a per-app basis through either the app manifest or the cf CLI. Additionally, you can enforce
 the log rate limit you configure for all apps that are deployed within a space or org by specifying the log rate limit in the quota plan for the space or org.
-<% if vars.platform_code == 'CF' %>For more information, see [Creating and Modifying Quota Plans](../adminguide/quota-plans.html).<% end %>
+<% if not vars.platform_code == "OFFLINE" %>For more information, see [Creating and Modifying Quota Plans](../adminguide/quota-plans.html).<% end %>
 
 ### <a id='overview-line-limit'></a> Global Log Rate Limiting in Lines Per Second
 
