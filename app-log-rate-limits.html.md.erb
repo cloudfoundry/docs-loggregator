@@ -3,9 +3,9 @@ title: App Log Rate Limiting
 owner: Logging and Metrics
 ---
 
-<p class="note warning"><strong>Warning:</strong>
-Previously, Diego was placing logs into a buffer and releasing them in accordance with the log line limit that was set.
-If the limit is exceed, logs would be delayed. If the buffer overflowed, logs would be dropped. The new behavior is to
+<p class="note caution"><strong>Warning:</strong>
+Previously, Diego placed logs into a buffer and released them in accordance with the log line limit that was set.
+If the limit was exceeded, logs would be delayed. If the buffer overflowed, logs would be dropped. The new behavior is to
 immediately output logs without placing them into a buffer. When the limit is reached, logs are dropped. This change makes
 the timestamps of logs match when they were actually output by the app.
 </p>
