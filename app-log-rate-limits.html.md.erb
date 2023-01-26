@@ -25,7 +25,7 @@ reporting inaccurate app metrics in the Cloud Foundry Command Line Interface (cf
 if Log Cache evicts metrics from the cache in order to store large volumes of logs. It also can
 limit the CPU usage of logging agents on the Diego Cell VM.
 
-<% if not vars.platform_code == "CF" %>
+<% if vars.platform_code != "CF" %>
 <%= vars.app_rate_log_limit_config_procedure %>
 <% end %>
 
