@@ -130,7 +130,7 @@ The table below describes the data included in logs and metrics from each source
 		<td>
 			<ul>
 				<li>Container metrics<sup>3</sup></li>
-				<% if not vars.platform_code == 'CF' %>
+				<% if vars.platform_code != 'CF' %>
 				<li>Custom app metrics<sup>4</sup></li>
 				<% end %>
 			</ul>
@@ -206,7 +206,7 @@ and metrics:
           Firehose Plugin for CLI</a>.</li>
 				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">
           Cloud Foundry Community cf CLI Plugins</a>.</li>
-				<% if not vars.platform_code == 'CF' %>
+				<% if vars.platform_code != 'CF' %>
 				<li><%= vars.platform_metric_tool_ref %></li>
 				<% end %>
 			</ul>
@@ -219,7 +219,7 @@ and metrics:
 			<ul>
 				<li>cf CLI cf logs command. See <a href="https://cli.cloudfoundry.org/en-US/cf/logs.html">
           Cloud Foundry CLI Reference Guide.</a></li>
-				<% if not vars.platform_code == 'CF' %>
+				<% if vars.platform_code != 'CF' %>
 				<li><%= vars.manage_apps_service_instances_ref %></li>
 				<% end %>
 				<li><%= vars.syslog_forwarding_ref %></li>
@@ -236,7 +236,7 @@ and metrics:
           Firehose Plugin for CLI</a>.</li>
 				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">
           Cloud Foundry Community cf CLI Plugins</a>.</li>
-				<% if not vars.platform_code == 'CF' %>
+				<% if vars.platform_code != 'CF' %>
 				<li><%= vars.metrics_product_ref %></li>
 				<% end %>
 			</ul>
