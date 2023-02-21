@@ -99,7 +99,7 @@ Where `BOSH-ENVIRONMENT` is the alias that you set for your BOSH Director.
 
 For example:
 
-<pre class='terminal'>
+<pre class="terminal">
 $ bosh -e dev deploy
 Acting as user 'admin' on deployment 'cf-warden' on 'Bosh Lite Director'
 Getting deployment properties from director...
@@ -161,7 +161,7 @@ To clone the example nozzle release:
 	 git submodule update --init --recursive
     ```
 	 For example:
-    <pre class='terminal'>
+    <pre class="terminal">
     $ git submodule update --init --recursive
     Submodule 'src/github.com/cloudfoundry-incubator/example-nozzle' (<span>git@</span>github.com:cloudfoundry-incubator/example-nozzle.git) registered for path 'src/github.com/cloudfoundry-incubator/example-nozzle'
     Submodule 'src/github.com/cloudfoundry-incubator/uaago' (<span>git@</span>github.com:cloudfoundry-incubator/uaago.git) registered for path 'src/github.com/cloudfoundry-incubator/uaago'
@@ -241,7 +241,7 @@ Where:
 deployment manifest.
 
 For example:
-<pre class='terminal'>
+<pre class="terminal">
 $ bosh -e dev create-release --name example-nozzle
 Syncing blobs...
 ...
@@ -260,7 +260,7 @@ bosh -e BOSH-ENVIRONMENT upload-release
 Where `BOSH-ENVIRONMENT` is the alias that you set for your BOSH Director.
 
 For example:
-<pre class='terminal'>
+<pre class="terminal">
 $ bosh -e dev upload-release
 Acting as user 'admin' on 'Bosh Lite Director'<br>
 Copying packages
@@ -299,7 +299,7 @@ bosh -e BOSH-ENVIRONMENT deploy
 Where `BOSH-ENVIRONMENT` is the alias that you set for your BOSH Director.
 
 For example:
-<pre class='terminal'>
+<pre class="terminal">
 $ bosh -e dev deploy
 Acting as user 'admin' on deployment 'example-nozzle-lite' on 'Bosh Lite Director'
 Getting deployment properties from director...
@@ -325,7 +325,7 @@ To view nozzle output:
     bosh -e BOSH-ENVIRONMENT ssh
     ```
     Where `BOSH-ENVIRONMENT` is the alias that you set for your BOSH Director. For example:
-    <pre class='terminal'>
+    <pre class="terminal">
     $ bosh -e dev ssh example-nozzle
     Welcome to Ubuntu 14.04.1 LTS (GNU/Linux 3.19.0-25-generic x86_64)
     Documentation: <span>https<span>://help.ubuntu.com/
@@ -334,7 +334,7 @@ To view nozzle output:
 
 1. Use the `cat` command to output the `stdout` log file.
 
-    <pre class='terminal'>
+    <pre class="terminal">
     $ cat /var/vcap/sys/log/example-nozzle/example-nozzle.stdout.log
     ===== Streaming Firehose (will only succeed if you have admin credentials)
     origin:"bosh-system-metrics-forwarder" eventType:ValueMetric timestamp:1541091851000000000 deployment:"cf-c42ae2c4dfb6f67b6c27" job:"loggregator_trafficcontroller" index:"d1dffe15-5894-44de-b7f0-ad43161a0a7b" ip:"" tags:&gt;key:"id" value:"d1dffe15-5894-44de-b7f0-ad43161a0a7b" > tags:&gt;key:"source_id" value:"bosh-system-metrics-forwarder" > valueMetric:&gt;"system.swap.percent" value:0 unit:"Percent" >
