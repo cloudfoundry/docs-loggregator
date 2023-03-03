@@ -72,7 +72,7 @@ When an app instance exceeds the log rate limit, the Diego Cell containing the a
 similar to the following example:
 
 <pre class="terminal">
-origin:"rep" eventType:CounterEvent timestamp:1582582740243576212 deployment:"cf" job:"diego-cell" index:"0e98fd00-47b2-4589-94f0-385f78b3a04d" ip:"10.0.1.12" tags:<key:"instance_id" value:"0e98fd00-47b2-4589-94f0-385f78b3a04d" > tags:<key:"source_id" value:"rep" > counterEvent:<name:"AppInstanceExceededLogRateLimitCount" delta:1 total:206 >
+origin:"rep" eventType:CounterEvent timestamp:1582582740243576212 deployment:"cf" job:"diego-cell" index:"0e98fd00-47b2-4589-94f0-385f78b3a04d" ip:"10.0.1.12" tags:&#60;key:"instance_id" value:"0e98fd00-47b2-4589-94f0-385f78b3a04d" > tags:&#60;key:"source_id" value:"rep" > counterEvent:<name:"AppInstanceExceededLogRateLimitCount" delta:1 total:206 >
 </pre>
 
 Each Diego Cell in a deployment has a unique `AppInstanceExceededLogRateLimitCount` counter. The `total` value of the counter is the sum total of all app
