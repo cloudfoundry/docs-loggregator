@@ -23,9 +23,11 @@ To access metrics using the Log Cache plugin:
     cf login -a API-URL -u USERNAME -p PASSWORD
     ```
     Where:
-    * `API-URL` is your API endpoint.
-    * `USERNAME` is your username.
-    * `PASSWORD` is your password.
+    <ul>
+    <li><code>API-URL</code> is your API endpoint.</li>
+    <li><code>USERNAME</code> is your username.</li>
+    <li><code>PASSWORD</code> is your password.</li>
+    </ul>
 
 1. Install the Log Cache CLI plugin by running:
 
@@ -41,8 +43,10 @@ To access metrics using the Log Cache plugin:
     cf query 'METRIC-NAME{source_id="SOURCE-ID"}'
     ```
     Where:
-    * `METRIC-NAME` is the name of the metric you want to view.
-    * `SOURCE-ID` is the source ID of the component for which you want to view metrics.
+    <ul>
+    <li><code>METRIC-NAME</code> is the name of the metric you want to view.</li>
+    <li><code>SOURCE-ID</code> is the source ID of the component for which you want to view metrics.</li>
+    </ul>
     <br>
     <br>
     To find the source ID and metric name of the metric you want to view, <%= vars.find_metric_name_source_id %>.
@@ -57,9 +61,11 @@ To access metrics using the Firehose plugin:
     cf login -a API-URL -u USERNAME -p PASSWORD
     ```
     Where:
-    * `API-URL` is your API endpoint.
-    * `USERNAME` is your username.
-    * `PASSWORD` is your password.
+    <ul>
+    <li><code>API-URL</code> is your API endpoint.</li>
+    <li><code>USERNAME</code> is your username.</li>
+    <li><code>PASSWORD</code> is your password.</li>
+    </ul>
 
 1. Install the Firehose cf CLI plugin by running:
 
@@ -75,8 +81,10 @@ To access metrics using the Firehose plugin:
     cf nozzle -no-filter | grep SOURCE-ID | grep -i METRIC-NAME
     ```
     Where:
-    * `METRIC-NAME` is the name of the metric you want to view.
-    * `SOURCE-ID` is the source ID of the component for which you want to view metrics.
+    <ul>
+    <li><code>METRIC-NAME</code> is the name of the metric you want to view.</li>
+    <li><code>SOURCE-ID</code> is the source ID of the component for which you want to view metrics.</li>
+    </ul>
     <br>
     <br>
     For example:
