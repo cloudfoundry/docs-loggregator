@@ -21,7 +21,7 @@ Logs and metrics are sent from VMs via the following process:
   1. Applications and components on the system emit logs and metrics.
   2. Logs and metrics pass through two forwarders:
     * rsyslog, which sends platform logs in Syslog RFC5424 format.
-    * The Forwarder Agent, which sends metrics and application logs to three agents (see above).
+    * The Forwarder Agent, which sends metrics and application logs to three agents.
   3. Metrics and application logs are sent through each of the following:
     * The Syslog Agent sends application logs in Syslog RFC5424 format to aggregate and application log destinations.
     * The Metrics Agent exposes metrics for Prometheus-style scraping.
