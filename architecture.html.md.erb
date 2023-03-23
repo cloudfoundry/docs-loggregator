@@ -5,7 +5,6 @@ owner: Logging and Metrics
 
 This topic provides architecture diagrams of the components that collect, store, and forward logs and metrics in your <%= vars.app_runtime_first %> deployment.
 
-
 ## <a id='overview'></a> Overview of Logging and Metrics Architecture
 
 Logging and metrics architecture includes components that transport logs and metrics from your <%= vars.app_runtime_abbr %> deployment to destinations such as the Cloud Foundry Command-Line Interface (cf CLI), monitoring tools, or internal system components.
@@ -13,7 +12,6 @@ Logging and metrics architecture includes components that transport logs and met
 Depending on the configuration of your <%= vars.app_runtime_abbr %> deployment, your <%= vars.app_runtime_abbr %> deployment uses either a Loggregator Firehose architecture or a shared-nothing architecture.
 
 In addition to the components in these architectures, you can also use a System Metrics Agents architecture on a Loggregator deployment to collect metrics from system components and expose them on Prometheus-scrapable endpoints.
-
 
 ## <a id='architecture-references'></a> Architecture Reference Diagrams
 
@@ -29,22 +27,21 @@ You can use these diagrams to:
 
 This section includes the following diagrams:
 
-* Loggregator Firehose architecture. For more information, see [Loggregator Firehose Architecture](#firehose-architecture) below.
+* Loggregator Firehose architecture. For more information, see [Loggregator Firehose Architecture](#firehose-architecture).
 
-* Shared-nothing architecture. For more information, see [Shared-Nothing Architecture](#shared-nothing-architecture) below.
+* Shared-nothing architecture. For more information, see [Shared-Nothing Architecture](#shared-nothing-architecture).
 
-* System Metrics Agents architecture. For more information, see [System Metrics Agents Architecture](#system-metrics-agents) below.
+* System Metrics Agents architecture. For more information, see [System Metrics Agents Architecture](#system-metrics-agents).
 
 ### <a id='firehose-architecture'></a> Loggregator Firehose Architecture
 <a id='loggregator-architecture'></a>
 
-The following diagram shows how logs and metrics are transported from components and apps on your deployment to Loggregator Firehose consumers, such as nozzles, monitoring tools, or third-party software.
-
-![](images/architecture/firehose-reference.png)
+The following diagram shows how logs and metrics are transported from components and apps on your deployment to Loggregator Firehose consumers, such as nozzles, monitoring tools, or third party software.
+![alt-text="How logs and metrics are transported. "](./images/architecture/firehose-reference.png)
 
 [View a larger version of this image.](images/architecture/firehose-reference.png)
 
-The following components are included in the Loggregator Firehose architecture, as shown in the diagram above:
+The following components are included in the Loggregator Firehose architecture, as shown in the previous diagram:
 
 * **Prom Scraper:** Prom Scrapers run on both component VMs and Diego Cell VMs. They aggregate metrics from components located on those VMs through Prometheus exposition. Prom Scrapers then forward the metrics to Forwarder Agents.
 
@@ -56,7 +53,7 @@ The following components are included in the Loggregator Firehose architecture, 
 
 * **Doppler:** Dopplers receive logs and metrics from Loggregator Agents, store them in temporary buffers, and forward them to Traffic Controllers and Reverse Log Proxies.
 
-* **Traffic Controller:** Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. It services the Firehose Endpoint, also known as the V1 Firehose. The Firehose cf CLI plugin allows you to view the output of the Firehose. For more information about the Firehose plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](cli-plugin.html).
+* **Traffic Controller:** Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. It services the Firehose Endpoint, also known as the V1 Firehose. The Firehose cf CLI plug-in allows you to view the output of the Firehose. For more information about the Firehose plug-in, see [Installing the Loggregator Firehose Plugin for cf CLI](cli-plugin.html).
 
 * **Reverse Log Proxy (V2 Firehose):** Reverse Log Proxies (RLPs) collect logs and metrics from Dopplers and forward them to Log Cache and other consumers over gRPC. Operators can scale up the number of RLPs based on overall log volume.
 
@@ -66,19 +63,19 @@ The following components are included in the Loggregator Firehose architecture, 
 
 * **Log Cache Syslog Server:** The Log Cache Syslog Server receives logs and metrics from Syslog Agents and sends them to Log Cache.
 
-### <a id='shared-nothing-architecture'></a> Shared-Nothing Architecture
+### <a id='shared-nothing-architecture'></a> Shared Nothing Architecture
 
-This section describes the components in the shared-nothing architecture that collect, store, and transport logs and metrics on your deployment.
+This section describes the components in the shared nothing architecture that collect, store, and transport logs and metrics on your deployment.
 
-Similar to the Loggregator Firehose Architecture, the shared-nothing architecture allows you to forward logs and metrics from your deployment to external and internal consumers.
+Similar to the Loggregator Firehose Architecture, the shared nothing architecture allows you to forward logs and metrics from your deployment to external and internal consumers.
 
-In contrast to the Loggregator Firehose architecture, logs and metrics to pass through fewer components in the shared-nothing architecture. For example, the shared-nothing architecture does not require the Forwarder Agent, Syslog Agent, or Metrics Agent.
+In contrast to the Loggregator Firehose architecture, logs and metrics pass through fewer components in the shared nothing architecture. For example, the shared nothing architecture does not require the Forwarder Agent, Syslog Agent, or Metrics Agent.
 
-![](./images/architecture/shared-nothing-reference.png)
+![alt-text="Shared nothing architecture does not require the Forwarder Agent, Syslog Agent, or Metrics Agent."](./images/architecture/shared-nothing-reference.png)
 
 [View a larger version of this image.](images/architecture/shared-nothing-reference.png)
 
-The following components are included in the shared-nothing Architecture, as shown in the diagram above:
+The following components are included in the shared-nothing Architecture, as shown in the previous diagram:
 
 * **Prom Scraper:** Prom Scrapers run on both <%= vars.app_runtime_abbr %> component VMs and Diego Cell VMs. They aggregate metrics from <%= vars.app_runtime_abbr %> components located on those VMs through Prometheus exposition. Prom Scrapers then forward those metrics to Forwarder Agents.
 
@@ -102,11 +99,11 @@ The following components are included in the shared-nothing Architecture, as sho
 
 The following diagram shows the architecture of a deployment that uses System Metrics Agents to collect VM and system-level metrics.
 
-![System Metrics Agent appear in squares that depict 'Host VMs'. Represented by arrows, the System Metrics Agents send VM system-level metrics to a System Metrics Scraper, which forwards these metrics to Loggregator Agents over mTLS. For more descriptions of all of the components in Loggregator, see the 'Loggregator Components' section below.](./images/architecture/system-metrics-agents.png)
+![alt-text="NSX-T Overview"](./images/architecture/system-metrics-agents.png)
 
 [View a larger version of this image.](./images/architecture/system-metrics-agents.png)
 
-The following describes the components of a Loggregator deployment that uses System Metrics Agents, as shown in the diagram above:
+The following describes the components of a Loggregator deployment that uses System Metrics Agents, as shown in the previous diagram:
 
 * **System Metrics Agent:** A standalone agent to provide VM system metrics using a Prometheus-scrapeable endpoint.
 
@@ -114,38 +111,40 @@ The following describes the components of a Loggregator deployment that uses Sys
 
 ## <a id='data-flow'></a> How Components Transport Logs and Metrics
 
-This section provides detailed descriptions of how the components in the Loggregator Firehose architecture and in the shared-nothing architecture transport logs and metrics on your deployment.
+This section provides detailed descriptions of how the components in the Loggregator Firehose architecture and in the shared nothing architecture transport logs and metrics on your deployment.
 
 It describes the transport of logs and metrics during the following phases:
 
-* How components in the logging and metrics architectures collect and forward metrics from VMs on your deployment. For more information, see [How Logs and Metrics Egress from VMs](#vms-egress) below.
+* How components in the logging and metrics architectures collect and forward metrics from VMs on your deployment. For more information, see [How Logs and Metrics Egress from VMs](#vms-egress).
 
-* How components in a Loggregator Firehose architecture collect and forward logs and metrics. For more information, see [How the Loggregator Firehose Forwards Logs and Metrics](#firehose) below.
+* How components in a Loggregator Firehose architecture collect and forward logs and metrics. For more information, see [How the Loggregator Firehose Forwards Logs and Metrics](#firehose).
 
-* How the logging and metrics architectures expose logs and metrics to consumers. For more information, see [How Consumers Receive Logs and Metrics](#consumers) below.
+* How the logging and metrics architectures expose logs and metrics to consumers. For more information, see [How Consumers Receive Logs and Metrics](#consumers).
 
-### <a id='vms-egress'></a> How Logs and Metrics Egress from VMs
+### <a id='vms-egress'></a> How Logs and Metrics egress from VMs
 
-The following describes the transport of logs and metrics from VMs through system components and to a destination:
+The following describes the transport of logs and metrics from VMs through system components to a destination:
 
   1. Apps and component VMs on your deployment emit logs and metrics.
   2. Logs and metrics pass through two forwarders:
-    * rsyslog. This sends logs from the component VMs in Syslog RFC 5424 format.
-    * The Forwarder Agent. This sends metrics and app logs to the Syslog Agent, the Metrics Agent, and the Loggregator Agent.
+  * rsyslog: This sends logs from the component VMs in Syslog RFC 5424 format.
+  * The Forwarder Agent: This sends metrics and app logs to the Syslog Agent, the Metrics Agent, and the Loggregator Agent.
   3. From the Forwarder Agent, logs and metrics then pass through each of the following agents:
-    * The Syslog Agent. This sends app logs in Syslog RFC 5424 format to aggregate and app log destinations.
-    * The Metrics Agent. This exposes metrics for Prometheus-style scraping.
-    * The Loggregator Agent. This sends metrics and app logs to the Loggregator Firehose. For more information about how logs and metrics flow through the Loggregator Firehose, see [How the Loggregator Firehose Forwards Logs and Metrics](#firehose) below.
+  * The Syslog Agent: This sends app logs in Syslog RFC 5424 format to aggregate and app log destinations.
+  * The Metrics Agent: This exposes metrics for Prometheus-style scraping.
+  * The Loggregator Agent: This sends metrics and app logs to the Loggregator Firehose.
 
-The following diagram shows the transport of logs and metrics from VMs on your deployment as described above:
+   For more information about how logs and metrics flow through the Loggregator Firehose, see [How the Loggregator Firehose Forwards Logs and Metrics](#firehose).
 
-![](./images/architecture/vms.png)
+The following diagram shows the transport of logs and metrics from VMs on your deployment:
 
-### <a id='firehose'></a> How the Loggregator Firehose Forwards Logs and Metrics
+![alt-text="Transport of logs and metrics from VMs on your deployment"](./images/architecture/vms.png)
+
+### <a id='firehose'></a> How the Loggregator Firehose forwards Logs and Metrics
 
 For deployments that use a Loggregator Firehose architecture, the Loggregator Agent forwards logs and metrics emitted by apps and component VMs on your deployment to the Loggregator Firehose.
 
-The following describes how the Loggregator Firehose sends logs and metrics through the V1 and V2 Firehose APIs:
+The following information describes how the Loggregator Firehose sends logs and metrics through the V1 and V2 Firehose APIs:
 
  1. The Loggregator Agent sends each log and metric to one Doppler. It distributes the logs and metrics among a random group of five Dopplers.
 
@@ -156,11 +155,10 @@ The following describes how the Loggregator Firehose sends logs and metrics thro
       * Reverse Log Proxies receive gRPC connections from V2 Firehose Consumers and send logs and metrics as V2 Envelopes. If a consumer falls behind, the envelopes are dropped.
       * Reverse Log Proxy Gateways (RLP Gateways) receive HTTP connections from V2 Firehose consumers, and send logs and metrics as JSON-encoded V2 Envelopes. Reverse Log Proxy Gateways connect to Reverse Log Proxies, rather than directly to Dopplers.
 
-The following diagram shows the flow of logs and metrics through the Loggregator Firehose as described above:
+The following diagram shows the flow of logs and metrics through the Loggregator Firehose as previously described:
+![alt-text="A Loggregator Agent appears inside a square labeled VMs. Loggregator Agents send to Dopplers, located on Doppler VMs. Dopplers, in turn, send to both Traffic Controllers and Reverse Log Proxies. V1 Firehose Consumers receive logs and metrics from Traffic Controllers, whereas V2 Firehose Consumers receive logs and metrics from Reverse Log Proxies. V2 Firehose Consumers can also receive logs and metrics from Reverse Log Proxy (RLP) Gateways."](./images/architecture/firehose.png)
 
-![A Loggregator Agent appears inside a square labeled VMs. Loggregator Agents send to Dopplers, located on Doppler VMs. Dopplers, in turn, send to both Traffic Controllers and Reverse Log Proxies. V1 Firehose Consumers receive logs and metrics from Traffic Controllers, whereas V2 Firehose Consumers receive logs and metrics from Reverse Log Proxies. V2 Firehose Consumers can also receive logs and metrics from Reverse Log Proxy (RLP) Gateways.](./images/architecture/firehose.png)
-
-### <a id='consumers'></a> How Consumers Receive Logs and Metrics
+### <a id='consumers'></a> How Consumers receive Logs and Metrics
 
 Consumers of logs and metrics include the Cloud Foundry Command Line Interface (cf CLI), Cloud Foundry web UIs such as Stratos, and any observability or monitoring product integrations.
 
@@ -174,19 +172,18 @@ Integrations with observability or monitoring products receive logs and metrics 
 
 The following diagram shows how consumers of logs and metrics receive logs and metrics from your deployment:
 
-![A Forwarder Agent appears inside a square labeled VMs. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent. Components also send logs to rsyslog, which then sends platform logs outside the system through syslog RFC 5424. The Forwarder Agent sends to three downstream consumers. The Syslog Agent sends app logs through syslog RFC 5424. The Metrics Agent exposes metrics through Prometheus endpoints. Finally, the Loggregator Agent sends metrics and app logs through syslog RFC 5424.](./images/architecture/consumers.png)
+![alt-text="A Forwarder Agent appears inside a square labeled VMs. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent. Components also send logs to rsyslog, which then sends platform logs outside the system through syslog RFC 5424. The Forwarder Agent sends to three downstream consumers. The Syslog Agent sends app logs through syslog RFC 5424. The Metrics Agent exposes metrics through Prometheus endpoints. Finally, the Loggregator Agent sends metrics and app logs through syslog RFC 5424."](./images/architecture/consumers.png)
 
+## <a id='bosh-metrics'></a> Related BOSH components
 
-## <a id='bosh-metrics'></a> Related BOSH Components
+This section describes the components that forward BOSH reported VM metrics to Loggregator. BOSH-reported VM metrics measure the health of BOSH-deployed VMs on which apps and components are deployed. Loggregator streams BOSH-reported VM metrics through the Firehose.
 
-This section describes the components that forward BOSH-reported VM metrics to Loggregator. BOSH-reported VM metrics measure the health of BOSH-deployed VMs on which apps and components are deployed. Loggregator streams BOSH-reported VM metrics through the Firehose.
-
-The following components send BOSH-reported VM metrics to Loggregator:
+The following components send BOSH reported VM metrics to Loggregator:
 
 * **BOSH Agent:** BOSH Agents are located on component VMs and Diego Cell VMs. They collect metrics, such as Diego Cell capacity remaining, from the VM and forward them to the BOSH Health Monitor.
 
 * **BOSH Health Monitor:** The BOSH Health Monitor receives metrics from the BOSH Agents. It then forwards the metrics to a third-party service or to the BOSH System Metrics Forwarder.
 
-* **BOSH System Metrics Plugin:** This plugin reads health events, such as VM heartbeats and alerts from the BOSH Health Monitor, and streams them to the System Metrics Agent.
+* **BOSH System Metrics Plugin:** This plug-in reads health events. For example, VM heartbeats and alerts from the BOSH Health Monitor, and streams them to the System Metrics Agent.
 
 * **BOSH System Metrics Forwarder:** The BOSH System Metrics Forwarder is located on the Loggregator Traffic Controller. It forwards heartbeat events from the System Metrics Agent as envelopes to Loggregator through a Loggregator Agent.

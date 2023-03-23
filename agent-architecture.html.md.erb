@@ -22,7 +22,7 @@ This section describes the components of the Log and Metric Agent Architecture t
 
 These components allow you to access the same metrics available through the Loggregator Firehose with a pull-based architecture. The Loggregator system uses a push-based model for forwarding metrics, in which all data is sent though the Firehose.
 
-The following components of the Log and Metric Agent Architecture enable pull-based access to metrics:
+The following components of the Log and Metric Agent Architecture activate pull based access to metrics:
 
 * **Metrics Agent**: <br>The Metrics Agent collects Loggregator V2 envelopes and makes them available on a Prometheus endpoint. The Metrics Agent performs a similar function to the Loggregator Agent in the Loggregator system.
 
@@ -36,7 +36,7 @@ This section describes the Log and Metric Agent Architecture components that all
 
 These components are also a part of the Loggregator system. For more information about how these components function as part of the Loggregator system, see [Loggregator Architecture](architecture.html).
 
-The following components of the Log and Metric Agent Architecture enable access to logs:
+The following components of the Log and Metric Agent Architecture activate access to logs:
 
 * **Syslog Agent**:<%= partial 'syslog_agents' %>
 

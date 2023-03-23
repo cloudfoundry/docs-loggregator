@@ -10,7 +10,7 @@ nozzle app for use with this tutorial.
 
 ## <a id='overview'></a> Overview
 
-The procedure described below deploys an example nozzle to the Firehose of a <%= vars.app_runtime_abbr %>
+The follolwing procedure deploys an example nozzle to the Firehose of a <%= vars.app_runtime_abbr %>
 installation deployed locally with BOSH Lite v2. For more information about BOSH Lite v2, see
 [VirtualBox BOSH Lite v2](https://bosh.io/docs/bosh-lite/) in the BOSH documentation.
 
@@ -20,7 +20,7 @@ metrics on an allow list. For examples, see `rlpreader` and `rlptypereader` in t
 [V2 Subscriptions](https://github.com/cloudfoundry/loggregator-release/blob/develop/docs/v2-subscriptions.md) in the
 Loggregator Relese repository in GitHub.
 
-<p class='note'><strong>Note:</strong> You can disable the Firehose. In place of the Firehose, you can configure an
+<p class='note'><strong>Note:</strong> You can deactivate the Firehose. In place of the Firehose, you can configure an
 aggregate log and metric drain for your foundation. <%= vars.configure_system_logging_link %></p>
 
 ## <a id='prerequisites'></a> Prerequisites
@@ -67,8 +67,8 @@ To add the nozzle as a UAA client for your deployment:
 
 1. Under the `uaa` key, locate the `clients` key at the next level of indentation.
 
-1. Enter properties for the `example-nozzle` at the next level of indentation, exactly as shown below. The `...` in the
-text below indicate other properties that might populate the manifest at each level in the hierarchy.
+1. Enter properties for the `example-nozzle` at the next level of indentation, exactly as shown. The `...` in the
+text indicates other properties that might populate the manifest at each level in the hierarchy.
 
     ```
     properties:
@@ -249,7 +249,7 @@ Syncing blobs...
 
 ## <a id='upload-nozzle-bosh-release'></a> Step 7: Upload Nozzle BOSH Release
 
-Upload the nozzle BOSH release that you created in [Step 6: Create Nozzle BOSH Release](#create-nozzle-bosh-release) above.
+Upload the nozzle BOSH release that you created in [Step 6: Create Nozzle BOSH Release](#create-nozzle-bosh-release).
 
 To upload the BOSH release, run:
 

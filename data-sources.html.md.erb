@@ -4,18 +4,18 @@ owner: Logging and Metrics
 ---
 
 This topic provides an overview of logging and metrics in <%= vars.app_runtime_full %>
-(<%= vars.app_runtime_abbr %>). It includes information about logs and metrics sources and
+(<%= vars.app_runtime_abbr %>). It includes information about logs and metrics sources, and
 transport systems. It also lists products for viewing logs and metrics.
 
 
 ## <a id="sources"></a> Accessing Metrics
 
-You must use a Cloud Foundry Command-Line Interface (cf CLI) plugin to access and view metrics
-directly from the command line. You can use either the Firehose plugin or the Log Cache plugin.
+You must use a Cloud Foundry Command-Line Interface (cf CLI) plug-in to access and view metrics
+directly from the command line. You can use either the Firehose plug-in or the Log Cache plug-in.
 
-### <a id='log-cache'></a> Access Metrics Using the Log Cache CLI Plugin
+### <a id='log-cache'></a> Access Metrics Using the Log Cache CLI Plug-in
 
-To access metrics using the Log Cache plugin:
+To access metrics using the Log Cache plug-in:
 
 1. Log in to the cf CLI by running:
 
@@ -29,13 +29,13 @@ To access metrics using the Log Cache plugin:
     <li><code>PASSWORD</code> is your password.</li>
     </ul>
 
-1. Install the Log Cache CLI plugin by running:
+1. Install the Log Cache CLI plug-in by running:
 
     ```
-    cf install-plugin -r CF-Community "log-cache"
+    cf install-plug-in -r CF-Community "log-cache"
     ```
     For more information, see [log-cache](https://plugins.cloudfoundry.org/#log-cache) in _cf
-    CLI Plugins_ on the Cloud Foundry website.
+    CLI Plug-ins_ on the Cloud Foundry website.
 
 1. Run:
 
@@ -49,9 +49,9 @@ To access metrics using the Log Cache plugin:
     </ul>
     To find the source ID and metric name of the metric you want to view, <%= vars.find_metric_name_source_id %>.
 
-### <a id='cf-nozzle'></a> Access Metrics Using the Firehose Plugin
+### <a id='cf-nozzle'></a> Access Metrics Using the Firehose Plug-in
 
-To access metrics using the Firehose plugin:
+To access metrics using the Firehose plug-in:
 
 1. Log in to the cf CLI by running:
 
@@ -65,13 +65,13 @@ To access metrics using the Firehose plugin:
     <li><code>PASSWORD</code> is your password.</li>
     </ul>
 
-1. Install the Firehose cf CLI plugin by running:
+1. Install the Firehose cf CLI plug-in by running:
 
     ```
     cf install-plugin -r CF-Community "Firehose Plugin"
     ```
-    For more information, see [Firehose Plugins](https://plugins.cloudfoundry.org/#Firehose%20Plugin)
-    in _cf CLI Plugins_ on the Cloud Foundry website.
+    For more information, see [Firehose Plug-ins](https://plugins.cloudfoundry.org/#Firehose%20Plugin)
+    in _cf CLI Plug-ins_ on the Cloud Foundry website.
 
 1. Run:
 
@@ -102,13 +102,13 @@ For more information about nozzles, <%= vars.nozzle_info_link %>.
 
 ## <a id="sources"></a> Sources of Logs and Metrics
 
-There are two sources of <%= vars.app_runtime_abbr %> logs and metrics:
+The following sources are for <%= vars.app_runtime_abbr %> logs and metrics:
 
  * <%= vars.app_runtime_abbr %> platform components, such as a Diego Cell, MySQL Server, or
  Cloud Controller
  * Apps and app containers deployed on <%= vars.app_runtime_abbr %>
 
-The table below describes the data included in logs and metrics from each source:
+The following table describes the data included in logs and metrics from each source:
 
 <table>
 	<tr>
@@ -167,7 +167,7 @@ and components, see [Loggregator Architecture](architecture.html).
 for <%= vars.app_runtime_abbr %> component logs. Users can configure rsyslogd to transport
 component logs to a third-party syslog server.
 
-The table below lists the transport system for logs and metrics on <%= vars.app_runtime_abbr %>
+The following table lists the transport system for logs and metrics on <%= vars.app_runtime_abbr %>
 platform components and apps:
 
 <table>
@@ -191,7 +191,7 @@ platform components and apps:
 
 ## <a id="viewing"></a> Viewing Logs and Metrics
 
-The table below lists the products and tools for viewing <%= vars.app_runtime_abbr %> logs
+The following table lists the products and tools for viewing <%= vars.app_runtime_abbr %> logs
 and metrics:
 
 <table>
@@ -207,10 +207,10 @@ and metrics:
 		<td valign="top">
 			You can use the following products or tools to view platform component and VM metrics:
 			<ul>
-				<li>Loggregator Firehose CLI Plugin. See <a href="cli-plugin.html">Installing the Loggregator
-          Firehose Plugin for CLI</a>.</li>
-				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">
-          Cloud Foundry Community cf CLI Plugins</a>.</li>
+				<li>Loggregator Firehose CLI Plug in. See <a href="cli-plugin.html">Installing the Loggregator
+          Firehose Plug-in for CLI</a>.</li>
+				<li>Loggregator Log Cache CLI Plug-in. See <a href="https://plugins.cloudfoundry.org/">
+          Cloud Foundry Community cf CLI Plug-ins</a>.</li>
 				<% if vars.platform_code != 'CF' %>
 				<li><%= vars.platform_metric_tool_ref %></li>
 				<% end %>
@@ -228,19 +228,19 @@ and metrics:
 				<li><%= vars.manage_apps_service_instances_ref %></li>
 				<% end %>
 				<li><%= vars.syslog_forwarding_ref %></li>
-				<li>Loggregator Firehose CLI Plugin. See <a href="cli-plugin.html">Installing the Loggregator
-          Firehose Plugin for CLI</a>.</li>
-				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">
-          Cloud Foundry Community cf CLI Plugins</a>.</li>
+				<li>Loggregator Firehose CLI Plug-in. See <a href="cli-plugin.html">Installing the Loggregator
+          Firehose Plug-in for CLI</a>.</li>
+				<li>Loggregator Log Cache CLI Plug-in. See <a href="https://plugins.cloudfoundry.org/">
+          Cloud Foundry Community cf CLI Plug-ins</a>.</li>
 			</ul>
 		</td>
 		<td valign="top">
 			You can use the following products or tools to view app metrics:
 			<ul>
-				<li>Loggregator Firehose CLI Plugin. See <a href="cli-plugin.html">Installing the Loggregator
-          Firehose Plugin for CLI</a>.</li>
-				<li>Loggregator Log Cache CLI Plugin. See <a href="https://plugins.cloudfoundry.org/">
-          Cloud Foundry Community cf CLI Plugins</a>.</li>
+				<li>Loggregator Firehose CLI Plug-in. See <a href="cli-plugin.html">Installing the Loggregator
+          Firehose Plug-in for CLI</a>.</li>
+				<li>Loggregator Log Cache CLI Plug-in. See <a href="https://plugins.cloudfoundry.org/">
+          Cloud Foundry Community cf CLI Plug-ins</a>.</li>
 				<% if vars.platform_code != 'CF' %>
 				<li><%= vars.metrics_product_ref %></li>
 				<% end %>

@@ -5,14 +5,14 @@ owner: Logging and Metrics
 
 
 
-This topic describes how to enable and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub.
+This topic describes how to activate and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub.
 Operators can use these logs to retrieve information about a subset of requests to the Cloud Controller, UAA server, and CredHub for security or compliance purposes.
 
 ##<a id="cc"></a>Cloud Controller Logging
 
 <%=vars.cc_logging_default%>
 
-The Cloud Controller logs security events to syslog. You must configure a syslog drain to forward your system logs to a log management service. 
+The Cloud Controller logs security events to syslog. You must configure a syslog drain to forward your system logs to a log management service.
 
 <%=vars.enable_syslog_drain%>
 
@@ -29,10 +29,10 @@ Entries in the Cloud Controller log use the following format:
 ```
 CEF:CEF_VERSION|cloud_foundry|cloud_controller_ng|CC_API_VERSION|
 SIGNATURE_ID|NAME|SEVERITY|rt=TIMESTAMP suser=USERNAME suid=USER_GUID
-cs1Label=userAuthenticationMechanism cs1=AUTH_MECHANISM 
+cs1Label=userAuthenticationMechanism cs1=AUTH_MECHANISM
 cs2Label=vcapRequestId cs2=VCAP_REQUEST_ID request=REQUEST
-requestMethod=REQUEST_METHOD cs3Label=result cs3=RESULT 
-cs4Label=httpStatusCode cs4=HTTP_STATUS_CODE src=SOURCE_ADDRESS 
+requestMethod=REQUEST_METHOD cs3Label=result cs3=RESULT
+cs4Label=httpStatusCode cs4=HTTP_STATUS_CODE src=SOURCE_ADDRESS
 dst=DESTINATION_ADDRESS cs5Label=xForwardedFor cs5=X_FORWARDED_FOR_HEADER
 ```
 
@@ -54,7 +54,7 @@ Refer to the following list for a description of the properties shown in the Clo
 * `HTTP_STATUS_CODE`. The HTTP status code of the response. For example, `200`.
 * `SOURCE_ADDRESS`: The IP address of the client who originated the request.
 * `DESTINATION_ADDRESS`: The IP address of the Cloud Controller VM.
-* `X_FORWARDED_FOR_HEADER`: The contents of the X-Forwarded-For 
+* `X_FORWARDED_FOR_HEADER`: The contents of the X-Forwarded-For
 header of the request. This is empty if the header is not present.
 
 ###<a id="example"></a>Example Log Entries
@@ -64,12 +64,12 @@ The following list provides several example requests with the corresponding Clou
 * An anonymous `GET` request:
 
     ```
-    CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/info|GET 
-    /v2/info|0|rt=1460690037402 suser= suid= request=/v2/info 
-    requestMethod=GET src=127.0.0.1 dst=<%=vars.example_ip_1%> 
-    cs1Label=userAuthenticationMechanism cs1=no-auth cs2Label=vcapRequestId 
-    cs2=c4bac383-7cc9-4d9f-b1c0-1iq8c0baa000 cs3Label=result cs3=success 
-    cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor 
+    CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/info|GET
+    /v2/info|0|rt=1460690037402 suser= suid= request=/v2/info
+    requestMethod=GET src=127.0.0.1 dst=<%=vars.example_ip_1%>
+    cs1Label=userAuthenticationMechanism cs1=no-auth cs2Label=vcapRequestId
+    cs2=c4bac383-7cc9-4d9f-b1c0-1iq8c0baa000 cs3Label=result cs3=success
+    cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor
     cs5=<%=vars.example_ip_2%>
     ```
 
@@ -77,25 +77,25 @@ The following list provides several example requests with the corresponding Clou
 
     ```
     CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/syslog_drain_urls|GET
-    /v2/syslog_drain_urls|0|rt=1460690165743 suser=bulk_api suid= 
-    request=/v2/syslog_drain_urls?batch_size\=1000 requestMethod=GET 
-    src=127.0.0.1 dst=<%=vars.example_ip_1%> cs1Label=userAuthenticationMechanism 
+    /v2/syslog_drain_urls|0|rt=1460690165743 suser=bulk_api suid=
+    request=/v2/syslog_drain_urls?batch_size\=1000 requestMethod=GET
+    src=127.0.0.1 dst=<%=vars.example_ip_1%> cs1Label=userAuthenticationMechanism
     cs1=basic-auth cs2Label=vcapRequestId cs2=79187189-e810-33dd-6911-b5d015bbc999
-    ::eat1234d-4004-4622-ad11-9iaai88e3ae9 cs3Label=result cs3=success 
+    ::eat1234d-4004-4622-ad11-9iaai88e3ae9 cs3Label=result cs3=success
     cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor cs5=<%=vars.example_ip_2%>
     ```
 
 * A `GET` request with OAuth access token authentication:
 
     ```
-    CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/routes|GET 
+    CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/routes|GET
     /v2/routes|0|rt=1460689904925 suser=admin suid=c7ca208f-8a9e-4aab-
     92f5-28795f86d62a request=/v2/routes?inline-relations-depth\=1&q\=
-    host%3Adora%3Bdomain_guid%3B777-1o9f-5f5n-i888-o2025cb2dfc3 
-    requestMethod=GET src=127.0.0.1 dst=<%=vars.example_ip_1%> 
-    cs1Label=userAuthenticationMechanism cs1=oauth-access-token 
+    host%3Adora%3Bdomain_guid%3B777-1o9f-5f5n-i888-o2025cb2dfc3
+    requestMethod=GET src=127.0.0.1 dst=<%=vars.example_ip_1%>
+    cs1Label=userAuthenticationMechanism cs1=oauth-access-token
     cs2Label=vcapRequestId cs2=79187189-990i-8930-52b2-9090b2c5poz0
-    ::5a265621-b223-4520-afae-ab7d0ee7c75b cs3Label=result cs3=success 
+    ::5a265621-b223-4520-afae-ab7d0ee7c75b cs3Label=result cs3=success
     cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor cs5=<%=vars.example_ip_2%>
     ```
 
@@ -105,30 +105,30 @@ The following list provides several example requests with the corresponding Clou
     CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/apps/7f310103-
     39aa-4a8c-b92a-9ff8a6a2fa6b|GET /v2/apps/7f310103-39aa-4a8c-b92a-
     9ff8a6a2fa6b|0|rt=1460691002394 suser=bob suid=a00i2026-55io-3983-
-    555o-40e611410aec request=/v2/apps/7f310103-39aa-4a8c-b92a-9ff8a6a2fa6b 
-    requestMethod=GET src=127.0.0.1 dst=<%=vars.example_ip_1%> 
-    cs1Label=userAuthenticationMechanism cs1=oauth-access-token cs2Label=vcapRequestId 
-    cs2=49f21579-9eb5-4bdf-6e49-e77d2de647a2::9f8841e6-e04a-498b-b3ff-d59cfe7cb7ea 
-    cs3Label=result cs3=clientError cs4Label=httpStatusCode cs4=404 
+    555o-40e611410aec request=/v2/apps/7f310103-39aa-4a8c-b92a-9ff8a6a2fa6b
+    requestMethod=GET src=127.0.0.1 dst=<%=vars.example_ip_1%>
+    cs1Label=userAuthenticationMechanism cs1=oauth-access-token cs2Label=vcapRequestId
+    cs2=49f21579-9eb5-4bdf-6e49-e77d2de647a2::9f8841e6-e04a-498b-b3ff-d59cfe7cb7ea
+    cs3Label=result cs3=clientError cs4Label=httpStatusCode cs4=404
     cs5Label=xForwardedFor cs5=<%=vars.example_ip_2%>
     ```
 
 * A `POST` request that results in a 403 error:
 
     ```
-    CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|POST /v2/apps|POST 
+    CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|POST /v2/apps|POST
     /v2/apps|0|rt=1460691405564 suser=bob suid=4f9a33f9-fb13-4774-a708-
-    f60c939625cd request=/v2/apps?async\=true requestMethod=POST 
-    src=127.0.0.1 dst=<%=vars.example_ip_1%> cs1Label=userAuthenticationMechanism 
+    f60c939625cd request=/v2/apps?async\=true requestMethod=POST
+    src=127.0.0.1 dst=<%=vars.example_ip_1%> cs1Label=userAuthenticationMechanism
     cs1=oauth-access-token cs2Label=vcapRequestId cs2=booc03111-9999-4003-88ab-
-    20i9r33333ou::5a4993fc-722f-48bc-aff4-99b2005i9bb5 cs3Label=result 
-    cs3=clientError cs4Label=httpStatusCode cs4=403 cs5Label=xForwardedFor 
+    20i9r33333ou::5a4993fc-722f-48bc-aff4-99b2005i9bb5 cs3Label=result
+    cs3=clientError cs4Label=httpStatusCode cs4=403 cs5Label=xForwardedFor
     cs5=<%=vars.example_ip_2%>
     ```
 
 ##<a id="uaa"></a>UAA Logging
 
-UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA virtual machine (VM). Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service. 
+UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA virtual machine (VM). Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service.
 
 <%=vars.enable_syslog_drain%>
 
@@ -148,58 +148,58 @@ To learn more about the names of the events included in these categories and the
 
 The following sections provide several example requests with the corresponding UAA log entries.
 
-#### Successful User Authentication 
+#### Successful User Authentication
 
 ```
 Audit: TokenIssuedEvent ('["openid","scim.read","uaa.user",
 "cloud_controller.read","password.write","cloud_controller.write",
-"scim.write"]'): principal=a42026d6-5533-1884-eef2-838abcd0i3e3, 
+"scim.write"]'): principal=a42026d6-5533-1884-eef2-838abcd0i3e3,
 origin=[client=cf, user=bob], identityZoneId=[uaa]
 ```
 
-* This entry records a `TokenIssuedEvent`. 
+* This entry records a `TokenIssuedEvent`.
 * UAA issued a token associated with the scopes `"openid","scim.read","uaa.user",
 "cloud_controller.read","password.write","cloud_controller.write","scim.write"` to the user `bob`.
 
 #### Failed User Authentication
 
 ```
-Audit: UserAuthenticationFailure ('bob@example.com'): 
-principal=61965469-c821-46b7-825f-630e12a51d6c, 
-origin=[remoteAddress=<%=vars.example_ip_2%>, clientId=cf], 
+Audit: UserAuthenticationFailure ('bob@example.com'):
+principal=61965469-c821-46b7-825f-630e12a51d6c,
+origin=[remoteAddress=<%=vars.example_ip_2%>, clientId=cf],
 identityZoneId=[uaa]
 ```
 
-* This entry records a `UserAuthenticationFailure`. 
+* This entry records a `UserAuthenticationFailure`.
 * The user `bob@example.com` originating at `<%=vars.example_ip_2%>` failed to authenticate.
 
 #### Successful User Creation
 
 ```
 Audit: UserCreatedEvent ('["user_id=61965469-c821-
-46b7-825f-630e12a51d6c","username=bob@example.com"]'): 
-principal=91220262-d901-44c0-825f-633i33b55d6c, 
-origin=[client=cf, user=admin, details=(<%=vars.example_ip_2%>, 
-tokenType=bearertokenValue=<TOKEN>, 
-sub=20i03423-dd8e-33e1-938d-e9999e30f500, 
+46b7-825f-630e12a51d6c","username=bob@example.com"]'):
+principal=91220262-d901-44c0-825f-633i33b55d6c,
+origin=[client=cf, user=admin, details=(<%=vars.example_ip_2%>,
+tokenType=bearertokenValue=<TOKEN>,
+sub=20i03423-dd8e-33e1-938d-e9999e30f500,
 iss=https://uaa.example.com/oauth/token)], identityZoneId=[uaa]
 ```
 
-* This entry records a `UserCreatedEvent`. 
+* This entry records a `UserCreatedEvent`.
 * The `admin` user originating at `<%=vars.example_ip_2%>` created a user named `bob@example.com`.
 
 #### Successful User Deletion
 
 ```
 Audit: UserDeletedEvent ('["user_id=61965469-c821-
-46b7-825f-630e12a51d6c","username=bob@example.com"]'): 
-principal=61965469-c821-46b7-825f-630e12a51d6c, 
-origin=[client=admin, details=(remoteAddress=<%=vars.example_ip_2%>, 
-tokenType=bearertokenValue=<TOKEN>, 
+46b7-825f-630e12a51d6c","username=bob@example.com"]'):
+principal=61965469-c821-46b7-825f-630e12a51d6c,
+origin=[client=admin, details=(remoteAddress=<%=vars.example_ip_2%>,
+tokenType=bearertokenValue=<TOKEN>,
 sub=admin, iss=https://uaa.example.com/oauth/token)], identityZoneId=[uaa]
 ```
 
-* This entry records a `UserDeletedEvent`. 
+* This entry records a `UserDeletedEvent`.
 * The `admin` user originating at `<%=vars.example_ip_2%>` deleted a user named `bob@example.com`.
 
 ##<a id="credhub"></a>CredHub Logging
@@ -221,9 +221,9 @@ Entries in the CredHub log use the following format:
 ```
 CEF:0|cloud_foundry|credhub|CREDHUB_SERVER_VERSION|
 SIGNATURE_ID|NAME|0|rt=TIMESTAMP suser=USERNAME suid=USER_GUID
-cs1Label=userAuthenticationMechanism cs1=AUTH_MECHANISM 
+cs1Label=userAuthenticationMechanism cs1=AUTH_MECHANISM
 request=REQUEST requestMethod=REQUEST_METHOD
-cs3Label=versionUuid cs3=VERSION_UUID 
+cs3Label=versionUuid cs3=VERSION_UUID
 cs4Label=httpStatusCode cs4=HTTP_STATUS_CODE src=SOURCE_ADDRESS dst=DESTINATION_ADDRESS
 cs2Label=resourceName cs2=RESOURCE_NAME
 cs5Label=resourceUuid cs5=RESOURCE_UUID deviceAction=OPERATION

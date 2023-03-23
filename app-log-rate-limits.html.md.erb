@@ -22,9 +22,9 @@ its cache in order to store large volumes of logs.
 
 You can allow log rate limits in the following ways:
 
-* On a per-app basis in bytes per second. For more information, see [App Log Rate Limiting in Bytes Per Second](#overview-byte-limit) below.
+* On a per-app basis in bytes per second. For more information, see [App Log Rate Limiting in Bytes Per Second](#overview-byte-limit).
 
-* Globally in lines per second. For more information, see [Global Log Rate Limiting in Lines Per Second](#overview-line-limit) below.
+* Globally in lines per second. For more information, see [Global Log Rate Limiting in Lines Per Second](#overview-line-limit).
   <p class='note'><strong>Note:</strong> Log rate limits in lines per second are deprecated in favor of log rate limits in bytes per second.</p>
 
 ### <a id='overview-byte-limit'></a> App Log Rate Limiting in Bytes Per Second
@@ -105,7 +105,7 @@ For more information about third-party log management services, see [Streaming A
 
 ## <a id='view-counter'></a> Identify Apps That Exceed the App Log Rate Limit
 
-Diego also logs when a noisy app instance exceeds the log rate limit configured in <%= vars.app_runtime_abbr %>. A log message similar to the example below
+Diego also logs when a noisy app instance exceeds the log rate limit configured in <%= vars.app_runtime_abbr %>. A log message similar to the following example:
 appears in the log stream for the noisy app:
 
 <pre class="terminal">
@@ -114,16 +114,16 @@ appears in the log stream for the noisy app:
 
 To identify which app instances are exceeding the app log rate limit:
 
-<p class='note'><strong>Note:</strong> The Firehose and Log Cache plugins are developed by the open-source Cloud Foundry community and are not supported by
+<p class='note'><strong>Note:</strong> The Firehose and Log Cache plug-ins are developed by the open-source Cloud Foundry community and are not supported by
   VMware.</p>
 
-1. In a terminal window, install the Firehose plugin by running:
+1. In a terminal window, install the Firehose plug-in by running:
 
     ```
     cf install-plugin 'Firehose Plugin'
     ```
 
-1. Install the Log Cache plugin by running:
+1. Install the Log Cache plug-in by running:
 
     ```
     cf install-plugin 'log-cache'
@@ -134,7 +134,7 @@ To identify which app instances are exceeding the app log rate limit:
     ```
     cf nozzle -f LogMessage | grep "app instance exceeded log rate limit"
     ```
-    The above command returns all logs with log messages containing `"app instance exceeded log rate limit"`, similar to the following example:
+    This command returns all logs with log messages containing `"app instance exceeded log rate limit"`, similar to the following example:
     <pre class="terminal">
     origin:"rep" eventType:LogMessage timestamp:1583859621886751670 deployment:"warp-drive" job:"diego-cell" index:"3a574bde-91df-48b8-ae21-1d6913da0908" ip:"10.0.1.33" tags:&#60;key:"app_id" value:"34bcfafc-402b-4bb4-84db-aea5401b79eb" > tags:&#60;key:"app_name" value:"app-2" > tags:&#60;key:"instance_id" value:"0" > tags:&#60;key:"organization_id" value:"a30f39c2-4ff3-48a1-a869-a9ed21812a61" > tags:&#60;key:"organization_name" value:"test" > tags:&#60;key:"process_id" value:"34bcfafc-402b-4bb4-84db-aea5401b79eb" > tags:&#60;key:"process_instance_id" value:"92e2ee78-3a1d-41a6-4933-e47b" > tags:&#60;key:"process_type" value:"web" > tags:&#60;key:"source_id" value:"34bcfafc-402b-4bb4-84db-aea5401b79eb" > tags:&#60;key:"space_id" value:"0e2d2d58-3ef5-43f3-b880-c8a30903a96b" > tags:&#60;key:"space_name" value:"test-2" > logMessage:&#60;message:"app instance exceeded log rate limit (1024 bytes/sec)" message_type:OUT timestamp:1583859621886751670 app_id:"34bcfafc-402b-4bb4-84db-aea5401b79eb" source_type:"APP/PROC/WEB" source_instance:"0" >
     </pre>
