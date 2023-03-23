@@ -20,12 +20,8 @@ its cache in order to store large volumes of logs.
 
 * Limit the CPU usage of logging agents on the Diego Cell VM.
 
-You can allow log rate limits in the following ways:
-
-* On a per-app basis in bytes per second. For more information, see [App Log Rate Limiting in Bytes Per Second](#overview-byte-limit).
-
-* Globally in lines per second. For more information, see [Global Log Rate Limiting in Lines Per Second](#overview-line-limit).
-  <p class='note'><strong>Note:</strong> Log rate limits in lines per second are deprecated in favor of log rate limits in bytes per second.</p>
+You can allow log rate limits on a per-app basis in bytes per second. For more information, see
+[App Log Rate Limiting in Bytes Per Second](#overview-byte-limit).
 
 ### <a id='overview-byte-limit'></a> App Log Rate Limiting in Bytes Per Second
 
@@ -34,19 +30,6 @@ In <%= vars.app_runtime_abbr %>, you can limit the number of bytes each app inst
 You can configure app log rate limiting in bytes per second on a per-app basis through either the app manifest or the cf CLI. Additionally, you can enforce
 the log rate limit you configure for all apps that are deployed within a space or org by specifying the log rate limit in the quota plan for the space or org.
 <% if vars.platform_code != "OFFLINE" %>For more information, see [Creating and Modifying Quota Plans](../adminguide/quota-plans.html).<% end %>
-
-### <a id='overview-line-limit'></a> Global Log Rate Limiting in Lines Per Second
-
-This feature is deprecated in favor of log rate limits in bytes per second. If you have configured a global log rate limit in lines per second,
-<%= vars.company_name %> recommends that you re-configure your apps to use log rate limits in bytes per second.
-
-In <%= vars.app_runtime_abbr %>, you can limit the number of log lines each app instance can generate per second by configuring
-<%= vars.app_rate_log_limit_config %>. This is a global setting that applies to all apps in your <%= vars.app_runtime_abbr %> deployment.
-
-<% if vars.platform_code != "CF" %>
-<%= vars.app_rate_log_limit_config_procedure %>
-<% end %>
-
 
 ## <a id='determine-limit'></a> Determining the Ideal App Log Rate Limit
 
@@ -57,14 +40,12 @@ When you allow app log rate limiting, Diego applies the log rate limit to each a
 does not sum the logging rates of all five instances when determining if the log rate limit has been exceeded. Instead, Diego evaluates the logging rate of
 each individual app instance and only limits instances that exceed the log rate limit.
 
-
 ## <a id='exceed-limit'></a> What Happens When App Instances Exceed the App Log Rate Limit
 
-When an app instance exceeds the log rate limit you configured through <%= vars.app_rate_log_limit_config %>, Diego drops the app logs that exceed that limit.
-When this happens, you see a message indicating that Diego is dropping app logs.
+When an app instance exceeds the log rate limit you configured, Diego drops the app logs that exceed that limit. When this happens, you see a message
+indicating that Diego is dropping app logs.
 
 For more information about how Diego rate-limits app logs, see the [Go documentation](https://godoc.org/golang.org/x/time/rate).
-
 
 ## <a id='determine-exceeded'></a> How Diego Cells Determine When an App Instance Has Exceeded the App Log Rate Limit
 
@@ -101,7 +82,6 @@ When you configure this alert, consider the number of app instances running on <
 <%= vars.app_runtime_abbr %>, your other <%= vars.app_runtime_abbr %> configuration settings, and so on.
 
 For more information about third-party log management services, see [Streaming App Logs to Log Management Services](../devguide/services/log-management.html).
-
 
 ## <a id='view-counter'></a> Identify Apps That Exceed the App Log Rate Limit
 
