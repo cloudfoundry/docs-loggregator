@@ -224,7 +224,7 @@ with your BOSH Director UUID.
     ```
 
 <p class='note'><strong>Note:</strong> If you do not want to see the complete deployment procedure, run
-<code>scripts/make_manifest_spiff_bosh_lite</code> to automatically prepare the manifest.</p>
+<code>scripts/make_manifest_spiff_bosh_lite</code> to prepare the manifest.</p>
 
 ## <a id='create-nozzle-bosh-release'></a> Step 6: Create Nozzle BOSH Release
 
@@ -292,7 +292,7 @@ Uploading release
 
 To deploy the nozzle, run:
 
-```
+```console
 bosh -e BOSH-ENVIRONMENT deploy
 ```
 
@@ -321,10 +321,13 @@ To view nozzle output:
 1. Access the nozzle VM at the IP address configured in the nozzle manifest template stub,
 `./templates/bosh-lite-stub.yml`, by running:
 
-    ```
+    ```yml
     bosh -e BOSH-ENVIRONMENT ssh
     ```
-    Where `BOSH-ENVIRONMENT` is the alias that you set for your BOSH Director. For example:
+
+    Where `BOSH-ENVIRONMENT` is the alias that you set for your BOSH Director.
+
+     For example:
     <pre class="terminal">
     $ bosh -e dev ssh example-nozzle
     Welcome to Ubuntu 14.04.1 LTS (GNU/Linux 3.19.0-25-generic x86_64)

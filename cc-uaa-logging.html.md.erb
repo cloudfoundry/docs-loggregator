@@ -128,7 +128,7 @@ The following list provides several example requests with the corresponding Clou
 
 ##<a id="uaa"></a>UAA Logging
 
-UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA virtual machine (VM). Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service.
+UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA virtual machine (VM). Because these logs are rotated, you must configure a syslog drain to forward your system logs to a log management service.
 
 <%=vars.enable_syslog_drain%>
 
@@ -204,7 +204,7 @@ sub=admin, iss=https://uaa.example.com/oauth/token)], identityZoneId=[uaa]
 
 ##<a id="credhub"></a>CredHub Logging
 
-CredHub logs security events to a file located at `/var/vcap/sys/log/credhub/credhub_security_events.log` on the CredHub VM. Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service.
+CredHub logs security events to a file located at `/var/vcap/sys/log/credhub/credhub_security_events.log` on the CredHub VM. Because these logs are rotated, you must configure a syslog drain to forward your system logs to a log management service.
 
 <%=vars.enable_syslog_drain%>
 
