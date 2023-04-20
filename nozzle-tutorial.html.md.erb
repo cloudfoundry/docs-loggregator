@@ -17,8 +17,8 @@ installation deployed locally with BOSH Lite v2. For more information about BOSH
 To reduce the load on custom nozzles that you develop, you can request Firehose subscriptions that emit only
 metrics on an allow list. For examples, see `rlpreader` and `rlptypereader` in the
 [Loggregator Tools](https://github.com/cloudfoundry-incubator/loggregator-tools) repository and
-[V2 Subscriptions](https://github.com/cloudfoundry/loggregator-release/blob/develop/docs/v2-subscriptions.md) in the
-Loggregator Relese repository in GitHub.
+[V2 Subscriptions](https://github.com/cloudfoundry/loggregator-release/blob/main/docs/v2-subscriptions.md) in the
+Loggregator Release repository in GitHub.
 
 <p class='note'><strong>Note:</strong> You can disable the Firehose. In place of the Firehose, you can configure an
 aggregate log and metric drain for your foundation. <%= vars.configure_system_logging_link %></p>
@@ -37,9 +37,7 @@ documentation.
 [VirtualBox BOSH Lite v2](https://bosh.io/docs/bosh-lite/) in the BOSH documentation.
 
 * A working <%= vars.app_runtime_abbr %> deployment, including Loggregator, deployed with your local BOSH Lite v2. This
-deployment serves as the source of data. For more information, see
-[Deploying Cloud Foundry with BOSH Lite v2](https://operator-workshop.cloudfoundry.org/labs/deploy-cf/) in the
-Operating the Foundry documentation, or use the `provision_cf` script included in the BOSH Lite v2 release.
+deployment serves as the source of data. Use the `provision_cf` script included in the BOSH Lite v2 release.
 
 <p class='note'><strong>Note:</strong> Deploying <%= vars.app_runtime_abbr %> can take several hours depending on your
 internet bandwith, even when using the automated <code>provision_cf</code> script.</p>
