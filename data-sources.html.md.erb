@@ -3,7 +3,7 @@ title: Overview of Logging and Metrics
 owner: Logging and Metrics
 ---
 
-This topic provides an overview of logging and metrics in <%= vars.app_runtime_full %>
+This topic tells you about logging and metrics in <%= vars.app_runtime_full %>
 (<%= vars.app_runtime_abbr %>). It includes information about logs and metrics sources, and
 transport systems. It also lists products for viewing logs and metrics.
 
@@ -89,7 +89,7 @@ To access metrics using the Firehose plug-in:
     ```
     cf nozzle -no-filter | grep bbs | grep -i ConvergenceLRPDuration
     ```
-    Because metrics are scraped at different intervals, it may take up to fifteen minutes for
+    Because metrics are scraped at different intervals, it might take up to fifteen minutes for
     the Firehose to receive all metrics for the component. Re-run `cf nozzle` until you have
     received a complete set of metrics for a component. For more information, see [Firehose
     Architecture](../loggregator/architecture.html#firehose-architecture) in _Loggregator Architecture_.
