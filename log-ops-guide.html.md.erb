@@ -1,5 +1,5 @@
 ---
-title: Loggregator Guide for Cloud Foundry Operators
+title: Loggregator guide for Cloud Foundry operators
 owner: Logging and Metrics
 ---
 
@@ -10,16 +10,17 @@ owner: Logging and Metrics
 
 <% end %>
 
-This topic has information for <%= vars.app_runtime_first %> deployment operators about how to configure the Loggregator system to avoid data loss with high volumes of logging and metrics data.
+This topic contains information for <%= vars.app_runtime_first %> deployment operators about how to configure the
+Loggregator system to avoid data loss with high volumes of logging and metrics data.
 
 For more information about the Loggregator system, see [Loggregator Architecture](./architecture.html).
 
 
-## <a id='throughput-reliability'></a> Loggregator Message Throughput and Reliability
+## <a id='throughput-reliability'></a> Loggregator message throughput and reliability
 
 You can measure both the message throughput and message reliability rates of your Loggregator system.
 
-### <a id='throughput-rate'></a> Measuring Message Throughput
+### <a id='throughput-rate'></a> Measuring message throughput
 
 To measure the message throughput of the Loggregator system, you can monitor the total number of egress messages from all Loggregator Agents in your deployment using the `metron.egress` metric.
 
@@ -47,7 +48,7 @@ If you do not use a monitoring platform, you can measure the overall message thr
 	cf nozzle -n | pv -l -i 10 -r > /dev/null
 	```
 
-### <a id='reliability-rate'></a> Measuring Message Reliability
+### <a id='reliability-rate'></a> Measuring message reliability
 
 To measure the message reliability rate of your Loggregator system, you can run black-box tests.
 
@@ -90,7 +91,7 @@ Most Loggregator configurations use preferred resource defaults. For more inform
 <% end %>
 
 
-## <a id='scaling-nozzles'></a> Scaling Nozzles
+## <a id='scaling-nozzles'></a> Scaling nozzles
 
 Nozzles are programs that consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and to forward it to other apps and services. You can scale a nozzle using the subscription ID specified when the nozzle connects to the Firehose. If you use the same subscription ID on each nozzle instance, the Firehose evenly distributes data across all instances of the nozzle.
 
@@ -105,9 +106,10 @@ Stateless nozzles handle scaling. If a nozzle buffers or caches the data, the no
 <p class='note'><strong>Note:</strong> You can deactivate the Firehose. In place of the Firehose, you can configure an aggregate log and metric drain for your foundation. <%= vars.configure_system_logging_link %></p>
 
 
-## <a id='slow-noz'></a> Slow Nozzle Alerts
+## <a id='slow-noz'></a> Slow nozzle alerts
 
-The Traffic Controller alerts nozzles if they consume events too slowly. The following metrics can be used to identify slow consumers:
+The Traffic Controller alerts the nozzle programs if they consume events too slowly.
+The following metrics can be used to identify slow consumers:
 
 * For v1 consumers: `doppler_proxy.slow_consumer` is incremented as consumers are disconnected for being slow.
 
@@ -117,11 +119,11 @@ For more information about the Traffic Controller,
 see [Loggregator Architecture](./architecture.html#loggregator-architecture) in _Loggregator Architecture_.
 
 
-## <a id='syslog-forward'></a> Forwarding Logs to an External Service
+## <a id='syslog-forward'></a> Forwarding logs to an external service
 
 You can configure <%= vars.app_runtime_abbr %> to forward log data from apps to an external aggregator service. For information about how to bind apps to the external service and configure it to receive logs from <%= vars.app_runtime_abbr %>, see [Streaming App Logs to Log Management Services](../devguide/services/log-management.html).
 
 
-## <a id='log-message-size'></a> Log Message Size Constraints
+## <a id='log-message-size'></a> Log message size constraints
 
 When a Diego Cell emits app logs to Loggregator, Diego breaks up log messages greater than approximately 60&nbsp;KiB into multiple envelopes.

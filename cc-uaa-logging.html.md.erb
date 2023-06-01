@@ -1,14 +1,12 @@
 ---
-title: Security Event Logging
+title: Security event logging
 owner: Logging and Metrics
 ---
 
+Learn how to activate and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub.
+You can use these logs to retrieve information about a subset of requests to the Cloud Controller, UAA server, and CredHub for security or compliance purposes.
 
-
-This topic describes how to activate and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub.
-Operators can use these logs to retrieve information about a subset of requests to the Cloud Controller, UAA server, and CredHub for security or compliance purposes.
-
-##<a id="cc"></a>Cloud Controller Logging
+##<a id="cc"></a>Cloud Controller logging
 
 <%=vars.cc_logging_default%>
 
@@ -16,7 +14,7 @@ The Cloud Controller logs security events to syslog. You must configure a syslog
 
 <%=vars.enable_syslog_drain%>
 
-###<a id="format"></a>Format for Log Entries
+###<a id="format"></a>Formatting log entries
 
 Cloud Controller logs security events in the [Common Event Format](https://kc.mcafee.com/resources/sites/MCAFEE/content/live/CORP_KNOWLEDGEBASE/78000/KB78712/en_US/CEF_White_Paper_20100722.pdf) (CEF). CEF specifies the following format for log entries:
 
@@ -57,7 +55,7 @@ Refer to the following list for a description of the properties shown in the Clo
 * `X_FORWARDED_FOR_HEADER`: The contents of the X-Forwarded-For
 header of the request. This is empty if the header is not present.
 
-###<a id="example"></a>Example Log Entries
+###<a id="example"></a>Exanples of log entries
 
 The following list provides several example requests with the corresponding Cloud Controller log entries.
 
@@ -126,7 +124,7 @@ The following list provides several example requests with the corresponding Clou
     cs5=<%=vars.example_ip_2%>
     ```
 
-##<a id="uaa"></a>UAA Logging
+##<a id="uaa"></a>UAA logging
 
 UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA virtual machine (VM). Because these logs are rotated, you must configure a syslog drain to forward your system logs to a log management service.
 
@@ -144,11 +142,11 @@ UAA logs identify the following categories of events:
 
 To learn more about the names of the events included in these categories and the information they record in the UAA logs, see [User Account and Authentication Service Audit Requirements](https://docs.cloudfoundry.org/running/managing-cf/uaa-audit-requirements.html).
 
-###<a id='uaa-events'></a>Example Log Entries
+###<a id='uaa-events'></a>Exanples of log entries
 
 The following sections provide several example requests with the corresponding UAA log entries.
 
-#### Successful User Authentication
+#### Successful user authentication
 
 ```
 Audit: TokenIssuedEvent ('["openid","scim.read","uaa.user",
@@ -161,7 +159,7 @@ origin=[client=cf, user=bob], identityZoneId=[uaa]
 * UAA issued a token associated with the scopes `"openid","scim.read","uaa.user",
 "cloud_controller.read","password.write","cloud_controller.write","scim.write"` to the user `bob`.
 
-#### Failed User Authentication
+#### Failed user authentication
 
 ```
 Audit: UserAuthenticationFailure ('bob@example.com'):
@@ -173,7 +171,7 @@ identityZoneId=[uaa]
 * This entry records a `UserAuthenticationFailure`.
 * The user `bob@example.com` originating at `<%=vars.example_ip_2%>` failed to authenticate.
 
-#### Successful User Creation
+#### Successful user creation
 
 ```
 Audit: UserCreatedEvent ('["user_id=61965469-c821-
@@ -188,7 +186,7 @@ iss=https://uaa.example.com/oauth/token)], identityZoneId=[uaa]
 * This entry records a `UserCreatedEvent`.
 * The `admin` user originating at `<%=vars.example_ip_2%>` created a user named `bob@example.com`.
 
-#### Successful User Deletion
+#### Successful user deletion
 
 ```
 Audit: UserDeletedEvent ('["user_id=61965469-c821-
@@ -202,7 +200,7 @@ sub=admin, iss=https://uaa.example.com/oauth/token)], identityZoneId=[uaa]
 * This entry records a `UserDeletedEvent`.
 * The `admin` user originating at `<%=vars.example_ip_2%>` deleted a user named `bob@example.com`.
 
-##<a id="credhub"></a>CredHub Logging
+##<a id="credhub"></a>CredHub logging
 
 CredHub logs security events to a file located at `/var/vcap/sys/log/credhub/credhub_security_events.log` on the CredHub VM. Because these logs are rotated, you must configure a syslog drain to forward your system logs to a log management service.
 
@@ -273,7 +271,7 @@ Refer to the following list for a description of the properties shown in the Cre
 
 The following sections provide several example requests with the corresponding CredHub log entries.
 
-#### Accessing a Credential
+#### Accessing a credential
 
 ```
 CEF:0|cloud_foundry|credhub|2.0.0-beta.28|GET /api/v1/data|
@@ -293,7 +291,7 @@ cs6={"nameLike":null,"path":"0b353167-0d5a-48c7-5036-7eaa","paths":null}
 * A user authenticated to the CredHub instance using `mutual_tls` from `10.0.0.1`.
 * The authenticated user accessed a CredHub credential.
 
-#### Setting a Credential
+#### Setting a credential
 
 ```
 CEF:0|cloud_foundry|credhub|2.0.0-beta.28|PUT /api/v1/data|
@@ -313,7 +311,7 @@ cs6={"name":"/1530901097842989110","type":"json","mode":null,
 * A user authenticated to the CredHub instance with UAA from `10.0.0.1`.
 * The authenticated user set a CredHub credential.
 
-#### Generating a Credential
+#### Generating a credential
 
 ```
 CEF:0|cloud_foundry|credhub|2.0.0-beta.28|POST /api/v1/data|
