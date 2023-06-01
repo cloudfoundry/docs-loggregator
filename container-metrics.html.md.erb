@@ -1,18 +1,15 @@
 ---
-title:  Container Metrics
+title:  Container metrics
 owner:
 ---
 
-This topic describes the metrics that are emitted by all containers managed by <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) and its scheduling
+This topic tells you about the metrics that are emitted by all containers managed by <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) and its scheduling
 system, Diego.
 
-
-## <a id='overview'></a> Overview of Container Metrics
-
-App metrics include the container metrics described below, as well as any custom app metrics that developers create.
+App metrics include the container metrics, and any custom app metrics that developers create.
 
 
-## <a id='container-metrics'></a> Diego Container Metrics
+## <a id='container-metrics'></a> Diego Container metrics
 
 Diego containers emit resource usage metrics for the app instance. Diego averages and emits each metric every 15 seconds.
 
@@ -90,7 +87,7 @@ The way that Diego emits container metrics differs depending on the version of L
 `log_rate`, and `log_rate_limit` container metrics in separate gauge envelopes from other container metrics.
 
 
-## <a id='cf-cli'></a> Retrieve Container Metrics from the cf CLI
+## <a id='cf-cli'></a> Retrieving Container metrics from the cf CLI
 
 You can retrieve container metrics using the Cloud Foundry Command Line Interface (cf CLI).
 
@@ -100,7 +97,7 @@ To retrieve CPU entitlement metrics for all instances of an app, see [Retrieve C
 
 To determine when an app has exceeded its CPU entitlement, see [Monitor Apps That Exceed Their CPU Entitlement](#cpu-entitlement) below.
 
-### <a id='cf-mem-disk'></a> Retrieve CPU, Memory, and Disk Metrics
+### <a id='cf-mem-disk'></a> Retrieving CPU, Memory, and Disk metrics
 
 To retrieve CPU, memory, and disk metrics for all instances of an app:
 
@@ -135,7 +132,7 @@ To retrieve CPU, memory, and disk metrics for all instances of an app:
     <p class='note'><strong>Note:</strong> The above command shows what percentage of CPU the app is currently using relative to the total CPU on the host
       machine.</p>
 
-### <a id='cf-entitlement'></a> Retrieve CPU Entitlement Metrics
+### <a id='cf-entitlement'></a> Retrieving CPU Entitlement metrics
 
 The `absolute_entitlement` metric shows the amount of CPU an app is using relative to its CPU entitlement.
 
@@ -162,9 +159,9 @@ repository on GitHub.
     &#35;2   2.51%       2.62%
     </pre>
 
-### <a id='cpu-entitlement'></a> Monitor Apps That Exceed Their CPU Entitlement
+### <a id='cpu-entitlement'></a> Determining when Apps exceed their CPU Entitlement
 
-You can use the Cloud Foundry CPU Entitlement Plugin to determine when an app has exceeded its CPU entitlement and may need to be scaled up.
+You can use the Cloud Foundry CPU Overentitlement Plug-in to determine when an app has exceeded its CPU entitlement and might need to be scaled up.
 
 When you allow CPU throttling in your <%= vars.app_runtime_abbr %> deployment, apps are split into two groups:
 

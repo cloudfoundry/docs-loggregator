@@ -1,5 +1,5 @@
 ---
-title: Overview of Logging and Metrics
+title: Logging and metrics in Cloud Foundry
 owner: Logging and Metrics
 ---
 
@@ -8,14 +8,14 @@ This topic provides an overview of logging and metrics in <%= vars.app_runtime_f
 transport systems. It also lists products for viewing logs and metrics.
 
 
-## <a id="sources"></a> Accessing Metrics
+## <a id="sources"></a> Accessing metrics
 
 You must use a Cloud Foundry Command-Line Interface (cf CLI) plugin to access and view metrics
 directly from the command line. You can use either the Firehose plugin or the Log Cache plugin.
 
-### <a id='log-cache'></a> Access Metrics Using the Log Cache CLI Plugin
+### <a id='log-cache'></a> Accessing metrics using the Log Cache CLI Plug-in
 
-To access metrics using the Log Cache plugin:
+To access metrics with the Log Cache plug-in:
 
 1. Log in to the cf CLI by running:
 
@@ -49,7 +49,7 @@ To access metrics using the Log Cache plugin:
     </ul>
     To find the source ID and metric name of the metric you want to view, <%= vars.find_metric_name_source_id %>.
 
-### <a id='cf-nozzle'></a> Access Metrics Using the Firehose Plugin
+### <a id='cf-nozzle'></a> Accessing metrics using the Firehose Plug-in
 
 To access metrics using the Firehose plugin:
 
@@ -100,7 +100,7 @@ To access metrics using the Firehose plugin:
 For more information about nozzles, <%= vars.nozzle_info_link %>.
 
 
-## <a id="sources"></a> Sources of Logs and Metrics
+## <a id="sources"></a> Sources for logs and metrics
 
 There are two sources of <%= vars.app_runtime_abbr %> logs and metrics:
 
