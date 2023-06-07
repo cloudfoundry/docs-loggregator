@@ -9,7 +9,7 @@ Log and metric egress is the process by which logs and metrics are transported f
 
 <img src='images/architecture/overview.png' alt="Arrows are shown depicting the flow of information from VMs. One arrow points directly from VMs to Consumers. The other arrow points to the Firehose, which then sends to Consumers.">
 
-## <a id='vms-egress'></a> How Logs and Metrics Egress from VMs
+## <a id='vms-egress'></a> How logs and metrics egress from VMs
 
 Logs and metrics are sent from VMs via the following process:
 
@@ -24,7 +24,7 @@ Logs and metrics are sent from VMs via the following process:
     * The Metrics Agent exposes metrics for Prometheus-style scraping.
     * The Loggregator Agent sends metrics and application logs to the Loggregator Firehose.
 
-## <a id='firehose'></a> How the Firehose Forwards Logs and Metrics
+## <a id='firehose'></a> How the Firehose forwards logs and metrics
 
 The Loggregator Firehose sends logs and metrics through the V1 and V2 Firehose APIs, via the
 following process:
@@ -48,7 +48,7 @@ following process:
         Reverse Log Proxy Gateways connect to Reverse Log Proxies, rather than directly to
         Dopplers.<br/><br/>
 
-## <a id="consumers"></a> How Consumers Receive Logs and Metrics
+## <a id="consumers"></a> How consumers receive logs and metrics
 
 Consumers of logs and metrics may receive them through a few different paths:
 
@@ -63,7 +63,7 @@ Observability integrations can consume logs and metrics via either:
   * connecting to the Loggregator Firehose, or
   * receiving logs in Syslog RFC 5424 format and scraping metrics from Prometheus endpoints.
 
-## <a id="architecture-references"></a> Full Architecture References
+## <a id="architecture-references"></a> Full Architecture references
 
 The architectures described in this topic include components for collecting, storing, and forwarding logs and metrics.
 
@@ -77,7 +77,7 @@ This section provides architecture diagrams that show the components that collec
 
 <%= vars.loggregator_architecture_syslog %>
 
-### <a id='firehose-architecture'></a> Firehose Architecture
+### <a id='firehose-architecture'></a> Firehose architecture
 <a id='loggregator-architecture'></a>
 
 The following diagram shows how logs and metrics are transported from components and apps in your deployment to Loggregator Firehose consumers, such as nozzles, monitoring tools, or third-party software.
