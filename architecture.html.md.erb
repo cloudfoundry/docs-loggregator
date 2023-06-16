@@ -49,7 +49,7 @@ The following components are included in the Loggregator Firehose architecture, 
 
 * **Doppler:** Dopplers receive logs and metrics from Loggregator Agents, store them in temporary buffers, and forward them to Traffic Controllers and Reverse Log Proxies.
 
-* **Traffic Controller:** Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. It services the Firehose Endpoint, also known as the V1 Firehose. The Firehose cf CLI plug-in allows you to view the output of the Firehose. For more information about the Firehose plug-in, see [Installing the Loggregator Firehose Plugin for cf CLI](cli-plugin.html).
+* **Traffic Controller:** Traffic Controllers poll Doppler servers for logs and metrics, then translate these messages from the Doppler servers as necessary for external and legacy APIs. It services the Firehose Endpoint, also known as the V1 Firehose. The Firehose cf CLI plug-in allows you to view the output of the Firehose. For more information about the Firehose plug-in, see [Installing the Loggregator Firehose plug-in for cf CLI](cli-plugin.html).
 
 * **Reverse Log Proxy (V2 Firehose):** Reverse Log Proxies (RLPs) collect logs and metrics from Dopplers and forward them to Log Cache and other consumers over gRPC. Operators can scale up the number of RLPs based on overall log volume.
 

@@ -3,7 +3,7 @@ title: Limiting your App Log Rate in Cloud Foundry
 owner: Logging and Metrics
 ---
 
-Learn about limiting your app log rate for apps in <%= vars.app_runtime_full %>.
+Here you can learn about limiting your app log rate for apps in <%= vars.app_runtime_full %>.
 
 Log rate limiting limits the number of logs that can be sent to an app.
 
@@ -19,7 +19,7 @@ its cache in order to store large volumes of logs.
 
 You can allow log rate limits on a per-app basis in bytes per second.
 
-### <a id='overview-byte-limit'></a> App Log Rate limiting in Bytes Per Second
+### <a id='overview-byte-limit'></a> App log rate limiting in bytes per second
 
 In <%= vars.app_runtime_abbr %>, you can limit the number of bytes each app instance can generate per second.
 
@@ -27,7 +27,7 @@ You can configure app log rate limiting in bytes per second on a per-app basis t
 the log rate limit you configure for all apps that are deployed within a space or org by specifying the log rate limit in the quota plan for the space or org.
 <% if vars.platform_code != "OFFLINE" %>For more information, see [Creating and Modifying Quota Plans](../adminguide/quota-plans.html).<% end %>
 
-## <a id='determine-limit'></a> Determining the ideal App Log Rate Limit
+## <a id='determine-limit'></a> Determining the ideal app log rate limit
 
 The ideal app logging rate for a deployment depends on characteristics such as VM sizes and the number and type of apps in <%= vars.app_runtime_abbr %>.
 <%= vars.company_name %> recommends using at minimum the default limit of `1k` bytes per second.
@@ -36,14 +36,14 @@ When you allow app log rate limiting, Diego applies the log rate limit to each a
 does not sum the logging rates of all five instances when determining if the log rate limit has been exceeded. Instead, Diego evaluates the logging rate of
 each individual app instance and only limits instances that exceed the log rate limit.
 
-## <a id='exceed-limit'></a> What happens when App Instances exceed the App Log Rate Limit
+## <a id='exceed-limit'></a> What happens when app instances exceed the app log rate limit
 
 When an app instance exceeds the log rate limit you configured, Diego drops the app logs that exceed that limit. When this happens, you see a message
 indicating that Diego is dropping app logs.
 
 For more information about how Diego rate-limits app logs, see the [Go documentation](https://godoc.org/golang.org/x/time/rate).
 
-## <a id='determine-exceeded'></a> How Diego Cells determine when an App Instance exceeds the App Log Rate Limit
+## <a id='determine-exceeded'></a> How Diego Cells determine when an app instance exceeds the app log rate limit
 
 When an app instance exceeds the log rate limit, the Diego Cell containing the app instance emits the `AppInstanceExceededLogRateLimitCount` counter metric,
 similar to the following example:
@@ -79,7 +79,7 @@ When you configure this alert, consider the number of app instances running on <
 
 For more information about third-party log management services, see [Streaming App Logs to Log Management Services](../devguide/services/log-management.html).
 
-## <a id='view-counter'></a> Identifying Apps that exceed the App Log Rate Limit
+## <a id='view-counter'></a> Identifying apps that exceed the app log rate limit
 
 Diego also logs when a noisy app instance exceeds the log rate limit configured in <%= vars.app_runtime_abbr %>. A log message similar to the following example:
 appears in the log stream for the noisy app:
