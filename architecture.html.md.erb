@@ -34,7 +34,7 @@ This section includes the following diagrams:
 
 The following diagram shows how logs and metrics are transported from components and apps on your deployment to Loggregator Firehose consumers, such as nozzles, monitoring tools, or third-party software.
 
-![alt-text=""](./images/firehose-reference.png)
+![alt-text=""](./images/architecture/firehose-reference.png)
 
 
 [View a larger version of this image.](images/architecture/firehose-reference.png)
@@ -67,7 +67,7 @@ Similar to the Loggregator Firehose Architecture, the shared-nothing architectur
 
 In contrast to the Loggregator Firehose architecture, logs and metrics to pass through fewer components in the shared-nothing architecture. For example, the shared-nothing architecture does not require the Forwarder Agent, Syslog Agent, or Metrics Agent.
 
-![alt-text=""](./images/shared-nothing-reference.png)
+![alt-text=""](./images/architecture/shared-nothing-reference.png)
 
 
 [View a larger version of this image.](images/architecture/shared-nothing-reference.png)
@@ -98,7 +98,7 @@ The following diagram shows the architecture of a deployment that uses System Me
 
 ![alt-text="System Metrics Agent appear in squares that depict
 'Host VMs'. Represented by arrows, the System Metrics Agents send VM system-level metrics to a System Metrics Scraper,
-which forwards these metrics to Loggregator Agents over mTLS."](./images/systems-metrics-agent.png)
+which forwards these metrics to Loggregator Agents over mTLS."](./images/architecture/systems-metrics-agent.png)
 
 For more descriptions of all of the components in Loggregator, see the 'Loggregator Components' section.]
 
