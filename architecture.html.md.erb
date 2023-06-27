@@ -34,7 +34,8 @@ This section includes the following diagrams:
 
 The following diagram shows how logs and metrics are transported from components and apps on your deployment to Loggregator Firehose consumers, such as nozzles, monitoring tools, or third-party software.
 
-![](images/architecture/firehose-reference.png)
+![alt-text=""](./images/firehose-reference.png)
+
 
 [View a larger version of this image.](images/architecture/firehose-reference.png)
 
@@ -66,7 +67,8 @@ Similar to the Loggregator Firehose Architecture, the shared-nothing architectur
 
 In contrast to the Loggregator Firehose architecture, logs and metrics to pass through fewer components in the shared-nothing architecture. For example, the shared-nothing architecture does not require the Forwarder Agent, Syslog Agent, or Metrics Agent.
 
-![](./images/architecture/shared-nothing-reference.png)
+![alt-text=""](./images/shared-nothing-reference.png)
+
 
 [View a larger version of this image.](images/architecture/shared-nothing-reference.png)
 
@@ -94,7 +96,11 @@ The following components are included in the shared-nothing Architecture, as sho
 
 The following diagram shows the architecture of a deployment that uses System Metrics Agents to collect VM and system-level metrics.
 
-![System Metrics Agent appear in squares that depict 'Host VMs'. Represented by arrows, the System Metrics Agents send VM system-level metrics to a System Metrics Scraper, which forwards these metrics to Loggregator Agents over mTLS. For more descriptions of all of the components in Loggregator, see the 'Loggregator Components' section below.](./images/architecture/system-metrics-agents.png)
+![alt-text="System Metrics Agent appear in squares that depict
+'Host VMs'. Represented by arrows, the System Metrics Agents send VM system-level metrics to a System Metrics Scraper,
+which forwards these metrics to Loggregator Agents over mTLS."](./images/systems-metrics-agent.png)
+
+For more descriptions of all of the components in Loggregator, see the 'Loggregator Components' section.]
 
 [View a larger version of this image.](./images/architecture/system-metrics-agents.png)
 
@@ -163,9 +169,9 @@ Integrations with observability or monitoring products receive logs and metrics 
 
 The following diagram shows how consumers of logs and metrics receive logs and metrics from your deployment:
 
-![A Forwarder Agent appears inside a square labeled VMs. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent.
-Components also send logs to rsyslog, which then sends platform logs outside the system through syslog RFC 5424. The Forwarder Agent sends to three downstream consumers.
-The Syslog Agent sends app logs through syslog RFC 5424. The Metrics Agent exposes metrics through Prometheus endpoints. Finally, the Loggregator Agent sends metrics and app logs through syslog RFC 5424.](./images/architecture/consumers.png)
+![alt-text="A Forwarder Agent appears inside a square labeled VMs. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent.
+Components also send logs to rsyslog, which then sends platform logs outside
+the system through syslog RFC 5424."](./images/architecture/consumers.png)
 
 
 ## <a id='bosh-metrics'></a> Related BOSH components
