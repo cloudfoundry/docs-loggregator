@@ -23,23 +23,23 @@ You can use these diagrams to:
 
 This section includes the following diagrams:
 
-* Loggregator Firehose architecture. For more information, see [Loggregator Firehose Architecture](#firehose-architecture).
+* Loggregator Firehose architecture. For more information, see [Loggregator Firehose architecture](#firehose-architecture).
 
-* Shared-nothing architecture. For more information, see [Shared-Nothing Architecture](#shared-nothing-architecture).
+* Shared-nothing architecture. For more information, see [Shared-Nothing architecture](#shared-nothing-architecture).
 
-* System Metrics Agents architecture. For more information, see [System Metrics Agents Architecture](#system-metrics-agents).
+* System Metrics Agents architecture. For more information, see [System Metrics Agents architecture](#system-metrics-agents).
 
-### <a id='firehose-architecture'></a> Loggregator Firehose Architecture
+### <a id='firehose-architecture'></a> Loggregator Firehose architecture
+
 <a id='loggregator-architecture'></a>
 
 The following diagram shows how logs and metrics are transported from components and apps on your deployment to Loggregator Firehose consumers, such as nozzles, monitoring tools, or third-party software.
 
 ![alt-text=""](./images/architecture/firehose-reference.png)
 
-
 [View a larger version of this image.](images/architecture/firehose-reference.png)
 
-The following components are included in the Loggregator Firehose architecture, as shown in the diagram above:
+The following components are included in the Loggregator Firehose architecture, as shown in the previous diagram:
 
 * **Prom Scraper:** Prom Scrapers run on both component VMs and Diego Cell VMs. They aggregate metrics from components located on those VMs through Prometheus exposition. Prom Scrapers then forward the metrics to Forwarder Agents.
 
@@ -59,8 +59,6 @@ The following components are included in the Loggregator Firehose architecture, 
 
 * **Log Cache:** <%= partial 'log_cache' %>
 
-### <a id='shared-nothing-architecture'></a> Shared-Nothing Architecture
-
 ### <a id='shared-nothing-architecture'></a> Shared Nothing architecture
 
 Similar to the Loggregator Firehose Architecture, the shared-nothing architecture allows you to forward logs and metrics from your deployment to external and internal consumers.
@@ -69,10 +67,9 @@ In contrast to the Loggregator Firehose architecture, logs and metrics to pass t
 
 ![alt-text=""](./images/architecture/shared-nothing-reference.png)
 
-
 [View a larger version of this image.](images/architecture/shared-nothing-reference.png)
 
-The following components are included in the shared-nothing Architecture, as shown in the diagram above:
+The following components are included in the shared-nothing Architecture, as shown in the previous diagram:
 
 * **Prom Scraper:** Prom Scrapers run on both <%= vars.app_runtime_abbr %> component VMs and Diego Cell VMs. They aggregate metrics from <%= vars.app_runtime_abbr %> components located on those VMs through Prometheus exposition. Prom Scrapers then forward those metrics to Forwarder Agents.
 
@@ -104,7 +101,7 @@ For more descriptions of all of the components in Loggregator, see the 'Loggrega
 
 [View a larger version of this image.](./images/architecture/system-metrics-agents.png)
 
-The following describes the components of a Loggregator deployment that uses System Metrics Agents, as shown in the diagram above:
+The following describes the components of a Loggregator deployment that uses System Metrics Agents, as shown in the previous diagram:
 
 * **System Metrics Agent:** A standalone agent to provide VM system metrics using a Prometheus-scrapeable endpoint.
 
@@ -170,9 +167,7 @@ Integrations with observability or monitoring products receive logs and metrics 
 The following diagram shows how consumers of logs and metrics receive logs and metrics from your deployment:
 
 ![alt-text="A Forwarder Agent appears inside a square labeled VMs. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent.
-Components also send logs to rsyslog, which then sends platform logs outside
-the system through syslog RFC 5424."](./images/architecture/consumers.png)
-
+"](./images/architecture/consumers.png)
 
 ## <a id='bosh-metrics'></a> Related BOSH components
 
