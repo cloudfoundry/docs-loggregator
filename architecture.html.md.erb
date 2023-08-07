@@ -88,7 +88,7 @@ You can use this diagram to:
 * Diagnose performance issues related to logging and metrics.
 * Make decisions about how to scale the components or Firehose consumers described in this architecture.
 
-![](images/architecture/firehose-reference.png)
+![alt-text=""](images/architecture/firehose-reference.png)
 
 [View a larger version of this image.](./images/architecture/firehose-reference.png)
 
@@ -125,7 +125,7 @@ You can use this diagram to:
 * Diagnose performance issues related to logging and metrics.
 * Make decisions about how to best scale the Loggregator components or Firehose consumers described in this architecture.
 
-![](./images/architecture/shared-nothing-reference.png)
+![alt-text=""](./images/architecture/shared-nothing-reference.png)
 
 [View a larger version of this image.](./images/architecture/shared-nothing-reference.png)
 
@@ -227,9 +227,7 @@ Integrations with observability or monitoring products receive logs and metrics 
 
 The following diagram shows how consumers of logs and metrics receive logs and metrics from your deployment:
 
-![A Forwarder Agent appears inside a square labeled VMs. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent.
-Components also send logs to rsyslog, which then sends platform logs outside the system through syslog RFC 5424. The Forwarder Agent sends to three downstream consumers.
-The Syslog Agent sends app logs through syslog RFC 5424. The Metrics Agent exposes metrics through Prometheus endpoints. Finally, the Loggregator Agent sends metrics and app logs through syslog RFC 5424.](./images/architecture/consumers.png)
+![alt-text="A Forwarder Agent appears inside a square labeled VMs. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent.  Components also send logs to rsyslog, which then sends platform logs outside the system through syslog RFC 5424. The Forwarder Agent sends to three downstream consumers.  The Syslog Agent sends app logs through syslog RFC 5424. The Metrics Agent exposes metrics through Prometheus endpoints. Finally, the Loggregator Agent sends metrics and app logs through syslog RFC 5424."](./images/architecture/consumers.png)
 
 
 ## <a id='bosh-metrics'></a> Related BOSH components
