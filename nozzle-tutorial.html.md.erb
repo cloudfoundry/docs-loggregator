@@ -3,7 +3,11 @@ title: Deploying a Nozzle to your Cloud Foundry Loggregator Firehose
 owner: Logging and Metrics
 ---
 
+<<<<<<< HEAD
 Here you can learn how to deploy a nozzle app to the <%= vars.app_runtime_first %>
+=======
+You can deploy a nozzle app to the <%= vars.app_runtime_first %>
+>>>>>>> ccf1521f0a79ef3f247edc696860af3d513086a6
 Loggregator Firehose.
 
 For more information about nozzles and the Loggregator Firehose, see
@@ -20,7 +24,7 @@ metrics on an allow list. For examples, see `rlpreader` and `rlptypereader` in t
 [V2 Subscriptions](https://github.com/cloudfoundry/loggregator-release/blob/main/docs/v2-subscriptions.md) in the
 Loggregator Release repository in GitHub.
 
-<p class='note'><strong>Note:</strong> You can deactivate the Firehose. In place of the Firehose, you can configure an
+<p> You can deactivate the Firehose. In place of the Firehose, you can configure an
 aggregate log and metric drain for your foundation. <%= vars.configure_system_logging_link %></p>
 
 ## <a id='prerequisites'></a> Prerequisites
@@ -39,7 +43,8 @@ documentation.
 * A working <%= vars.app_runtime_abbr %> deployment, including Loggregator, deployed with your local BOSH Lite v2. This
 deployment serves as the source of data. Use the `provision_cf` script included in the BOSH Lite v2 release.
 
-<p class='note'><strong>Note:</strong> Deploying <%= vars.app_runtime_abbr %> can take several hours depending on your
+<p class="note important">
+<span class="note__title">Important</span>  Deploying <%= vars.app_runtime_abbr %> can take several hours depending on your
 internet bandwith, even when using the automated <code>provision_cf</code> script.</p>
 
 ## <a id='download-manifest'></a> Step 1: Downloading Cloud Foundry BOSH manifest
@@ -221,7 +226,7 @@ with your BOSH Director UUID.
     director_uuid: PLACEHOLDER-DIRECTOR-UUID
     ```
 
-<p class='note'><strong>Note:</strong> If you do not want to see the complete deployment procedure, run
+<p> If you do not want to see the complete deployment procedure, run
 <code>scripts/make_manifest_spiff_bosh_lite</code> to prepare the manifest.</p>
 
 ## <a id='create-nozzle-bosh-release'></a> Step 6: Creating nozzle BOSH release

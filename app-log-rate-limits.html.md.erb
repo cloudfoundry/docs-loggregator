@@ -3,7 +3,11 @@ title: Limiting your App Log Rate in Cloud Foundry
 owner: Logging and Metrics
 ---
 
+<<<<<<< HEAD
 Here you can learn about limiting your app log rate for apps in <%= vars.app_runtime_full %>.
+=======
+You can limit your app log rate for apps in <%= vars.app_runtime_full %>.
+>>>>>>> ccf1521f0a79ef3f247edc696860af3d513086a6
 
 Log rate limiting limits the number of logs that can be sent to an app.
 
@@ -19,7 +23,11 @@ its cache in order to store large volumes of logs.
 
 You can allow log rate limits on a per-app basis in bytes per second.
 
+<<<<<<< HEAD
 ### <a id='overview-byte-limit'></a> App log rate limiting in bytes per second
+=======
+## <a id='overview-byte-limit'></a> App Log Rate limiting in Bytes Per Second
+>>>>>>> ccf1521f0a79ef3f247edc696860af3d513086a6
 
 In <%= vars.app_runtime_abbr %>, you can limit the number of bytes each app instance can generate per second.
 
@@ -90,7 +98,7 @@ appears in the log stream for the noisy app:
 
 To identify which app instances are exceeding the app log rate limit:
 
-<p class='note'><strong>Note:</strong> The Firehose and Log Cache plug-ins are developed by the open-source Cloud Foundry community and are not supported by
+<p> The Firehose and Log Cache plug-ins are developed by the open-source Cloud Foundry community and are not supported by
   VMware.</p>
 
 1. In a terminal window, install the Firehose plug-in by running:
