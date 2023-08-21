@@ -30,7 +30,7 @@ The following table describes all Diego container metrics:
     <td><code>float64</code></td>
   </tr><tr>
     <td><code>absolute_entitlement</code></td>
-    <td>The amount of CPU time that a Diego Cell has allocated to an app instance.
+    <td>The amount of CPU time that a Diego Cell has allocated to an app instance, in nanoseconds.
       <br>
       <br>
       At minimum, the CPU time that a Diego Cell allocates to an app instance is
@@ -42,7 +42,7 @@ The following table describes all Diego container metrics:
     <td><code>float64</code></td>
   </tr><tr>
     <td><code>absolute_usage</code></td>
-    <td>The CPU time that an app instance has used.
+    <td>The CPU time that an app instance has used, in nanoseconds.
       <br>
       <br>
       <code>absolute_usage / absolute_entitlement</code> calculates a 0-100% range of app instance usage per entitlement.</td>
