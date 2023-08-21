@@ -83,19 +83,19 @@ The way that Diego emits container metrics differs depending on the version of L
 * **Loggregator v1:** Diego emits most container metrics in a `ContainerMetric` envelope. Diego emits the `absolute_entitlement`, `absolute_usage`,
 `container_age`, `log_rate`, and `log_rate_limit` container metrics in `ValueMetric` envelopes.
 
-* **Loggregator v2:** Diego emits all container metrics in gauge envelopes. Diego emits the `absolute_entitlement`, `absolute_usage`, `container_age`,
-`log_rate`, and `log_rate_limit` container metrics in separate gauge envelopes from other container metrics.
+* **Loggregator v2:** Diego emits all container metrics in gauge envelopes. Diego emits the `absolute_entitlement`, `absolute_usage`, `container_age`, `log_rate`, and `log_rate_limit` container metrics in separate gauge envelopes from other container metrics. The container metrics come in three envelopes:
+    * One envelope containing `cpu`, `disk`, `disk_quota`, `memory`, and `memory_quota`
+    * One envelope containing `absolute_entitlement`, `absolute_usage`, and `container_age`
+    * One envelope containing `log_rate` and `log_rate_limit`
 
 
 ## <a id='cf-cli'></a> Retrieving container metrics from the cf CLI
 
 You can retrieve container metrics using the Cloud Foundry Command Line Interface (cf CLI).
 
-To retrieve CPU, memory, and disk metrics for all instances of an app, see [Retrieve CPU, memory, and disk metrics](#cpu-mem-disk).
-
-To retrieve CPU entitlement metrics for all instances of an app, see [Retrieve CPU Entitlement metrics](#cpu-entitlement).
-
-To determine when an app has exceeded its CPU entitlement, see [Monitor apps that exceed their CPU Entitlement](#cpu-entitlement).
+* To retrieve CPU, memory, and disk metrics for all instances of an app, see [Retrieve CPU, memory, and disk metrics](#cpu-mem-disk).
+* To retrieve CPU entitlement metrics for all instances of an app, see [Retrieve CPU Entitlement metrics](#cpu-entitlement).
+* To determine when an app has exceeded its CPU entitlement, see [Monitor apps that exceed their CPU Entitlement](#cpu-entitlement).
 
 ### <a id='cf-mem-disk'></a> Retrieving CPU, memory, and disk metrics
 
