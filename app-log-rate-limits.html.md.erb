@@ -43,7 +43,7 @@ indicating that Diego is dropping app logs.
 
 For more information about how Diego rate-limits app logs, see the [Go documentation](https://godoc.org/golang.org/x/time/rate).
 
-## <a id='determine-exceeded'></a> How Diego Cells determine when an app instance exceeds the app log rate limit
+## <a id='determine-exceeded'></a> How Diego Cells behave when an app instance exceeds the app log rate
 
 When an app instance exceeds the log rate limit, the Diego Cell containing the app instance emits the `AppInstanceExceededLogRateLimitCount` counter metric,
 similar to the following example:
