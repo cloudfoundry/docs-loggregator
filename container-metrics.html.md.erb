@@ -108,8 +108,7 @@ You can retrieve container metrics using the Cloud Foundry Command Line Interfac
 * To retrieve CPU, memory, and disk metrics for all instances of an app, see [Retrieve CPU, memory, and disk metrics](#cpu-mem-disk).
 * To retrieve CPU entitlement metrics for all instances of an app, see [Retrieve CPU Entitlement metrics](#cpu-entitlement).
 * To determine when an app has exceeded its CPU entitlement, see [Monitor apps that exceed their CPU Entitlement](#cpu-entitlement).
-
-# TODO: Do we need an example here as well how to retrieve traffic metrics?
+* To retrieve network traffic metrics for all instances of an app, see [Retrieve network traffic metrics](#cf-network-traffic).
 
 ### <a id='cf-mem-disk'></a> Retrieving CPU, memory, and disk metrics
 
@@ -206,3 +205,25 @@ Plug-in](https://github.com/cloudfoundry/cpu-entitlement-plugin/releases) reposi
   </pre>
   The previous example output shows that the three listed apps have an average CPU usage that exceeds 100% of their entitlements. When an app's average CPU usage
   exceeds its CPU entitlement, consider increasing their CPU entitlement to ensure that they do not become throttled.
+
+### <a id='cf-network-traffic'></a> Retrieve network traffic metrics
+
+To retrieve received- and transmitted bytes for all instances of an app:
+
+1. Install the Log Cache CLI Plug-in from the [Log Cache cf CLI Plugin](https://github.com/cloudfoundry/log-cache-cli) repository on GitHub.
+
+1. In a terminal window, run:
+
+    ```
+    cf tail --name-filter="bytes" APP-NAME
+    ```
+    Where `APP-NAME` is the name of the app.
+    <br>
+    <br>
+    This command returns `rx_bytes` and `tx_bytes` metrics for all instances of the app, similar to the following example:
+    <pre class="terminal">
+    2023-08-10T13:27:50.27+0000 [my-app/0] COUNTER rx_bytes:24842
+    2023-08-10T13:27:50.27+0000 [my-app/0] COUNTER tx_bytes:24306
+    2023-08-10T13:27:50.27+0000 [my-app/1] COUNTER rx_bytes:14832
+    2023-08-10T13:27:50.27+0000 [my-app/1] COUNTER tx_bytes:32312
+    </pre>
