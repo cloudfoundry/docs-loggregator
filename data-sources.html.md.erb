@@ -90,7 +90,7 @@ To access metrics using the Firehose plug-in:
     cf nozzle -no-filter | grep bbs | grep -i ConvergenceLRPDuration
     ```
     Because metrics are scraped at different intervals, it might take up to fifteen minutes for
-    the Firehose to receive all metrics for the component. Re-run `cf nozzle` until you have
+    the Firehose to receive all metrics for the component. Run `cf nozzle` again until you have
     received a complete set of metrics for a component. For more information, see [Firehose
     Architecture](../loggregator/architecture.html#firehose-architecture) in _Loggregator Architecture_.
     <br>
@@ -163,7 +163,6 @@ on VMs, see [Configuring a Monitoring System](/operating/monitoring/metrics.html
 
 <%= vars.custom_metrics_footnote %>
 
-
 ## <a id="transport"></a> Transport Systems for logs and metrics
 
 The following transport systems deliver logs and metrics from their source to an observability
@@ -171,8 +170,11 @@ product for viewing:
 
 * **Loggregator:** Loggregator is the transport system for both logs and metrics on apps deployed
 on <%= vars.app_runtime_abbr %>, as well as metrics on <%= vars.app_runtime_abbr %> platform
-components. For more information about the Loggregator system, including Loggregator architecture
-and components, see [Loggregator Architecture](architecture.html).
+components.
+
+	For more information about the Loggregator system, including Loggregator architecture
+and components, see [Loggregator Architecture](architecture.html) and for the types
+of envelopes being transported in Loggregator, see [Envelope Types](https://github.com/cloudfoundry/loggregator-api#v2-envelope-types).
 
 * **rsyslogd on <%= vars.app_runtime_abbr %> component VMs:** rsyslogd is the transport system
 for <%= vars.app_runtime_abbr %> component logs. Users can configure rsyslogd to transport
