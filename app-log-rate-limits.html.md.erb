@@ -88,12 +88,14 @@ appears in the log stream for the noisy app:
 2022-08-22T12:42:18.90-0800 [APP/PROC/WEB/0] OUT app instance exceeded log rate limit (1024 bytes/sec)
 </pre>
 
+<% if vars.platform_code != 'CF' %>
+The Firehose and Log Cache plug-ins are developed by the open-source Cloud Foundry community and are not supported by
+VMware.
+<% end %>>
+
 To identify which app instances are exceeding the app log rate limit:
 
-<p class='note'><strong>Note:</strong> The Firehose and Log Cache plugins are developed by the open-source Cloud Foundry community and are not supported by
-  VMware.</p>
-
-1. In a terminal window, install the Firehose plugin by running:
+1. In a terminal window, install the Firehose plug-in by running:
 
     ```
     cf install-plugin 'Firehose Plugin'

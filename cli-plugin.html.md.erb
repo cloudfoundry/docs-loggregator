@@ -9,7 +9,7 @@ The Loggregator Firehose plugin for the cf CLI allows <%= vars.app_runtime_first
 
 For more information about using plugins with the cf CLI, see [Using cf CLI Plugins](../cf-cli/use-cli-plugins.html).
 
-<p class='note'><strong>Note:</strong> You can disable the Firehose. In place of the Firehose, you can configure an aggregate log and metric drain for your foundation. <%= vars.configure_system_logging_link %></p>
+If you don't want to use the Firehose, you can configure an aggregate log and metric drain for your foundation. <%= vars.configure_system_logging_link %>
 
 
 ## <a id='prerequisites'></a> Prerequisites
@@ -42,13 +42,12 @@ To install the Loggregator Firehose plugin:
 
 ## <a id='usage'></a> Viewing the Firehose
 
-To view the streaming output of the Firehose, which includes logging events and metrics from <%= vars.app_runtime_abbr %> system components, run:
+To view the streaming output of the Firehose, which includes logging events and metrics from <%= vars.app_runtime_abbr %> system components, run the following cf command.
+You must be logged in as a <%= vars.app_runtime_abbr %> admin to access the Firehose.
 
 ```
 cf nozzle --debug
 ```
-
-<p class='note'><strong>Note:</strong> You must be logged in as a <%= vars.app_runtime_abbr %> admin to access the Firehose.</p>
 
 For more information about logging and metrics in <%= vars.app_runtime_abbr %>, see [Loggregator Architecture](./architecture.html).
 
