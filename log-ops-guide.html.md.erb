@@ -97,13 +97,11 @@ Nozzles are programs that consume data from the Loggregator Firehose. Nozzles ca
 
 For example, if you have two nozzle instances with the same subscription ID, the Firehose sends half of the data to one nozzle instance and half to the other. Similarly, if you have three nozzle instances with the same subscription ID, the Firehose sends one-third of the data to each instance.
 
-If you want to scale a nozzle, the number of nozzle instances should match the number of Traffic Controller instances:
-
-<p class="tip"><em>Number of nozzle instances = Number of Traffic Controller instances</em></p>
+If you want to scale a nozzle, the number of nozzle instances should match the number of Traffic Controller instances.
 
 Stateless nozzles should handle scaling gracefully. If a nozzle buffers or caches the data, the nozzle author must test the results of scaling the number of nozzle instances up or down.
 
-<p class='note'><strong>Note:</strong> You can disable the Firehose. In place of the Firehose, you can configure an aggregate log and metric drain for your foundation. <%= vars.configure_system_logging_link %></p>
+If you don't want to use the Firehose, you can configure an aggregate log and metric drain for your foundation. <%= vars.configure_system_logging_link %>
 
 
 ## <a id='slow-noz'></a> Slow nozzle alerts

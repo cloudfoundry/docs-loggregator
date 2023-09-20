@@ -96,7 +96,15 @@ The command output lists Diego container metric values as follows:
 | `memory` | `MemoryBytes` of `MemoryBytesQuota` |
 | `disk` | `DiskBytes` of `DiskBytesQuota` |
 
-For example:
+    type:           web
+    sidecars:
+    instances:      1/1
+    memory usage:   1024M
+         state     since                  cpu    memory        disk          logging            details
+    &#35;0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
+    </pre>
+
+The command shows the percentage of CPU the app is currently using relative to the total CPU on the host machine.
 
 ### <a id='cf-entitlement'></a> Retrieving CPU Entitlement metrics
 
