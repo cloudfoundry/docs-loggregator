@@ -25,7 +25,7 @@ This section includes the following diagrams:
 
 * Loggregator Firehose architecture. For more information, see [Loggregator Firehose Architecture](#firehose-architecture).
 
-* Shared-nothing architecture. For more information, see [Shared-Nothing Architecture](#shared-nothing-architecture).
+* Shared-nothing architecture. For more information, see [Shared-nothing Architecture](#shared-nothing-architecture).
 
 * System Metrics Agents architecture. For more information, see [System Metrics Agents Architecture](#system-metrics-agents).
 
@@ -60,15 +60,15 @@ The following components are included in the Loggregator Firehose architecture, 
 
 * **Log Cache Syslog Server:** The Log Cache Syslog Server receives logs and metrics from Syslog Agents and sends them to Log Cache.
 
-### <a id='shared-nothing-architecture'></a> Shared Nothing architecture
+### <a id='shared-nothing-architecture'></a> Shared-nothing architecture
 
-This section describes the components in the shared nothing architecture that collect, store, and transport logs and metrics on your deployment.
+This section describes the components in the shared-nothing architecture that collect, store, and transport logs and metrics on your deployment.
 
-Similar to the Loggregator Firehose Architecture, the shared nothing architecture allows you to forward logs and metrics from your deployment to external and internal consumers.
+Similar to the Loggregator Firehose Architecture, the shared-nothing architecture allows you to forward logs and metrics from your deployment to external and internal consumers.
 
-In contrast to the Loggregator Firehose architecture, logs and metrics pass through fewer components in the shared nothing architecture.
+In contrast to the Loggregator Firehose architecture, logs and metrics pass through fewer components in the shared-nothing architecture.
 
-![alt-text="Shared nothing architecture does not require the Forwarder Agent, Syslog Agent, or Metrics Agent."](./images/architecture/shared-nothing-reference.png)
+![alt-text="shared-nothing architecture does not require the Forwarder Agent, Syslog Agent, or Metrics Agent."](./images/architecture/shared-nothing-reference.png)
 
 [View a larger version of this image.](images/architecture/shared-nothing-reference.png)
 
@@ -108,7 +108,7 @@ The following describes the components of a Loggregator deployment that uses Sys
 
 ## <a id='data-flow'></a> How components transport logs and metrics
 
-This section provides detailed descriptions of how the components in the Loggregator Firehose architecture and in the shared nothing architecture transport logs and metrics on your deployment.
+This section provides detailed descriptions of how the components in the Loggregator Firehose architecture and in the shared-nothing architecture transport logs and metrics on your deployment.
 
 It describes the transport of logs and metrics during the following phases:
 
