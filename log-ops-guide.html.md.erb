@@ -62,7 +62,9 @@ Most Loggregator configurations are set to use preferred resource defaults. If y
 
 Doppler resources can require scaling to accommodate your overall log and metric volume. The recommended formula for estimating the number of Doppler instances you need to achieve a loss rate of < 1% is:
 
-<p class="tip"><em>Number of Doppler instances = doppler.ingress / 16&nbsp;000</em></p>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+Number of Doppler instances = doppler.ingress / 16&nbsp;000</em></p>
 
 where `doppler.ingress` represents the per-second rate of change of the `ingress` metric from the `doppler` source, summed over all VMs in your deployment.
 
@@ -72,7 +74,9 @@ Using maximum values over a two-week period is a recommended approach for ingres
 
 Traffic Controller resources are usually scaled in line with Doppler resources. The recommended formula for determining the number of Traffic Controller instances is:
 
-<p class="tip"><em>Number of Traffic Controller instances = Number of Doppler instances / 2</em></p>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+Number of Traffic Controller instances = Number of Doppler instances / 2</em></p>
 
 In addition, Traffic Controller resources can require scaling to accommodate the number of your log streams and Firehose subscriptions.
 
