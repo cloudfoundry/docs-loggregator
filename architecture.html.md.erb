@@ -92,7 +92,7 @@ The following components are included in the shared-nothing architecture, as sho
 
 * **Log Cache Syslog Server:** The Log Cache Syslog Server receives logs and metrics from Syslog Agents and sends them to Log Cache.
 
-* **OTel Collector:** [OpenTelemetry Collectors](https://opentelemetry.io/docs/collector/) are configured to receive metrics from Forwarder Agents and send them to external drains using a variety of available formats.
+* **OTel Collector (experimental):** [OpenTelemetry Collectors](https://opentelemetry.io/docs/collector/) are configured to receive metrics from Forwarder Agents and send them to external drains using a variety of available formats.
 
 ### <a id='system-metrics-agents'></a> System Metrics Agents architecture
 
@@ -132,7 +132,7 @@ The following describes the transport of logs and metrics from VMs through syste
   * Syslog Agent: This sends app logs in Syslog RFC 5424 format to aggregate and app log destinations.
   * Metrics Agent: This exposes metrics for Prometheus-style scraping.
   * Loggregator Agent: This sends metrics and app logs to the Loggregator Firehose.
-  * OTel Collector: This sends app and component metrics in a variety of formats to aggregate metric destinations.
+  * OTel Collector (experimental): This sends app and component metrics in a variety of formats to aggregate metric destinations.
 
    For more information about how logs and metrics flow through the Loggregator Firehose, see [How  Loggregator Firehose forwards logs and metrics](#firehose).
 
