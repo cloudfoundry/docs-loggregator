@@ -3,7 +3,8 @@ title: Configuring the OpenTelemetry Collector
 owner: Logging and Metrics
 ---
 
-You can deploy an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) to Cloud Foundry VMs to egress metrics.
+You can deploy an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) to <%= vars.app_runtime_abbr %>
+to egress metrics.
 
 When the OpenTelemetry Collector is deployed the Loggregator Forwarder Agent forwards platform and application metrics
 to the OTel Collector which then egresses metrics via one or more metric exporters that you configure.
@@ -14,8 +15,8 @@ OpenTelemetry Collector support is currently an experimental feature.</p>
 
 ## <a id='metric-exporter-config'></a> Metric Exporter Configuration
 
-The OTel Collector has a standard YAML-based file format for configuration. When deploying Cloud Foundry with Otel Collector
-support you should **only** provide the exporter configuration.
+The OTel Collector has a standard YAML-based file format for configuration. When deploying <%= vars.app_runtime_abbr %>
+with Otel Collector support you should **only** provide the exporter configuration.
 
 <p class="note important">
 <span class="note__title"><strong>Important</strong></span>
@@ -77,13 +78,13 @@ otlp/another:
 
 ### <a id='authentication'></a> Authentication
 
-The Cloud Foundry distribution of the OpenTelemetry Collector does not support configuration of authenticator extensions
-for exporters at this time.
+The <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector does not support configuration of
+authenticator extensions for exporters at this time.
 
 ### <a id='available-exporters'></a> Reviewing the Available Exporters
 
-The Cloud Foundry distribution of the OpenTelemetry Collector ships with a number of exporters. To see the exporters that are
-available for use, run the following command on a VM that has the otel-collector deployed:
+The <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector ships with a number of exporters. To see
+the exporters that are available for use, run the following command on a VM that has the otel-collector deployed:
 
 ```
 /var/vcap/packages/otel-collector/otel-collector components
@@ -91,11 +92,13 @@ available for use, run the following command on a VM that has the otel-collector
 
 Alternatively you can review the [distribution
 file](https://github.com/cloudfoundry/loggregator-agent-release/blob/main/src/otel-collector/config.yaml) used to build
-the Cloud Foundry distribution of OTel Collector. Please ensure that the tag of the loggregator-agent-release repository
-that you are reviewing matches the version of loggregator-agent release that you plan to deploy.
+the <%= vars.app_runtime_abbr %> distribution of OTel Collector. Please ensure that the tag of the
+loggregator-agent-release repository that you are reviewing matches the version of loggregator-agent release that you
+plan to deploy.
 
 ## <a id='deploying'></a> Deploying the OpenTelemetry Collector
 
+<% if vars.platform_code == 'CF' %>
 CF Deployment provides [experimental operations files](https://github.com/cloudfoundry/cf-deployment/tree/main/operations/experimental)
 that you can use to deploy the OTel Collector
 [on Linux](https://github.com/cloudfoundry/cf-deployment/blob/main/operations/experimental/add-otel-collector.yml) and
@@ -109,3 +112,6 @@ bosh deploy cf-deployment.yml \
   --var-file=otel_collector_metric_exporters=YOUR_METRIC_EXPORTER_CONFIG_FILE_PATH.yml \
   --var=system_domain=YOUR_SYSTEM_DOMAIN
 ```
+<% else %>
+  <%= partial "/pcf/core/deploy_otel_collector" %>
+<% end %>
