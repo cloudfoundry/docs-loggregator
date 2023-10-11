@@ -6,38 +6,38 @@ owner: Logging and Metrics
 You can deploy an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) for <%= vars.app_runtime_abbr %>
 to egress metrics.
 
-When the OpenTelemetry Collector is deployed the Loggregator Forwarder Agent forwards platform and application metrics
-to the OTel Collector which then egresses metrics via one or more metric exporters that you configure.
+When the OpenTelemetry Collector is deployed, the Loggregator Forwarder Agent forwards platform and application metrics
+to the OTel Collector, which then egresses metrics using one or more metric exporters that you configure.
 
 <p class="note caution">
 <span class="note__title"><strong>Caution</strong></span>
 OpenTelemetry Collector support is currently an experimental feature.</p>
 
-## <a id='metric-exporter-config'></a> Metric Exporter Configuration
+## <a id='metric-exporter-config'></a> Metric Exporter configuration
 
 The OTel Collector has a standard YAML-based file format for configuration. When deploying <%= vars.app_runtime_abbr %>
-with Otel Collector support you should **only** provide the exporter configuration.
+with Otel Collector support, provide only the exporter configuration.
 
 <p class="note important">
 <span class="note__title"><strong>Important</strong></span>
 You should only specify the configuration under the `exporters` section of the OpenTelemetry Collector configuration. It
 is not currently possible to configure Receivers or Processors.</p>
 
-For example, to configure the OpenTelemetry Collector to egress metrics via OTLP over gRPC you could provide the following
-minimal configuration. This will use the defaults for gRPC and TLS configuration:
+For example, to configure the OpenTelemetry Collector to egress metrics using OTLP over gRPC, you can provide the following
+minimal configuration. This will use the defaults for gRPC and TLS configuration.
 
 ```
 otlp:
   endpoint: 203.0.113.10:4317
 ```
 
-As the OTel Collector is typically deployed on all VMs you will want to ensure that all VMs in your deployment are
+As the OTel Collector is typically deployed on all VMs, you must ensure that all VMs in your deployment are
 allowed to connect to the OTLP server endpoint.
 
 ### <a id='mtls'></a> mTLS
 
-To configure the exporter to do mTLS to the remote OTLP endpoint you can specify [additional TLS
-configuration](https://github.com/open-telemetry/opentelemetry-collector/blob/main/config/configtls/README.md):
+To configure the exporter to use an mTLS connection to the remote OTLP endpoint, you can specify [additional TLS
+configuration](https://github.com/open-telemetry/opentelemetry-collector/blob/main/config/configtls/README.md).
 
 ```
 otlp:
@@ -51,12 +51,12 @@ otlp:
       PEM_ENCODED_CERTIFICATE
 ```
 
-### <a id='grpc-compression'></a> gRPC Compression
+### <a id='grpc-compression'></a> gRPC compression
 
 You can configure the type of compression used for OTLP gRPC exporters. The OTLP gRPC exporter uses `gzip` compression
 by default. To reduce CPU usage of the OTel Collector (increasing the size of the payload) you can optionally configure
-the OTLP gRPC exporter to use `snappy` compression. You should validate that the server you are sending metrics to
-supports snappy compression before making this change:
+the OTLP gRPC exporter to use `snappy` compression. Validate that the server you are sending metrics to
+supports `snappy` compression before making this change.
 
 ```
 otlp:
@@ -64,10 +64,10 @@ otlp:
   compression: snappy
 ```
 
-### <a id='multiple-exporters'></a> Multiple Exporters
+### <a id='multiple-exporters'></a> Multiple exporters
 
-The OTel Collector supports defining multiple exporters, each with their own configuration. For example you could define
-two OTLP gRPC exporters egressing metrics to different destinations:
+The OTel Collector supports defining multiple exporters, each with its own configuration. For example, you can define
+two OTLP gRPC exporters egressing metrics to different destinations.
 
 ```
 otlp:
@@ -81,19 +81,18 @@ otlp/another:
 The <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector does not support configuration of
 authenticator extensions for exporters at this time.
 
-### <a id='available-exporters'></a> Reviewing the Available Exporters
+### <a id='available-exporters'></a> Reviewing the available exporters
 
 The <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector ships with a number of exporters. To see
-the exporters that are available for use, run the following command on a VM that has the otel-collector deployed:
+the exporters that are available for use, run the following command on a VM that has the otel-collector deployed.
 
 ```
 /var/vcap/packages/otel-collector/otel-collector components
 ```
 
-Alternatively you can review the [distribution
-file](https://github.com/cloudfoundry/loggregator-agent-release/blob/main/src/otel-collector/config.yaml) used to build
-the <%= vars.app_runtime_abbr %> distribution of OTel Collector. Please ensure that the tag of the
-loggregator-agent-release repository that you are reviewing matches the version of loggregator-agent release that you
+Alternatively, you can review the [distribution file](https://github.com/cloudfoundry/loggregator-agent-release/blob/main/src/otel-collector/config.yaml) used to build
+the <%= vars.app_runtime_abbr %> distribution of OTel Collector. Ensure that the tag of the
+loggregator-agent-release repository that you are reviewing matches the version of loggregator-agent-release that you
 plan to deploy.
 
 ## <a id='deploying'></a> Deploying the OpenTelemetry Collector
@@ -104,7 +103,7 @@ that you can use to deploy the OTel Collector
 [on Linux](https://github.com/cloudfoundry/cf-deployment/blob/main/operations/experimental/add-otel-collector.yml) and
 [on Windows](https://github.com/cloudfoundry/cf-deployment/blob/main/operations/experimental/add-otel-collector-windows.yml).
 
-For example to deploy a fresh deployment of CF Deployment with OTel Collector enabled you could run:
+For example, to deploy a fresh CF Deployment with OTel Collector enabled, run:
 
 ```
 bosh deploy cf-deployment.yml \
