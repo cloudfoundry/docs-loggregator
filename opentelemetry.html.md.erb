@@ -3,7 +3,7 @@ title: Configuring the OpenTelemetry Collector
 owner: Logging and Metrics
 ---
 
-You can deploy an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) to <%= vars.app_runtime_abbr %>
+You can deploy an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) for <%= vars.app_runtime_abbr %>
 to egress metrics.
 
 When the OpenTelemetry Collector is deployed the Loggregator Forwarder Agent forwards platform and application metrics
@@ -31,7 +31,7 @@ otlp:
   endpoint: 203.0.113.10:4317
 ```
 
-As the OTel Collector is typically deployed as a BOSH add-on you will want to ensure that all VMs in your deployment are
+As the OTel Collector is typically deployed on all VMs you will want to ensure that all VMs in your deployment are
 allowed to connect to the OTLP server endpoint.
 
 ### <a id='mtls'></a> mTLS
