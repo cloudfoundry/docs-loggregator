@@ -20,7 +20,7 @@ with Otel Collector support, provide only the exporter configuration.
 
 <p class="note important">
 <span class="note__title"><strong>Important</strong></span>
-You should only specify the configuration under the `exporters` section of the OpenTelemetry Collector configuration. It
+You should only specify the configuration under the <code>exporters</code> section of the OpenTelemetry Collector configuration. It
 is not currently possible to configure Receivers or Processors.</p>
 
 For example, to configure the OpenTelemetry Collector to egress metrics using OTLP over gRPC, you can provide the following
@@ -84,7 +84,7 @@ authenticator extensions for exporters at this time.
 ### <a id='available-exporters'></a> Reviewing the available exporters
 
 The <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector ships with a number of exporters. To see
-the exporters that are available for use, run the following command on a VM that has the otel-collector deployed.
+the exporters that are available for use, run the following command on a VM that has otel-collector deployed.
 
 ```
 /var/vcap/packages/otel-collector/otel-collector components
@@ -99,9 +99,10 @@ plan to deploy.
 
 <% if vars.platform_code == 'CF' %>
 CF Deployment provides [experimental operations files](https://github.com/cloudfoundry/cf-deployment/tree/main/operations/experimental)
-that you can use to deploy the OTel Collector
-[on Linux](https://github.com/cloudfoundry/cf-deployment/blob/main/operations/experimental/add-otel-collector.yml) and
-[on Windows](https://github.com/cloudfoundry/cf-deployment/blob/main/operations/experimental/add-otel-collector-windows.yml).
+that you can use to deploy the OTel Collector:
+
+* [on Linux](https://github.com/cloudfoundry/cf-deployment/blob/main/operations/experimental/add-otel-collector.yml)
+* [on Windows](https://github.com/cloudfoundry/cf-deployment/blob/main/operations/experimental/add-otel-collector-windows.yml)
 
 For example, to deploy a fresh CF Deployment with OTel Collector enabled, run:
 
