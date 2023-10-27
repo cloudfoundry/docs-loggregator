@@ -181,12 +181,13 @@ The following describes the transport of logs and metrics from VMs through syste
 
   1. Apps and component VMs on your deployment emit logs and metrics.
   2. Logs and metrics pass through two forwarders:
-    * rsyslog. This sends logs from the component VMs in Syslog RFC 5424 format.
-    * The Forwarder Agent. This sends metrics and app logs to the Syslog Agent, the Metrics Agent, and the Loggregator Agent.
+     * rsyslog: This sends logs from the component VMs in Syslog RFC 5424 format.
+     * Forwarder Agent: This sends metrics and app logs to the Syslog Agent, the Metrics Agent, and the Loggregator Agent.
   3. From the Forwarder Agent, logs and metrics then pass through each of the following agents:
-    * The Syslog Agent. This sends app logs in Syslog RFC 5424 format to aggregate and app log destinations.
-    * The Metrics Agent. This exposes metrics for Prometheus-style scraping.
-    * The Loggregator Agent. This sends metrics and app logs to the Loggregator Firehose. For more information about how logs and metrics flow through the Loggregator Firehose, see [How the Loggregator Firehose Forwards Logs and Metrics](#firehose) below.
+     * Syslog Agent: This sends app logs in Syslog RFC 5424 format to aggregate and app log destinations.
+     * Metrics Agent: This exposes metrics for Prometheus-style scraping.
+     * Loggregator Agent: This sends metrics and app logs to the Loggregator Firehose.
+     * OTel Collector (experimental): This sends app and component metrics in a variety of formats to aggregate metric destinations.
 
    For more information about how logs and metrics flow through the Loggregator Firehose, see [How  Loggregator Firehose forwards logs and metrics](#firehose).
 
