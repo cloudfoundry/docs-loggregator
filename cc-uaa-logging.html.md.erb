@@ -6,7 +6,7 @@ owner: Logging and Metrics
 Here you can learn how to activate and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub.
 You can use these logs to retrieve information about a subset of requests to the Cloud Controller, UAA server, and CredHub for security or compliance purposes.
 
-##<a id="cc"></a>Cloud Controller logging
+##  <a id="cc"></a>Cloud Controller logging
 
 <%=vars.cc_logging_default%>
 
@@ -14,7 +14,7 @@ The Cloud Controller logs security events to syslog. You must configure a syslog
 
 <%=vars.enable_syslog_drain%>
 
-###<a id="format"></a>Formatting log entries
+###  <a id="format"></a>Formatting log entries
 
 Cloud Controller logs security events in the [Common Event Format](https://kc.mcafee.com/resources/sites/MCAFEE/content/live/CORP_KNOWLEDGEBASE/78000/KB78712/en_US/CEF_White_Paper_20100722.pdf) (CEF). CEF specifies the following format for log entries:
 
@@ -55,7 +55,7 @@ See the following list for a description of the properties shown in the Cloud Co
 * `X_FORWARDED_FOR_HEADER`: The contents of the X-Forwarded-For
 header of the request. This is empty if the header is not present.
 
-###<a id="example"></a>Exanples of log entries
+###  <a id="example"></a>Examples of log entries
 
 The following list provides several example requests with the corresponding Cloud Controller log entries.
 
@@ -124,13 +124,13 @@ The following list provides several example requests with the corresponding Clou
     cs5=<%=vars.example_ip_2%>
     ```
 
-##<a id="uaa"></a>UAA logging
+##  <a id="uaa"></a>UAA logging
 
 UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA virtual machine (VM). Because these logs are rotated, you must configure a syslog drain to forward your system logs to a log management service.
 
 <%=vars.enable_syslog_drain%>
 
-###<a id='uaa-events'></a>Log Events
+###  <a id='uaa-events'></a>Log Events
 
 UAA logs identify the following categories of events:
 
@@ -142,7 +142,7 @@ UAA logs identify the following categories of events:
 
 To learn more about the names of the events included in these categories and the information they record in the UAA logs, see [User Account and Authentication Service Audit Requirements](https://docs.cloudfoundry.org/running/managing-cf/uaa-audit-requirements.html).
 
-###<a id='uaa-events'></a>Exanples of log entries
+###  <a id='uaa-events'></a>Examples of log entries
 
 The following sections provide several example requests with the corresponding UAA log entries.
 
@@ -200,13 +200,13 @@ sub=admin, iss=https://uaa.example.com/oauth/token)], identityZoneId=[uaa]
 * This entry records a `UserDeletedEvent`.
 * The `admin` user originating at `<%=vars.example_ip_2%>` deleted a user named `bob@example.com`.
 
-##<a id="credhub"></a>CredHub logging
+##  <a id="credhub"></a>CredHub logging
 
 CredHub logs security events to a file located at `/var/vcap/sys/log/credhub/credhub_security_events.log` on the CredHub VM. Because these logs are rotated, you must configure a syslog drain to forward your system logs to a log management service.
 
 <%=vars.enable_syslog_drain%>
 
-###<a id="credhub-format"></a>Format for Log Entries
+###  <a id="credhub-format"></a>Format for Log Entries
 
 CredHub logs security events in the [Common Event Format](https://kc.mcafee.com/resources/sites/MCAFEE/content/live/CORP_KNOWLEDGEBASE/78000/KB78712/en_US/CEF_White_Paper_20100722.pdf) (CEF). CEF specifies the following format for log entries:
 
@@ -269,7 +269,7 @@ See the following list for a description of the properties shown in the CredHub 
 logs include <code>cs2Label=resourceName</code> to define the <code>cs2</code> label. The value
 for <code>resourceName</code> appears in the log next to <code>cs2=/path/to/credential</code>.</p>
 
-###<a id="credhub-example"></a>Example Log Entries
+###  <a id="credhub-example"></a>Example Log Entries
 
 The following sections provide several example requests with the corresponding CredHub log entries.
 
