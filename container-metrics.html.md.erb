@@ -15,12 +15,15 @@ Diego containers emit resource usage metrics for the application instance. Diego
 
 The following table describes all Diego container metrics:
 
-<table id='container-metrics' class="nice" >
+<table class=“table”>
+<thead>
   <tr>
     <th width=27%>Metric</th>
     <th width=58%>Description</th>
     <th width=15%>Unit</th>
-  </tr><tr>
+  </tr>
+  </thead>
+  <tr>
     <td><code>CpuPercentage</code></td>
     <td>CPU time used by AI as a percentage of a single CPU core.<br><br>
     This is usually no greater than <code>100% * the number of vCPUs on the host Diego cell</code>, but it might be more due to discrepancies in measurement timing.</td>
