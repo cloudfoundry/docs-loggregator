@@ -108,26 +108,31 @@ To retrieve CPU, memory, and disk metrics for all instances of an application:
     ```
     cf app APP-NAME
     ```
+
     Where `APP-NAME` is the name of the app.
     <br>
-    <br>
     The above command returns CPU, memory, and disk metrics for all instances of the app, similar to the following example:
-    <pre class="terminal">
-    Showing health and status for app dora-example in org o / space s as admin...
+    
+<pre class="terminal">
+Showing health and status for app dora-example in org o / space s as admin...
+</pre>
 
-| Label in Output | Metrics listed, as described in [Diego Container Metrics](#container-metrics) |
+| Label in output | Metrics listed |
 |---|---|
 | `cpu` | `CpuPercentage` |
 | `memory` | `MemoryBytes` of `MemoryBytesQuota` |
 | `disk` | `DiskBytes` of `DiskBytesQuota` |
 
-    type:           web
-    sidecars:
-    instances:      1/1
-    memory usage:   1024M
-         state     since                  cpu    memory        disk          logging            details
-    &#35;0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
-    </pre>
+The listed metrics are as described in [Diego Container Metrics](#container-metrics).
+
+<pre>
+  type:           web
+  sidecars:
+  instances:      1/1
+  memory usage:   1024M
+        state     since                  cpu    memory        disk          logging            details
+  &#35;0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
+</pre>
 
 The command shows the percentage of CPU the app is currently using relative to the total CPU on the host machine.
 
@@ -142,21 +147,22 @@ repository on GitHub.
 
 To see application instance `AbsoluteCPUEntitlement` metrics from the command line:
 
-    ```
-    cf cpu-entitlement APP-NAME
-    ```
-    Where `APP-NAME` is the name of the app.
-    <br>
-    <br>
-    The above command returns `absolute_entitlement` metrics for all instances of the app, similar to the following example:
-    <pre class="terminal">
-    Showing CPU usage against entitlement for app dora-example in org example-org / space example-org-staging as dora@example.com ...
-    ​
-         avg usage   curr usage
-    &#35;0   1.62%       1.66%
-    &#35;1   2.93%       3.09%
-    &#35;2   2.51%       2.62%
-    </pre>
+  ```
+  cf cpu-entitlement APP-NAME
+  ```
+
+  Where `APP-NAME` is the name of the app.
+  <br>
+  The above command returns `absolute_entitlement` metrics for all instances of the app, similar to the following example:
+    
+<pre class="terminal">
+Showing CPU usage against entitlement for app dora-example in org example-org / space example-org-staging as dora@example.com ...
+​
+      avg usage   curr usage
+&#35;0   1.62%       1.66%
+&#35;1   2.93%       3.09%
+&#35;2   2.51%       2.62%
+</pre>
 
 ### <a id='cpu-entitlement'></a> Determining when Applications exceed their CPU Entitlement
 
@@ -179,14 +185,16 @@ repository on GitHub.
   cf over-entitlement-instances
   ```
   The above command returns output similar to the following example:
-  <pre class="terminal">
-  Note: This feature is experimental.
-  Showing over-entitlement apps in org example-org / space example-org-staging as dora@example.com ...
-  ​
-       space                     app
-  &#35;0   example-org-staging       dora-example-2
-  &#35;1   example-org-staging       dora-example-3
-  &#35;2   example-org-staging       dora-example-4
-  </pre>
-  The above example output shows that the three listed apps have an average CPU usage that exceeds 100% of their entitlements. When an app's average CPU usage
-  exceeds its CPU entitlement, consider increasing their CPU entitlement to ensure that they do not become throttled.
+
+<pre class="terminal">
+Note: This feature is experimental.
+Showing over-entitlement apps in org example-org / space example-org-staging as dora@example.com ...
+​
+      space                     app
+&#35;0   example-org-staging       dora-example-2
+&#35;1   example-org-staging       dora-example-3
+&#35;2   example-org-staging       dora-example-4
+</pre>
+
+The above example output shows that the three listed apps have an average CPU usage that exceeds 100% of their entitlements. When an app's average CPU usage
+exceeds its CPU entitlement, consider increasing their CPU entitlement to ensure that they do not become throttled.
