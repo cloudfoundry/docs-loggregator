@@ -7,7 +7,6 @@ You can use logging and metrics in <%= vars.app_runtime_full %>
 (<%= vars.app_runtime_abbr %>). Learn about logs and metrics sources, and
 transport systems. It also lists products for viewing logs and metrics.
 
-
 ## <a id="sources"></a> Accessing metrics
 
 You must use a Cloud Foundry Command-Line Interface (cf CLI) plug-in to access and view metrics
@@ -22,6 +21,7 @@ To access metrics with the Log Cache plug-in:
     ```
     cf login -a API-URL -u USERNAME -p PASSWORD
     ```
+
     Where:
     <ul>
     <li><code>API-URL</code> is your API endpoint.</li>
@@ -34,6 +34,7 @@ To access metrics with the Log Cache plug-in:
     ```
     cf install-plug-in -r CF-Community "log-cache"
     ```
+
     For more information, see [log-cache](https://plugins.cloudfoundry.org/#log-cache) in _cf
     CLI plug-ins_ on the Cloud Foundry website.
 
@@ -42,6 +43,7 @@ To access metrics with the Log Cache plug-in:
     ```
     cf query 'METRIC-NAME{source_id="SOURCE-ID"}'
     ```
+
     Where:
     <ul>
     <li><code>METRIC-NAME</code> is the name of the metric you want to view.</li>
@@ -58,6 +60,7 @@ To access metrics using the Firehose plug-in:
     ```
     cf login -a API-URL -u USERNAME -p PASSWORD
     ```
+
     Where:
     <ul>
     <li><code>API-URL</code> is your API endpoint.</li>
@@ -70,6 +73,7 @@ To access metrics using the Firehose plug-in:
     ```
     cf install-plugin -r CF-Community "Firehose Plugin"
     ```
+
     For more information, see [Firehose plug-ins](https://plugins.cloudfoundry.org/#Firehose%20Plugin)
     in _cf CLI Plug-ins_ on the Cloud Foundry website.
 
@@ -78,6 +82,7 @@ To access metrics using the Firehose plug-in:
     ```
     cf nozzle -no-filter | grep SOURCE-ID | grep -i METRIC-NAME
     ```
+
     Where:
     <ul>
     <li><code>METRIC-NAME</code> is the name of the metric you want to view.</li>
@@ -89,6 +94,7 @@ To access metrics using the Firehose plug-in:
     ```
     cf nozzle -no-filter | grep bbs | grep -i ConvergenceLRPDuration
     ```
+
     Because metrics are scraped at different intervals, it might take up to fifteen minutes for
     the Firehose to receive all metrics for the component. Run `cf nozzle` again until you have
     received a complete set of metrics for a component. For more information, see [Firehose
@@ -99,48 +105,48 @@ To access metrics using the Firehose plug-in:
 
 For more information about nozzles, <%= vars.nozzle_info_link %>.
 
-
 ## <a id="sources"></a> Sources for logs and metrics
 
 The following sources are for <%= vars.app_runtime_abbr %> logs and metrics:
 
- * <%= vars.app_runtime_abbr %> platform components, such as a Diego Cell, MySQL Server, or
+* <%= vars.app_runtime_abbr %> platform components, such as a Diego Cell, MySQL Server, or
  Cloud Controller
- * Apps and app containers deployed on <%= vars.app_runtime_abbr %>
+* Apps and app containers deployed on <%= vars.app_runtime_abbr %>
 
 The following table describes the data included in logs and metrics from each source:
-
-<table>
-	<tr>
-		<th width="20%">Source</th>
-		<th width="40%">Logs Data</th>
-		<th>Metrics Data</th>
-	</tr>
-	<tr>
-		<td>Platform components</td>
-		<td>Logs from <%= vars.app_runtime_abbr %> components</td>
-		<td>
-			<ul>
-				<li>Health metrics from BOSH-deployed VMs<sup>1</sup></li>
-				<li>Platform metrics from <%= vars.app_runtime_abbr %> components. For example, Diego
+<table class=“table”>
+<thead>
+ <tr>
+  <th width="20%">Source</th>
+  <th width="40%">Logs Data</th>
+  <th>Metrics Data</th>
+ </tr>
+ </thead>
+ <tr>
+  <td>Platform components</td>
+  <td>Logs from <%= vars.app_runtime_abbr %> components</td>
+  <td>
+   <ul>
+    <li>Health metrics from BOSH-deployed VMs<sup>1</sup></li>
+    <li>Platform metrics from <%= vars.app_runtime_abbr %> components. For example, Diego
           Cell capacity remaining and Gorouter throughput.</li>
-				<li>Metrics for any service tile that self-publishes to the Loggregator Firehose. For
+    <li>Metrics for any service tile that self-publishes to the Loggregator Firehose. For
           example, Redis and MySQL.</li>
-			</ul>
-		</td>
-	</tr>
-	<tr>
-		<td>Apps and app containers</td>
-		<td>Logs from apps<sup>2</sup></td>
-		<td>
-			<ul>
-				<li>Container metrics<sup>3</sup></li>
-				<% if vars.platform_code != 'CF' %>
-				<li>Custom app metrics<sup>4</sup></li>
-				<% end %>
-			</ul>
-		</td>
-	</tr>
+   </ul>
+  </td>
+ </tr>
+ <tr>
+  <td>Apps and app containers</td>
+  <td>Logs from apps<sup>2</sup></td>
+  <td>
+   <ul>
+    <li>Container metrics<sup>3</sup></li>
+    <% if vars.platform_code != 'CF' %>
+    <li>Custom app metrics<sup>4</sup></li>
+    <% end %>
+   </ul>
+  </td>
+ </tr>
 </table>
 
 <% if vars.platform_code == 'CF' || vars.platform_code == 'OFFLINE' %>
@@ -172,7 +178,7 @@ product for viewing:
 on <%= vars.app_runtime_abbr %>, as well as metrics on <%= vars.app_runtime_abbr %> platform
 components.
 
-	For more information about the Loggregator system, including Loggregator architecture
+For more information about the Loggregator system, including Loggregator architecture
 and components, see [Loggregator Architecture](architecture.html) and for the types
 of envelopes being transported in Loggregator, see [Envelope Types](https://github.com/cloudfoundry/loggregator-api#v2-envelope-types).
 
@@ -183,81 +189,84 @@ component logs to a third-party syslog server.
 The following table lists the transport system for logs and metrics on <%= vars.app_runtime_abbr %>
 platform components and apps:
 
-<table>
-	<tr>
-		<th width="20%">Source</th>
-		<th width="40%">Logs Transport System</th>
-		<th>Metrics Transport System</th>
-	</tr>
-	<tr>
-		<td>Platform components</td>
-		<td>rsyslogd on <%= vars.app_runtime_abbr %> component VMs</td>
-		<td>Loggregator</td>
-	</tr>
-	<tr>
-		<td>Apps</td>
-		<td>Loggregator</td>
-		<td>Loggregator</td>
-	</tr>
+<table class=“table”>
+<thead>
+ <tr>
+  <th width="20%">Source</th>
+  <th width="40%">Logs Transport System</th>
+  <th>Metrics Transport System</th>
+ </tr>
+ </thead>
+ <tr>
+  <td>Platform components</td>
+  <td>rsyslogd on <%= vars.app_runtime_abbr %> component VMs</td>
+  <td>Loggregator</td>
+ </tr>
+ <tr>
+  <td>Apps</td>
+  <td>Loggregator</td>
+  <td>Loggregator</td>
+ </tr>
 </table>
-
 
 ## <a id="viewing"></a> Viewing logs and metrics
 
 The following table lists the products and tools for viewing <%= vars.app_runtime_abbr %> logs
 and metrics:
 
-<table>
-	<tr>
-		<th width="20%">Source</th>
-		<th width="40%">Products and Tools for Viewing Logs</th>
-		<th>Products and Tools for Viewing Metrics</th>
-	</tr>
-	<tr>
-		<td>Platform components</td>
-		<td valign="top">To view system logs from <%= vars.app_runtime_abbr %> components, configure
+<table class=“table”>
+<thead>
+ <tr>
+  <th width="20%">Source</th>
+  <th width="40%">Products and Tools for Viewing Logs</th>
+  <th>Products and Tools for Viewing Metrics</th>
+ </tr>
+ </thead>
+ <tr>
+  <td>Platform components</td>
+  <td valign="top">To view system logs from <%= vars.app_runtime_abbr %> components, configure
       rsyslogd to transport logs to a third-party product.</td>
-		<td valign="top">
-			You can use the following products or tools to view platform component and VM metrics:
-			<ul>
-				<li>Loggregator Firehose CLI Plug in. See <a href="cli-plugin.html">Installing the Loggregator
+  <td valign="top">
+   You can use the following products or tools to view platform component and VM metrics:
+   <ul>
+    <li>Loggregator Firehose CLI Plug in. See <a href="cli-plugin.html">Installing the Loggregator
           Firehose plug-in for CLI</a>.</li>
-				<li>Loggregator Log Cache CLI plug-in. See <a href="https://plugins.cloudfoundry.org/">
+    <li>Loggregator Log Cache CLI plug-in. See <a href="https://plugins.cloudfoundry.org/">
           Cloud Foundry Community cf CLI plug-ins</a>.</li>
-				<% if vars.platform_code != 'CF' %>
-				<li><%= vars.platform_metric_tool_ref %></li>
-				<% end %>
-			</ul>
-		</td>
-	</tr>
-	<tr>
-		<td>Apps</td>
-		<td valign="top">
-			You can use the following products or tools to view app logs:
-			<ul>
-				<li>cf CLI cf logs command. See <a href="https://cli.cloudfoundry.org/en-US/cf/logs.html">
+    <% if vars.platform_code != 'CF' %>
+    <li><%= vars.platform_metric_tool_ref %></li>
+    <% end %>
+   </ul>
+  </td>
+ </tr>
+ <tr>
+  <td>Apps</td>
+  <td valign="top">
+   You can use the following products or tools to view app logs:
+   <ul>
+    <li>cf CLI cf logs command. See <a href="https://cli.cloudfoundry.org/en-US/cf/logs.html">
           Cloud Foundry CLI Reference Guide.</a></li>
-				<% if vars.platform_code != 'CF' %>
-				<li><%= vars.manage_apps_service_instances_ref %></li>
-				<% end %>
-				<li><%= vars.syslog_forwarding_ref %></li>
-				<li>Loggregator Firehose CLI plug-in. See <a href="cli-plugin.html">Installing the Loggregator
+    <% if vars.platform_code != 'CF' %>
+    <li><%= vars.manage_apps_service_instances_ref %></li>
+    <% end %>
+    <li><%= vars.syslog_forwarding_ref %></li>
+    <li>Loggregator Firehose CLI plug-in. See <a href="cli-plugin.html">Installing the Loggregator
           Firehose plug-in for CLI</a>.</li>
-				<li>Loggregator Log Cache CLI plug-in. See <a href="https://plugins.cloudfoundry.org/">
+    <li>Loggregator Log Cache CLI plug-in. See <a href="https://plugins.cloudfoundry.org/">
           Cloud Foundry Community cf CLI plug-ins</a>.</li>
-			</ul>
-		</td>
-		<td valign="top">
-			You can use the following products or tools to view app metrics:
-			<ul>
-				<li>Loggregator Firehose CLI plug-in. See <a href="cli-plugin.html">Installing the Loggregator
+   </ul>
+  </td>
+  <td valign="top">
+   You can use the following products or tools to view app metrics:
+   <ul>
+    <li>Loggregator Firehose CLI plug-in. See <a href="cli-plugin.html">Installing the Loggregator
           Firehose plug-in for CLI</a>.</li>
-				<li>Loggregator Log Cache CLI plug-in. See <a href="https://plugins.cloudfoundry.org/">
+    <li>Loggregator Log Cache CLI plug-in. See <a href="https://plugins.cloudfoundry.org/">
           Cloud Foundry Community cf CLI plug-ins</a>.</li>
-				<% if vars.platform_code != 'CF' %>
-				<li><%= vars.metrics_product_ref %></li>
-				<% end %>
-			</ul>
-		</td>
-	</tr>
+    <% if vars.platform_code != 'CF' %>
+    <li><%= vars.metrics_product_ref %></li>
+    <% end %>
+   </ul>
+  </td>
+ </tr>
 </table>
