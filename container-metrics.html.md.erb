@@ -116,28 +116,32 @@ To retrieve CPU, memory, and disk metrics for all instances of an application:
     ```
     cf app APP-NAME
     ```
+
     Where `APP-NAME` is the name of the app.
-    <br>
     <br>
     This command returns CPU, memory, and disk metrics for all instances of the app, similar to the following example:
     <pre class="terminal">
     Showing health and status for app dora-example in org o / space s as admin...
 
-| Label in Output | Metrics listed, as described in [Diego Container Metrics](#container-metrics) |
+| Label in output | Metrics listed |
 |---|---|
 | `cpu` | `CpuPercentage` |
 | `memory` | `MemoryBytes` of `MemoryBytesQuota` |
 | `disk` | `DiskBytes` of `DiskBytesQuota` |
 
-    type:           web
-    sidecars:
-    instances:      1/1
-    memory usage:   1024M
-         state     since                  cpu    memory        disk          logging            details
-    &#35;0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
-    </pre>
-    <p> The preceding command shows what percentage of CPU the app is currently using relative to the total CPU on the host
-      machine.</p>
+The listed metrics are described in [Diego container metrics](#container-metrics).
+
+<pre>
+type:           web
+sidecars:
+instances:      1/1
+memory usage:   1024M
+      state     since                  cpu    memory        disk          logging            details
+&#35;0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
+</pre>
+
+The preceding command shows what percentage of CPU the app is currently using relative to the total CPU on the host
+machine.
 
 ### <a id='cf-entitlement'></a> Retrieving CPU Entitlement metrics
 
@@ -150,21 +154,22 @@ repository on GitHub.
 
 To see application instance `AbsoluteCPUEntitlement` metrics from the command line:
 
-    ```
-    cf cpu-entitlement APP-NAME
-    ```
-    Where `APP-NAME` is the name of the app.
-    <br>
-    <br>
-    This command returns `absolute_entitlement` metrics for all instances of the app, similar to the following example:
-    <pre class="terminal">
-    Showing CPU usage against entitlement for app dora-example in org example-org / space example-org-staging as dora@example.com ...
-    ​
-         avg usage   curr usage
-    &#35;0   1.62%       1.66%
-    &#35;1   2.93%       3.09%
-    &#35;2   2.51%       2.62%
-    </pre>
+  ```
+  cf cpu-entitlement APP-NAME
+  ```
+
+  Where `APP-NAME` is the name of the app.
+  <br>
+  This command returns `absolute_entitlement` metrics for all instances of the app, similar to the following example:
+    
+<pre class="terminal">
+Showing CPU usage against entitlement for app dora-example in org example-org / space example-org-staging as dora@example.com ...
+​
+    avg usage   curr usage
+&#35;0   1.62%       1.66%
+&#35;1   2.93%       3.09%
+&#35;2   2.51%       2.62%
+</pre>
 
 ### <a id='cpu-entitlement'></a> Determining when Applications exceed their CPU Entitlement
 
@@ -186,7 +191,9 @@ Plug-in](https://github.com/cloudfoundry/cpu-entitlement-plugin/releases) reposi
   ```
   cf over-entitlement-instances
   ```
+
   This command returns output similar to the following example:
+
   <pre class="terminal">
 
   Note, this feature is experimental.
@@ -211,10 +218,11 @@ To retrieve received- and transmitted bytes for all instances of an app:
     ```
     cf tail --name-filter="bytes" APP-NAME
     ```
+
     Where `APP-NAME` is the name of the app.
     <br>
-    <br>
     This command returns `rx_bytes` and `tx_bytes` metrics for all instances of the app, similar to the following example:
+
     <pre class="terminal">
     2023-08-10T13:27:50.27+0000 [my-app/0] COUNTER rx_bytes:24842
     2023-08-10T13:27:50.27+0000 [my-app/0] COUNTER tx_bytes:24306
