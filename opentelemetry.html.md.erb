@@ -6,12 +6,12 @@ owner: Logging and Metrics
 You can deploy an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) for <%= vars.app_runtime_abbr %>
 to egress metrics.
 
-When the OpenTelemetry Collector is deployed, the Loggregator Forwarder Agent forwards platform and application metrics
+When the OpenTelemetry (OTel) Collector is deployed, the Loggregator Forwarder Agent forwards platform and application metrics
 to the OTel Collector, which then egresses metrics using one or more metric exporters that you configure.
 
 <p class="note caution">
 <span class="note__title"><strong>Caution</strong></span>
-OpenTelemetry Collector support is currently an experimental feature.</p>
+OpenTelemetry Collector is currently an experimental feature and should not be used in production systems.</p>
 
 ## <a id='metric-exporter-config'></a> Metric Exporter configuration
 
@@ -20,7 +20,7 @@ with Otel Collector support, provide only the exporter configuration.
 
 <p class="note important">
 <span class="note__title"><strong>Important</strong></span>
-You should only specify the configuration under the <code>exporters</code> section of the OpenTelemetry Collector configuration. It
+Specify only the configuration under the <code>exporters</code> section of the OpenTelemetry Collector configuration. It
 is not currently possible to configure Receivers or Processors.</p>
 
 For example, to configure the OpenTelemetry Collector to egress metrics using OTLP over gRPC, you can provide the following
@@ -56,7 +56,7 @@ otlp:
 You can configure the type of compression used for OTLP gRPC exporters. The OTLP gRPC exporter uses `gzip` compression
 by default. To reduce CPU usage of the OTel Collector (increasing the size of the payload) you can optionally configure
 the OTLP gRPC exporter to use `snappy` compression. Validate that the server you are sending metrics to
-supports `snappy` compression before making this change.
+support `snappy` compression before making this change.
 
 ```
 otlp:
@@ -67,7 +67,7 @@ otlp:
 ### <a id='multiple-exporters'></a> Multiple exporters
 
 The OTel Collector supports defining multiple exporters, each with its own configuration. For example, you can define
-two OTLP gRPC exporters egressing metrics to different destinations.
+two OTLP gRPC exporters that egress metrics to different destinations.
 
 ```
 otlp:
