@@ -135,14 +135,14 @@ To retrieve CPU, memory, and disk metrics for all instances of an application:
 
 The listed metrics are described in [Diego container metrics](#container-metrics).
 
-    <pre class="terminal">
-      type:           web
-      sidecars:
-      instances:      1/1
-      memory usage:   1024M
-            state     since                  cpu    memory        disk          logging            details
-      &#35;0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
-    </pre>
+<pre class="terminal">
+  type:           web
+  sidecars:
+  instances:      1/1
+  memory usage:   1024M
+        state     since                  cpu    memory        disk          logging            details
+  &#35;0   running   2022-09-16T01:38:46Z   0.2%   36.3M of 1G   90.3M of 1G   0/s of unlimited
+</pre>
 
 The preceding command shows what percentage of CPU the app is currently using relative to the total CPU on the host
 machine.
