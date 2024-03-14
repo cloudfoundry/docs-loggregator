@@ -25,12 +25,12 @@ The following table describes all Diego container metrics:
   </thead>
   <tr>
     <td><code>CpuPercentage</code></td>
-    <td>CPU time used by AI as a percentage of a single CPU core.<br><br>
+    <td>CPU time used by an app instance as a percentage of a single CPU core.<br><br>
     This is usually no greater than <code>100% * the number of vCPUs on the host Diego cell</code>, but it might be more due to discrepancies in measurement timing.</td>
     <td><code>float64</code></td>
   </tr><tr>
-    <td><code>absolute_entitlement</code></td>
-    <td>The amount of CPU time that a Diego Cell has allocated to an app instance, in nanoseconds.
+    <td><code>cpu_entitlement</code></td>
+    <td>CPU time used by an app instance as a percentage of its CPU entitlement.
       <br>
       <br>
       At minimum, the CPU time that a Diego Cell allocates to an app instance is
@@ -39,13 +39,6 @@ The following table describes all Diego container metrics:
       <br>
       If a Diego Cell is not already working at capacity, or if other workloads on the Diego Cell are idle, the Diego Cell can allocate more than the minimum
       amount of CPU time to an app instance.</td>
-    <td><code>float64</code></td>
-  </tr><tr>
-    <td><code>absolute_usage</code></td>
-    <td>The CPU time that an app instance has used, in nanoseconds.
-      <br>
-      <br>
-      <code>absolute_usage / absolute_entitlement</code> calculates a 0-100% range of app instance usage per entitlement.</td>
     <td><code>float64</code></td>
   </tr><tr>
     <td><code>memory</code></td>
@@ -90,12 +83,12 @@ The following table describes all Diego container metrics:
 
 The way that Diego emits container metrics differs depending on the version of Loggregator used in your <%= vars.app_runtime_abbr %> deployment:
 
-* **Loggregator v1:** Diego emits most container metrics in a `ContainerMetric` envelope. Diego emits the `absolute_entitlement`, `absolute_usage`,
+* **Loggregator v1:** Diego emits most container metrics in a `ContainerMetric` envelope. Diego emits the `cpu_entitlement`,
 `container_age`, `log_rate`, and `log_rate_limit` container metrics in `ValueMetric` envelopes.
 
-* **Loggregator v2:** Diego emits all container metrics in gauge and counter envelopes. Diego emits the `absolute_entitlement`, `absolute_usage`, `container_age`, `log_rate`, and `log_rate_limit` container metrics in separate gauge envelopes from other container metrics. The container metrics come in five envelopes:
+* **Loggregator v2:** Diego emits all container metrics in gauge and counter envelopes. Diego emits the `cpu_entitlement`, `container_age`, `log_rate`, and `log_rate_limit` container metrics in separate gauge envelopes from other container metrics. The container metrics come in five envelopes:
     * One envelope containing `cpu`, `disk`, `disk_quota`, `memory`, and `memory_quota`
-    * One envelope containing `absolute_entitlement`, `absolute_usage`, and `container_age`
+    * One envelope containing `cpu_entitlement`, and `container_age`
     * One envelope containing `log_rate` and `log_rate_limit`
     * One envelope containing `rx_bytes`
     * One envelope containing `tx_bytes`
