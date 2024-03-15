@@ -24,7 +24,7 @@ The following table describes all Diego container metrics:
   </tr>
   </thead>
   <tr>
-    <td><code>CpuPercentage</code></td>
+    <td><code>cpu</code></td>
     <td>CPU time used by an app instance as a percentage of a single CPU core.<br><br>
     This is usually no greater than <code>100% * the number of vCPUs on the host Diego cell</code>, but it might be more due to discrepancies in measurement timing.</td>
     <td><code>float64</code></td>
@@ -79,6 +79,38 @@ The following table describes all Diego container metrics:
     <td>Transmitted network traffic in bytes for an app instance.</td>
     <td><code>uint64</code></td>
   </tr>
+</table>
+
+
+The operator of your <%= vars.app_runtime_abbr %> deployment can [enable it to emit](https://bosh.io/jobs/rep?source=github.com/cloudfoundry/diego-release&version=2.93.0#p%3dloggregator.app_metric_exclusion_filter) the following additional, deprecated container metrics:
+<table class=“table”>
+  <thead>
+    <tr>
+      <th width=27%>Metric</th>
+      <th width=58%>Description</th>
+      <th width=15%>Unit</th>
+    </tr>
+</thead>
+<tr>
+    <td><code>absolute_entitlement</code></td>
+    <td>The amount of CPU time that a Diego Cell has allocated to an app instance, in nanoseconds.
+      <br>
+      <br>
+      At minimum, the CPU time that a Diego Cell allocates to an app instance is
+      <code>min(app memory, 8&nbsp;GB) * (Diego cell vCPUs/Diego cell memory) * 100%</code>. The operator of your <%= vars.app_runtime_abbr %> deployment can
+      provide the <code>vCPUs/memory</code> ratio of the Diego Cell to developers.
+      <br>
+      If a Diego Cell is not already working at capacity, or if other workloads on the Diego Cell are idle, the Diego Cell can allocate more than the minimum
+      amount of CPU time to an app instance.</td>
+    <td><code>float64</code></td>
+  </tr><tr>
+    <td><code>absolute_usage</code></td>
+    <td>The CPU time that an app instance has used, in nanoseconds.
+      <br>
+      <br>
+      <code>absolute_usage / absolute_entitlement</code> calculates a percentage of app instance usage per entitlement.</td>
+    <td><code>float64</code></td>
+  </tr><tr>
 </table>
 
 The way that Diego emits container metrics differs depending on the version of Loggregator used in your <%= vars.app_runtime_abbr %> deployment:
