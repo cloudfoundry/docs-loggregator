@@ -32,9 +32,9 @@ This section includes the following diagrams:
 ### <a id='firehose-architecture'></a> Loggregator Firehose architecture
 <a id='loggregator-architecture'></a>
 
-The following diagram shows how logs and metrics are transported from components and apps on your deployment to Loggregator Firehose consumers, such as nozzles, monitoring tools, or third party software.
+The following diagram shows how logs and metrics are transported from components and apps on your deployment to Loggregator Firehose consumers, such as nozzles, monitoring tools, or third-party software.
 
-![alt-text="How logs and metrics are transported. "](./images/architecture/firehose-reference.png)
+![How logs and metrics are transported.](./images/architecture/firehose-reference.png)
 
 [View a larger version of this image.](images/architecture/firehose-reference.png)
 
@@ -68,7 +68,7 @@ Similar to the Loggregator Firehose Architecture, the shared-nothing architectur
 
 In contrast to the Loggregator Firehose architecture, logs and metrics pass through fewer components in the shared-nothing architecture.
 
-![alt-text="In shared-nothing architecture, the logs and metrics egress directly from deployment VMs, eliminating the need for VMs running doppler and traffic controller components."](./images/architecture/shared-nothing-reference.png)
+![In shared-nothing architecture, the logs and metrics egress directly from deployment VMs, eliminating the need for VMs running doppler and traffic controller components.](./images/architecture/shared-nothing-reference.png)
 
 [View a larger version of this image.](images/architecture/shared-nothing-reference.png)
 
@@ -98,7 +98,7 @@ The following components are included in the shared-nothing architecture, as sho
 
 The following diagram shows the architecture of a deployment that uses System Metrics Agents to collect VM and system-level metrics.
 
-![alt-text="NSX-T Overview"](./images/architecture/system-metrics-agents.png)
+![NSX-T Overview](./images/architecture/system-metrics-agents.png)
 
 [View a larger version of this image.](./images/architecture/system-metrics-agents.png)
 
@@ -138,7 +138,7 @@ The following describes the transport of logs and metrics from VMs through syste
 
 The following diagram shows the transport of logs and metrics from VMs on your deployment:
 
-![alt-text="Transport of logs and metrics from VMs on your deployment"](./images/architecture/vms.png)
+![Transport of logs and metrics from VMs on your deployment.](./images/architecture/vms.png)
 
 ### <a id='firehose'></a> How Loggregator Firehose forwards logs and metrics
 
@@ -157,7 +157,7 @@ The following information describes how the Loggregator Firehose sends logs and 
 
 The following diagram shows the flow of logs and metrics through the Loggregator Firehose as previously described:
 
-![alt-text="A Loggregator Agent appears inside a square labeled VMs. Loggregator Agents send to Dopplers, located on Doppler VMs.  Dopplers, in turn, send to both Traffic Controllers and Reverse Log Proxies."](./images/architecture/firehose.png)
+![A Loggregator Agent appears inside the VMs block. Loggregator Agents send to Dopplers, located on Doppler VMs. Dopplers, in turn, send to both Traffic Controllers and Reverse Log Proxies.](./images/architecture/firehose.png)
 
 ### <a id='consumers'></a> How consumers receive logs and metrics
 
@@ -173,7 +173,7 @@ Integrations with observability or monitoring products receive logs and metrics 
 
 The following diagram shows how consumers of logs and metrics receive logs and metrics from your deployment:
 
-![alt-text="A Forwarder Agent appears inside a square labeled VMs. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent. Components also send logs to syslog."](./images/architecture/consumers.png)
+![A Forwarder Agent is one of the VMs in the VMs block. Apps are shown sending to the Forwarder Agent, and Components are shown sending metrics to the the Forwarder Agent. Components also send logs to syslog.](./images/architecture/consumers.png)
 
 ## <a id='bosh-metrics'></a> Related BOSH components
 
