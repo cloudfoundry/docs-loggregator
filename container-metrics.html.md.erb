@@ -131,8 +131,6 @@ The way that Diego emits container metrics differs depending on the version of L
 You can retrieve container metrics using the Cloud Foundry Command Line Interface (cf CLI).
 
 * To retrieve CPU, memory, and disk metrics for all instances of an application, see [Retrieve CPU, memory, and disk metrics](#cpu-mem-disk).
-* To retrieve CPU entitlement metrics for all instances of an app, see [Retrieve CPU Entitlement metrics](#cpu-entitlement).
-* To determine when an app has exceeded its CPU entitlement, see [Monitor apps that exceed their CPU Entitlement](#cpu-entitlement).
 * To retrieve network traffic metrics for all instances of an app, see [Retrieve network traffic metrics](#cf-network-traffic).
 
 ### <a id='cf-mem-disk'></a> Retrieving CPU, Memory, and Disk metrics
@@ -171,70 +169,6 @@ The listed metrics are described in [Diego container metrics](#container-metrics
 
 The preceding command shows what percentage of CPU the app is currently using relative to the total CPU on the host
 machine.
-
-### <a id='cf-entitlement'></a> Retrieving CPU Entitlement metrics
-
-The `absolute_entitlement` metric shows the amount of CPU an app is using relative to its CPU entitlement.
-
-To retrieve `absolute_entitlement` metrics for all instances of an app:
-
-1. Install the Cloud Foundry CPU Entitlement Plug-in from the [Cloud Foundry CPU Entitlement Plugin](https://github.com/cloudfoundry/cpu-entitlement-plugin)
-repository on GitHub.
-
-To see application instance `AbsoluteCPUEntitlement` metrics from the command line:
-
-  ```
-  cf cpu-entitlement APP-NAME
-  ```
-
-  Where `APP-NAME` is the name of the app.
-  <br>
-  This command returns `absolute_entitlement` metrics for all instances of the app, similar to the following example:
-    
-<pre class="terminal">
-Showing CPU usage against entitlement for app dora-example in org example-org / space example-org-staging as dora@example.com ...
-​
-    avg usage   curr usage
-&#35;0   1.62%       1.66%
-&#35;1   2.93%       3.09%
-&#35;2   2.51%       2.62%
-</pre>
-
-### <a id='cpu-entitlement'></a> Determining when Applications exceed their CPU Entitlement
-
-You can use the Cloud Foundry CPU Overentitlement Plug-in to determine when an application has exceeded its CPU entitlement and might need to be scaled up.
-
-When you allow CPU throttling in your <%= vars.app_runtime_abbr %> deployment, apps are split into two groups:
-
-* Apps with an average CPU usage under 100% of their CPU entitlement
-
-* Apps with an average CPU usage that exceeds 100% of their entitlements
-
-To determine which apps in your org have exceeded their CPU entitlements:
-
-1. Install the Cloud Foundry CPU Overentitlement Plug-in, `cpu-overentitlement-instances-plugin`, from the [Cloud Foundry CPU Entitlement
-Plug-in](https://github.com/cloudfoundry/cpu-entitlement-plugin/releases) repository on GitHub.
-
-1. In a terminal window, run:
-
-  ```
-  cf over-entitlement-instances
-  ```
-
-  This command returns output similar to the following example:
-
-  <pre class="terminal">
-
-  Note, this feature is experimental.
-  Showing over-entitlement apps in org example-org / space example-org-staging as dora@example.com ...
-  ​
-       space                     app
-  &#35;0   example-org-staging       dora-example-2
-  &#35;1   example-org-staging       dora-example-3
-  &#35;2   example-org-staging       dora-example-4
-  </pre>
-  The previous example output shows that the three listed apps have an average CPU usage that exceeds 100% of their entitlements. When an app's average CPU usage
-  exceeds its CPU entitlement, consider increasing their CPU entitlement to ensure that they do not become throttled.
 
 ### <a id='cf-network-traffic'></a> Retrieve network traffic metrics
 
