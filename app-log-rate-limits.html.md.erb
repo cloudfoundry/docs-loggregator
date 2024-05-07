@@ -17,14 +17,15 @@ its cache in order to store large volumes of logs.
 
 * Limit the CPU usage of logging agents on the Diego Cell VM.
 
-You can allow log rate limits on a per-app basis in bytes per second.
+You can define log rate limits on a per-app basis in bytes per second.
 
 ## <a id='overview-byte-limit'></a> App log rate limiting in bytes per second
 
 In <%= vars.app_runtime_abbr %>, you can limit the number of bytes each app instance can generate per second.
 
-You can configure app log rate limiting in bytes per second on a per-app basis through either the app manifest or the cf CLI. Additionally, you can enforce
-the log rate limit you configure for all apps that are deployed within a space or org by specifying the log rate limit in the quota plan for the space or org.
+You can configure app log rate limiting in bytes per second on a per-app and per-task basis through the cf CLI. Log rate limits can also be
+defined for apps in the application manifest. Additionally, you can enforce the log rate limit you configure for all apps that are deployed
+within a space or org by specifying the log rate limit in the quota plan for the space or org.
 <% if vars.platform_code != "OFFLINE" %>For more information, see [Creating and Modifying Quota Plans](../adminguide/quota-plans.html).<% end %>
 
 ## <a id='determine-limit'></a> Determining the ideal app log rate limit
@@ -88,21 +89,14 @@ appears in the log stream for the noisy app:
 2022-08-22T12:42:18.90-0800 [APP/PROC/WEB/0] OUT app instance exceeded log rate limit (1024 bytes/sec)
 </pre>
 
-To identify which app instances are exceeding the app log rate limit:
+To identify which app instances are exceeding the app log rate limit, you can search through application logs for the string "app instance exceeded log rate limit".
 
-<p> The Firehose and Log Cache plug-ins are developed by the open-source Cloud Foundry community and are not supported by
-  VMware.</p>
+One way to do this across all applications is by using the Firehose cf CLI plug-in.
 
 1. In a terminal window, install the Firehose plug-in by running:
 
     ```
     cf install-plugin 'Firehose Plugin'
-    ```
-
-1. Install the Log Cache plug-in by running:
-
-    ```
-    cf install-plugin 'log-cache'
     ```
 
 1. Filter your app log messages by running:
