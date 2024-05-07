@@ -34,13 +34,13 @@ This section includes the following diagrams:
 
 The following diagram shows how logs and metrics are transported from components and apps on your deployment to Loggregator Firehose consumers, such as nozzles, monitoring tools, or third-party software.
 
-![How logs and metrics are transported.](./images/architecture/firehose-reference.png)
+![How logs and metrics are transported.](./images/architecture/observability.png)
 
-[View a larger version of this image.](images/architecture/firehose-reference.png)
+[View a larger version of this image.](images/architecture/observability.png)
 
 The following components are included in the Loggregator Firehose architecture, as shown in the previous diagram:
 
-* **Prom Scraper:** Prom Scrapers run on both component VMs and Diego Cell VMs. They aggregate metrics from components located on those VMs through Prometheus exposition. Prom Scrapers then forward the metrics to Forwarder Agents.
+* **Prom Scraper:** Prometheus Scrapers run on both component VMs and Diego Cell VMs. They aggregate metrics from components located on those VMs through Prometheus exposition. Prom Scrapers then forward the metrics to Forwarder Agents.
 
 * **Statsd Injector:** Statsd Injectors run on component VMs. They receive metrics from components over the Statsd protocol. Statsd Injectors then forward the metrics to Forwarder Agents.
 
