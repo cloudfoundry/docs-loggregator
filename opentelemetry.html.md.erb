@@ -178,6 +178,37 @@ service:
     exporters: [otlp]
 ```
 
+## <a id='example-config'></a> Example config
+Below is an example config structure:
+```
+receivers:
+  otlp/test:     
+  protocols:
+    grpc: 
+
+processors:   
+  batch: 
+
+exporters:
+  otlp:
+    endpoint: otelcol:4317
+
+extensions:
+  pprof: 
+
+service:
+  extensions: [pprof]
+  pipelines:  
+    traces:
+      receivers: [otlp/test]
+      processors: [batch]
+      exporters: [otlp]
+    metrics:       
+      receivers: [otlp/test]
+      processors: [batch]
+      exporters: [otlp]
+```
+
 ## <a id='deploying'></a> Deploying the OpenTelemetry Collector
 
 <% if vars.platform_code == 'CF' %>
