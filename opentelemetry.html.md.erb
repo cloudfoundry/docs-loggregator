@@ -4,9 +4,9 @@ owner: Logging and Metrics
 ---
 
 You can deploy an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) for <%= vars.app_runtime_abbr %>
-to egress traces, metrics, and logs.
+to egress metrics.
 
-When the OpenTelemetry (OTel) Collector is deployed, the Loggregator Forwarder Agent forwards platform and application metrics to the OTel Collector, which then processes traces, metrics, and logs using one or more pipelines that you configure.
+When the OpenTelemetry (OTel) Collector is deployed, the Loggregator Forwarder Agent forwards platform and application metrics to the OTel Collector, which then processes metrics using one or more pipelines that you configure.
 
 # <a id='collector-config'></a> Collector configuration structure
 
@@ -19,9 +19,9 @@ The structure of <%= vars.app_runtime_abbr %> configuration file consists of thr
 * [Receivers](#metric-receiver-config)
 * [Processors](#metric-processor-config)
 
-After each pipeline component is configured, add it in the `service.pipelines` section of the Collector configuration file.
+After each pipeline component is configured you must enable it using the pipelines within the [service](#service) section of the configuration file.
 
-## <a id='metric-exporter-config'></a> Exporter configuration
+## <a id='metric-exporter-config'></a> Metric Exporter configuration
 For example, to configure the OpenTelemetry Collector to egress metrics using OTLP over gRPC, you can provide the following minimal configuration. This will use the defaults for gRPC and TLS configuration.
 
 ```
@@ -29,13 +29,13 @@ otlp:
   endpoint: 203.0.113.10:4317
 ```
 
-The OTel Collector is deployed on all VMs in <%= vars.product_short %>, so make sure that all VMs in your deployment can access the OTLP server endpoint.
+As the OTel Collector is typically deployed on all VMs, you must ensure that all VMs in your deployment are allowed to connect to the OTLP server endpoint.
 
 Currently, the <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector supports the following exporters out of the box: `otlp`, `prometheus`. You can configure exporters using the `exporters` section of the Collector configuration file.
 
 <p class="note important">
 <span class="note__title"><strong>Important</strong></span>
-The OpenTelemetry Collector also supports <code>file</code>, <code>prometheusremotewrite</code>, and <code>splunkhec</code> exporters as experimental features.</p>
+You can specify additional experimental exporters including <code>file</code>, <code>prometheusremotewrite</code>  and <code>splunkhec</code> after enabling the <code>experimental OpenTelemetry Collector features (beta)</code> checkbox.</p>
 
 ### <a id='mtls'></a> mTLS
 
@@ -67,18 +67,38 @@ otlp/another:
 
 <p class="note important">
 <span class="note__title"><strong>Important</strong></span>
-The OpenTelemetry Collector also supports <code>transform</code>  and <code>filter</code> processors as experimental features.</p>
-
+You can specify additional experimental exporters including <code>transform</code>  and <code>filter</code> after enabling the <code>experimental OpenTelemetry Collector features (beta)</code> checkbox.</p>
 
 ## <a id='metric-receiver-config'></a> Metric Receiver configuration
 
-Currently, you cannot configure metric receivers for the OpenTelemetry Collector.
-As a metric receiver, the Collector automatically uses the one `otlp` receiver that forwarder agent sends its metrics traffic to.
+To configure the OpenTelemetry Collector to ingress metrics using OTLP over gRPC, you can provide the following minimal configuration. This will use the defaults for gRPC configuration.
 
+```
+receivers:
+  otlp/test:     
+  protocols:
+      grpc: 
+```     
 
-## <a id='grpc-compression'></a> gRPC compression
+### <a id='multiple-receivers'></a> Multiple receivers
 
-You can configure the type of compression used for OTLP gRPC exporters. The OTLP gRPC exporter uses `gzip` compression
+The OTel Collector supports defining multiple receivers, each with its own configuration. For example, you can define OTLP gRPC receivers that ingress metrics from one or more sources.
+
+```
+receivers:
+  otlp/auth:
+    protocols:
+      http:
+        endpoint: 203.0.113.10:4318
+  otlp/api:
+    protocols:
+      http:
+        endpoint: 203.0.113.11:4318
+```
+
+### <a id='grpc-compression'></a> gRPC compression
+
+You can configure the type of compression used for OTLP gRPC exporters or receivers. The OTLP gRPC exporter uses `gzip` compression
 by default. To reduce CPU usage of the OTel Collector (increasing the size of the payload) you can optionally configure
 the OTLP gRPC exporter to use `snappy` compression. Validate that the server you are sending metrics to
 support `snappy` compression before making this change.
@@ -104,7 +124,7 @@ processors:
 
 <p class="note important">
 <span class="note__title"><strong>Important</strong></span>
-The OpenTelemetry Collector also supports <code>transform</code>  and <code>filter</code> processors as experimental features.</p>
+You can specify additional experimental processors including <code>transform</code>  and <code>filter</code> after enabling the <code>experimental OpenTelemetry Collector features (beta)</code> checkbox.</p>
 
 ### <a id='authentication'></a> Authentication
 
@@ -121,7 +141,7 @@ the components that are available for use, run the following command on a VM tha
 ```
 
 ## <a id='service'></a> Service section
-The  `service`  section is used to configure what components are enabled in the Collector based on the configuration found in the receivers, processors, exporters, and extensions sections. If a component is configured, but not referenced within the  `service`  section, then it’s not enabled.
+The  `service`  section is used to configure what components are enabled in the Collector based on the configuration found in the receivers, processors, exporters, and extensions sections. If a component is configured, but not defined within the  `service`  section, then it’s not enabled.
 
 The service section consists of two subsections:
 * [Extensions](#extensions)
