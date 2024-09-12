@@ -4,35 +4,42 @@ owner: Logging and Metrics
 ---
 
 You can deploy an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) for <%= vars.app_runtime_abbr %>
-to egress metrics.
+to egress traces, metrics, and logs.
 
-When the OpenTelemetry (OTel) Collector is deployed, the Loggregator Forwarder Agent forwards platform and application metrics
-to the OTel Collector, which then egresses metrics using one or more metric exporters that you configure.
+When the OpenTelemetry (OTel) Collector is deployed, the Loggregator Forwarder Agent forwards platform and application metrics to the OTel Collector, which then processes traces, metrics, and logs using one or more pipelines that you configure.
 
-<p class="note caution">
-<span class="note__title"><strong>Caution</strong></span>
-OpenTelemetry Collector is currently an experimental feature and should not be used in production systems.</p>
+# <a id='collector-config'></a> Collector configuration structure
 
-## <a id='metric-exporter-config'></a> Metric Exporter configuration
 
-The OTel Collector has a standard YAML-based file format for configuration. When deploying <%= vars.app_runtime_abbr %>
-with Otel Collector support, provide only the exporter configuration.
+The OTel Collector has a standard YAML-based file format for configuration. 
 
-<p class="note important">
-<span class="note__title"><strong>Important</strong></span>
-Specify only the configuration under the <code>exporters</code> section of the OpenTelemetry Collector configuration. It
-is not currently possible to configure Receivers or Processors.</p>
+The structure of <%= vars.app_runtime_abbr %> configuration file consists of three classes of pipeline components that access telemetry data:
 
-For example, to configure the OpenTelemetry Collector to egress metrics using OTLP over gRPC, you can provide the following
-minimal configuration. This will use the defaults for gRPC and TLS configuration.
+* [Exporters](#metric-exporter-config)
+* [Receivers](#metric-receiver-config)
+* [Processors](#metric-processor-config)
+
+After each pipeline component is configured, add it in the `service.pipelines` [section](#service) of the Collector configuration file.
+
+## <a id='metric-exporter-config'></a> Exporter configuration
+For example, to configure the OpenTelemetry Collector to egress metrics using OTLP over gRPC, you can provide the following minimal configuration. This will use the defaults for gRPC and TLS configuration.
 
 ```
 otlp:
   endpoint: 203.0.113.10:4317
 ```
 
-As the OTel Collector is typically deployed on all VMs, you must ensure that all VMs in your deployment are
-allowed to connect to the OTLP server endpoint.
+As the OTel Collector is deployed on all VMs in Cloud Foundry, you must ensure that all VMs in your deployment are allowed to connect to the OTLP server endpoint.
+
+### <a id='included-exporters'></a> Included exporters
+|Exporter | Stability | 
+| :--- | :--- | 
+| `otlpexporter` | beta | 
+| `nopexporter` | beta | 
+| `fileexporter` | alpha | 
+| `prometheusexporter` | beta | 
+| `prometheusremotewriteexporter` | beta | 
+| `splunkhecexporter` | beta | 
 
 ### <a id='mtls'></a> mTLS
 
@@ -51,9 +58,24 @@ otlp:
       PEM_ENCODED_CERTIFICATE
 ```
 
-### <a id='grpc-compression'></a> gRPC compression
+### <a id='multiple-exporters'></a> Multiple exporters
 
-You can configure the type of compression used for OTLP gRPC exporters. The OTLP gRPC exporter uses `gzip` compression
+The OTel Collector supports defining multiple exporters, each with its own configuration. For example, you can define two OTLP gRPC exporters that egress metrics to different destinations.
+
+```
+otlp:
+  endpoint: 203.0.113.10:4317
+otlp/another:
+  endpoint: 203.0.113.11:4317
+```
+
+## <a id='metric-receiver-config'></a> Receiver configuration
+
+Currently, users should not list receivers and include them in the pipeline. By default, receivers are replaced with OTLP receiver that forwarder agent sends to automatically.
+
+## <a id='grpc-compression'></a> gRPC compression
+
+You can configure the type of compression used for OTLP gRPC exporters or receivers. The OTLP gRPC exporter uses `gzip` compression
 by default. To reduce CPU usage of the OTel Collector (increasing the size of the payload) you can optionally configure
 the OTLP gRPC exporter to use `snappy` compression. Validate that the server you are sending metrics to
 support `snappy` compression before making this change.
@@ -64,30 +86,107 @@ otlp:
   compression: snappy
 ```
 
-### <a id='multiple-exporters'></a> Multiple exporters
+## <a id='metric-processor-config'></a> Processor configuration
 
-The OTel Collector supports defining multiple exporters, each with its own configuration. For example, you can define
-two OTLP gRPC exporters that egress metrics to different destinations.
+Processors are used at various stages of a pipeline to pre-processes data before it is exported. By default, no processors are enabled. The order of the processors in a pipeline determines the order of the processing operations that the Collector applies to the signal. 
+
+Refer to the individual processor [documentation](https://opentelemetry.io/docs/collector/configuration/#processors) for more information.
+
+Currently, the <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector supports the following processors out of the box: `batch`, `memorylimiter`. You can configure processors using the `processors` section of the Collector configuration file.
 
 ```
-otlp:
-  endpoint: 203.0.113.10:4317
-otlp/another:
-  endpoint: 203.0.113.11:4317
-```
+processors:   
+  batch:  
+```     
 
-### <a id='authentication'></a> Authentication
+### <a id='included-processors'></a> Included processors
+| Processor | Stability | 
+| :--- | :--- | 
+| `batchprocessor` | beta | 
+| `memorylimiterprocessor` | beta | 
+| `transformprocessor` | alpha | 
+| `filterprocessor` | alpha |
 
-The <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector does not support configuration of
-authenticator extensions for exporters at this time.
+## <a id='authentication'></a> Authentication
 
-### <a id='available-exporters'></a> Reviewing the available exporters
+The <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector does not currently include any authenticator extensions. Please let us know if there are authenticator extensions you would find useful. 
 
-The <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector ships with a number of exporters. To see
-the exporters that are available for use, run the following command on a VM that has otel-collector deployed.
+## <a id='available-exporters'></a> Reviewing the available components
+
+The <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector ships with a number of components. To see
+the components that are available for use, run the following command on a VM that has otel-collector deployed.
 
 ```
 /var/vcap/packages/otel-collector/otel-collector components
+```
+
+## <a id='service'></a> Service section
+The  `service`  section is used to configure what components are enabled in the Collector based on the configuration found in the receivers, processors, exporters, and extensions sections. If a component is configured, but not defined referenced the  `service`  section, then it’s not enabled.
+
+The service section consists of two subsections:
+* [Extensions](#extensions)
+* [Pipelines](#pipelines)
+
+### <a id='extensions'></a> Extensions
+
+You can enable desired extensions using `extensions` subsections:
+
+```
+service:
+  extensions: [pprof, health_check, zpages]
+```
+
+### <a id='pipelines'></a> Pipelines
+
+A pipeline is a set of components used to process a signal. Before including a receiver, processor, or exporter in a pipeline, make sure to define its configuration in the appropriate section.
+
+You can use the same receiver, processor, or exporter in more than one pipeline. When a processor is referenced in multiple pipelines, each pipeline gets a separate instance of the processor.
+
+The following is an example of pipeline configuration. Note that the order of processors dictates the order in which data is processed:
+
+```
+service:
+  extensions: [pprof]
+  pipelines:  
+    traces:
+    receivers: [otlp/test]
+    processors: [batch]
+    exporters: [otlp]
+    metrics:       
+    receivers: [otlp/test]
+    processors: [batch]
+    exporters: [otlp]
+```
+
+## <a id='example-config'></a> Example config
+Below is an example config structure:
+```
+receivers:
+  otlp/test:     
+  protocols:
+    grpc: 
+
+processors:   
+  batch: 
+
+exporters:
+  otlp:
+    endpoint: otelcol:4317
+
+extensions:
+  pprof: 
+
+service:
+  extensions: [pprof]
+  pipelines:  
+    traces:
+      receivers: [otlp/test]
+      processors: [batch]
+      exporters: [otlp]
+    metrics:       
+      receivers: [otlp/test]
+      processors: [batch]
+      exporters: [otlp]
 ```
 
 ## <a id='deploying'></a> Deploying the OpenTelemetry Collector
