@@ -4,6 +4,7 @@ owner: Logging and Metrics
 ---
 
 Here you can learn how to activate and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub.
+
 You can use these logs to retrieve information about a subset of requests to the Cloud Controller, UAA server, and CredHub for security or compliance purposes.
 
 ##  <a id="cc"></a>Cloud Controller logging
@@ -34,7 +35,7 @@ cs4Label=httpStatusCode cs4=HTTP_STATUS_CODE src=SOURCE_ADDRESS
 dst=DESTINATION_ADDRESS cs5Label=xForwardedFor cs5=X_FORWARDED_FOR_HEADER
 ```
 
-See the following list for a description of the properties shown in the Cloud Controller log format:
+Refer to the following list for a description of the properties shown in the Cloud Controller log format:
 
 * `CEF_VERSION`: The version of CEF used in the logs.
 * `CC_API_VERSION`: The current Cloud Controller API version.
@@ -126,7 +127,7 @@ The following list provides several example requests with the corresponding Clou
 
 ##  <a id="uaa"></a>UAA logging
 
-UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA virtual machine (VM). Because these logs are rotated, you must configure a syslog drain to forward your system logs to a log management service.
+UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA virtual machine (VM). Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service.
 
 <%=vars.enable_syslog_drain%>
 
@@ -202,7 +203,7 @@ sub=admin, iss=https://uaa.example.com/oauth/token)], identityZoneId=[uaa]
 
 ##  <a id="credhub"></a>CredHub logging
 
-CredHub logs security events to a file located at `/var/vcap/sys/log/credhub/credhub_security_events.log` on the CredHub VM. Because these logs are rotated, you must configure a syslog drain to forward your system logs to a log management service.
+CredHub logs security events to a file located at `/var/vcap/sys/log/credhub/credhub_security_events.log` on the CredHub VM. Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service.
 
 <%=vars.enable_syslog_drain%>
 
@@ -228,7 +229,7 @@ cs5Label=resourceUuid cs5=RESOURCE_UUID deviceAction=OPERATION
 cs6Label=requestDetails cs6=REQUEST_DETAILS
 ```
 
-See the following list for a description of the properties shown in the CredHub log.
+Refer to the following list for a description of the properties shown in the CredHub log.
 
 * `CEF_VERSION`: The version of CEF used in the logs.
 * `CREDHUB_SERVER_VERSION`: The current CredHub server version.
@@ -265,9 +266,8 @@ See the following list for a description of the properties shown in the CredHub 
   * `update-transitional-version`
 * `REQUEST_DETAILS (cs6)`: A JSON blob that differs per request.
 
-<p> The CredHub logs include descriptions for each custom label. For example, the
-logs include <code>cs2Label=resourceName</code> to define the <code>cs2</code> label. The value
-for <code>resourceName</code> appears in the log next to <code>cs2=/path/to/credential</code>.</p>
+<p class="note">
+The CredHub logs include descriptions for each custom label. For example, the logs include <code>cs2Label=resourceName</code> to define the <code>cs2</code> label. The value for <code>resourceName</code> appears in the log next to <code>cs2=/path/to/credential</code>.</p>
 
 ###  <a id="credhub-example"></a>Example Log Entries
 
