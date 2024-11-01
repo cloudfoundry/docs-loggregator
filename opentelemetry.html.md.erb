@@ -10,7 +10,6 @@ When the OpenTelemetry (OTel) Collector is deployed, the Loggregator Forwarder A
 to the OTel Collector, which then egresses metrics using one or more metric exporters that you configure.
 
 <p class="note caution">
-<span class="note__title"><strong>Caution</strong></span>
 OpenTelemetry Collector is currently an experimental feature and should not be used in production systems.</p>
 
 ## <a id='metric-exporter-config'></a> Metric Exporter configuration
@@ -19,7 +18,6 @@ The OTel Collector has a standard YAML-based file format for configuration. When
 with Otel Collector support, provide only the exporter configuration.
 
 <p class="note important">
-<span class="note__title"><strong>Important</strong></span>
 Specify only the configuration under the <code>exporters</code> section of the OpenTelemetry Collector configuration. It
 is not currently possible to configure Receivers or Processors.</p>
 
