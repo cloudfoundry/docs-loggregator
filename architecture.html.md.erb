@@ -84,8 +84,6 @@ The following components are included in the shared-nothing architecture, as sho
 
 * **Syslog Binding Cache** (not pictured): Syslog Agents can overwhelm CAPI when querying for existing bindings. To address this, the Syslog Binding Cache is a caching proxy between the Syslog Agents and CAPI.
 
-* **Metrics Agents:** Metrics Agents receive metrics from Forwarder Agents and make them available to Metric Scrapers through Prometheus Exposition.
-
 * **Metrics Discovery Registrars:** Metrics Discovery Registrars register each scrapeable endpoint with NATS for discovery by Metrics Scrapers.
 
 * **Log Cache:** <%= partial 'log_cache' %>
@@ -127,10 +125,9 @@ The following describes the transport of logs and metrics from VMs through syste
   1. Apps and component VMs on your deployment emit logs and metrics.
   2. Logs and metrics pass through two forwarders:
      * rsyslog: This sends logs from the component VMs in Syslog RFC 5424 format.
-     * Forwarder Agent: This sends metrics and app logs to the Syslog Agent, the Metrics Agent, and the Loggregator Agent.
+     * Forwarder Agent: This sends metrics and app logs to the Syslog Agent and the Loggregator Agent.
   3. From the Forwarder Agent, logs and metrics then pass through each of the following agents:
      * Syslog Agent: This sends app logs in Syslog RFC 5424 format to aggregate and app log destinations.
-     * Metrics Agent: This exposes metrics for Prometheus-style scraping.
      * Loggregator Agent: This sends metrics and app logs to the Loggregator Firehose.
      * OTel Collector (experimental): This sends app and component metrics in a variety of formats to aggregate metric destinations.
 
