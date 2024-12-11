@@ -133,7 +133,7 @@ You can enable desired extensions using `extensions` subsections:
 
 ```
 service:
-  extensions: [pprof, health_check, zpages]
+  extensions: [zpages]
 ```
 
 ### <a id='pipelines'></a> Pipelines
@@ -146,7 +146,7 @@ The following is an example of pipeline configuration. Note that the order of pr
 
 ```
 service:
-  extensions: [pprof]
+  extensions: [zpages]
   pipelines:  
     traces:
     receivers: [otlp/test]
@@ -174,10 +174,10 @@ exporters:
     endpoint: otelcol:4317
 
 extensions:
-  pprof: 
+  zpages:
 
 service:
-  extensions: [pprof]
+  extensions: [zpages]
   pipelines:  
     traces:
       receivers: [otlp/test]
