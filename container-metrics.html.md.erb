@@ -71,12 +71,30 @@ The following table describes all Diego container metrics:
   </tr>
   </tr><tr>
     <td><code>rx_bytes</code></td>
-    <td>Received network traffic in bytes for an app instance.</td>
+    <td>
+    Received network traffic in bytes for an app instance.
+    <% if vars.platform_code = 'CF' %>
+      Operators can enable this metric by setting garden-runc-release's
+      <code>garden.enable_container_network_metrics</code> bosh
+      property to <code>true</code>.
+    <% else %>
+      This metric is not available in Tanzu Platform for Cloud Foundry.
+    <% end %>
+    </td>
     <td><code>uint64</code></td>
   </tr>
   </tr><tr>
     <td><code>tx_bytes</code></td>
-    <td>Transmitted network traffic in bytes for an app instance.</td>
+    <td>
+    Transmitted network traffic in bytes for an app instance.
+    <% if vars.platform_code = 'CF' %>
+      Operators can enable this metric by setting garden-runc-release's
+      <code>garden.enable_container_network_metrics</code> bosh
+      property to <code>true</code>.
+    <% else %>
+      This metric is not available in Tanzu Platform for Cloud Foundry.
+    <% end %>
+    </td>
     <td><code>uint64</code></td>
   </tr>
 </table>
