@@ -11,7 +11,7 @@ When the OpenTelemetry (OTel) Collector is deployed, the Loggregator Forwarder A
 # <a id='collector-config'></a> Collector configuration structure
 
 
-The OTel Collector has a standard YAML-based file format for configuration. 
+The OTel Collector has a standard YAML-based file format for configuration.
 
 The structure of <%= vars.app_runtime_abbr %> configuration file consists of three classes of pipeline components that access telemetry data:
 
@@ -32,14 +32,14 @@ otlp:
 As the OTel Collector is deployed on all VMs in Cloud Foundry, you must ensure that all VMs in your deployment are allowed to connect to the OTLP server endpoint.
 
 ### <a id='included-exporters'></a> Included exporters
-|Exporter | Stability | 
-| :--- | :--- | 
-| `otlpexporter` | beta | 
-| `nopexporter` | beta | 
-| `fileexporter` | alpha | 
-| `prometheusexporter` | beta | 
-| `prometheusremotewriteexporter` | beta | 
-| `splunkhecexporter` | beta | 
+|Exporter | Stability |
+| :--- | :--- |
+| `otlpexporter` | stable |
+| `nopexporter` | beta |
+| `fileexporter` | alpha |
+| `prometheusexporter` | stable |
+| `prometheusremotewriteexporter` | beta |
+| `splunkhecexporter` | beta |
 
 ### <a id='mtls'></a> mTLS
 
@@ -88,23 +88,23 @@ otlp:
 
 ## <a id='metric-processor-config'></a> Processor configuration
 
-Processors are used at various stages of a pipeline to pre-processes data before it is exported. By default, no processors are enabled. The order of the processors in a pipeline determines the order of the processing operations that the Collector applies to the signal. 
+Processors are used at various stages of a pipeline to pre-processes data before it is exported. By default, no processors are enabled. The order of the processors in a pipeline determines the order of the processing operations that the Collector applies to the signal.
 
 Refer to the individual processor [documentation](https://opentelemetry.io/docs/collector/configuration/#processors) for more information.
 
 Currently, the <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector supports the following processors out of the box: `batch`, `memorylimiter`. You can configure processors using the `processors` section of the Collector configuration file.
 
 ```
-processors:   
-  batch:  
-```     
+processors:
+  batch:
+```
 
 ### <a id='included-processors'></a> Included processors
-| Processor | Stability | 
-| :--- | :--- | 
-| `batchprocessor` | beta | 
-| `memorylimiterprocessor` | beta | 
-| `transformprocessor` | alpha | 
+| Processor | Stability |
+| :--- | :--- |
+| `batchprocessor` | stable |
+| `memorylimiterprocessor` | stable |
+| `transformprocessor` | alpha |
 | `filterprocessor` | alpha |
 
 ## <a id='authentication'></a> Authentication
@@ -147,12 +147,12 @@ The following is an example of pipeline configuration. Note that the order of pr
 ```
 service:
   extensions: [zpages]
-  pipelines:  
+  pipelines:
     traces:
     receivers: [otlp/test]
     processors: [batch]
     exporters: [otlp]
-    metrics:       
+    metrics:
     receivers: [otlp/test]
     processors: [batch]
     exporters: [otlp]
@@ -162,12 +162,12 @@ service:
 Below is an example config structure:
 ```
 receivers:
-  otlp/test:     
+  otlp/test:
   protocols:
-    grpc: 
+    grpc:
 
-processors:   
-  batch: 
+processors:
+  batch:
 
 exporters:
   otlp:
@@ -178,12 +178,12 @@ extensions:
 
 service:
   extensions: [zpages]
-  pipelines:  
+  pipelines:
     traces:
       receivers: [otlp/test]
       processors: [batch]
       exporters: [otlp]
-    metrics:       
+    metrics:
       receivers: [otlp/test]
       processors: [batch]
       exporters: [otlp]
