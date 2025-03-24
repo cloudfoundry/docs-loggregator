@@ -1,12 +1,12 @@
 ---
-title: Log and Metric Agent architecture (Beta)
+title: Log and Metric Agent architecture
 owner: Log Egress, Metric Egress
 ---
 
-The Log and Metric Agent Architecture (Beta) contains a group of components that allow you to access all the same logs and
+The Log and Metric Agent Architecture contains a group of components that allow you to access all the same logs and
 metrics that you can through the Loggregator system.
 
-The Log and Metric Agent Architecture (Beta) does not
+The Log and Metric Agent Architecture does not
 currently integrate with Healthwatch or App Metrics.
 
 The components of the Log and Metric Agent Architecture use a shared-nothing architecture that requires several fewer VMs than the Loggregator system.
@@ -27,7 +27,7 @@ The following components of the Log and Metric Agent Architecture enable pull-ba
 
 * **Service Metrics Agent**: <br>The Service Metrics Agent receives metrics from service instances on your <%= vars.platform_name %> deployment and makes them available on a Prometheus endpoint.
 
-* **Metrics Discovery Registrar**: <br>The Metrics Discovery Registrar publishes the location of the Prometheus endpoint defined by the Metrics Agent and Service Metrics Agent to NATs. This is helpful for configuring automation to scrape metric data from the endpoint. For more information about automating metric scraping, see [Telegraf Reference Architecture (Beta)](#telegraf-reference-architecture).
+* **Metrics Discovery Registrar**: <br>The Metrics Discovery Registrar publishes the location of the Prometheus endpoint defined by the Metrics Agent and Service Metrics Agent to NATs. This is helpful for configuring automation to scrape metric data from the endpoint.
 
 ## <a id="log-egress"></a> Log components
 
