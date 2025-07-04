@@ -26,23 +26,23 @@ To measure the message throughput of the Loggregator system, you can monitor the
 
 If you do not use a monitoring platform, you can measure the overall message throughput of your Loggregator system. To measure the overall message throughput:
 
-1. Log in to the Cloud Foundry Command Line Interface (cf CLI) with your admin credentials by running:
+1. Log in to the Tanzu cf CLI with your admin credentials by running:
 
 	```
 	cf login
 	```
 
-1. Install the <%= vars.app_runtime_abbr %> Firehose plug-in.
+2. Install the <%= vars.app_runtime_abbr %> Firehose plug-in.
    For more information, see [Install the plug-in](cli-plugin.html#add) in
    _Installing the Loggregator Firehose Plug-in for cf CLI_.
 
-1. Install Pipe Viewer by running:
+3. Install Pipe Viewer by running:
 
 	```
 	apt-get install pv
 	```
 
-1. Run:
+4. Run:
 
 	```
 	cf nozzle -n | pv -l -i 10 -r > /dev/null

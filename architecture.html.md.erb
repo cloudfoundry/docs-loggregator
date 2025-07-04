@@ -3,7 +3,7 @@ title: Logging and metrics architecture
 owner: Logging and Metrics
 ---
 
-Logging and metrics architecture includes components that transport logs and metrics from your <%= vars.app_runtime_abbr %> deployment to destinations such as the Cloud Foundry Command-Line Interface (cf CLI), monitoring tools, or internal system components.
+Logging and metrics architecture includes components that transport logs and metrics from your <%= vars.app_runtime_abbr %> deployment to destinations such as the Tanzu cf CLI, monitoring tools, or internal system components.
 
 Depending on the configuration of your <%= vars.app_runtime_abbr %> deployment, your <%= vars.app_runtime_abbr %> deployment uses either a Loggregator Firehose architecture or a shared-nothing architecture.
 
@@ -158,9 +158,9 @@ The following diagram shows the flow of logs and metrics through the Loggregator
 
 ### <a id='consumers'></a> How consumers receive logs and metrics
 
-Consumers of logs and metrics include the Cloud Foundry Command Line Interface (cf CLI), Cloud Foundry web UIs such as Stratos, and any observability or monitoring product integrations.
+Consumers of logs and metrics include the Tanzu cf CLI, Cloud Foundry web UIs such as Stratos, and any observability or monitoring product integrations.
 
-The cf CLI and any Cloud Foundry web UIs can access logs and metrics through Log Cache. Log Cache receives logs and metrics from either the Firehose or directly from VMs through syslog. Log Cache provides short-term storage for logs and metrics where the cf CLI and web UIs can access them.
+The Tanzu cf CLI and any Cloud Foundry web UIs can access logs and metrics through Log Cache. Log Cache receives logs and metrics from either the Firehose or directly from VMs through syslog. Log Cache provides short-term storage for logs and metrics where the Tanzu cf CLI and web UIs can access them.
 
 Integrations with observability or monitoring products receive logs and metrics through one of the following methods, depending on the logging and metrics architecture that your deployment uses:
 
