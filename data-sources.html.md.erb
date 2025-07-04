@@ -9,14 +9,14 @@ transport systems. It also lists products for viewing logs and metrics.
 
 ## <a id="sources"></a> Accessing metrics
 
-You must use a Cloud Foundry Command-Line Interface (cf CLI) plug-in to access and view metrics
+You must use a Tanzu cf CLI plug-in to access and view metrics
 directly from the command line. You can use either the Firehose plug-in or the Log Cache plug-in.
 
 ### <a id='log-cache'></a> Accessing metrics using the Log Cache CLI plug-in
 
 To access metrics with the Log Cache plug-in:
 
-1. Log in to the cf CLI by running:
+1. Log in to the Tanzu cf CLI by running:
 
     ```
     cf login -a API-URL -u USERNAME -p PASSWORD
@@ -55,7 +55,7 @@ To access metrics with the Log Cache plug-in:
 
 To access metrics using the Firehose plug-in:
 
-1. Log in to the cf CLI by running:
+1. Log in to the Tanzu cf CLI by running:
 
     ```
     cf login -a API-URL -u USERNAME -p PASSWORD
@@ -244,7 +244,7 @@ and metrics:
   <td valign="top">
    You can use the following products or tools to view app logs:
    <ul>
-    <li>cf CLI cf logs command. See <a href="https://cli.cloudfoundry.org/en-US/cf/logs.html">
+    <li>Tanzu cf CLI cf logs command. See <a href="https://cli.cloudfoundry.org/en-US/cf/logs.html">
           Cloud Foundry CLI Reference Guide.</a></li>
     <% if vars.platform_code != 'CF' %>
     <li><%= vars.manage_apps_service_instances_ref %></li>

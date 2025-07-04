@@ -1,13 +1,13 @@
 ---
-title: Installing the Loggregator Firehose Plug-in for cf CLI
+title: Installing the Loggregator Firehose Plug-in for Tanzu cf CLI
 owner: Logging and Metrics
 ---
 
-You can use the Loggregator Firehose Plug-in for the Cloud Foundry Command Line Interface (cf CLI).
+You can use the Loggregator Firehose Plug-in for the Tanzu cf CLI.
 
-The Loggregator Firehose plug-in for the cf CLI allows <%= vars.app_runtime_first %> admins to access the output of the Loggregator Firehose. The output of the Firehose includes logs and metrics from apps deployed on <%= vars.app_runtime_abbr %> as well as metrics from <%= vars.app_runtime_abbr %> platform components. For more information about the Firehose, see the [Loggregator Architecture](./architecture.html#loggregator-architecture) section of the _Loggregator Architecture_ topic.
+The Loggregator Firehose plug-in for the Tanzu cf CLI allows <%= vars.app_runtime_first %> admins to access the output of the Loggregator Firehose. The output of the Firehose includes logs and metrics from apps deployed on <%= vars.app_runtime_abbr %> as well as metrics from <%= vars.app_runtime_abbr %> platform components. For more information about the Firehose, see the [Loggregator Architecture](./architecture.html#loggregator-architecture) section of the _Loggregator Architecture_ topic.
 
-For more information about using plug-ins with the cf CLI, see [Using cf CLI plug-ins](../cf-cli/use-cli-plugins.html).
+For more information about using plug-ins with the Tanzu cf CLI, see [Using Tanzu cf CLI plug-ins](../cf-cli/use-cli-plugins.html).
 
 <p> You can deactivate the Firehose. In place of the Firehose, you can configure an aggregate log and metric drain for your foundation:
 
@@ -20,9 +20,9 @@ Before you install the Loggregator Firehose plug-in, you need the following prer
 
 - Admin access to the <%= vars.app_runtime_abbr %> deployment that you want to monitor
 
-- Cloud Foundry Command Line Interface (cf CLI) v6.12.2 or later
+- Tanzu cf CLI v10 or later
 
-For information about downloading, installing, and uninstalling the cf CLI, see [Installing the cf CLI](../operating/cf-cli/install-cf-cli.html).
+For information about downloading, installing, and uninstalling the Tanzu cf CLI, see [Installing the Tanzu cf CLI](../operating/cf-cli/install-cf-cli.html).
 
 ## <a id='add'></a> Installing the plug-in
 

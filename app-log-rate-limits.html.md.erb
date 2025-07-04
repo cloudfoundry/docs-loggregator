@@ -12,7 +12,7 @@ Loggregator Agent with logs, so the Loggregator Agent does not drop logs for oth
 
 Using app log rate limiting can also do the following:
 
-* Prevent apps from reporting inaccurate app metrics in the Cloud Foundry Command Line Interface (cf CLI), which can happen if Log Cache evicts metrics from
+* Prevent apps from reporting inaccurate app metrics in the Tanzu cf CLI, which can happen if Log Cache evicts metrics from
 its cache in order to store large volumes of logs.
 
 * Limit the CPU usage of logging agents on the Diego Cell VM.
@@ -23,7 +23,7 @@ You can define log rate limits on a per-app basis in bytes per second.
 
 In <%= vars.app_runtime_abbr %>, you can limit the number of bytes each app instance can generate per second.
 
-You can configure app log rate limiting in bytes per second on a per-app and per-task basis through the cf CLI. Log rate limits can also be
+You can configure app log rate limiting in bytes per second on a per-app and per-task basis through the Tanzu cf CLI. Log rate limits can also be
 defined for apps in the application manifest. Additionally, you can enforce the log rate limit you configure for all apps that are deployed
 within a space or org by specifying the log rate limit in the quota plan for the space or org.
 <% if vars.platform_code != "OFFLINE" %>For more information, see [Creating and Modifying Quota Plans](../adminguide/quota-plans.html).<% end %>
