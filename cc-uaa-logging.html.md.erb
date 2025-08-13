@@ -3,8 +3,8 @@ title: Security event logging
 owner: Logging and Metrics
 ---
 
-Here you can learn how to activate and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub.
-You can use these logs to retrieve information about a subset of requests to the Cloud Controller, UAA server, and CredHub for security or compliance purposes.
+Here you can learn how to activate and interpret security event logging for the Cloud Controller, the Tanzu User Account and Authentication (Tanzu UAA) server, and CredHub.
+You can use these logs to retrieve information about a subset of requests to the Cloud Controller, Tanzu UAA server, and CredHub for security or compliance purposes.
 
 ##  <a id="cc"></a>Cloud Controller logging
 
@@ -124,27 +124,27 @@ The following list provides several example requests with the corresponding Clou
     cs5=<%=vars.example_ip_2%>
     ```
 
-##  <a id="uaa"></a>UAA logging
+##  <a id="uaa"></a>Tanzu UAA logging
 
-UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the UAA virtual machine (VM). Because these logs are rotated, you must configure a syslog drain to forward your system logs to a log management service.
+Tanzu UAA logs security events to a file located at `/var/vcap/sys/log/uaa/uaa.log` on the Tanzu UAA virtual machine (VM). Because these logs are rotated, you must configure a syslog drain to forward your system logs to a log management service.
 
 <%=vars.enable_syslog_drain%>
 
 ###  <a id='uaa-events'></a>Log Events
 
-UAA logs identify the following categories of events:
+Tanzu UAA logs identify the following categories of events:
 
 * Authorization and Password Events
 * SCIM Administration Events
 * Token Events
 * Client Administration Events
-* UAA Administration Events
+* Tanzu UAA Administration Events
 
-To learn more about the names of the events included in these categories and the information they record in the UAA logs, see [User Account and Authentication Service Audit Requirements](https://docs.cloudfoundry.org/running/managing-cf/uaa-audit-requirements.html).
+To learn more about the names of the events included in these categories and the information they record in the Tanzu UAA logs, see [User Account and Authentication Service Audit Requirements](https://docs.cloudfoundry.org/running/managing-cf/uaa-audit-requirements.html).
 
 ###  <a id='uaa-events'></a>Examples of log entries
 
-The following sections provide several example requests with the corresponding UAA log entries.
+The following sections provide several example requests with the corresponding Tanzu UAA log entries.
 
 #### Successful user authentication
 
@@ -156,7 +156,7 @@ origin=[client=cf, user=bob], identityZoneId=[uaa]
 ```
 
 * This entry records a `TokenIssuedEvent`.
-* UAA issued a token associated with the scopes `"openid","scim.read","uaa.user",
+* Tanzu UAA issued a token associated with the scopes `"openid","scim.read","uaa.user",
 "cloud_controller.read","password.write","cloud_controller.write","scim.write"` to the user `bob`.
 
 #### Failed user authentication
@@ -235,7 +235,7 @@ See the following list for a description of the properties shown in the CredHub 
 * `SIGNATURE_ID`: The method and path of the request. For example, `GET /v2/app:GUID`.
 * `NAME`: The same as `SIGNATURE_ID`.
 * `TIMESTAMP`: The number of milliseconds since the Unix epoch.
-* `USERNAME`: The name of the user who originated the request, as defined by UAA. In the case of mTLS, no-auth, or not defined, this value is empty.
+* `USERNAME`: The name of the user who originated the request, as defined by Tanzu UAA. In the case of mTLS, no-auth, or not defined, this value is empty.
 * `USER_GUID`: The "actor" identifier. For example, `mtls-app:GUID`. If there is no authenticated user, this value is empty.
 * `AUTH_MECHANISM (cs1)`: The user authentication mechanism. This can be `oauth-access-token`, `mtls-auth`, or `no-auth`.
 * `REQUEST`: The request path and parameters. For example, `/v2/info?MY-PARAM=VALUE`.
@@ -310,7 +310,7 @@ cs6={"name":"/1530901097842989110","type":"json","mode":null,
 "additionalPermissions":[{"actor":"uaa-client:cc_service_key_client",
 "allowedOperations":["READ","WRITE","DELETE","WRITE_ACL","READ_ACL"]}]}
 ```
-* A user authenticated to the CredHub instance with UAA from `10.0.0.1`.
+* A user authenticated to the CredHub instance with Tanzu UAA from `10.0.0.1`.
 * The authenticated user set a CredHub credential.
 
 #### Generating a credential
