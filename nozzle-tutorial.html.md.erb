@@ -49,14 +49,14 @@ To download the BOSH manifest:
 
 <%= partial 'download_bosh_manifest' %>
 
-## <a id='add-client'></a> Step 2: Adding UAA client
+## <a id='add-client'></a> Step 2: Adding Tanzu UAA client
 
-You must authorize the example nozzle as a UAA client for your <%= vars.app_runtime_abbr %> deployment. To do this, add
+You must authorize the example nozzle as a Tanzu UAA client for your <%= vars.app_runtime_abbr %> deployment. To do this, add
 an entry for the example nozzle as a `client` for `uaa` under the `properties` key in your <%= vars.app_runtime_abbr %>
 deployment manifest YAML file. You must enter the example nozzle object in the correct location in the manifest, and
 with the correct indentation.
 
-To add the nozzle as a UAA client for your deployment:
+To add the nozzle as a Tanzu UAA client for your deployment:
 
 1. Open the deployment manifest in a text editor.
 
@@ -236,7 +236,7 @@ bosh -e BOSH-ENVIRONMENT create-release --name RELEASE-NAME
 Where:
 
 * `BOSH-ENVIRONMENT` is the alias that you set for your BOSH Director.
-* `RELEASE-NAME` is `example-nozzle` to match the UAA client that you created in the <%= vars.app_runtime_abbr %>
+* `RELEASE-NAME` is `example-nozzle` to match the Tanzu UAA client that you created in the <%= vars.app_runtime_abbr %>
 deployment manifest.
 
 For example:
