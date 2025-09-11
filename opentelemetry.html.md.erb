@@ -100,6 +100,7 @@ processors:
 ```
 
 ### <a id='included-processors'></a> Included processors
+
 | Processor | Stability |
 | :--- | :--- |
 | `batchprocessor` | stable |
@@ -121,9 +122,11 @@ the components that are available for use, run the following command on a VM tha
 ```
 
 ## <a id='service'></a> Service section
+
 The  `service`  section is used to configure what components are enabled in the Collector based on the configuration found in the receivers, processors, exporters, and extensions sections. If a component is configured, but not defined referenced the  `service`  section, then it’s not enabled.
 
 The service section consists of two subsections:
+
 * [Extensions](#extensions)
 * [Pipelines](#pipelines)
 
