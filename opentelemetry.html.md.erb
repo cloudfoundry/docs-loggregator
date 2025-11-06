@@ -31,15 +31,25 @@ otlp:
 
 As the OTel Collector is deployed on all VMs in Cloud Foundry, you must ensure that all VMs in your deployment are allowed to connect to the OTLP server endpoint.
 
+
 ### <a id='included-exporters'></a> Included exporters
-|Exporter | Stability |
-| :--- | :--- |
+
+<p class="note important">
+The <b>Stability</b> states shown in these tables are controlled by OTEL, not by Broadcom.</p>
+
+| Exporter | Stability |
+| :------- | :-------- |
 | `otlpexporter` | stable |
 | `nopexporter` | beta |
 | `fileexporter` | alpha |
 | `prometheusexporter` | stable |
 | `prometheusremotewriteexporter` | beta |
 | `splunkhecexporter` | beta |
+| `OTLP/HTTP` | stable |
+| `DataDog`   | beta   |
+| `Kafka`     | beta   |
+| `Syslog`    | beta   |
+
 
 ### <a id='mtls'></a> mTLS
 
