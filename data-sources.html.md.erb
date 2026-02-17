@@ -98,7 +98,7 @@ To access metrics using the Firehose plug-in:
     Because metrics are scraped at different intervals, it might take up to fifteen minutes for
     the Firehose to receive all metrics for the component. Run `cf nozzle` again until you have
     received a complete set of metrics for a component. For more information, see [Firehose
-    Architecture](../loggregator/architecture.html#firehose-architecture) in _Loggregator Architecture_.
+    Architecture](architecture.html#firehose-architecture) in _Loggregator Architecture_.
     <br>
     <br>
     To find the source ID and metric name of the metric you want to view, <%= vars.find_metric_name_source_id %>.
@@ -152,16 +152,16 @@ The following table describes the data included in logs and metrics from each so
 <% if vars.platform_code == 'CF' || vars.platform_code == 'OFFLINE' %>
 
 <sup>1</sup>For more information about using the BOSH Health Monitor to collect health metrics
-on VMs, see [Selecting and configuring a monitoring system](https://techdocs.broadcom.com/us/en/vmware-tanzu/platform/tanzu-platform-for-cloud-foundry/<%= vars.current_major_version_url %>/tpcf/monitoring-metrics.html).
+on VMs, see [Selecting and configuring a monitoring system](../operating/monitoring/metrics.html).
 
-<sup>2</sup>For more information about app logging, see [App Logging in Tanzu Platform for Cloud Foundry](https://techdocs.broadcom.com/us/en/vmware-tanzu/platform/tanzu-platform-for-cloud-foundry/<%= vars.current_major_version_url %>/tpcf/deploy-apps-streaming-logs.html).
+<sup>2</sup>For more information about app logging, see [App Logging in Tanzu Platform for Cloud Foundry](../devguide/deploy-apps/streaming-logs.html).
 
 <% else %>
 
 <sup>1</sup>For more information about using the BOSH Health Monitor to collect health metrics
-on VMs, see [Configuring a Monitoring System](/operating/monitoring/metrics.html).
+on VMs, see [Configuring a Monitoring System](../operating/monitoring/metrics.html).
 
-<sup>2</sup>For more information about app logging, see [App Logging in Tanzu Platform for Cloud Foundry](/devguide/deploy-apps/streaming-logs.html).
+<sup>2</sup>For more information about app logging, see [App Logging in Tanzu Platform for Cloud Foundry](../devguide/deploy-apps/streaming-logs.html).
 
 <% end %>
 
