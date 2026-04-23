@@ -15,7 +15,7 @@ Diego containers emit resource usage metrics for the application instance. Diego
 
 The following table describes all Diego container metrics:
 
-<table class=“table”>
+<table class="table">
 <thead>
   <tr>
     <th width=27%>Metric</th>
@@ -83,7 +83,7 @@ The following table describes all Diego container metrics:
 
 
 The operator of your <%= vars.app_runtime_abbr %> deployment can [enable it to emit](https://bosh.io/jobs/rep?source=github.com/cloudfoundry/diego-release&version=2.93.0#p%3dloggregator.app_metric_exclusion_filter) the following additional, deprecated container metrics:
-<table class=“table”>
+<table class="table">
   <thead>
     <tr>
       <th width=27%>Metric</th>
@@ -110,7 +110,7 @@ The operator of your <%= vars.app_runtime_abbr %> deployment can [enable it to e
       <br>
       <code>absolute_usage / absolute_entitlement</code> calculates a percentage of app instance usage per entitlement.</td>
     <td><code>float64</code></td>
-  </tr><tr>
+  </tr>
 </table>
 
 The way that Diego emits container metrics differs depending on the version of Loggregator used in your <%= vars.app_runtime_abbr %> deployment:
