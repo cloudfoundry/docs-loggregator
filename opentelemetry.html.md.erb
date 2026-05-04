@@ -40,6 +40,7 @@ The <b>Stability</b> states shown in these tables are controlled by OTEL, not by
 | Exporter | Stability |
 | :------- | :-------- |
 | `otlpexporter` | stable |
+| `otlphttpexporter`| stable |
 | `nopexporter` | beta |
 | `fileexporter` | alpha |
 | `prometheusexporter` | stable |
@@ -49,7 +50,9 @@ The <b>Stability</b> states shown in these tables are controlled by OTEL, not by
 | `DataDog`   | beta   |
 | `Kafka`     | beta   |
 | `Syslog`    | beta   |
-
+| `datadogexporter` | beta |
+| `kafkaexporter` | beta |
+| `syslogexporter` | alpha |
 
 ### <a id='mtls'></a> mTLS
 
@@ -114,7 +117,7 @@ processors:
 | :--- | :--- |
 | `batchprocessor` | stable |
 | `memorylimiterprocessor` | stable |
-| `transformprocessor` | alpha |
+| `transformprocessor` | beta |
 | `filterprocessor` | alpha |
 
 ## <a id='authentication'></a> Authentication
@@ -145,6 +148,14 @@ You can enable desired extensions using `extensions` subsections:
 service:
   extensions: [zpages]
 ```
+
+#### Included Extensions
+
+### <a id='included-extensions'></a> Included extensions
+| Extension | Stability |
+| :--- | :--- |
+| `opampextension` | alpha |
+| `pprofextension` | beta |
 
 ### <a id='pipelines'></a> Pipelines
 
