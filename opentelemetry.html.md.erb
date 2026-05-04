@@ -35,11 +35,15 @@ As the OTel Collector is deployed on all VMs in Cloud Foundry, you must ensure t
 |Exporter | Stability |
 | :--- | :--- |
 | `otlpexporter` | stable |
+| `otlphttpexporter`| stable |
 | `nopexporter` | beta |
 | `fileexporter` | alpha |
 | `prometheusexporter` | stable |
 | `prometheusremotewriteexporter` | beta |
 | `splunkhecexporter` | beta |
+| `datadogexporter` | beta |
+| `kafkaexporter` | beta |
+| `syslogexporter` | alpha |
 
 ### <a id='mtls'></a> mTLS
 
@@ -104,7 +108,7 @@ processors:
 | :--- | :--- |
 | `batchprocessor` | stable |
 | `memorylimiterprocessor` | stable |
-| `transformprocessor` | alpha |
+| `transformprocessor` | beta |
 | `filterprocessor` | alpha |
 
 ## <a id='authentication'></a> Authentication
@@ -137,6 +141,14 @@ You can enable desired extensions using `extensions` subsections:
 service:
   extensions: [pprof]
 ```
+
+#### Included Extensions
+
+### <a id='included-extensions'></a> Included extensions
+| Extension | Stability |
+| :--- | :--- |
+| `opampextension` | alpha |
+| `pprofextension` | beta |
 
 ### <a id='pipelines'></a> Pipelines
 
