@@ -8,8 +8,20 @@ to egress traces, metrics, and logs.
 
 When the OpenTelemetry (OTel) Collector is deployed, the Loggregator Forwarder Agent forwards platform and application metrics to the OTel Collector, which then processes traces, metrics, and logs using one or more pipelines that you configure.
 
-# <a id='collector-config'></a> Collector configuration structure
+## <a id='collector-config'></a> Enabling additional OpenTelemetry Collector features
 
+Under the **System Logging** tab in the <%= vars.app_runtime_abbr %> tile, there is an **Enable additional Open Telemetry Collector features** checkbox.
+
+![The "Enable additional Open Telemetry Collector features" checkbox in the System Logging tab of the EAR tile.](images/otel-additional-features.png)
+
+The components available to you depend on whether this checkbox is selected:
+
+| Checkbox state | Available exporters | Available processors |
+| :--- | :--- | :--- |
+| Unselected (default) | `otlp`, `prometheus`, `prometheusremotewrite` | `batch`, `memory_limiter` |
+| Selected | All exporters in [Included exporters](#included-exporters) | All processors in [Included processors](#included-processors) |
+
+## <a id='collector-config'></a> Collector configuration structure
 
 The OTel Collector has a standard YAML-based file format for configuration.
 
@@ -21,7 +33,8 @@ The structure of <%= vars.app_runtime_abbr %> configuration file consists of thr
 
 After each pipeline component is configured, add it in the `service.pipelines` [section](#service) of the Collector configuration file.
 
-## <a id='metric-exporter-config'></a> Exporter configuration
+### <a id='metric-exporter-config'></a> Exporter configuration
+
 For example, to configure the OpenTelemetry Collector to egress metrics using OTLP over gRPC, you can provide the following minimal configuration. This will use the defaults for gRPC and TLS configuration.
 
 ```
@@ -32,29 +45,36 @@ otlp:
 As the OTel Collector is deployed on all VMs in Cloud Foundry, you must ensure that all VMs in your deployment are allowed to connect to the OTLP server endpoint.
 
 
-### <a id='included-exporters'></a> Included exporters
+#### <a id='included-exporters'></a> Included exporters
 
 <p class="note important">
 The <b>Stability</b> states shown in these tables are controlled by OTEL, not by Broadcom.</p>
 
+The following exporters are available by default when **Enable additional Open Telemetry Collector features** is unselected:
+
 | Exporter | Stability |
 | :------- | :-------- |
 | `otlpexporter` | stable |
-| `otlphttpexporter`| stable |
-| `nopexporter` | beta |
-| `fileexporter` | alpha |
 | `prometheusexporter` | stable |
 | `prometheusremotewriteexporter` | beta |
+
+The following exporters are available when **Enable additional Open Telemetry Collector features** is selected:
+
+| Exporter | Stability |
+| :------- | :-------- |
+| `otlphttpexporter` | stable |
+| `nopexporter` | beta |
+| `fileexporter` | alpha |
 | `splunkhecexporter` | beta |
 | `OTLP/HTTP` | stable |
-| `DataDog`   | beta   |
-| `Kafka`     | beta   |
-| `Syslog`    | beta   |
+| `DataDog` | beta |
+| `Kafka` | beta |
+| `Syslog` | beta |
 | `datadogexporter` | beta |
 | `kafkaexporter` | beta |
 | `syslogexporter` | alpha |
 
-### <a id='mtls'></a> mTLS
+#### <a id='mtls'></a> mTLS
 
 To configure the exporter to use an mTLS connection to the remote OTLP endpoint, you can specify [additional TLS
 configuration](https://github.com/open-telemetry/opentelemetry-collector/blob/main/config/configtls/README.md).
@@ -71,7 +91,7 @@ otlp:
       PEM_ENCODED_CERTIFICATE
 ```
 
-### <a id='multiple-exporters'></a> Multiple exporters
+#### <a id='multiple-exporters'></a> Multiple exporters
 
 The OTel Collector supports defining multiple exporters, each with its own configuration. For example, you can define two OTLP gRPC exporters that egress metrics to different destinations.
 
@@ -82,11 +102,11 @@ otlp/another:
   endpoint: 203.0.113.11:4317
 ```
 
-## <a id='metric-receiver-config'></a> Receiver configuration
+### <a id='metric-receiver-config'></a> Receiver configuration
 
 Currently, users should not list receivers and include them in the pipeline. By default, receivers are replaced with OTLP receiver that forwarder agent sends to automatically.
 
-## <a id='grpc-compression'></a> gRPC compression
+### <a id='grpc-compression'></a> gRPC compression
 
 You can configure the type of compression used for OTLP gRPC exporters or receivers. The OTLP gRPC exporter uses `gzip` compression
 by default. To reduce CPU usage of the OTel Collector (increasing the size of the payload) you can optionally configure
@@ -99,7 +119,7 @@ otlp:
   compression: snappy
 ```
 
-## <a id='metric-processor-config'></a> Processor configuration
+### <a id='metric-processor-config'></a> Processor configuration
 
 Processors are used at various stages of a pipeline to pre-processes data before it is exported. By default, no processors are enabled. The order of the processors in a pipeline determines the order of the processing operations that the Collector applies to the signal.
 
@@ -112,19 +132,29 @@ processors:
   batch:
 ```
 
-### <a id='included-processors'></a> Included processors
+#### <a id='included-processors'></a> Included processors
+
+The following processors are available by default when **Enable additional Open Telemetry Collector features** is unselected:
+
 | Processor | Stability |
 | :--- | :--- |
 | `batchprocessor` | stable |
 | `memorylimiterprocessor` | stable |
+
+The following processors are available when **Enable additional Open Telemetry Collector features** is selected:
+
+| Processor | Stability |
+| :--- | :--- |
 | `transformprocessor` | beta |
 | `filterprocessor` | alpha |
 
-## <a id='authentication'></a> Authentication
+<p class="note">To forward platform and application logs and to filter logs in the <%= vars.app_runtime_abbr %> tile in <%= vars.ops_manager %>, see <a href="../operating/log-filtering.html">Log forwarding and filtering with OpenTelemetry</a>.</p>
+
+### <a id='authentication'></a> Authentication
 
 The <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector does not currently include any authenticator extensions. Please let us know in the [Cloud Foundry Slack](#logging-and-metrics) `#logging-and-metrics` channel if there are authenticator extensions you would find useful.
 
-## <a id='available-exporters'></a> Reviewing the available components
+### <a id='available-exporters'></a> Reviewing the available components
 
 The <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector ships with a number of components. To see
 the components that are available for use, run the following command on a VM that has otel-collector deployed.
@@ -133,14 +163,16 @@ the components that are available for use, run the following command on a VM tha
 /var/vcap/packages/otel-collector/otel-collector components
 ```
 
-## <a id='service'></a> Service section
-The  `service`  section is used to configure what components are enabled in the Collector based on the configuration found in the receivers, processors, exporters, and extensions sections. If a component is configured, but not defined referenced the  `service`  section, then it’s not enabled.
+### <a id='service'></a> Service section
+
+The `service` section is used to configure what components are enabled in the Collector based on the configuration found in the receivers, processors, exporters, and extensions sections. If a component is configured, but not referenced in the `service` section, then it's not enabled.
 
 The service section consists of two subsections:
+
 * [Extensions](#extensions)
 * [Pipelines](#pipelines)
 
-### <a id='extensions'></a> Extensions
+#### <a id='extensions'></a> Extensions
 
 You can enable desired extensions using `extensions` subsections:
 
@@ -149,15 +181,14 @@ service:
   extensions: [zpages]
 ```
 
-#### Included Extensions
+#### <a id='included-extensions'></a> Included extensions
 
-### <a id='included-extensions'></a> Included extensions
 | Extension | Stability |
 | :--- | :--- |
 | `opampextension` | alpha |
 | `pprofextension` | beta |
 
-### <a id='pipelines'></a> Pipelines
+#### <a id='pipelines'></a> Pipelines
 
 A pipeline is a set of components used to process a signal. Before including a receiver, processor, or exporter in a pipeline, make sure to define its configuration in the appropriate section.
 
@@ -179,8 +210,10 @@ service:
     exporters: [otlp]
 ```
 
-## <a id='example-config'></a> Example config
+### <a id='example-config'></a> Example config
+
 Below is an example config structure:
+
 ```
 receivers:
   otlp/test:
@@ -210,7 +243,7 @@ service:
       exporters: [otlp]
 ```
 
-## <a id='deploying'></a> Deploying the OpenTelemetry Collector
+### <a id='deploying'></a> Deploying the OpenTelemetry Collector
 
 <% if vars.platform_code == 'CF' %>
 CF Deployment provides [experimental operations files](https://github.com/cloudfoundry/cf-deployment/tree/main/operations/experimental)
