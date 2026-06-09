@@ -25,11 +25,16 @@ After each pipeline component is configured, add it in the `service.pipelines` [
 For example, to configure the OpenTelemetry Collector to egress metrics using OTLP over gRPC, you can provide the following minimal configuration. This will use the defaults for gRPC and TLS configuration.
 
 ```
-otlp:
+otlp_grpc:
   endpoint: 203.0.113.10:4317
 ```
 
 As the OTel Collector is deployed on all VMs in Cloud Foundry, you must ensure that all VMs in your deployment are allowed to connect to the OTLP server endpoint.
+
+<p class="note">
+The OTLP exporter config key names changed in this release. Use <code>otlp_grpc</code>
+for gRPC and <code>otlp_http</code> for HTTP. The previous names <code>otlp</code> and
+<code>otlphttp</code> are deprecated but continue to work.</p>
 
 ### <a id='included-exporters'></a> Included exporters
 |Exporter | Stability |
@@ -51,7 +56,7 @@ To configure the exporter to use an mTLS connection to the remote OTLP endpoint,
 configuration](https://github.com/open-telemetry/opentelemetry-collector/blob/main/config/configtls/README.md).
 
 ```
-otlp:
+otlp_grpc:
   endpoint: 203.0.113.10:4317
   tls:
     cert_pem: |
@@ -67,9 +72,9 @@ otlp:
 The OTel Collector supports defining multiple exporters, each with its own configuration. For example, you can define two OTLP gRPC exporters that egress metrics to different destinations.
 
 ```
-otlp:
+otlp_grpc:
   endpoint: 203.0.113.10:4317
-otlp/another:
+otlp_grpc/another:
   endpoint: 203.0.113.11:4317
 ```
 
@@ -85,7 +90,7 @@ the OTLP gRPC exporter to use `snappy` compression. Validate that the server you
 support `snappy` compression before making this change.
 
 ```
-otlp:
+otlp_grpc:
   endpoint: 203.0.113.10:4317
   compression: snappy
 ```
@@ -165,11 +170,11 @@ service:
     traces:
     receivers: [otlp/test]
     processors: [batch]
-    exporters: [otlp]
+    exporters: [otlp_grpc]
     metrics:
     receivers: [otlp/test]
     processors: [batch]
-    exporters: [otlp]
+    exporters: [otlp_grpc]
 ```
 
 ## <a id='example-config'></a> Example config
@@ -184,7 +189,7 @@ processors:
   batch:
 
 exporters:
-  otlp:
+  otlp_grpc:
     endpoint: otelcol:4317
 
 extensions:
@@ -196,11 +201,11 @@ service:
     traces:
       receivers: [otlp/test]
       processors: [batch]
-      exporters: [otlp]
+      exporters: [otlp_grpc]
     metrics:
       receivers: [otlp/test]
       processors: [batch]
-      exporters: [otlp]
+      exporters: [otlp_grpc]
 ```
 
 ## <a id='deploying'></a> Deploying the OpenTelemetry Collector
