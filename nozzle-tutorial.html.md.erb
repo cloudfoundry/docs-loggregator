@@ -19,15 +19,14 @@ metrics on an allow list. For examples, see `rlpreader` and `rlptypereader` in t
 [V2 Subscriptions](https://github.com/cloudfoundry/loggregator-release/blob/main/docs/v2-subscriptions.md) in the
 Loggregator Release repository in GitHub.
 
-<p> You can deactivate the Firehose. In place of the Firehose, you can configure an
-aggregate log and metric drain for your foundation. <%= vars.configure_system_logging_link %></p>
+You can deactivate the Firehose. In place of the Firehose, you can configure an
+aggregate log and metric drain for your foundation. <%= vars.configure_system_logging_link %>
 
 ## <a id='prerequisites'></a> Prerequisites
 
 Before you deploy a nozzle to the Loggregator Firehose, you must have:
 
-* BOSH CLI installed locally. For more information, see [BOSH CLI](https://bosh.io/docs/bosh-cli.html) in the BOSH
-documentation.
+* BOSH CLI installed locally. For more information, see [BOSH CLI](https://bosh.io/docs/bosh-cli.html) in the BOSH documentation.
 
 * Spiff installed locally and added to the load path of your shell. For more information, see the
 [Spiff](https://github.com/cloudfoundry-incubator/spiff) repository on GitHub.
@@ -223,8 +222,8 @@ with your BOSH Director UUID.
     director_uuid: PLACEHOLDER-DIRECTOR-UUID
     ```
 
-<p> If you do not want to see the complete deployment procedure, run
-<code>scripts/make_manifest_spiff_bosh_lite</code> to prepare the manifest.</p>
+If you do not want to see the complete deployment procedure, run
+`scripts/make_manifest_spiff_bosh_lite` to prepare the manifest.
 
 ## <a id='create-nozzle-bosh-release'></a> Step 6: Creating nozzle BOSH release
 
