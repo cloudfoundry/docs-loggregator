@@ -96,15 +96,16 @@ The following components are included in the shared-nothing architecture, as sho
 
 The following diagram shows the architecture of a deployment that uses System Metrics Agents to collect VM and system-level metrics.
 
-![NSX-T Overview](./images/architecture/system-metrics-agents.png)
+![System Metrics Agents architecture](./images/architecture/system-metrics-agents2.png)
 
-[View a larger version of this image.](./images/architecture/system-metrics-agents.png)
+[View a larger version of this image.](./images/architecture/system-metrics-agents2.png)
 
 The following describes the components of a Loggregator deployment that uses System Metrics Agents, as shown in the previous diagram:
 
 * **System Metrics Agent:** A standalone agent to provide VM system metrics using a Prometheus-scrapeable endpoint.
 
-* **System Metrics Scraper:** The System Metrics Scraper forwards metrics from System Metrics Agents to Loggregator Agents over mTLS.
+* **System Metrics Scraper:** The System Metrics Scraper sends metrics to Forwarder Agent, which then forward the logs and metrics to Loggregator Agents and other agents.
+
 
 ## <a id='data-flow'></a> How components transport logs and metrics
 
