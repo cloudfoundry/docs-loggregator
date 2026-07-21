@@ -212,7 +212,6 @@ service:
 
 ## <a id='deploying'></a> Deploying the OpenTelemetry Collector
 
-<% if vars.platform_code == 'CF' %>
 CF Deployment provides [experimental operations files](https://github.com/cloudfoundry/cf-deployment/tree/main/operations/experimental)
 that you can use to deploy the OTel Collector:
 
@@ -227,6 +226,3 @@ bosh deploy cf-deployment.yml \
   --var-file=otel_collector_metric_exporters=YOUR_METRIC_EXPORTER_CONFIG_FILE_PATH.yml \
   --var=system_domain=YOUR_SYSTEM_DOMAIN
 ```
-<% else %>
-  <%= partial "/pcf/core/deploy_otel_collector" %>
-<% end %>
