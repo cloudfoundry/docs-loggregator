@@ -3,13 +3,6 @@ title: Loggregator guide for Cloud Foundry operators
 owner: Logging and Metrics
 ---
 
-<%# Reset page title based on platform type %>
-<% if vars.platform_code != 'CF' %>
-
-<% set_title("Loggregator Guide for", vars.app_runtime_abbr, "Operators") %>
-
-<% end %>
-
 Here you can view information for <%= vars.app_runtime_first %> deployment operators about how to configure the
 Loggregator system to avoid data loss with high volumes of logging and metrics data.
 
@@ -54,8 +47,6 @@ To measure the message reliability rate of your Loggregator system, you can run 
 
 ## <a id='scaling'></a> Scaling Loggregator
 
-<% if vars.platform_code == 'CF' %>
-
 Most Loggregator configurations are set to use preferred resource defaults. If you want to customize these defaults or plan the capacity of your Loggregator system, see the following formulas:
 
 ### <a id='doppler'></a> Doppler
@@ -89,12 +80,6 @@ logs and metrics are available at a time. <%= vars.recommended_by %> recommends 
 
 For more information about scaling the Loggregator system,
 see [Scaling Loggregator](../running/managing-cf/logging-config.html#scaling) in _Configuring System Logging_.
-
-<% else %>
-
-Most Loggregator configurations use preferred resource defaults. For more information about customizing these defaults and planning the capacity of your Loggregator system, see <%= vars.key_cap_link %>.
-
-<% end %>
 
 
 ## <a id='scaling-nozzles'></a> Scaling nozzles

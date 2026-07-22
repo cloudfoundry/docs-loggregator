@@ -141,26 +141,12 @@ The following table describes the data included in logs and metrics from each so
   <td>
    <ul>
     <li>Container metrics<sup>3</sup></li>
-    <% if vars.platform_code != 'CF' %>
-    <li>Custom app metrics<sup>4</sup></li>
-    <% end %>
    </ul>
   </td>
  </tr>
 </table>
 
-<% if vars.platform_code == 'CF' || vars.platform_code == 'OFFLINE' %>
-
 <sup>2</sup>For more information about app logging, see [Streaming App Logs](/devguide/deploy-apps/streaming-logs.html).
-
-<% else %>
-
-<sup>1</sup>For more information about using the BOSH Health Monitor to collect health metrics
-on VMs, see [Configuring a Monitoring System](/operating/monitoring/metrics.html).
-
-<sup>2</sup>For more information about app logging, see [Streaming App Logs](/devguide/deploy-apps/streaming-logs.html).
-
-<% end %>
 
 <sup>3</sup>For more information about container metrics, see [Container Metrics](container-metrics.html).
 
@@ -230,9 +216,6 @@ and metrics:
           Firehose plug-in for CLI</a>.</li>
     <li>Loggregator Log Cache CLI plug-in. See <a href="https://plugins.cloudfoundry.org/">
           Cloud Foundry Community cf CLI plug-ins</a>.</li>
-    <% if vars.platform_code != 'CF' %>
-    <li><%= vars.platform_metric_tool_ref %></li>
-    <% end %>
    </ul>
   </td>
  </tr>
@@ -242,9 +225,6 @@ and metrics:
    You can use the following products or tools to view app logs:
    <ul>
     <li>cf CLI <code>cf logs</code> command.</a></li>
-    <% if vars.platform_code != 'CF' %>
-    <li><%= vars.manage_apps_service_instances_ref %></li>
-    <% end %>
     <li><%= vars.syslog_forwarding_ref %></li>
     <li>Loggregator Firehose CLI plug-in. See <a href="cli-plugin.html">Installing the Loggregator
           Firehose plug-in for CLI</a>.</li>
@@ -259,9 +239,6 @@ and metrics:
           Firehose plug-in for CLI</a>.</li>
     <li>Loggregator Log Cache CLI plug-in. See <a href="https://plugins.cloudfoundry.org/">
           Cloud Foundry Community cf CLI plug-ins</a>.</li>
-    <% if vars.platform_code != 'CF' %>
-    <li><%= vars.metrics_product_ref %></li>
-    <% end %>
    </ul>
   </td>
  </tr>
