@@ -82,7 +82,34 @@ otlp_grpc/another:
 
 ## <a id='metric-receiver-config'></a> Receiver configuration
 
-Currently, users should not list receivers and include them in the pipeline. By default, receivers are replaced with OTLP receiver that forwarder agent sends to automatically.
+The release always supplies the managed `otlp/cf-internal-local` receiver for telemetry from the Loggregator Forwarder Agent. Its definition comes from the BOSH job's `ingress.grpc.*` properties and overrides any operator definition with the same name.
+
+To use custom receivers, define them in `config.receivers` and reference them in the appropriate `config.service.pipelines` receiver lists.
+
+The BOSH job property `ingress.pipelines` controls how the managed receiver is wired:
+
+| `ingress.pipelines` | Receiver definitions | Pipeline receiver lists |
+| :--- | :--- | :--- |
+| Unset (default) | Replaced with only `otlp/cf-internal-local` | All replaced with `[otlp/cf-internal-local]` |
+| `[]` | Custom definitions preserved; managed receiver supplied | Unchanged; wire all receivers manually |
+| Nonempty list | Custom definitions preserved; managed receiver supplied | Only selected pipelines' lists replaced with `[otlp/cf-internal-local]`; other lists unchanged |
+
+A nonempty list must contain exact configured pipeline names, for example `[metrics/inbound]`. Selected receiver lists are **replaced**, not extended. To combine managed and custom receivers in the same pipeline, use `[]` and explicitly list both receivers, as in the [custom receiver example](#custom-receiver-config).
+
+Only the default, unset mode adds `nop` pipelines for missing traces, metrics, or logs. Explicit modes (`[]` or a nonempty list) add no `nop` fallbacks. Operators must configure pipelines to handle unwanted signals, for example with a `nop` exporter, or disable emission of those signals at their sources.
+
+<p class="note">
+<span class="note__title"><strong>Migration warning</strong></span>
+Default behavior remains compatible. Before switching to an explicit mode, remove obsolete placeholder receiver definitions such as an empty <code>otlp/placeholder</code>. Explicit modes preserve these definitions instead of discarding them, and invalid definitions can prevent the Collector from starting.
+</p>
+
+See the [deployment instructions](#deploying) for release requirements and [Configuring custom receiver wiring in CF Deployment](#deploying-custom-receivers) for the supplementary BOSH operations file.
+
+### <a id='included-receivers'></a> Included receivers
+| Receiver | Stability
+| :--- | :--- |
+| `otlpreceiver` | stable |
+| `filelogreceiver` | beta |
 
 ## <a id='grpc-compression'></a> gRPC compression
 
@@ -163,30 +190,26 @@ A pipeline is a set of components used to process a signal. Before including a r
 
 You can use the same receiver, processor, or exporter in more than one pipeline. When a processor is referenced in multiple pipelines, each pipeline gets a separate instance of the processor.
 
-The following is an example of pipeline configuration. Note that the order of processors dictates the order in which data is processed:
+The following is a Collector configuration fragment, under the BOSH job's `config` property. The release supplies the managed receiver; define the referenced processors, exporters, and extensions separately. Note that the order of processors dictates the order in which data is processed:
 
 ```
 service:
   extensions: [pprof]
   pipelines:
     traces:
-    receivers: [otlp/test]
-    processors: [batch]
-    exporters: [otlp_grpc]
+      receivers: [otlp/cf-internal-local]
+      processors: [batch]
+      exporters: [otlp_grpc]
     metrics:
-    receivers: [otlp/test]
-    processors: [batch]
-    exporters: [otlp_grpc]
+      receivers: [otlp/cf-internal-local]
+      processors: [batch]
+      exporters: [otlp_grpc]
 ```
 
 ## <a id='example-config'></a> Example config
-Below is an example config structure:
-```
-receivers:
-  otlp/test:
-  protocols:
-    grpc:
+Below is a complete input for the BOSH job's `config` property, not a complete BOSH properties map. Save this Collector configuration as the file supplied to `otel_collector_config` in the [deployment command](#deploying). For receiver wiring options, see [Receiver configuration](#metric-receiver-config).
 
+```yaml
 processors:
   batch:
 
@@ -201,14 +224,50 @@ service:
   extensions: [pprof]
   pipelines:
     traces:
-      receivers: [otlp/test]
+      receivers: [otlp/cf-internal-local]
       processors: [batch]
       exporters: [otlp_grpc]
     metrics:
-      receivers: [otlp/test]
+      receivers: [otlp/cf-internal-local]
       processors: [batch]
       exporters: [otlp_grpc]
 ```
+
+### <a id='custom-receiver-config'></a> Custom filelog receiver example
+
+This **BOSH job properties** example collects logs from files on the VM and combines them with logs from the managed receiver. Traces and metrics use only the managed receiver. For receiver wiring options, see [Receiver configuration](#metric-receiver-config). Only the contents of `config` are Collector configuration.
+
+```yaml
+ingress:
+  pipelines: []
+config:
+  receivers:
+    filelog/custom:
+      include:
+        - /var/vcap/sys/log/YOUR_JOB/*.log
+      start_at: end
+  processors:
+    batch:
+  exporters:
+    otlp_grpc:
+      endpoint: otelcol:4317
+  service:
+    pipelines:
+      traces:
+        receivers: [otlp/cf-internal-local]
+        processors: [batch]
+        exporters: [otlp_grpc]
+      metrics:
+        receivers: [otlp/cf-internal-local]
+        processors: [batch]
+        exporters: [otlp_grpc]
+      logs:
+        receivers: [otlp/cf-internal-local, filelog/custom]
+        processors: [batch]
+        exporters: [otlp_grpc]
+```
+
+Set `ingress.pipelines` using a supplementary operations file as shown in [Configuring custom receiver wiring in CF Deployment](#deploying-custom-receivers).
 
 ## <a id='deploying'></a> Deploying the OpenTelemetry Collector
 
@@ -218,11 +277,27 @@ that you can use to deploy the OTel Collector:
 * [on Linux](https://github.com/cloudfoundry/cf-deployment/blob/main/operations/experimental/add-otel-collector.yml)
 * [on Windows](https://github.com/cloudfoundry/cf-deployment/blob/main/operations/experimental/add-otel-collector-windows.yml)
 
+Custom receiver wiring via `ingress.pipelines` is available in [otel-collector-release v0.11.13](https://github.com/cloudfoundry/otel-collector-release/releases/tag/v0.11.13) or later.
+
 For example, to deploy a fresh CF Deployment with OTel Collector enabled, run:
 
 ```
 bosh deploy cf-deployment.yml \
   --ops-file=operations/experimental/add-otel-collector.yml \
-  --var-file=otel_collector_metric_exporters=YOUR_METRIC_EXPORTER_CONFIG_FILE_PATH.yml \
+  --var-file=otel_collector_config=YOUR_COLLECTOR_CONFIG_FILE_PATH.yml \
   --var=system_domain=YOUR_SYSTEM_DOMAIN
 ```
+
+The supplied file must contain the full Collector configuration, such as the [example config](#example-config). The `--var-file` option passes the file contents as a string, which the BOSH job template parses as YAML. The operations file places it under the job's `config` property and supplies the managed receiver's TLS certificates.
+
+### <a id='deploying-custom-receivers'></a> Configuring custom receiver wiring in CF Deployment
+
+When using a release that supports `ingress.pipelines`, save the following supplementary BOSH operations file as `custom-otel-ingress.yml` to enable manual receiver wiring on Linux:
+
+```yaml
+- type: replace
+  path: /addons/name=otel-collector/jobs/name=otel-collector/properties/ingress/pipelines?
+  value: []
+```
+
+Apply it with `--ops-file=custom-otel-ingress.yml` **after** the addon operations files. To select pipelines instead of manual wiring, replace `[]` with their exact names, for example `[metrics]`; each selected receiver list will be replaced, not extended.
