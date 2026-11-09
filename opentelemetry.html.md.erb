@@ -13,11 +13,12 @@ When the OpenTelemetry (OTel) Collector is deployed, the Loggregator Forwarder A
 
 The OTel Collector has a standard YAML-based file format for configuration.
 
-The structure of <%= vars.app_runtime_abbr %> configuration file consists of three classes of pipeline components that access telemetry data:
+The <%= vars.app_runtime_abbr %> configuration file supports these pipeline components:
 
 * [Exporters](#metric-exporter-config)
 * [Receivers](#metric-receiver-config)
 * [Processors](#metric-processor-config)
+* [Connectors](#connector-config)
 
 After each pipeline component is configured, add it in the `service.pipelines` [section](#service) of the Collector configuration file.
 
@@ -145,6 +146,12 @@ processors:
 | `transformprocessor` | beta |
 | `filterprocessor` | alpha |
 
+## <a id='connector-config'></a> Connector configuration
+
+Connectors join pipelines, acting as an exporter in the upstream pipeline and a receiver in downstream pipelines. The included `routing` connector is **alpha** for traces, metrics, and logs. Define it under `config.connectors`; see the [routing connector documentation](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/connector/routingconnector) for routing conditions.
+
+Routing support requires otel-collector-release **0.12.0*.
+
 ## <a id='authentication'></a> Authentication
 
 The <%= vars.app_runtime_abbr %> distribution of the OpenTelemetry Collector does not currently include any authenticator extensions. Please let us know in the [Cloud Foundry Slack](#logging-and-metrics) `#logging-and-metrics` channel if there are authenticator extensions you would find useful.
@@ -160,7 +167,7 @@ the components that are available for use, run the following command on a VM tha
 
 ## <a id='service'></a> Service section
 
-The  `service`  section is used to configure what components are enabled in the Collector based on the configuration found in the receivers, processors, exporters, and extensions sections. If a component is configured, but not defined referenced the  `service`  section, then it’s not enabled.
+The `service` section enables components defined in the receivers, processors, exporters, connectors, and extensions sections. A configured component is not enabled unless it is referenced in `service`.
 
 The service section consists of two subsections:
 
